@@ -26,10 +26,9 @@ require 'evosynth'
 
 class TestPopulation < Test::Unit::TestCase
 
-	def test_stupid
+	def test_to_s
 		mda = EvoSynth::Util::MDArray.new(2, 3, 0)
-		puts mda
-		puts mda[1,2]
+#		puts mda
 	end
 
 	def test_constructor_nil
@@ -50,4 +49,10 @@ class TestPopulation < Test::Unit::TestCase
 		assert_equal(mda[0,0], "foo")
 	end
 
+	def test_each
+		mda = EvoSynth::Util::MDArray.new(1,3,0)
+		mda.each do |row, col|
+			assert_equal(mda[row,col], 0)
+		end
+	end
 end

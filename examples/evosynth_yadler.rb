@@ -29,6 +29,7 @@ module GraphColouring
 		attr_reader :matrix
 
 		# reads the node count from grapg-file
+
 		def count_nodes(file_name)
 			File.open(file_name) do |file|
 				file.each_line do |line|
@@ -39,16 +40,14 @@ module GraphColouring
 		end
 
 		# reads a graph file
+
 		def read_file(file_name)
 			@node_count = count_nodes(file_name)
 			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
 
 			File.open(file_name) do |file|
 				file.each_line do |line|
-					# skip everything except edges
 					next if line !~ /^e/
-
-					#match the begin and end node of that edge
 					line =~ /(\d+)\s*(\d+)/
 					@matrix[Integer($1)-1, Integer($2)-1] = 1
 				end
@@ -71,14 +70,10 @@ module GraphColouring
 			if @genome.changed
 				@verletzungen = 0
 
-				@graph.matrix.each_index do |x|
-					@graph.matrix[x].each_index do |y|
-
-						if @graph.matrix[x][y] == 1 && @genome[x] == @genome[y]
+				@graph.matrix.each do |row, col|
+					if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
 							@verletzungen += 1
 						end
-
-					end
 				end
 			end
 
@@ -89,7 +84,7 @@ module GraphColouring
 		def fitness
 			if @genome.changed
 				@fitness = 0.0
-				@fitness += Set.new(@genome).size
+				@fitness += @genome.uniq.size
 				@fitness *= (verletzungen + 1)
 				@genome.changed = false
 			end
@@ -112,3 +107,4 @@ graph.read_file(filename)
 pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 
 puts pop
+puts pop[0]

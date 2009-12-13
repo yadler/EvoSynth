@@ -50,6 +50,14 @@ module EvoSynth
 				@data[row * @col_count + col] = data
 			end
 
+			def each
+				@row_count.times do	|row|
+					@col_count.times do |col|
+						yield row, col
+					end
+				end
+			end
+
 			def to_s
 				@data.to_s
 			end
