@@ -25,6 +25,17 @@ require 'population'
 module EvoSynth
 
 	module Recombinations
+		MUTATION_RATE = 5;
+
+		#FIXME
+		def two_point_crossover(one, two)
+			start = rand(one.genome.size)
+			length = rand(one.genome.size - start)
+
+			length.times do |i|
+				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
+			end
+		end
 
 	end
 
