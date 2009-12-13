@@ -89,6 +89,12 @@ module GraphColouring
 
 	end
 
+	def another_mutation(individual)
+		individual.genome.each_index do |index|
+			individual.genome[index] = rand(individual.genome[index] + 1) if (rand(100) < MUTATION_RATE)
+		end
+	end
+
 end
 
 # Simple testing...

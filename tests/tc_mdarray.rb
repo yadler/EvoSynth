@@ -24,7 +24,7 @@ require 'test/unit'
 require 'evosynth'
 
 
-class TestPopulation < Test::Unit::TestCase
+class TestMDArray < Test::Unit::TestCase
 
 	def test_to_s
 		mda = EvoSynth::Util::MDArray.new(2, 3, 0)

@@ -23,26 +23,43 @@
 require 'test/unit'
 require 'evosynth'
 
+
 class TestIndividual
 	include EvoSynth::Individual
 
-	def initialize
+	def initialize(fitness = 0.0)
+		@fitness = fitness
 	end
 
 	def fitness
-		0.0
+		@fitness
+	end
+
+	def to_s
+		@fitness
 	end
 end
 
 
-class TestSelection < Test::Unit::TestCase
+class TestBestSelection < Test::Unit::TestCase
 
-	def test_stupid
-		p = EvoSynth::Population.new(10) { TestIndividual.new }
-#		assert_equal(p.to_s, "Population (size=10, individuals=[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil])", "to_s failed")
-#		assert_nil(p.best, "foo")
-		puts EvoSynth::Selections::select_best(p);
-		puts EvoSynth::Selections::select_turnier(p);
+	def test_simple
+		pop = EvoSynth::Population.new()
+		t1 = TestIndividual.new(1)
+		t2 = TestIndividual.new(2)
+		t3 = TestIndividual.new(3)
+		t4 = TestIndividual.new(5)
+		t5 = TestIndividual.new(20)
+		pop.add(t1)
+		pop.add(t2)
+		pop.add(t3)
+		pop.add(t4)
+		pop.add(t5)
+
+		should_be = EvoSynth::Population.new()
+		should_be.add(t1)
+		should_be.add(t2)
+		result = EvoSynth::Selections.select_best(pop, 2)
+		assert_equal(result, should_be)
 	end
-
 end

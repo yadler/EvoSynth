@@ -20,22 +20,40 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'test/unit'
+require 'evosynth'
 
-module EvoSynth
 
-	module Recombinations
-		MUTATION_RATE = 5;
+class TestIndividual
+	include EvoSynth::Individual
 
-		#FIXME
-		def two_point_crossover(one, two)
-			start = rand(one.genome.size)
-			length = rand(one.genome.size - start)
-
-			length.times do |i|
-				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
-			end
-		end
-
+	def initialize(fitness = 0.0)
+		@fitness = fitness
 	end
 
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		@fitness
+	end
+end
+
+
+class TestFPSelection < Test::Unit::TestCase
+
+	def test_selection_weicker
+		pop = EvoSynth::Population.new()
+		pop.add(TestIndividual.new(1))
+		pop.add(TestIndividual.new(2))
+		pop.add(TestIndividual.new(3))
+		pop.add(TestIndividual.new(4))
+		pop.add(TestIndividual.new(20))
+
+		result = EvoSynth::Selections.fitness_proportional_selection(pop, 20)
+		result.sort!
+		puts result
+		puts result.size
+	end
 end

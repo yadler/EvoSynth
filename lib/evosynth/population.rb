@@ -26,15 +26,21 @@ module EvoSynth
 	# This class is used to create and maintain a population
 
 	class Population
-
+		include Comparable
 		include Enumerable
 
+		attr_reader :individuals
 		# Setup a population of individuals with the given size
 		# and a block to initialize each individual
 
-		def initialize(size = 0, &individual_creator)
+		def initialize(size = 0)
 			@individuals = Genome.new(size)
-			@individuals.collect! { |individual| individual_creator.call } if block_given?
+			@individuals.collect! { |individual| yield } if block_given?
+		end
+
+
+		def <=>(anOther)
+			@individuals <=> anOther.individuals
 		end
 
 
@@ -53,9 +59,9 @@ module EvoSynth
 		end
 
 
-		def best
+		def best(count = 1)
 			@individuals.sort! { |a,b| a.fitness <=> b.fitness }
-			@individuals.first
+			@individuals.first(count)
 		end
 
 

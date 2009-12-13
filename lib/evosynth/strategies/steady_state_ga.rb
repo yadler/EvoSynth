@@ -23,17 +23,20 @@
 
 module EvoSynth
 
-	module Recombinations
-		MUTATION_RATE = 5;
+	module Strategies
 
-		#FIXME
-		def two_point_crossover(one, two)
-			start = rand(one.genome.size)
-			length = rand(one.genome.size - start)
+		class SteadyStateGA
 
-			length.times do |i|
-				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
+			def initialize(population)
+				@population = population
 			end
+
+			def run(generations)
+				generations.times do |generation|
+#						rand
+				end
+			end
+
 		end
 
 	end

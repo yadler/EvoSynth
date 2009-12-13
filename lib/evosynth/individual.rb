@@ -50,7 +50,6 @@ module EvoSynth
 			fitness <=> anOther.fitness
 		end
 
-
 		def to_s
 			"Individual (fitness=" + fitness.to_s + ")"
 		end

@@ -23,17 +23,30 @@
 
 module EvoSynth
 
-	module Recombinations
-		MUTATION_RATE = 5;
+	module Selections
 
-		#FIXME
-		def two_point_crossover(one, two)
-			start = rand(one.genome.size)
-			length = rand(one.genome.size - start)
+		# FIXME function is not able to minimize
 
-			length.times do |i|
-				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
+		def Selections.fitness_proportional_selection(population, select_count = 1)
+			selected_population = Population.new()
+
+			fitness_sum = 0
+			population.each { |individual| fitness_sum += individual.fitness }
+
+			select_count.times do |index|
+				selection_sum = 1
+				limit = rand(fitness_sum)
+
+				population.each do |individual|
+					selection_sum += individual.fitness
+					if (selection_sum >= limit)
+						selected_population.add(individual)
+						break
+					end
+				end
 			end
+
+			selected_population
 		end
 
 	end

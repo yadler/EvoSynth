@@ -20,22 +20,28 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-
 module EvoSynth
 
-	module Recombinations
-		MUTATION_RATE = 5;
+	module Selections
 
-		#FIXME
-		def two_point_crossover(one, two)
-			start = rand(one.genome.size)
-			length = rand(one.genome.size - start)
+		def Selections.tournament(population, select_count = 1, enemies = 2)
+			selected_population = Population.new()
 
-			length.times do |i|
-				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
+			select_count.times do
+				individual = population[rand(population.size)]
+
+				enemies.times do
+					enemy = population[rand(population.size)]
+					individual = enemy if enemy < individual
+				end
+
+				selected_population.add(individual)
 			end
+
+			selected_population.sort![0..select_count]
 		end
 
 	end
 
 end
+

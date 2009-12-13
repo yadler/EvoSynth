@@ -50,6 +50,11 @@ class TestPopulation < Test::Unit::TestCase
 		p.sort!
 	end
 
+	def test_no_block
+		p = EvoSynth::Population.new(1)
+		assert_nil(p[0])
+	end
+
 	def test_klammern
 		p = EvoSynth::Population.new(2) { TestIndividual.new }
 		p[0] = "foo"

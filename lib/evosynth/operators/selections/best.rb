@@ -23,17 +23,15 @@
 
 module EvoSynth
 
-	module Recombinations
-		MUTATION_RATE = 5;
+	module Selections
 
-		#FIXME
-		def two_point_crossover(one, two)
-			start = rand(one.genome.size)
-			length = rand(one.genome.size - start)
+		# FIXME function is not able to maximize
 
-			length.times do |i|
-				one.genome[start+i], two.genome[start+i] = two.genome[start+i], one.genome[start+i]
-			end
+		def Selections.select_best(population, count = 0)
+			best = population.best(count)
+			selected_population = Population.new()
+			best.each { |individual| selected_population.add(individual) }
+			selected_population
 		end
 
 	end
