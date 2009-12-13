@@ -20,39 +20,11 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'population'
+
 module EvoSynth
 
-	class Genome < Array
-
-		attr_accessor :changed
-
-		def initialize(*args)
-			super
-			@changed = true
-		end
-
-
-		def [](*n)
-			@changed = true
-			super(*n)
-		end
-
-	end
-
-
-	# Mixin for Individuals, they have to implement fitness function
-
-	module Individual
-		include Comparable
-
-		def <=>(anOther)
-			fitness <=> anOther.fitness
-		end
-
-
-		def to_s
-			"Individual (fitness=" + fitness.to_s + ")"
-		end
+	module Recombinations
 
 	end
 

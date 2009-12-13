@@ -20,38 +20,41 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'population'
 
 module EvoSynth
 
-	module Selections
+	class Genome < Array
 
+		attr_accessor :changed
 
-		def Selections.select_best(population, count = 0)
-			population.sort!
-			population[0..count]
+		def initialize(*args)
+			super
+			@changed = true
 		end
 
 
-		def Selections.select_turnier(population, child_count = 1, enemies = 2)
-			child_population = Population.new()
-
-			child_count.times do
-				individual = population[rand(population.size)]
-
-				enemies.times do
-					enemy = population[rand(population.size)]
-					individual = enemy if enemy < individual
-				end
-
-				child_population.add(individual)
-			end
-
-			child_population.sort![0..child_count]
+		def [](*n)
+			@changed = true
+			super(*n)
 		end
 
+	end
+
+
+	# Mixin for Individuals, they have to implement fitness function
+
+	module Individual
+		include Comparable
+
+		def <=>(anOther)
+			fitness <=> anOther.fitness
+		end
+
+
+		def to_s
+			"Individual (fitness=" + fitness.to_s + ")"
+		end
 
 	end
 
 end
-

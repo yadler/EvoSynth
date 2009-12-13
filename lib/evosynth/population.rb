@@ -20,7 +20,6 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'individual'
 
 module EvoSynth
 

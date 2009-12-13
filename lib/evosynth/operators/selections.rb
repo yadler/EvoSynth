@@ -20,9 +20,37 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'evosynth/population'
-require 'evosynth/individual'
-require 'evosynth/operators/selections'
-require 'evosynth/util'
 
-# anthing that is needed to setup EvoSynth should be here!
+module EvoSynth
+
+	module Selections
+
+
+		def Selections.select_best(population, count = 0)
+			population.sort!
+			population[0..count]
+		end
+
+
+		def Selections.select_turnier(population, child_count = 1, enemies = 2)
+			child_population = Population.new()
+
+			child_count.times do
+				individual = population[rand(population.size)]
+
+				enemies.times do
+					enemy = population[rand(population.size)]
+					individual = enemy if enemy < individual
+				end
+
+				child_population.add(individual)
+			end
+
+			child_population.sort![0..child_count]
+		end
+
+
+	end
+
+end
+
