@@ -50,7 +50,7 @@ module EvoSynth
 
 
 		def add(individual)
-			@individuals + [individual]
+			@individuals << individual
 		end
 
 
