@@ -20,9 +20,34 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'population'
-require 'individual'
-require 'selections'
-require 'util'
+require 'test/unit'
+require 'evosynth'
 
-# anthing that is needed to setup EvoSynth should be here!
+
+class TestPopulation < Test::Unit::TestCase
+
+	def test_stupid
+		mda = EvoSynth::Util::MDArray.new(2, 3, 0)
+		puts mda
+		puts mda[1,2]
+	end
+
+	def test_constructor_nil
+		mda = EvoSynth::Util::MDArray.new(1,1)
+		assert_nil(mda[0,0])
+	end
+
+	def test_index_error
+		mda = EvoSynth::Util::MDArray.new(1,2)
+		assert_raise(IndexError) {mda[2,1]} # raise row error
+		assert_raise(IndexError) {mda[0,2]} # raise col error
+	end
+
+	def test_assign
+		mda = EvoSynth::Util::MDArray.new(1,1)
+		assert_nil(mda[0,0])
+		mda[0,0] = "foo"
+		assert_equal(mda[0,0], "foo")
+	end
+
+end

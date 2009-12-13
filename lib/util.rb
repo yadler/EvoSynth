@@ -20,9 +20,51 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'population'
-require 'individual'
-require 'selections'
-require 'util'
+module EvoSynth
 
-# anthing that is needed to setup EvoSynth should be here!
+	module Util
+
+		# Simple multidimensional Array
+
+		class MDArray
+
+			def initialize(rows, columns, initial_data = nil)
+				@row_count = rows
+				@col_count = columns
+				@data = Array.new(@row_count * @col_count, initial_data)
+			end
+
+			def [](row, col)
+				if row >= @row_count || col >= @col_count
+					raise IndexError
+				end
+
+				@data[row * @col_count + col]
+			end
+
+			def []=(row, col, data)
+				if row >= @row_count || col >= @col_count
+					raise IndexError
+				end
+
+				@data[row * @col_count + col] = data
+			end
+
+			def to_s
+				@data.to_s
+			end
+
+		end
+
+	end
+
+
+	private
+
+
+	#FIXME: there should be a better way to clone a object!
+	def EvoSynth.deep_copy( object )
+		Marshal.load( Marshal.dump( object ) )
+	end
+
+end
