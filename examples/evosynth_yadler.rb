@@ -38,22 +38,10 @@ module GraphColouring
 			end
 		end
 
-
-		# creates empty 2-dimensional array filled with 0's
-		def create_empty_matrix
-			@matrix = Array.new(@node_count)
-
-			@matrix.each_index do |x|
-				@matrix[x] = Array.new(@node_count)
-				@matrix[x].each_index { |y| @matrix[x][y] =  0 }
-			end
-		end
-
-
 		# reads a graph file
 		def read_file(file_name)
 			@node_count = count_nodes(file_name)
-			create_empty_matrix
+			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
 
 			File.open(file_name) do |file|
 				file.each_line do |line|
@@ -62,7 +50,7 @@ module GraphColouring
 
 					#match the begin and end node of that edge
 					line =~ /(\d+)\s*(\d+)/
-					@matrix[Integer($1)-1][Integer($2)-1] = 1
+					@matrix[Integer($1)-1, Integer($2)-1] = 1
 				end
 			end
 		end
