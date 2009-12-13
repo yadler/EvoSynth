@@ -25,15 +25,24 @@ module EvoSynth
 
 	module Strategies
 
+		#FIXME
 		class SteadyStateGA
 
 			def initialize(population)
 				@population = population
+				@parents_size
+				@recombination_probability = 0.1
 			end
 
 			def run(generations)
 				generations.times do |generation|
-#						rand
+					parents = EvoSynth::Selections.fitness_proportional_selection(@population, 2)
+
+					if rand < @recombination_probability
+						c = EvoSynth::Recombinations.one_point_crossover(parents[0], parents[1])
+					else
+						c = parents[1]
+					end
 				end
 			end
 
