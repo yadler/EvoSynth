@@ -30,7 +30,7 @@ module GraphColouring
 
 		# reads the node count from grapg-file
 
-		def count_nodes(file_name)
+		def get_node_count(file_name)
 			File.open(file_name) do |file|
 				file.each_line do |line|
 					next if line !~ /^p\D*(\d+)/
@@ -42,7 +42,7 @@ module GraphColouring
 		# reads a graph file
 
 		def read_file(file_name)
-			@node_count = count_nodes(file_name)
+			@node_count = get_node_count(file_name)
 			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
 
 			File.open(file_name) do |file|
