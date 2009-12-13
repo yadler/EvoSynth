@@ -59,27 +59,22 @@ module GraphColouring
 	class ColouringIndividual
 		include EvoSynth::Individual
 
-
 		def initialize(graph)
 			@graph = graph
 			@genome = EvoSynth::Genome.new(graph.node_count)
 		end
 
-
 		def verletzungen
-			if @genome.changed
-				@verletzungen = 0
+			verletzungen = 0
 
-				@graph.matrix.each do |row, col|
-					if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
-							@verletzungen += 1
-						end
-				end
+			@graph.matrix.each do |row, col|
+				if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
+						verletzungen += 1
+					end
 			end
 
-			return @verletzungen
+			return verletzungen
 		end
-
 
 		def fitness
 			if @genome.changed
