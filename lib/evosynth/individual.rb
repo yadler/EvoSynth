@@ -41,13 +41,31 @@ module EvoSynth
 	end
 
 
-	# Mixin for Individuals, they have to implement fitness function
+	# Mixin for Individuals (for minimizing Problems)
+	# they have to implement fitness function
 
-	module Individual
+	module MinimizingIndividual
 		include Comparable
 
 		def <=>(anOther)
 			fitness <=> anOther.fitness
+		end
+
+		def to_s
+			"Individual (fitness=" + fitness.to_s + ")"
+		end
+
+	end
+
+	# Mixin for Individuals (for maximizing Problems)
+	# they have to implement fitness function
+
+	module MaximizingIndividual
+		include Comparable
+
+		def <=>(anOther)
+			cmp = fitness <=> anOther.fitness
+			-1 * cmp
 		end
 
 		def to_s

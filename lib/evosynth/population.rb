@@ -60,14 +60,14 @@ module EvoSynth
 
 
 		def best(count = 1)
-			@individuals.sort! { |a,b| a.fitness <=> b.fitness }
+			@individuals.sort!
 			@individuals.first(count)
 		end
 
 
-		def worst
-			@individuals.sort! { |a,b| a.fitness <=> b.fitness }
-			@individuals.last
+		def worst(count = 1)
+			@individuals.sort!
+			@individuals.last(count)
 		end
 
 

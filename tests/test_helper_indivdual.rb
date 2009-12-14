@@ -20,23 +20,30 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'test/unit'
 require 'evosynth'
-require 'tests/test_helper_indivdual'
 
-# FIXME find good test case
 
-class TestFPSelection < Test::Unit::TestCase
+class TestIndividual
+	def initialize(fitness = 0.0)
+		@fitness = fitness
+	end
 
-	def test_selection_weicker
-		pop = EvoSynth::Population.new()
-		pop.add(TestMinimizingIndividual.new(1))
-		pop.add(TestMinimizingIndividual.new(2))
-		pop.add(TestMinimizingIndividual.new(3))
-		pop.add(TestMinimizingIndividual.new(4))
-		pop.add(TestMinimizingIndividual.new(20))
+	def fitness
+		@fitness
+	end
 
-		result = EvoSynth::Selections.fitness_proportional_selection(pop, 20)
-		result.sort!
+	def to_s
+		@fitness
 	end
 end
+
+
+class TestMinimizingIndividual < TestIndividual
+	include EvoSynth::MinimizingIndividual
+end
+
+
+class TestMaximizingIndividual < TestIndividual
+	include EvoSynth::MaximizingIndividual
+end
+

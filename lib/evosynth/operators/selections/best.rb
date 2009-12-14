@@ -25,11 +25,9 @@ module EvoSynth
 
 	module Selections
 
-		# FIXME function is not able to maximize
-
 		def Selections.select_best(population, count = 0)
-			best = population.best(count)
 			selected_population = Population.new()
+			best = population.best(count)
 			best.each { |individual| selected_population.add(individual) }
 			selected_population
 		end

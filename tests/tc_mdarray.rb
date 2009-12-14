@@ -26,11 +26,6 @@ require 'evosynth'
 
 class TestMDArray < Test::Unit::TestCase
 
-	def test_to_s
-		mda = EvoSynth::Util::MDArray.new(2, 3, 0)
-#		puts mda
-	end
-
 	def test_constructor_nil
 		mda = EvoSynth::Util::MDArray.new(1,1)
 		assert_nil(mda[0,0])
@@ -55,4 +50,5 @@ class TestMDArray < Test::Unit::TestCase
 			assert_equal(mda[row,col], 0)
 		end
 	end
+
 end

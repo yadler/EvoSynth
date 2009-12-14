@@ -57,7 +57,7 @@ module GraphColouring
 	end
 
 	class ColouringIndividual
-		include EvoSynth::Individual
+		include EvoSynth::MinimizingIndividual
 
 		def initialize(graph)
 			@graph = graph

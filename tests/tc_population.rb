@@ -21,33 +21,69 @@
 # License::   LGPLv3
 
 require 'test/unit'
-require 'evosynth'
-
-
-class TestIndividual
-	include EvoSynth::Individual
-
-	def initialize
-	end
-
-	def fitness
-		0.0
-	end
-end
+require 'tests/test_helper_indivdual'
 
 
 class TestPopulation < Test::Unit::TestCase
 
-	def test_stupid
-		p = EvoSynth::Population.new(10) { TestIndividual.new }
-# 		assert_equal(p.to_s, "Population (size=10, individuals=[nil, nil, nil, nil, nil, nil, nil, nil, nil, nil])", "to_s failed")
-#		assert_nil(p.best, "foo")
-		puts "to_s = " +  p.to_s
-		puts "best = " +  p.best.to_s
-		puts "worst = " +  p.worst.to_s
-		puts "first = " + p[0].to_s
-		puts "last = " + p[p.size - 1].to_s
-		p.sort!
+	def test_min
+		pop = EvoSynth::Population.new()
+		t1 = TestMinimizingIndividual.new(1)
+		t2 = TestMinimizingIndividual.new(2)
+		t3 = TestMinimizingIndividual.new(3)
+		pop.add(t3)
+		pop.add(t1)
+		pop.add(t2)
+		pop.sort!
+
+		expected = EvoSynth::Population.new()
+		expected.add(t1)
+		expected.add(t2)
+		expected.add(t3)
+
+		assert_equal(expected, pop)
+	end
+
+	def test_max
+		pop = EvoSynth::Population.new()
+		t1 = TestMaximizingIndividual.new(1)
+		t2 = TestMaximizingIndividual.new(2)
+		t3 = TestMaximizingIndividual.new(3)
+		pop.add(t3)
+		pop.add(t1)
+		pop.add(t2)
+		pop.sort!
+
+		expected = EvoSynth::Population.new()
+		expected.add(t3)
+		expected.add(t2)
+		expected.add(t1)
+
+		assert_equal(expected, pop)
+	end
+
+	def test_best_worst_min
+		p = EvoSynth::Population.new(10) { TestMinimizingIndividual.new(1) }
+		min = TestMinimizingIndividual.new(0)
+		max = TestMinimizingIndividual.new(2)
+		p.add(min)
+		p.add(max)
+		assert_equal(12, p.size)
+		
+		assert_equal([min], p.best)
+		assert_equal([max], p.worst)
+	end
+
+	def test_best_worst_max
+		p = EvoSynth::Population.new(10) { TestMaximizingIndividual.new(1) }
+		min = TestMaximizingIndividual.new(0)
+		max = TestMaximizingIndividual.new(2)
+		p.add(min)
+		p.add(max)
+		assert_equal(12, p.size)
+
+		assert_equal([max], p.best)
+		assert_equal([min], p.worst)
 	end
 
 	def test_no_block
@@ -55,8 +91,8 @@ class TestPopulation < Test::Unit::TestCase
 		assert_nil(p[0])
 	end
 
-	def test_klammern
-		p = EvoSynth::Population.new(2) { TestIndividual.new }
+	def test_braces
+		p = EvoSynth::Population.new(2) { TestMinimizingIndividual.new }
 		p[0] = "foo"
 		assert_equal(p[0], "foo", "klammer kaputt")
 		p[0] = "bar"
@@ -66,9 +102,9 @@ class TestPopulation < Test::Unit::TestCase
 	end
 
 	def test_size
-		p = EvoSynth::Population.new(0) { TestIndividual.new }
+		p = EvoSynth::Population.new(0) { TestMinimizingIndividual.new }
 		assert_equal(p.size, 0, "Population should be of size 0")
-		p = EvoSynth::Population.new(100) { TestIndividual.new }
+		p = EvoSynth::Population.new(100) { TestMinimizingIndividual.new }
 		assert_equal(p.size, 100, "Population should be of size 0")
 	end
 end

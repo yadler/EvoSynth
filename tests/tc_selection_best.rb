@@ -25,8 +25,6 @@ require 'evosynth'
 
 
 class TestIndividual
-	include EvoSynth::Individual
-
 	def initialize(fitness = 0.0)
 		@fitness = fitness
 	end
@@ -41,25 +39,55 @@ class TestIndividual
 end
 
 
+class TestMinimizingIndividual < TestIndividual
+	include EvoSynth::MinimizingIndividual
+end
+
+
+class TestMaximizingIndividual < TestIndividual
+	include EvoSynth::MaximizingIndividual
+end
+
+
 class TestBestSelection < Test::Unit::TestCase
 
-	def test_simple
+	def test_min
 		pop = EvoSynth::Population.new()
-		t1 = TestIndividual.new(1)
-		t2 = TestIndividual.new(2)
-		t3 = TestIndividual.new(3)
-		t4 = TestIndividual.new(5)
-		t5 = TestIndividual.new(20)
+		t1 = TestMinimizingIndividual.new(1)
+		t2 = TestMinimizingIndividual.new(2)
+		t3 = TestMinimizingIndividual.new(3)
+		t4 = TestMinimizingIndividual.new(5)
+		t5 = TestMinimizingIndividual.new(20)
 		pop.add(t1)
 		pop.add(t2)
 		pop.add(t3)
 		pop.add(t4)
 		pop.add(t5)
 
-		should_be = EvoSynth::Population.new()
-		should_be.add(t1)
-		should_be.add(t2)
+		expected = EvoSynth::Population.new()
+		expected.add(t1)
+		expected.add(t2)
 		result = EvoSynth::Selections.select_best(pop, 2)
-		assert_equal(result, should_be)
+		assert_equal(expected, result)
+	end
+
+	def test_max
+		pop = EvoSynth::Population.new()
+		t1 = TestMaximizingIndividual.new(1)
+		t2 = TestMaximizingIndividual.new(2)
+		t3 = TestMaximizingIndividual.new(3)
+		t4 = TestMaximizingIndividual.new(5)
+		t5 = TestMaximizingIndividual.new(20)
+		pop.add(t1)
+		pop.add(t2)
+		pop.add(t3)
+		pop.add(t4)
+		pop.add(t5)
+
+		expected = EvoSynth::Population.new()
+		expected.add(t5)
+		expected.add(t4)
+		result = EvoSynth::Selections.select_best(pop, 2)
+		assert_equal(expected, result)
 	end
 end
