@@ -20,32 +20,30 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-module EvoSynth
+require 'test/unit'
+require 'evosynth'
+require 'tests/test_helper_indivdual'
 
-	module Selections
 
-		def Selections.tournament(population, select_count = 1, enemies = 2)
-			scores = []
+class TestBestSelection < Test::Unit::TestCase
 
-			population.each do |individual|
-				victories = 0
+	def test_one
+		pop = EvoSynth::Population.new()
+		t1 = TestMinimizingIndividual.new(13)
+		t2 = TestMinimizingIndividual.new(12)
+		t3 = TestMinimizingIndividual.new(11)
+		t4 = TestMinimizingIndividual.new(10)
+		t5 = TestMinimizingIndividual.new(0)
+		pop.add(t1)
+		pop.add(t2)
+		pop.add(t3)
+		pop.add(t4)
+		pop.add(t5)
 
-				enemies.times do
-					enemy = population[rand(population.size)]
-					victories += 1 if individual > enemy
-				end
-
-				scores << [victories, individual]
-			end
-
-			selected = Population.new()
-			scores.sort! { |a, b| a[0] <=> b[0] }
-			scores.reverse!
-			scores.first(select_count).each { |winner| selected.add(winner[1]) }
-			selected
-		end
-
+		expected = EvoSynth::Population.new()
+		expected.add(t5)
+		result = EvoSynth::Selections.tournament(pop)
+		assert_equal(expected, result)
 	end
 
 end
-
