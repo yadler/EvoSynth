@@ -25,10 +25,11 @@ require 'evosynth'
 
 class TestIndividual
 	def initialize(fitness = 0.0)
+		@genome = EvoSynth::Genome.new
 		@fitness = fitness
 	end
 
-	def fitness
+	def calculate_fitness
 		@fitness
 	end
 

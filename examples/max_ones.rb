@@ -20,74 +20,30 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'evosynth'
 
-module EvoSynth
+module MaxOnes
+	class BinaryIndividual
+		include EvoSynth::MaximizingIndividual
 
-	class Genome < Array
-
-		attr_accessor :changed
-
-		def initialize(*args)
-			super
-			@changed = true
-		end
-
-
-		def [](*n)
-			@changed = true
-			super(*n)
-		end
-
-	end
-
-
-	module Individual
-
-		attr_accessor :genome
-
-		def to_s
-			"Individual (fitness=" + fitness.to_s + ")"
+		def initialize(genome_size)
+			@genome = EvoSynth::Genome.new(genome_size)
+			@genome.collect! { |gene| rand(2) > 0 ? true : false}
 		end
 
 		def fitness
-			if genome.changed
-				@fitness = calculate_fitness
-			end
-
+			@fitness = 0
+			@genome.each { |gene| @fitness += 1 if gene }
 			@fitness
 		end
 
-		def deep_clone
-			my_clone = self.clone
-			my_clone.genome = self.genome.clone
-			my_clone
+		def to_s
+			@fitness.to_s + " - " + @genome.to_s
 		end
 	end
-
-
-	# Mixin for Individuals (for minimizing Problems)
-
-	module MinimizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			cmp = fitness <=> anOther.fitness
-			-1 * cmp
-		end
-
-	end
-
-	# Mixin for Individuals (for maximizing Problems)
-
-	module MaximizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			fitness <=> anOther.fitness
-		end
-
-	end
-
 end
+
+individual = MaxOnes::BinaryIndividual.new(10)
+hillclimber = EvoSynth::Strategies::Hillclimber.new(individual)
+result = hillclimber.run(10)
+puts result

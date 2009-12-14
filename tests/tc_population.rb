@@ -34,14 +34,11 @@ class TestPopulation < Test::Unit::TestCase
 		pop.add(t3)
 		pop.add(t1)
 		pop.add(t2)
-		pop.sort!
 
-		expected = EvoSynth::Population.new()
-		expected.add(t1)
-		expected.add(t2)
-		expected.add(t3)
+		expected = []
+		expected << t1 << t2 << t3
 
-		assert_equal(expected, pop)
+		assert_equal(expected, pop.best(3))
 	end
 
 	def test_max
@@ -52,14 +49,11 @@ class TestPopulation < Test::Unit::TestCase
 		pop.add(t3)
 		pop.add(t1)
 		pop.add(t2)
-		pop.sort!
 
-		expected = EvoSynth::Population.new()
-		expected.add(t3)
-		expected.add(t2)
-		expected.add(t1)
+		expected = []
+		expected << t3 << t2 << t1
 
-		assert_equal(expected, pop)
+		assert_equal(expected, pop.best(3))
 	end
 
 	def test_best_worst_min

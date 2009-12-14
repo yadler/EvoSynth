@@ -20,9 +20,11 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'evosynth/population'
-require 'evosynth/individual'
-require 'evosynth/operators/selections'
 require 'evosynth/util'
+require 'evosynth/individual'
+require 'evosynth/population'
+require 'evosynth/operators/selections'
+require 'evosynth/operators/mutations'
+require 'evosynth/strategies'
 
 # anthing that is needed to setup EvoSynth should be here!

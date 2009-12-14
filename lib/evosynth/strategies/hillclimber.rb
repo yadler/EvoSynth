@@ -22,72 +22,24 @@
 
 
 module EvoSynth
+	module Strategies
 
-	class Genome < Array
+		class Hillclimber
 
-		attr_accessor :changed
-
-		def initialize(*args)
-			super
-			@changed = true
-		end
-
-
-		def [](*n)
-			@changed = true
-			super(*n)
-		end
-
-	end
-
-
-	module Individual
-
-		attr_accessor :genome
-
-		def to_s
-			"Individual (fitness=" + fitness.to_s + ")"
-		end
-
-		def fitness
-			if genome.changed
-				@fitness = calculate_fitness
+			def initialize(individual)
+				@individual = individual
 			end
 
-			@fitness
-		end
+			def run(generations)
+				generations.times do |generation|
+					child = EvoSynth::Mutations.one_bit_flipping(@individual)
+					@individual = child if child > @individual
+				end
 
-		def deep_clone
-			my_clone = self.clone
-			my_clone.genome = self.genome.clone
-			my_clone
-		end
-	end
+				@individual
+			end
 
-
-	# Mixin for Individuals (for minimizing Problems)
-
-	module MinimizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			cmp = fitness <=> anOther.fitness
-			-1 * cmp
 		end
 
 	end
-
-	# Mixin for Individuals (for maximizing Problems)
-
-	module MaximizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			fitness <=> anOther.fitness
-		end
-
-	end
-
 end

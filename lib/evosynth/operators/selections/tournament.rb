@@ -38,7 +38,7 @@ module EvoSynth
 				selected_population.add(individual)
 			end
 
-			selected_population.sort![0..select_count]
+			selected_population.best(select_count)
 		end
 
 	end

@@ -49,11 +49,6 @@ module EvoSynth
         end
 
 
-		def sort!(*args)
-			@individuals = @individuals.sort!(*args)
-		end
-
-
 		def add(individual)
 			@individuals << individual
 		end
@@ -61,13 +56,13 @@ module EvoSynth
 
 		def best(count = 1)
 			@individuals.sort!
-			@individuals.first(count)
+			@individuals.last(count).reverse
 		end
 
 
 		def worst(count = 1)
 			@individuals.sort!
-			@individuals.last(count)
+			@individuals.first(count).reverse
 		end
 
 

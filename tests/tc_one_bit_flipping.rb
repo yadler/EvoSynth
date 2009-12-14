@@ -22,20 +22,46 @@
 
 require 'test/unit'
 require 'evosynth'
-require 'tests/test_helper_indivdual'
 
-# FIXME find good test case
+class TestBinaryIndividual
+	include EvoSynth::MinimizingIndividual
 
-class TestFPSelection < Test::Unit::TestCase
-
-	def test_selection_weicker
-		pop = EvoSynth::Population.new()
-		pop.add(TestMinimizingIndividual.new(1))
-		pop.add(TestMinimizingIndividual.new(2))
-		pop.add(TestMinimizingIndividual.new(3))
-		pop.add(TestMinimizingIndividual.new(4))
-		pop.add(TestMinimizingIndividual.new(20))
-
-		result = EvoSynth::Selections.fitness_proportional_selection(pop, 20)
+	def initialize(genome_size)
+		@genome = EvoSynth::Genome.new(genome_size)
 	end
+
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		@fitness.to_s + " - " + @genome.to_s
+	end
+end
+
+
+class TestOneBitFlipping < Test::Unit::TestCase
+
+	def test_boolean_individual
+		individual = TestBinaryIndividual.new(10)
+		assert_equal(10, individual.genome.size)
+		individual.genome.collect! { |gene| true }
+		individual.genome.each { |gene| assert_equal(true, gene) }
+	end
+
+	def test_boolean_flipping
+		individual = TestBinaryIndividual.new(1)
+		individual.genome.collect! { |gene| true }
+
+		assert_equal(true, individual.genome[0])
+		mutated = EvoSynth::Mutations.one_bit_flipping(individual)
+		assert_equal(false, mutated.genome[0])
+		assert_equal(true, individual.genome[0])
+
+		mutated2 = EvoSynth::Mutations.one_bit_flipping(mutated)
+		assert_equal(false, mutated.genome[0])
+		assert_equal(true, mutated2.genome[0])
+		assert_equal(true, individual.genome[0])
+	end
+
 end
