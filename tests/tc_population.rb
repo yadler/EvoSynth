@@ -26,6 +26,13 @@ require 'tests/test_helper_indivdual'
 
 class TestPopulation < Test::Unit::TestCase
 
+	def test_map!
+		pop = EvoSynth::Population.new()
+		pop.add(TestMinimizingIndividual.new(1))
+		pop.map! { |i| i.fitness = 2; i}
+		assert_equal(2, pop[0].fitness)
+	end
+
 	def test_min
 		pop = EvoSynth::Population.new()
 		t1 = TestMinimizingIndividual.new(1)
@@ -64,8 +71,8 @@ class TestPopulation < Test::Unit::TestCase
 		p.add(max)
 		assert_equal(12, p.size)
 		
-		assert_equal([min], p.best)
-		assert_equal([max], p.worst)
+		assert_equal(min, p.best)
+		assert_equal(max, p.worst)
 	end
 
 	def test_best_worst_max
@@ -76,8 +83,8 @@ class TestPopulation < Test::Unit::TestCase
 		p.add(max)
 		assert_equal(12, p.size)
 
-		assert_equal([max], p.best)
-		assert_equal([min], p.worst)
+		assert_equal(max, p.best)
+		assert_equal(min, p.worst)
 	end
 
 	def test_no_block

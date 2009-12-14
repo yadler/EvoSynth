@@ -22,31 +22,7 @@
 
 require 'test/unit'
 require 'evosynth'
-
-
-class TestIndividual
-	def initialize(fitness = 0.0)
-		@fitness = fitness
-	end
-
-	def fitness
-		@fitness
-	end
-
-	def to_s
-		@fitness
-	end
-end
-
-
-class TestMinimizingIndividual < TestIndividual
-	include EvoSynth::MinimizingIndividual
-end
-
-
-class TestMaximizingIndividual < TestIndividual
-	include EvoSynth::MaximizingIndividual
-end
+require 'tests/test_helper_indivdual'
 
 
 class TestBestSelection < Test::Unit::TestCase

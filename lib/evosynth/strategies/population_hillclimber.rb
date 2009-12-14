@@ -20,39 +20,28 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'evosynth'
 
-module MaxOnes
-	class BinaryIndividual
-		include EvoSynth::MaximizingIndividual
+module EvoSynth
+	module Strategies
 
-		def initialize(genome_size)
-			@genome = EvoSynth::Genome.new(genome_size)
-			@genome.collect! { |gene| rand(2) > 0 ? true : false}
+		class PopulationHillclimber
+
+			def initialize(population)
+				@population = population
+			end
+
+			def run(generations)
+				generations.times do |generation|
+					@population.map! do |individual|
+						child = EvoSynth::Mutations.one_gene_flipping(individual)
+						individual = child > individual ? child : individual
+					end
+				end
+
+				@population
+			end
+
 		end
 
-		def fitness
-			@fitness = 0
-			@genome.each { |gene| @fitness += 1 if gene }
-			@fitness
-		end
-	end
-
-	def MaxOnes.use_hillclimber
-		individual = MaxOnes::BinaryIndividual.new(10)
-		hillclimber = EvoSynth::Strategies::Hillclimber.new(individual)
-		result = hillclimber.run(100)
-		puts "Hillclimber:\n"+ result.to_s
-	end
-
-	def MaxOnes.use_population_hillclimber
-		population = EvoSynth::Population.new(10) { MaxOnes::BinaryIndividual.new(10) }
-		hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
-		result = hillclimber.run(10)
-		puts "PopulationHillclimber\nbest: " + result.best.to_s
-		puts "worst: " + result.worst.to_s
 	end
 end
-
-MaxOnes.use_hillclimber
-MaxOnes.use_population_hillclimber

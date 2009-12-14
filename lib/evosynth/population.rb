@@ -49,6 +49,11 @@ module EvoSynth
         end
 
 
+		def map!
+			@individuals.map! { |individual| yield individual }
+		end
+
+
 		def add(individual)
 			@individuals << individual
 		end
@@ -56,13 +61,13 @@ module EvoSynth
 
 		def best(count = 1)
 			@individuals.sort!
-			@individuals.last(count).reverse
+			count == 1 ? @individuals.last : @individuals.last(count).reverse
 		end
 
 
 		def worst(count = 1)
 			@individuals.sort!
-			@individuals.first(count).reverse
+			count == 1 ? @individuals.first : @individuals.first(count).reverse
 		end
 
 

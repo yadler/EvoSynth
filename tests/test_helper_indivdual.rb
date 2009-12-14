@@ -24,6 +24,8 @@ require 'evosynth'
 
 
 class TestIndividual
+	attr_accessor :fitness
+
 	def initialize(fitness = 0.0)
 		@genome = EvoSynth::Genome.new
 		@fitness = fitness

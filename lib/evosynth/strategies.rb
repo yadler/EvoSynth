@@ -22,3 +22,4 @@
 
 
 require 'evosynth/strategies/hillclimber'
+require 'evosynth/strategies/population_hillclimber'
