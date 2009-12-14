@@ -37,7 +37,7 @@ module EvoSynth
 
 		def Mutations.binary_mutation(individual, probability)
 			mutated = individual.deep_clone
-			mutated.genome.collect! { |gene| rand < probability ? !gene : gene }
+			mutated.genome.collect! { |gene| rand <= probability ? !gene : gene }
 			mutated
 		end
 
