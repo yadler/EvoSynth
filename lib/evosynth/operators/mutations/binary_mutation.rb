@@ -21,5 +21,26 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
+module EvoSynth
+
+	module Mutations
+
+
+		# This mutations flips (inverts) each gene in the genome of a given individual
+		# with a give probability  and returns this mutated individual. It does not
+		# change the given individual
+		#
+		# To use this mutation each gene of the genome has to support the "!"
+		# function as negation/inverse of its value
+		#
+		# The given individual has to provide a deep_clone method
+
+		def Mutations.binary_mutation(individual, probability)
+			mutated = individual.deep_clone
+			mutated.genome.collect! { |gene| rand < probability ? !gene : gene }
+			mutated
+		end
+
+	end
+
+end

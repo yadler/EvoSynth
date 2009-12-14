@@ -20,6 +20,40 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'test/unit'
+require 'evosynth'
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
+class TestBinaryIndividual
+	include EvoSynth::MinimizingIndividual
+
+	def initialize(genome_size)
+		@genome = EvoSynth::Genome.new(genome_size)
+	end
+
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		@fitness.to_s + " - " + @genome.to_s
+	end
+end
+
+
+class TestOneGeneFlipping < Test::Unit::TestCase
+
+	def test_boolean_flipping
+		individual = TestBinaryIndividual.new(100)
+		individual.genome.collect! { |gene| true }
+		individual.genome.each { |gene| assert_equal(true, gene) }
+
+		count = 0
+		100.times do
+			mutated = EvoSynth::Mutations.binary_mutation(individual, 0.1)
+			mutated.genome.each { |gene| count += 1 if !gene }
+		end
+
+		assert_in_delta(10, Float(count) / 100, 0.5)
+	end
+
+end
