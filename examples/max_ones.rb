@@ -36,14 +36,10 @@ module MaxOnes
 			@genome.each { |gene| @fitness += 1 if gene }
 			@fitness
 		end
-
-		def to_s
-			@fitness.to_s + " - " + @genome.to_s
-		end
 	end
 end
 
 individual = MaxOnes::BinaryIndividual.new(10)
 hillclimber = EvoSynth::Strategies::Hillclimber.new(individual)
-result = hillclimber.run(10)
+result = hillclimber.run(100)
 puts result

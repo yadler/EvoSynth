@@ -46,7 +46,7 @@ module EvoSynth
 		attr_accessor :genome
 
 		def to_s
-			"Individual (fitness=" + fitness.to_s + ")"
+			"fitness = " + fitness.to_s + ", genome = " + genome.to_s + ")"
 		end
 
 		def fitness
