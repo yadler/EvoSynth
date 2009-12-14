@@ -32,8 +32,13 @@ module GraphColouring
 		attr_reader :node_count
 		attr_reader :matrix
 
-		# reads the node count from grapg-file
+		def initialize(filename)
+			read_file(filename)
+		end
+		
+		private
 
+		# reads the node count from grapg-file
 		def get_node_count(file_name)
 			File.open(file_name) do |file|
 				file.each_line do |line|
@@ -44,7 +49,6 @@ module GraphColouring
 		end
 
 		# reads a graph file
-
 		def read_file(file_name)
 			@node_count = get_node_count(file_name)
 			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
@@ -77,12 +81,14 @@ module GraphColouring
 			randomize_genome
 		end
 
+		private
+
 		def randomize_genome
 			max_color = rand(@genome.size > MAX_COLORS ? MAX_COLORS : @genome.size) + 1
 			@genome.map! { |gene| ColorGene.new(rand(max_color))}
 			@genome.map! { |gene| ColorGene.new(gene % get_uniq.size) }
 		end
-
+		
 		# workaround because of the rather ugly behaviour of rubys arr.uniq
 		def get_uniq
 			unique_colors = Array.new()
@@ -101,9 +107,7 @@ module GraphColouring
 		end
 
 		def calculate_fitness
-			fitness = 0.0
-			fitness += get_uniq.size
-			fitness *= (verletzungen + 1)
+			fitness = 0.0 + get_uniq.size * (verletzungen + 1)
 			fitness
 		end
 
@@ -115,16 +119,11 @@ module GraphColouring
 
 end
 
-# Simple testing...
 
-# setup problem
-filename = "tests/testdata/graph_colouring/myciel4.col"
-graph = GraphColouring::Graph.new
-graph.read_file(filename)
-
-# intialize population
-pop = EvoSynth::Population.new(25) { GraphColouring::ColouringIndividual.new(graph) }
+graph = GraphColouring::Graph.new("tests/testdata/graph_colouring/myciel3.col")
+pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
+
 result = hillclimber.run(1000)
 puts "PopulationHillclimber\nbest: " + result.best.to_s
 puts "worst: " + result.worst.to_s
