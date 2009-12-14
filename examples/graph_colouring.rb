@@ -21,8 +21,12 @@
 # License::   LGPLv3
 
 require 'evosynth'
+require 'delegate'
+
 
 module GraphColouring
+	MUTATION_RATE = 5
+	MAX_COLORS = 10
 
 	class Graph
 		attr_reader :node_count
@@ -56,43 +60,57 @@ module GraphColouring
 
 	end
 
+
+	class ColorGene < DelegateClass(Fixnum)
+		def !
+			ColorGene.new(rand(self + 1))
+		end
+	end
+
+
 	class ColouringIndividual
 		include EvoSynth::MinimizingIndividual
 
 		def initialize(graph)
 			@graph = graph
 			@genome = EvoSynth::Genome.new(graph.node_count)
+			randomize_genome
+		end
+
+		def randomize_genome
+			max_color = rand(@genome.size > MAX_COLORS ? MAX_COLORS : @genome.size) + 1
+			@genome.map! { |gene| ColorGene.new(rand(max_color))}
+			@genome.map! { |gene| ColorGene.new(gene % get_uniq.size) }
+		end
+
+		# workaround because of the rather ugly behaviour of rubys arr.uniq
+		def get_uniq
+			unique_colors = Array.new()
+			@genome.each { |gene| unique_colors << gene if !unique_colors.include?(gene)}
+			unique_colors
 		end
 
 		def verletzungen
 			verletzungen = 0
-
 			@graph.matrix.each do |row, col|
 				if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
-						verletzungen += 1
-					end
+					verletzungen += 1
+				end
 			end
-
-			return verletzungen
+			verletzungen
 		end
 
-		def fitness
-			if @genome.changed
-				@fitness = 0.0
-				@fitness += @genome.uniq.size
-				@fitness *= (verletzungen + 1)
-				@genome.changed = false
-			end
-
-			return @fitness
+		def calculate_fitness
+			fitness = 0.0
+			fitness += get_uniq.size
+			fitness *= (verletzungen + 1)
+			fitness
 		end
 
 	end
 
-	def another_mutation(individual)
-		individual.genome.each_index do |index|
-			individual.genome[index] = rand(individual.genome[index] + 1) if (rand(100) < MUTATION_RATE)
-		end
+	def GraphColouring.another_mutation(individual)
+		individual.genome.map! { |gene| rand(individual.genome[index] + 1) if rand(100) >= MUTATION_RATE }
 	end
 
 end
@@ -100,12 +118,13 @@ end
 # Simple testing...
 
 # setup problem
-filename = "tests/testdata/graph_colouring/myciel5.col"
+filename = "tests/testdata/graph_colouring/myciel4.col"
 graph = GraphColouring::Graph.new
 graph.read_file(filename)
 
 # intialize population
-pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
-
-puts pop
-puts pop[0]
+pop = EvoSynth::Population.new(25) { GraphColouring::ColouringIndividual.new(graph) }
+hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
+result = hillclimber.run(1000)
+puts "PopulationHillclimber\nbest: " + result.best.to_s
+puts "worst: " + result.worst.to_s

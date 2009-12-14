@@ -52,6 +52,7 @@ module EvoSynth
 		def fitness
 			if genome.changed
 				@fitness = calculate_fitness
+				@genome.changed = false
 			end
 
 			@fitness
