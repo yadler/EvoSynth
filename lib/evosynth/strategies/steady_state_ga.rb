@@ -25,7 +25,8 @@ module EvoSynth
 
 	module Strategies
 
-		#FIXME
+		#FIXME finish implementation some day
+
 		class SteadyStateGA
 
 			def initialize(population)

@@ -124,6 +124,6 @@ graph = GraphColouring::Graph.new("tests/testdata/graph_colouring/myciel3.col")
 pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
 
-result = hillclimber.run(1000)
+result = hillclimber.run(100)
 puts "PopulationHillclimber\nbest: " + result.best.to_s
 puts "worst: " + result.worst.to_s

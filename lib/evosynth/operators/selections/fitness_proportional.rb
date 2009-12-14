@@ -25,7 +25,7 @@ module EvoSynth
 
 	module Selections
 
-		# FIXME function is not able to minimize
+		# FIXME needs proper tests
 
 		def Selections.fitness_proportional_selection(population, select_count = 1)
 			selected_population = Population.new()

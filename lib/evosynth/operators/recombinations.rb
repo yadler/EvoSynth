@@ -26,12 +26,15 @@ module EvoSynth
 	module Recombinations
 		MUTATION_RATE = 5;
 
+		# FIXME implement me! ;)
+
 		def one_point_crossover(one, two)
 
 		end
 
 
-		#FIXME
+		# FIXME implement a proper two point crossover instead of this mess
+
 		def two_point_crossover(one, two)
 			start = rand(one.genome.size)
 			length = rand(one.genome.size - start)

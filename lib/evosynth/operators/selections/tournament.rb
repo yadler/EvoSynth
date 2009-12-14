@@ -24,6 +24,8 @@ module EvoSynth
 
 	module Selections
 
+		#FIXME: needs testcases and check if its correct (see weicker page 69)
+
 		def Selections.tournament(population, select_count = 1, enemies = 2)
 			selected_population = Population.new()
 
