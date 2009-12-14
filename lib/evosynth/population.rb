@@ -35,7 +35,7 @@ module EvoSynth
 
 		def initialize(size = 0)
 			@individuals = Genome.new(size)
-			@individuals.collect! { |individual| yield } if block_given?
+			@individuals.map! { |individual| yield } if block_given?
 		end
 
 

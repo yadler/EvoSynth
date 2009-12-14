@@ -45,13 +45,13 @@ class TestOneGeneFlipping < Test::Unit::TestCase
 	def test_boolean_individual
 		individual = TestBinaryIndividual.new(10)
 		assert_equal(10, individual.genome.size)
-		individual.genome.collect! { |gene| true }
+		individual.genome.map! { |gene| true }
 		individual.genome.each { |gene| assert_equal(true, gene) }
 	end
 
 	def test_boolean_flipping
 		individual = TestBinaryIndividual.new(1)
-		individual.genome.collect! { |gene| true }
+		individual.genome.map! { |gene| true }
 
 		assert_equal(true, individual.genome[0])
 		mutated = EvoSynth::Mutations.one_gene_flipping(individual)

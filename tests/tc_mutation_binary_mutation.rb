@@ -44,7 +44,7 @@ class TestOneGeneFlipping < Test::Unit::TestCase
 
 	def test_boolean_flipping
 		individual = TestBinaryIndividual.new(100)
-		individual.genome.collect! { |gene| true }
+		individual.genome.map! { |gene| true }
 		individual.genome.each { |gene| assert_equal(true, gene) }
 
 		count = 0

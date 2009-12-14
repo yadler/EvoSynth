@@ -28,7 +28,7 @@ module MaxOnes
 
 		def initialize(genome_size)
 			@genome = EvoSynth::Genome.new(genome_size)
-			@genome.collect! { |gene| rand(2) > 0 ? true : false}
+			@genome.map! { |gene| rand(2) > 0 ? true : false}
 		end
 
 		def fitness
