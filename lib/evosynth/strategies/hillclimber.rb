@@ -32,7 +32,7 @@ module EvoSynth
 
 			def run(generations)
 				generations.times do |generation|
-					child = EvoSynth::Mutations.one_bit_flipping(@individual)
+					child = EvoSynth::Mutations.one_gene_flipping(@individual)
 					@individual = child if child > @individual
 				end
 

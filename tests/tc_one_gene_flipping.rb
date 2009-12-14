@@ -40,7 +40,7 @@ class TestBinaryIndividual
 end
 
 
-class TestOneBitFlipping < Test::Unit::TestCase
+class TestOneGeneFlipping < Test::Unit::TestCase
 
 	def test_boolean_individual
 		individual = TestBinaryIndividual.new(10)
@@ -54,11 +54,11 @@ class TestOneBitFlipping < Test::Unit::TestCase
 		individual.genome.collect! { |gene| true }
 
 		assert_equal(true, individual.genome[0])
-		mutated = EvoSynth::Mutations.one_bit_flipping(individual)
+		mutated = EvoSynth::Mutations.one_gene_flipping(individual)
 		assert_equal(false, mutated.genome[0])
 		assert_equal(true, individual.genome[0])
 
-		mutated2 = EvoSynth::Mutations.one_bit_flipping(mutated)
+		mutated2 = EvoSynth::Mutations.one_gene_flipping(mutated)
 		assert_equal(false, mutated.genome[0])
 		assert_equal(true, mutated2.genome[0])
 		assert_equal(true, individual.genome[0])

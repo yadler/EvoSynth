@@ -21,4 +21,4 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_bit_flipping'
+require 'evosynth/operators/mutations/one_gene_flipping'
