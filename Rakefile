@@ -22,6 +22,7 @@
 
 require 'rake/gempackagetask'
 require 'rake/testtask'
+require 'spec/rake/spectask'
 
 PKG_NAME = "evosynth"
 PKG_VERSION = "0.1.0"
@@ -58,6 +59,12 @@ Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
 	test.test_files = FileList["tests/tc_*.rb"]
 	test.verbose = true
+end
+
+desc "Run the specs under spec"
+Spec::Rake::SpecTask.new do |t|
+#  t.spec_opts = ['--options', "spec/spec.opts"]
+  t.spec_files = FileList['spec/*_spec.rb']
 end
 
 desc "build latest gem package"
