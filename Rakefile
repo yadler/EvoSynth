@@ -20,31 +20,30 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'rubygems'
 require 'rake/gempackagetask'
 require 'rake/testtask'
 
-PKG_NAME = 'evosynth'
-PKG_VERSION = '0.1.0'
+PKG_NAME = "evosynth"
+PKG_VERSION = "0.1.0"
 
 package_specification = Gem::Specification.new do |spec|
 	spec.platform	= Gem::Platform::RUBY
 	spec.name		= PKG_NAME
 	spec.version	= PKG_VERSION
 
-	spec.summary	= 'EvoSynth is a framework for rapid prototyping of evolutionary and genetic algorithms'
-	spec.author		= 'Yves Adler'
-	spec.email		= 'yves.adler@googlemail.com'
+	spec.summary	= "EvoSynth is a framework for rapid prototyping of evolutionary and genetic algorithms"
+	spec.author		= "Yves Adler"
+	spec.email		= "yves.adler@googlemail.com"
 
-	files = FileList['**/*']
-	files.exclude '.git*'
-	files.exclude 'pkg/*'
+	files = FileList["**/*"]
+	files.exclude ".git*"
+	files.exclude "pkg/*"
 	spec.files			= files.to_a
 
-	spec.require_paths	<< 'lib'
+	spec.require_paths	<< "lib"
 
 	spec.has_rdoc			= true
-	spec.extra_rdoc_files	= ["README"]
+	spec.extra_rdoc_files	= ["COPYING"]
 end
 
 Rake::GemPackageTask.new(package_specification) do |pkg|
@@ -52,11 +51,22 @@ Rake::GemPackageTask.new(package_specification) do |pkg|
 	pkg.need_tar = true
 end
 
-lib_dir = File.expand_path('lib')
-test_dir = File.expand_path('tests')
+lib_dir = File.expand_path("lib")
+test_dir = File.expand_path("tests")
 
 Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
-	test.test_files = FileList['tests/tc_*.rb']
+	test.test_files = FileList["tests/tc_*.rb"]
 	test.verbose = true
+end
+
+desc "build latest gem package"
+task :package do
+	Rake::Task["pkg/#{PKG_NAME}-#{PKG_VERSION}.gem"].invoke
+end
+
+desc "print message"
+task :default do
+	puts "You have run rake without a task - please run"
+	puts "rake --tasks"
 end
