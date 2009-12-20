@@ -38,6 +38,9 @@ module EvoSynth
 			super(*n)
 		end
 
+		def to_s
+			self * ", "
+		end
 	end
 
 
