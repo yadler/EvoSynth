@@ -29,7 +29,7 @@ module EvoSynth
 		# This mutations flips (inverts) one gene in the genome of a given individual
 		# and returns this mutated individual. It does not change the given individual
 		# 
-		# To use this mutation each gene of the genome has to support the "!"
+		# To use this mutation each gene of the genome has to support the "flip"
 		# function as negation/inverse of its value
 		#
 		# The given individual has to provide a deep_clone method
@@ -37,7 +37,7 @@ module EvoSynth
 		def Mutations.one_gene_flipping(individual)
 			mutated = individual.deep_clone
 			rand_index = rand(mutated.genome.size)
-			mutated.genome[rand_index] = !mutated.genome[rand_index]
+			mutated.genome[rand_index] = mutated.genome[rand_index].flip
 			mutated
 		end
 

@@ -21,14 +21,29 @@
 # License::   LGPLv3
 
 require 'evosynth'
+require 'delegate'
+
+class TrueClass
+	def flip
+		!self
+	end
+end
+
+class FalseClass
+	def flip
+		!self
+	end
+end
+
 
 module MaxOnes
+
 	class BinaryIndividual
 		include EvoSynth::MaximizingIndividual
 
 		def initialize(genome_size)
 			@genome = EvoSynth::Genome.new(genome_size)
-			@genome.map! { |gene| rand(2) > 0 ? true : false}
+			@genome.map! { |gene| rand(2) > 0 ? true : false }
 		end
 
 		def fitness

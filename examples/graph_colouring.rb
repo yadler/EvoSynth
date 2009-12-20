@@ -66,7 +66,7 @@ module GraphColouring
 
 
 	class ColorGene < DelegateClass(Fixnum)
-		def !
+		def flip
 			ColorGene.new(rand(self + 1))
 		end
 	end
@@ -120,7 +120,7 @@ module GraphColouring
 end
 
 
-graph = GraphColouring::Graph.new("tests/testdata/graph_colouring/myciel3.col")
+graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel3.col")
 pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
 

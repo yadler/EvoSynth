@@ -23,6 +23,22 @@
 require 'evosynth'
 require 'spec/test_helper_individual'
 
+# TODO: how could this be done in a good way?
+# maybe I should do this in evosynth.rb?
+# (see also max_ones.rb!)
+
+class TrueClass
+	def flip
+		!self
+	end
+end
+
+class FalseClass
+	def flip
+		!self
+	end
+end
+
 describe "One Gene Flipping" do # EvoSynth::Mutations.one_gene_flipping
 
 	describe "when run on binary genome (size=10)" do
