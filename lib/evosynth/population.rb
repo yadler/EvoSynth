@@ -44,9 +44,9 @@ module EvoSynth
 		end
 
 
-        def each
+		def each
 			@individuals.each { |individual| yield individual }
-        end
+		end
 
 
 		def map!
