@@ -25,6 +25,8 @@ require 'spec/test_helper_individual'
 
 describe "Tournament selection" do # EvoSynth::Selections.tournament
 
+	# FIXME: this does actually fail sometimes
+
 	it "it should select a super-individual" do
 		pop = EvoSynth::Population.new()
 		individual1 = TestMinimizingIndividual.new(13)
