@@ -125,5 +125,5 @@ pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(gra
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
 
 result = hillclimber.run(100)
-puts "PopulationHillclimber\nbest: " + result.best.to_s
-puts "worst: " + result.worst.to_s
+puts "PopulationHillclimber\nbest: #{result.best}"
+puts "worst: #{result.worst}"

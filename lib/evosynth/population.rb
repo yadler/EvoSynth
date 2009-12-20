@@ -87,7 +87,7 @@ module EvoSynth
 
 
 		def to_s
-			"Population (size=" + @individuals.size.to_s + ", individuals=" + @individuals.to_s + ")"
+			"Population (size=#{@individuals.size}, individuals=#{@individuals})"
 		end
 
 	end

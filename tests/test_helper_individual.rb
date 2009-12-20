@@ -65,6 +65,6 @@ class TestBinaryIndividual
 	end
 
 	def to_s
-		@fitness.to_s + " - " + @genome.to_s
+		"#{@fitness} - #{@genome}"
 	end
 end

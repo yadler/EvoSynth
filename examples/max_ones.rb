@@ -42,15 +42,15 @@ module MaxOnes
 		individual = MaxOnes::BinaryIndividual.new(10)
 		hillclimber = EvoSynth::Strategies::Hillclimber.new(individual)
 		result = hillclimber.run(100)
-		puts "Hillclimber:\n"+ result.to_s
+		puts "Hillclimber:\n#{result}"
 	end
 
 	def MaxOnes.use_population_hillclimber
 		population = EvoSynth::Population.new(10) { MaxOnes::BinaryIndividual.new(10) }
 		hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
 		result = hillclimber.run(10)
-		puts "PopulationHillclimber\nbest: " + result.best.to_s
-		puts "worst: " + result.worst.to_s
+		puts "PopulationHillclimber\nbest: #{result.best}"
+		puts "worst: #{result.worst}"
 	end
 end
 
