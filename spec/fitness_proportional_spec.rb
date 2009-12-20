@@ -20,22 +20,26 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'test/unit'
 require 'evosynth'
-require 'tests/test_helper_individual'
+require 'spec/test_helper_individual'
 
-# FIXME find good test case
+describe "Fitness proportional selection" do # EvoSynth::Selections.tournament
 
-class TestFPSelection < Test::Unit::TestCase
-
-	def test_selection_weicker
+	it "it should select a super-individual" do
 		pop = EvoSynth::Population.new()
 		pop.add(TestMinimizingIndividual.new(1))
 		pop.add(TestMinimizingIndividual.new(2))
 		pop.add(TestMinimizingIndividual.new(3))
 		pop.add(TestMinimizingIndividual.new(4))
-		pop.add(TestMinimizingIndividual.new(20))
+		pop.add(TestMinimizingIndividual.new(200))
 
-		result = EvoSynth::Selections.fitness_proportional_selection(pop, 20)
+		expected = EvoSynth::Population.new()
+		expected.add(TestMinimizingIndividual.new(200))
+
+		# FIXME: find a real good test case
+
+		result = EvoSynth::Selections.fitness_proportional_selection(pop, 1)
+		result.should == expected
 	end
+
 end
