@@ -81,6 +81,11 @@ module EvoSynth
 		end
 
 
+		def empty?
+			@individuals.empty?
+		end
+
+
 		def size
 			@individuals.size
 		end
