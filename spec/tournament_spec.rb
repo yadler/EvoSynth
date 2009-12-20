@@ -20,30 +20,28 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'test/unit'
 require 'evosynth'
-require 'tests/test_helper_individual'
+require 'spec/test_helper_individual'
 
+describe "Tournament selection" do # EvoSynth::Selections.tournament
 
-class TestBestSelection < Test::Unit::TestCase
-
-	def test_one
+	it "it should select a super-individual" do
 		pop = EvoSynth::Population.new()
-		t1 = TestMinimizingIndividual.new(13)
-		t2 = TestMinimizingIndividual.new(12)
-		t3 = TestMinimizingIndividual.new(11)
-		t4 = TestMinimizingIndividual.new(10)
-		t5 = TestMinimizingIndividual.new(0)
-		pop.add(t1)
-		pop.add(t2)
-		pop.add(t3)
-		pop.add(t4)
-		pop.add(t5)
+		individual1 = TestMinimizingIndividual.new(13)
+		individual2 = TestMinimizingIndividual.new(12)
+		individual3 = TestMinimizingIndividual.new(11)
+		individual4 = TestMinimizingIndividual.new(10)
+		super_individual = TestMinimizingIndividual.new(0)
+		pop.add(individual1)
+		pop.add(individual2)
+		pop.add(individual3)
+		pop.add(individual4)
+		pop.add(super_individual)
 
 		expected = EvoSynth::Population.new()
-		expected.add(t5)
+		expected.add(super_individual)
 		result = EvoSynth::Selections.tournament(pop)
-		assert_equal(expected, result)
+		result.should == expected
 	end
 
 end

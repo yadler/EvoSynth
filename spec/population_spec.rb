@@ -21,6 +21,7 @@
 # License::   LGPLv3
 
 require 'evosynth'
+require 'spec/test_helper_individual'
 
 describe EvoSynth::Population do
 
