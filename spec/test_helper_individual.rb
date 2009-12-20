@@ -20,8 +20,38 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'test/unit'
 require 'evosynth'
+
+
+class TestIndividual
+	attr_accessor :fitness
+
+	def initialize(fitness = 0.0)
+		@genome = EvoSynth::Genome.new
+		@fitness = fitness
+	end
+
+	def calculate_fitness
+		@fitness
+	end
+
+	def to_s
+		@fitness
+	end
+end
+
+
+class TestMinimizingIndividual < TestIndividual
+	include EvoSynth::MinimizingIndividual
+end
+
+
+class TestMaximizingIndividual < TestIndividual
+	include EvoSynth::MaximizingIndividual
+end
+
+
+# FIXME: replace this with a mocked object!
 
 class TestBinaryIndividual
 	include EvoSynth::MinimizingIndividual
@@ -37,23 +67,4 @@ class TestBinaryIndividual
 	def to_s
 		@fitness.to_s + " - " + @genome.to_s
 	end
-end
-
-
-class TestOneGeneFlipping < Test::Unit::TestCase
-
-	def test_boolean_flipping
-		individual = TestBinaryIndividual.new(100)
-		individual.genome.map! { |gene| true }
-		individual.genome.each { |gene| assert_equal(true, gene) }
-
-		count = 0
-		100.times do
-			mutated = EvoSynth::Mutations.binary_mutation(individual, 0.1)
-			mutated.genome.each { |gene| count += 1 if !gene }
-		end
-
-		assert_in_delta(10, Float(count) / 100, 0.5)
-	end
-
 end
