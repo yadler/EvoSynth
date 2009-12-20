@@ -21,7 +21,7 @@
 # License::   LGPLv3
 
 require 'test/unit'
-require 'tests/test_helper_indivdual'
+require 'tests/test_helper_individual'
 
 
 class TestPopulation < Test::Unit::TestCase

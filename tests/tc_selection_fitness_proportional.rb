@@ -22,7 +22,7 @@
 
 require 'test/unit'
 require 'evosynth'
-require 'tests/test_helper_indivdual'
+require 'tests/test_helper_individual'
 
 # FIXME find good test case
 
