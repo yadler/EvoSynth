@@ -27,12 +27,11 @@ describe "Binary Mutation" do # EvoSynth::Mutations.binary_mutation
 
 	describe "when run on binary genome (size=100)" do
 		before do
-			# FIXME: replace this with a mocked object!
 			@individual = TestBinaryIndividual.new(100)
 			@individual.genome.map! { |gene| true }
 		end
 
-		describe "before mutations is executed" do
+		describe "before mutation is executed" do
 			it "all genes should be true" do
 				@individual.genome.each { |gene| gene.should be_true }
 			end
