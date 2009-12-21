@@ -33,23 +33,26 @@ module EvoSynth
 			def select(population, select_count = 1)
 				selected_population = Population.new
 
-				fitness_sum = 0
+				fitness_sum = 0.0
 				population.each { |individual| fitness_sum += individual.fitness }
-
 				select_count.times do
-					selection_sum = 0.0
-					limit = rand(fitness_sum)
-
-					population.each do |individual|
-						selection_sum += individual.fitness
-						if (selection_sum >= limit)
-							selected_population.add(individual)
-							break
-						end
-					end
+					next_individual = select_next_individual(population, fitness_sum)
+					selected_population.add(next_individual)
 				end
 
 				selected_population
+			end
+
+			private
+
+			def select_next_individual(population, fitness_sum)
+				selection_sum = 0.0
+				limit = rand(fitness_sum)
+
+				population.each do |individual|
+					selection_sum += individual.fitness
+					return individual if (selection_sum >= limit)
+				end
 			end
 
 		end

@@ -29,11 +29,11 @@ describe EvoSynth::Selections::TournamentSelection do
 
 	it "it should select a super-individual" do
 		pop = EvoSynth::Population.new
-		individual1 = TestMinimizingIndividual.new(130)
-		individual2 = TestMinimizingIndividual.new(120)
+		individual1 = TestMinimizingIndividual.new(112)
+		individual2 = TestMinimizingIndividual.new(111)
 		individual3 = TestMinimizingIndividual.new(110)
-		individual4 = TestMinimizingIndividual.new(100)
-		super_individual = TestMinimizingIndividual.new(0)
+		individual4 = TestMinimizingIndividual.new(109)
+		super_individual = TestMinimizingIndividual.new(1)
 		pop.add(individual1)
 		pop.add(individual2)
 		pop.add(individual3)
@@ -42,7 +42,7 @@ describe EvoSynth::Selections::TournamentSelection do
 
 		expected = EvoSynth::Population.new
 		expected.add(super_individual)
-		tournament_selection = EvoSynth::Selections::TournamentSelection.new
+		tournament_selection = EvoSynth::Selections::TournamentSelection.new(5)
 		result = tournament_selection.select(pop)
 		result.should == expected
 	end

@@ -35,24 +35,36 @@ module EvoSynth
 			end
 
 			def select(population, select_count = 1)
+				scores = calculate_scores(population)
+
+				selected = Population.new
+				scores.sort! { |first, second| first[0] <=> second[0] * -1 }
+				scores.first(select_count).each { |winner| selected.add(winner[1]) }
+				selected
+			end
+
+			private
+
+			def calculate_scores(population)
 				scores = []
 
 				population.each do |individual|
-					victories = 0
-
-					@stages.times do
-						enemy = population[rand(population.size)]
-						victories += 1 if individual > enemy
-					end
-
+					victories = fight(population, individual)
 					scores << [victories, individual]
 				end
 
-				selected = Population.new
-				scores.sort! { |a, b| a[0] <=> b[0] }
-				scores.reverse!
-				scores.first(select_count).each { |winner| selected.add(winner[1]) }
-				selected
+				scores
+			end
+
+			def fight(population, individual)
+				victories = 0
+
+				@stages.times do
+					enemy = population[rand(population.size)]
+					victories += 1 if individual > enemy
+				end
+
+				victories
 			end
 
 		end

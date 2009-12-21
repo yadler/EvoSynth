@@ -45,11 +45,9 @@ module GraphColouring
 
 		# reads the node count from grapg-file
 		def get_node_count(file_name)
-			File.open(file_name) do |file|
-				file.each_line do |line|
-					next if line !~ /^p\D*(\d+)/
-					return Integer($1)
-				end
+			File.open(file_name).each_line do |line|
+				next if line !~ /^p\D*(\d+)/
+				return Integer($1)
 			end
 		end
 
@@ -58,12 +56,10 @@ module GraphColouring
 			@node_count = get_node_count(file_name)
 			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
 
-			File.open(file_name) do |file|
-				file.each_line do |line|
-					next if line !~ /^e/
-					line =~ /(\d+)\s*(\d+)/
-					@matrix[Integer($1)-1, Integer($2)-1] = 1
-				end
+			File.open(file_name).each_line do |line|
+				next if line !~ /^e/
+				line =~ /(\d+)\s*(\d+)/
+				@matrix[Integer($1)-1, Integer($2)-1] = 1
 			end
 		end
 

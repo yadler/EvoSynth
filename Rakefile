@@ -62,9 +62,9 @@ Rake::TestTask.new do |test|
 end
 
 desc "Run the specs under spec"
-Spec::Rake::SpecTask.new do |t|
-  t.spec_opts = ['--format', "nested"]
-  t.spec_files = FileList['spec/*_spec.rb']
+Spec::Rake::SpecTask.new do |rspec|
+  rspec.spec_opts = ['--format', "nested"]
+  rspec.spec_files = FileList['spec/*_spec.rb']
 end
 
 desc "build latest gem package"

@@ -38,8 +38,10 @@ module EvoSynth
 
 			def mutate(individual)
 				mutated = individual.deep_clone
-				rand_index = rand(mutated.genome.size)
-				mutated.genome[rand_index] = mutated.genome[rand_index].flip
+				genome = mutated.genome
+
+				rand_index = rand(genome.size)
+				genome[rand_index] = genome[rand_index].flip
 				mutated
 			end
 
