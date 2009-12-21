@@ -69,6 +69,13 @@ module EvoSynth
 	end
 
 
+	# The following two mixins decide wether you have a
+	# minimization or maximization Problem
+	#
+	# In either case if you compare individuals with a > b,
+	#	individual a is a better solution than individual b
+
+
 	# Mixin for Individuals (for minimizing Problems)
 
 	module MinimizingIndividual

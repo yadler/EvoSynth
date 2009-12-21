@@ -25,6 +25,7 @@ module EvoSynth
 
 	module Selections
 
+		# FITNESSPROPORTIONALE-SELETION (Weicker Page 71)
 		# FIXME needs proper tests
 
 		class FitnessProportionalSelection

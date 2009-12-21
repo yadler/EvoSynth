@@ -20,28 +20,40 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-
 module EvoSynth
-	module Strategies
 
-		# BINÄRES-HILLCLIMBING (Weicker Page 49)
+	module Selections
 
-		class Hillclimber
+		# TURNIER-SELEKTION (Weicker Page 76)
 
-			def initialize(individual)
-				@individual = individual
+		class TournamentSelection
+
+			attr_accessor :enemies
+
+			def initialize(enemies = 2)
+				@enemies = enemies
 			end
 
-			def run(generations)
-				generations.times do
-					child = EvoSynth::Mutations::OneGeneFlipping.new.mutate(@individual)
-					@individual = child if child > @individual
+
+			def select(population, select_count = 1)
+				selected_population = Population.new()
+
+				select_count.times do
+					individual = population[rand(population.size)]
+
+					@enemies.times do
+						enemy = population[rand(population.size)]
+						individual = enemy if enemy > individual
+					end
+
+					selected_population.add(individual)
 				end
 
-				@individual
+				selected_population
 			end
 
 		end
 
 	end
+
 end

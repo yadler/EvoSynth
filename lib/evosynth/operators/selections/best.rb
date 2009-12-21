@@ -25,6 +25,8 @@ module EvoSynth
 
 	module Selections
 
+		# BESTEN-SELEKTION (Weicker Page 65)
+
 		class SelectBest
 
 			def select(population, select_count = 0)

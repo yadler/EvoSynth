@@ -20,28 +20,31 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'evosynth'
+require 'spec/test_helper_individual'
 
-module EvoSynth
-	module Strategies
+describe EvoSynth::Selections::TournamentSelection do
 
-		# BINÄRES-HILLCLIMBING (Weicker Page 49)
+	# FIXME: this does actually fail sometimes - which is correct ;)
 
-		class Hillclimber
+	it "it should select a super-individual" do
+		pop = EvoSynth::Population.new()
+		individual1 = TestMinimizingIndividual.new(130)
+		individual2 = TestMinimizingIndividual.new(120)
+		individual3 = TestMinimizingIndividual.new(110)
+		individual4 = TestMinimizingIndividual.new(100)
+		super_individual = TestMinimizingIndividual.new(0)
+		pop.add(individual1)
+		pop.add(individual2)
+		pop.add(individual3)
+		pop.add(individual4)
+		pop.add(super_individual)
 
-			def initialize(individual)
-				@individual = individual
-			end
-
-			def run(generations)
-				generations.times do
-					child = EvoSynth::Mutations::OneGeneFlipping.new.mutate(@individual)
-					@individual = child if child > @individual
-				end
-
-				@individual
-			end
-
-		end
-
+		expected = EvoSynth::Population.new()
+		expected.add(super_individual)
+		tournament_selection = EvoSynth::Selections::TournamentSelection.new
+		result = tournament_selection.select(pop)
+		result.should == expected
 	end
+
 end

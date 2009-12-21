@@ -24,3 +24,4 @@
 require 'evosynth/operators/selections/fitness_proportional'
 require 'evosynth/operators/selections/best'
 require 'evosynth/operators/selections/n_stage_tournament'
+require 'evosynth/operators/selections/tournament'

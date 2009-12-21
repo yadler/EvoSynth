@@ -23,7 +23,7 @@
 require 'evosynth'
 require 'spec/test_helper_individual'
 
-describe "Tournament selection" do # EvoSynth::Selections.tournament
+describe EvoSynth::Selections::NStageTournamentSelection do
 
 	# FIXME: this does actually fail sometimes
 

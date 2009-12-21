@@ -24,6 +24,8 @@
 module EvoSynth
 	module Strategies
 
+		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
+
 		class PopulationHillclimber
 
 			def initialize(population)

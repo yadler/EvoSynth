@@ -24,12 +24,14 @@ module EvoSynth
 
 	module Selections
 
+		# Q-STUFIGE-TURNIER-SELEKTION (Weicker Page 69)
+
 		class NStageTournamentSelection
 
-			attr_accessor :enemies
+			attr_accessor :stages
 
-			def initialize(enemies = 2)
-				@enemies = enemies
+			def initialize(stages = 2)
+				@stages = stages
 			end
 
 			def select(population, select_count = 1)
@@ -38,7 +40,7 @@ module EvoSynth
 				population.each do |individual|
 					victories = 0
 
-					@enemies.times do
+					@stages.times do
 						enemy = population[rand(population.size)]
 						victories += 1 if individual > enemy
 					end
