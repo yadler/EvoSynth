@@ -24,7 +24,7 @@ module EvoSynth
 
 	module Selections
 
-		class TournamentSelection
+		class NStageTournamentSelection
 
 			attr_accessor :enemies
 
