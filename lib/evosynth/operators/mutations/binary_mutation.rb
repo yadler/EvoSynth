@@ -35,11 +35,21 @@ module EvoSynth
 		#
 		# The given individual has to provide a deep_clone method
 
-		def Mutations.binary_mutation(individual, probability)
-			mutated = individual.deep_clone
-			mutated.genome.map! { |gene| rand <= probability ? !gene : gene }
-			mutated.genome.changed = true
-			mutated
+		class BinaryMutation
+
+			attr_accessor :probability
+
+			def initialize(probability = 0.1)
+				@probability = probability
+			end
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				mutated.genome.map! { |gene| rand <= @probability ? !gene : gene }
+				mutated.genome.changed = true
+				mutated
+			end
+
 		end
 
 	end

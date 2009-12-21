@@ -34,11 +34,15 @@ module EvoSynth
 		#
 		# The given individual has to provide a deep_clone method
 
-		def Mutations.one_gene_flipping(individual)
-			mutated = individual.deep_clone
-			rand_index = rand(mutated.genome.size)
-			mutated.genome[rand_index] = mutated.genome[rand_index].flip
-			mutated
+		class OneGeneFlipping
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				rand_index = rand(mutated.genome.size)
+				mutated.genome[rand_index] = mutated.genome[rand_index].flip
+				mutated
+			end
+
 		end
 
 	end

@@ -39,7 +39,7 @@ class FalseClass
 	end
 end
 
-describe "One Gene Flipping" do # EvoSynth::Mutations.one_gene_flipping
+describe EvoSynth::Mutations::OneGeneFlipping do
 
 	describe "when run on binary genome (size=10)" do
 		before do
@@ -55,7 +55,8 @@ describe "One Gene Flipping" do # EvoSynth::Mutations.one_gene_flipping
 
 		describe "after mutation is executed" do
 			before do
-				@mutated = EvoSynth::Mutations.one_gene_flipping(@individual)
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
 			it "all genes of the parent should (still) be true" do
@@ -84,7 +85,8 @@ describe "One Gene Flipping" do # EvoSynth::Mutations.one_gene_flipping
 
 		describe "after mutation is executed" do
 			before do
-				@mutated = EvoSynth::Mutations.one_gene_flipping(@individual)
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
 			it "the gene of the parent should (still) be true" do
@@ -98,8 +100,9 @@ describe "One Gene Flipping" do # EvoSynth::Mutations.one_gene_flipping
 
 		describe "after mutation is executed two times" do
 			before do
-				@mutated = EvoSynth::Mutations.one_gene_flipping(@individual)
-				@mutated = EvoSynth::Mutations.one_gene_flipping(@mutated)
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				@mutated = one_gene_flipping.mutate(@individual)
+				@mutated = one_gene_flipping.mutate(@mutated)
 			end
 
 			it "the gene of the parent should (still) be true" do

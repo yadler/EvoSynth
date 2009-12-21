@@ -31,8 +31,8 @@ module EvoSynth
 			end
 
 			def run(generations)
-				generations.times do |generation|
-					child = EvoSynth::Mutations.one_gene_flipping(@individual)
+				generations.times do
+					child = EvoSynth::Mutations::OneGeneFlipping.new.mutate(@individual)
 					@individual = child if child > @individual
 				end
 

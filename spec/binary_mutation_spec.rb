@@ -23,7 +23,7 @@
 require 'evosynth'
 require 'spec/test_helper_individual'
 
-describe "Binary Mutation" do # EvoSynth::Mutations.binary_mutation
+describe EvoSynth::Mutations::BinaryMutation do
 
 	describe "when run on binary genome (size=100)" do
 		before do
@@ -39,9 +39,10 @@ describe "Binary Mutation" do # EvoSynth::Mutations.binary_mutation
 
 		describe "after mutations is executed 100 times (with probability 0.1)" do
 			before do
+				binary_mutation = EvoSynth::Mutations::BinaryMutation.new(0.1)
 				@count = 0.0
 				100.times do
-					mutated = EvoSynth::Mutations.binary_mutation(@individual, 0.1)
+					mutated = binary_mutation.mutate(@individual)
 					mutated.genome.each { |gene| @count += 1 if !gene }
 				end
 			end

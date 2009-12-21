@@ -31,9 +31,11 @@ module EvoSynth
 			end
 
 			def run(generations)
-				generations.times do |generation|
-					@population.map! do |individual|
-						child = EvoSynth::Mutations.one_gene_flipping(individual)
+				generations.times do
+					one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+
+					@population.map! do |individual|						
+						child = one_gene_flipping.mutate(individual)
 						individual = child > individual ? child : individual
 					end
 				end
