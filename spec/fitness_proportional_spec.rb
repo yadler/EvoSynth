@@ -38,7 +38,8 @@ describe "Fitness proportional selection" do # EvoSynth::Selections.tournament
 
 		# FIXME: find a real good test case
 
-		result = EvoSynth::Selections.fitness_proportional_selection(pop, 1)
+		fitness_proportional_selection = EvoSynth::Selections::FitnessProportionalSelection.new
+		result = fitness_proportional_selection.select(pop, 1)
 		result.should == expected
 	end
 

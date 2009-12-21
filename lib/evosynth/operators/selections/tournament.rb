@@ -24,25 +24,35 @@ module EvoSynth
 
 	module Selections
 
-		def Selections.tournament(population, select_count = 1, enemies = 2)
-			scores = []
+		class TournamentSelection
 
-			population.each do |individual|
-				victories = 0
+			attr_accessor :enemies
 
-				enemies.times do
-					enemy = population[rand(population.size)]
-					victories += 1 if individual > enemy
-				end
-
-				scores << [victories, individual]
+			def initialize(enemies = 2)
+				@enemies = enemies
 			end
 
-			selected = Population.new()
-			scores.sort! { |a, b| a[0] <=> b[0] }
-			scores.reverse!
-			scores.first(select_count).each { |winner| selected.add(winner[1]) }
-			selected
+			def select(population, select_count = 1)
+				scores = []
+
+				population.each do |individual|
+					victories = 0
+
+					@enemies.times do
+						enemy = population[rand(population.size)]
+						victories += 1 if individual > enemy
+					end
+
+					scores << [victories, individual]
+				end
+
+				selected = Population.new()
+				scores.sort! { |a, b| a[0] <=> b[0] }
+				scores.reverse!
+				scores.first(select_count).each { |winner| selected.add(winner[1]) }
+				selected
+			end
+
 		end
 
 	end

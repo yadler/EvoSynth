@@ -42,7 +42,8 @@ describe "best selection" do # EvoSynth::Selections.select_best
 		expected.add(individual1)
 		expected.add(individual2)
 
-		result = EvoSynth::Selections.select_best(population, 2)
+		select_best = EvoSynth::Selections::SelectBest.new
+		result = select_best.select(population, 2)
 		result.should == expected
 	end
 
@@ -63,7 +64,8 @@ describe "best selection" do # EvoSynth::Selections.select_best
 		expected.add(individual5)
 		expected.add(individual4)
 
-		result = EvoSynth::Selections.select_best(population, 2)
+		select_best = EvoSynth::Selections::SelectBest.new
+		result = select_best.select(population, 2)
 		result.should == expected
 	end
 end

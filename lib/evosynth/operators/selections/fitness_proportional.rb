@@ -27,26 +27,30 @@ module EvoSynth
 
 		# FIXME needs proper tests
 
-		def Selections.fitness_proportional_selection(population, select_count = 1)
-			selected_population = Population.new()
+		class FitnessProportionalSelection
 
-			fitness_sum = 0
-			population.each { |individual| fitness_sum += individual.fitness }
+			def select(population, select_count = 1)
+				selected_population = Population.new()
 
-			select_count.times do |index|
-				selection_sum = 1
-				limit = rand(fitness_sum)
+				fitness_sum = 0
+				population.each { |individual| fitness_sum += individual.fitness }
 
-				population.each do |individual|
-					selection_sum += individual.fitness
-					if (selection_sum >= limit)
-						selected_population.add(individual)
-						break
+				select_count.times do
+					selection_sum = 1
+					limit = rand(fitness_sum)
+
+					population.each do |individual|
+						selection_sum += individual.fitness
+						if (selection_sum >= limit)
+							selected_population.add(individual)
+							break
+						end
 					end
 				end
+
+				selected_population
 			end
 
-			selected_population
 		end
 
 	end

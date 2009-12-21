@@ -42,7 +42,8 @@ describe "Tournament selection" do # EvoSynth::Selections.tournament
 
 		expected = EvoSynth::Population.new()
 		expected.add(super_individual)
-		result = EvoSynth::Selections.tournament(pop)
+		tournament_selection = EvoSynth::Selections::TournamentSelection.new
+		result = tournament_selection.select(pop)
 		result.should == expected
 	end
 
