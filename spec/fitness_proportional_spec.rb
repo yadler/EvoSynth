@@ -23,7 +23,7 @@
 require 'evosynth'
 require 'spec/test_helper_individual'
 
-describe "Fitness proportional selection" do # EvoSynth::Selections.tournament
+describe EvoSynth::Selections::FitnessProportionalSelection do
 
 	it "it should select a super-individual" do
 		pop = EvoSynth::Population.new

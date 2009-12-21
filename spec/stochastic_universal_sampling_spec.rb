@@ -20,9 +20,27 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'evosynth'
+require 'spec/test_helper_individual'
 
-require 'evosynth/operators/selections/fitness_proportional'
-require 'evosynth/operators/selections/best'
-require 'evosynth/operators/selections/n_stage_tournament'
-require 'evosynth/operators/selections/tournament'
-require 'evosynth/operators/selections/stochastic_universal_sampling'
+describe EvoSynth::Selections::StochasticUniversalSampling do
+
+	it "it should select a super-individual" do
+		pop = EvoSynth::Population.new
+		pop.add(TestMinimizingIndividual.new(1))
+		pop.add(TestMinimizingIndividual.new(2))
+		pop.add(TestMinimizingIndividual.new(3))
+		pop.add(TestMinimizingIndividual.new(4))
+		pop.add(TestMinimizingIndividual.new(200))
+
+		expected = EvoSynth::Population.new
+		expected.add(TestMinimizingIndividual.new(200))
+		expected.add(TestMinimizingIndividual.new(200))
+		expected.add(TestMinimizingIndividual.new(200))
+
+		fitness_proportional_selection = EvoSynth::Selections::FitnessProportionalSelection.new
+		result = fitness_proportional_selection.select(pop, 3)
+		result.should == expected
+	end
+
+end

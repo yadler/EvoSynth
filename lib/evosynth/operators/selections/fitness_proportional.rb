@@ -37,7 +37,7 @@ module EvoSynth
 				population.each { |individual| fitness_sum += individual.fitness }
 
 				select_count.times do
-					selection_sum = 1
+					selection_sum = 0.0
 					limit = rand(fitness_sum)
 
 					population.each do |individual|

@@ -20,9 +20,36 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+module EvoSynth
 
-require 'evosynth/operators/selections/fitness_proportional'
-require 'evosynth/operators/selections/best'
-require 'evosynth/operators/selections/n_stage_tournament'
-require 'evosynth/operators/selections/tournament'
-require 'evosynth/operators/selections/stochastic_universal_sampling'
+	module Selections
+
+		#	STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
+		# FIXME: add RSPec (find testcase!)
+
+		class StochasticUniversalSampling
+
+			def select(population, select_count = 1)
+				fitness_sum = 0
+				population.each { |individual| fitness_sum += individual.fitness }
+
+				limit = rand(fitness_sum / select_count)
+
+				select_count.times do
+					selection_sum = 0.0
+
+					population.each do |individual|
+						selection_sum += individual.fitness
+						if (selection_sum >= limit)
+							selected_population.add(individual)
+							break
+						end
+					end
+
+					limit += fitness_sum / select_count
+				end
+			end
+
+		end
+	end
+end

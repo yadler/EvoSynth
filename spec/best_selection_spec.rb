@@ -23,7 +23,7 @@
 require 'evosynth'
 require 'spec/test_helper_individual'
 
-describe "best selection" do # EvoSynth::Selections.select_best
+describe EvoSynth::Selections::SelectBest do
 
 	it "with minimizing individuals it should select the two min individuals" do
 		population = EvoSynth::Population.new
