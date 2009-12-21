@@ -22,12 +22,12 @@
 
 
 module EvoSynth
-
 	module Mutations
 
-
+		# <b>Relies on:</b> flip (see below)
+		# 
 		# This mutations flips (inverts) each gene in the genome of a given individual
-		# with a give probability  and returns this mutated individual. It does not
+		# with a given probability  and returns this mutated individual. It does not
 		# change the given individual
 		#
 		# To use this mutation each gene of the genome has to support the "flip"
@@ -37,11 +37,25 @@ module EvoSynth
 
 		class BinaryMutation
 
+			# Each gene is flipped with this probability (should be between 0 and 1)
+
 			attr_accessor :probability
+
+			#	:call-seq:
+			#		new -> BinaryMutation
+			#		new(Float) -> BinaryMutation (overrides default probability)
+			#
+			# Creates a new BinaryMutation. The default mutation
+			# probability is 0.1
 
 			def initialize(probability = 0.1)
 				@probability = probability
 			end
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#	
+			# Returns the mutation of the given individual.
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -53,5 +67,4 @@ module EvoSynth
 		end
 
 	end
-
 end
