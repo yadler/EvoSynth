@@ -36,7 +36,7 @@ module EvoSynth
 
 
 			def select(population, select_count = 1)
-				selected_population = Population.new()
+				selected_population = Population.new
 
 				select_count.times do
 					individual = population[rand(population.size)]

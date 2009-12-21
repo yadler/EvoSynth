@@ -28,7 +28,7 @@ describe EvoSynth::Selections::TournamentSelection do
 	# FIXME: this does actually fail sometimes - which is correct ;)
 
 	it "it should select a super-individual" do
-		pop = EvoSynth::Population.new()
+		pop = EvoSynth::Population.new
 		individual1 = TestMinimizingIndividual.new(130)
 		individual2 = TestMinimizingIndividual.new(120)
 		individual3 = TestMinimizingIndividual.new(110)
@@ -40,7 +40,7 @@ describe EvoSynth::Selections::TournamentSelection do
 		pop.add(individual4)
 		pop.add(super_individual)
 
-		expected = EvoSynth::Population.new()
+		expected = EvoSynth::Population.new
 		expected.add(super_individual)
 		tournament_selection = EvoSynth::Selections::TournamentSelection.new
 		result = tournament_selection.select(pop)

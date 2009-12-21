@@ -26,14 +26,14 @@ require 'spec/test_helper_individual'
 describe "Fitness proportional selection" do # EvoSynth::Selections.tournament
 
 	it "it should select a super-individual" do
-		pop = EvoSynth::Population.new()
+		pop = EvoSynth::Population.new
 		pop.add(TestMinimizingIndividual.new(1))
 		pop.add(TestMinimizingIndividual.new(2))
 		pop.add(TestMinimizingIndividual.new(3))
 		pop.add(TestMinimizingIndividual.new(4))
 		pop.add(TestMinimizingIndividual.new(200))
 
-		expected = EvoSynth::Population.new()
+		expected = EvoSynth::Population.new
 		expected.add(TestMinimizingIndividual.new(200))
 
 		# FIXME: find a real good test case

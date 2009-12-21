@@ -48,7 +48,7 @@ module EvoSynth
 					scores << [victories, individual]
 				end
 
-				selected = Population.new()
+				selected = Population.new
 				scores.sort! { |a, b| a[0] <=> b[0] }
 				scores.reverse!
 				scores.first(select_count).each { |winner| selected.add(winner[1]) }

@@ -89,7 +89,7 @@ module GraphColouring
 		
 		# workaround because of the rather ugly behaviour of rubys arr.uniq
 		def get_uniq
-			unique_colors = Array.new()
+			unique_colors = Array.new
 			@genome.each { |gene| unique_colors << gene if !unique_colors.include?(gene)}
 			unique_colors
 		end

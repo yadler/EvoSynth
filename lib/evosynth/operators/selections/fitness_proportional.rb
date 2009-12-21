@@ -31,7 +31,7 @@ module EvoSynth
 		class FitnessProportionalSelection
 
 			def select(population, select_count = 1)
-				selected_population = Population.new()
+				selected_population = Population.new
 
 				fitness_sum = 0
 				population.each { |individual| fitness_sum += individual.fitness }

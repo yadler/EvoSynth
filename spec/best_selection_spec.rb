@@ -26,7 +26,7 @@ require 'spec/test_helper_individual'
 describe "best selection" do # EvoSynth::Selections.select_best
 
 	it "with minimizing individuals it should select the two min individuals" do
-		population = EvoSynth::Population.new()
+		population = EvoSynth::Population.new
 		individual1 = TestMinimizingIndividual.new(1)
 		individual2 = TestMinimizingIndividual.new(2)
 		individual3 = TestMinimizingIndividual.new(3)
@@ -38,7 +38,7 @@ describe "best selection" do # EvoSynth::Selections.select_best
 		population.add(individual4)
 		population.add(individual5)
 
-		expected = EvoSynth::Population.new()
+		expected = EvoSynth::Population.new
 		expected.add(individual1)
 		expected.add(individual2)
 
@@ -48,7 +48,7 @@ describe "best selection" do # EvoSynth::Selections.select_best
 	end
 
 	it "with maximizing individuals it should select the two max individuals" do
-		population = EvoSynth::Population.new()
+		population = EvoSynth::Population.new
 		individual1 = TestMaximizingIndividual.new(1)
 		individual2 = TestMaximizingIndividual.new(2)
 		individual3 = TestMaximizingIndividual.new(3)
@@ -60,7 +60,7 @@ describe "best selection" do # EvoSynth::Selections.select_best
 		population.add(individual4)
 		population.add(individual5)
 
-		expected = EvoSynth::Population.new()
+		expected = EvoSynth::Population.new
 		expected.add(individual5)
 		expected.add(individual4)
 

@@ -41,7 +41,7 @@ describe EvoSynth::Population do
 
 	describe "when it contains maximizingIndividuals" do
 		before do
-			@population = EvoSynth::Population.new()
+			@population = EvoSynth::Population.new
 			@min = TestMaximizingIndividual.new(1)
 			@second = TestMaximizingIndividual.new(299)
 			@third = TestMaximizingIndividual.new(298)
@@ -72,7 +72,7 @@ describe EvoSynth::Population do
 
 	describe "when it contains minizingIndividuals" do
 		before do
-			@population = EvoSynth::Population.new()
+			@population = EvoSynth::Population.new
 			@min = TestMinimizingIndividual.new(1)
 			@second = TestMinimizingIndividual.new(2)
 			@third = TestMinimizingIndividual.new(3)
@@ -111,7 +111,7 @@ describe EvoSynth::Population do
 	end
 
 	it "should provide a working map! implementation" do
-		pop = EvoSynth::Population.new()
+		pop = EvoSynth::Population.new
 		pop.add(TestMinimizingIndividual.new(1))
 		pop.map! { |i| i.fitness = 2; i}
 		pop[0].fitness.should == 2
