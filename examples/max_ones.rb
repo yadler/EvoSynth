@@ -21,7 +21,6 @@
 # License::   LGPLv3
 
 require 'evosynth'
-require 'delegate'
 
 class TrueClass
 	def flip

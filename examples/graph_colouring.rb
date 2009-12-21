@@ -21,8 +21,13 @@
 # License::   LGPLv3
 
 require 'evosynth'
-require 'delegate'
 
+# add flip to fixnum (our gene) for mutation
+class Fixnum
+	def flip
+		rand(self + 1)
+	end
+end
 
 module GraphColouring
 	MUTATION_RATE = 5
@@ -65,13 +70,6 @@ module GraphColouring
 	end
 
 
-	class ColorGene < DelegateClass(Fixnum)
-		def flip
-			ColorGene.new(rand(self + 1))
-		end
-	end
-
-
 	class ColouringIndividual
 		include EvoSynth::MinimizingIndividual
 
@@ -85,8 +83,8 @@ module GraphColouring
 
 		def randomize_genome
 			max_color = rand(@genome.size > MAX_COLORS ? MAX_COLORS : @genome.size) + 1
-			@genome.map! { |gene| ColorGene.new(rand(max_color))}
-			@genome.map! { |gene| ColorGene.new(gene % get_uniq.size) }
+			@genome.map! { |gene| rand(max_color)}
+			@genome.map! { |gene| gene % get_uniq.size }
 		end
 		
 		# workaround because of the rather ugly behaviour of rubys arr.uniq
@@ -98,7 +96,7 @@ module GraphColouring
 
 		def verletzungen
 			verletzungen = 0
-			@graph.matrix.each do |row, col|
+			@graph.matrix.each_index do |row, col|
 				if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
 					verletzungen += 1
 				end

@@ -30,7 +30,7 @@ module EvoSynth
 		# with a give probability  and returns this mutated individual. It does not
 		# change the given individual
 		#
-		# To use this mutation each gene of the genome has to support the "!"
+		# To use this mutation each gene of the genome has to support the "flip"
 		# function as negation/inverse of its value
 		#
 		# The given individual has to provide a deep_clone method
