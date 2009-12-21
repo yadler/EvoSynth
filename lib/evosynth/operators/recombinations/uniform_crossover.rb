@@ -21,4 +21,40 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/recombinations/uniform_crossover'
+module EvoSynth
+	module Recombinations
+
+		#	UNIFORMER-CROSSOVER (Weicker Page 80)
+		# FIXME: refactor, improve, test me!
+
+		class UniformCrossover
+
+			def recombine(individual_one, individual_two)
+				child_one = individual_one.deep_clone
+				child_two = individual_two.deep_clone
+
+				if individual_one.genome.size > individual_one.genome.size then
+					shorter = individual_two
+					other = individual_one
+				else
+					shorter = individual_one
+					other = individual_two
+				end
+
+				shorter.genome.each_index do |index|
+					if (rand(2) > 0)
+						child_one.genome[index] = shorter.genome[index]
+						child_two.genome[index] = other.genome[index]
+					else
+						child_one.genome[index] = other.genome[index]
+						child_two.genome[index] = shorter.genome[index]
+					end
+				end
+
+				[child_one, child_two]
+			end
+
+		end
+
+	end
+end

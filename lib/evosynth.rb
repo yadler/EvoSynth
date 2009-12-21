@@ -25,6 +25,7 @@ require 'evosynth/individual'
 require 'evosynth/population'
 require 'evosynth/operators/selections'
 require 'evosynth/operators/mutations'
+require 'evosynth/operators/recombinations'
 require 'evosynth/strategies'
 
 # anthing that is needed to setup EvoSynth should be here!
