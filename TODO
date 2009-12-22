@@ -1,6 +1,16 @@
 Aus Weickers Buch (noch) nicht implementiert:
 
-- ARITHMETISCHER-CROSSOVER (Seite 83)
+Rekombinationen:
+	- ARITHMETISCHER-CROSSOVER (Seite 83)
+
+Mutationen:
+	- DREIERTAUSCH-MUTATION (Seite 107)
+	- INVERTIERENDE-MUTATION (Seite ???)
+	- SELBSTADAPTIVE-GAUSS-MUTATION (Seite 114)
+
+Anpassungsstrategien:
+	- VORDEFINIERTE-ANPASSUNG (Seite 111)
+	- ADAPTIVE-ANPASSUNG (Seite 113)
 
 ------------------------------------------------
 
