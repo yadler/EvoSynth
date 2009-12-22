@@ -59,7 +59,7 @@ module EvoSynth
 
 			def mutate(individual)
 				mutated = individual.deep_clone
-				mutated.genome.map! { |gene| rand <= @probability ? !gene : gene }
+				mutated.genome.map! { |gene| rand <= @probability ? gene.flip : gene }
 				mutated.genome.changed = true
 				mutated
 			end
