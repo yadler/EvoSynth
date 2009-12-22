@@ -23,3 +23,4 @@
 
 require 'evosynth/strategies/hillclimber'
 require 'evosynth/strategies/population_hillclimber'
+require 'evosynth/strategies/genetic_algorithm'

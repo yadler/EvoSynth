@@ -25,7 +25,7 @@ require 'evosynth'
 # add flip to fixnum (our gene) for mutation
 class Fixnum
 	def flip
-		rand(self + 1)
+		rand(self + 2)
 	end
 end
 
@@ -114,10 +114,15 @@ module GraphColouring
 end
 
 
-graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel3.col")
-pop = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
-hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(pop)
+graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+population = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 
+hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
 result = hillclimber.run(100)
 puts "PopulationHillclimber\nbest: #{result.best}"
+puts "worst: #{result.worst}"
+
+ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
+result = ga.run(100)
+puts "GeneticAlgorithm\nbest: #{result.best}"
 puts "worst: #{result.worst}"

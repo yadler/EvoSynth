@@ -59,6 +59,11 @@ module EvoSynth
 		end
 
 
+		def clear_all
+			@individuals.clear
+		end
+
+
 		def best(count = 1)
 			@individuals.sort!
 			count == 1 ? @individuals.last : @individuals.last(count).reverse

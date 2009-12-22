@@ -66,7 +66,16 @@ module MaxOnes
 		puts "PopulationHillclimber\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end
+
+	def MaxOnes.use_genetic_algorithm
+		population = EvoSynth::Population.new(10) { MaxOnes::BinaryIndividual.new(10) }
+		ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
+		result = ga.run(10)
+		puts "GeneticAlgorithm\nbest: #{result.best}"
+		puts "worst: #{result.worst}"
+	end
 end
 
 MaxOnes.use_hillclimber
 MaxOnes.use_population_hillclimber
+MaxOnes.use_genetic_algorithm
