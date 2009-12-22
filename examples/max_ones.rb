@@ -52,30 +52,42 @@ module MaxOnes
 		end
 	end
 
-	def MaxOnes.use_hillclimber
+	def MaxOnes.use_hillclimber(pop_size, generations)
 		individual = MaxOnes::BinaryIndividual.new(10)
 		hillclimber = EvoSynth::Strategies::Hillclimber.new(individual)
-		result = hillclimber.run(100)
+		result = hillclimber.run(pop_size * generations)
 		puts "Hillclimber:\n#{result}"
 	end
 
-	def MaxOnes.use_population_hillclimber
-		population = EvoSynth::Population.new(10) { MaxOnes::BinaryIndividual.new(10) }
+	def MaxOnes.use_population_hillclimber(pop_size, generations)
+		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
 		hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
-		result = hillclimber.run(10)
+		result = hillclimber.run(generations)
 		puts "PopulationHillclimber\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end
 
-	def MaxOnes.use_genetic_algorithm
-		population = EvoSynth::Population.new(10) { MaxOnes::BinaryIndividual.new(10) }
+	def MaxOnes.use_genetic_algorithm(pop_size, generations)
+		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
 		ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
-		result = ga.run(10)
+		result = ga.run(generations)
+		puts "GeneticAlgorithm\nbest: #{result.best}"
+		puts "worst: #{result.worst}"
+	end
+
+	def MaxOnes.use_steady_state_ga(pop_size, generations)
+		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
+		steady_state_ga = EvoSynth::Strategies::SteadyStateGA.new(population)
+		result = steady_state_ga.run(generations)
 		puts "GeneticAlgorithm\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end
 end
 
-MaxOnes.use_hillclimber
-MaxOnes.use_population_hillclimber
-MaxOnes.use_genetic_algorithm
+pop_size = 10
+generations = 100
+
+MaxOnes.use_hillclimber(pop_size, generations)
+MaxOnes.use_population_hillclimber(pop_size, generations)
+MaxOnes.use_genetic_algorithm(pop_size, generations)
+MaxOnes.use_steady_state_ga(pop_size, generations)

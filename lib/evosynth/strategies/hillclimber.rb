@@ -30,11 +30,12 @@ module EvoSynth
 
 			def initialize(individual)
 				@individual = individual
+				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
 			end
 
 			def run(generations)
 				generations.times do
-					child = EvoSynth::Mutations::OneGeneFlipping.new.mutate(@individual)
+					child = @mutation.mutate(@individual)
 					@individual = child if child > @individual
 				end
 
