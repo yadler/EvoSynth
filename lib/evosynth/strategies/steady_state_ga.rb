@@ -22,33 +22,39 @@
 
 
 module EvoSynth
-
 	module Strategies
 
-		#FIXME finish implementation some day
+		# STEADY-STATE-GA (Weicker Page 129)
 
 		class SteadyStateGA
 
-			def initialize(population)
+			def initialize(population, recombination_probability = 0.5)
 				@population = population
 				@parents_size
-				@recombination_probability = 0.1
+				@recombination_probability = recombination_probability
+
+				@mutation = EvoSynth::Mutations::BinaryMutation.new
+				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
+				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
 			end
 
 			def run(generations)
-				generations.times do |generation|
-					parents = EvoSynth::Selections.fitness_proportional_selection(@population, 2)
+				generations.times do
+					parents = @selection.select(@population, 2)
 
 					if rand < @recombination_probability
-						c = EvoSynth::Recombinations.one_point_crossover(parents[0], parents[1])
+						child = @recombination.recombine(parents[0], parents[1])[0]
 					else
-						c = parents[1]
+						child = parents[1]
 					end
-				end
-			end
 
+					@population.remove(@population.worst)
+					@population.add(@mutation.mutate(child))
+				end
+
+				@population
+			end
 		end
 
 	end
-
 end

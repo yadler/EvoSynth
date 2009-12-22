@@ -24,28 +24,32 @@
 module EvoSynth
 	module Strategies
 
+		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
+
 		class GeneticAlgorithm
 
 			def initialize(population, recombination_probability = 0.6)
 				@population = population
 				@recombination_probability = recombination_probability
+
+				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
+				@crossover = EvoSynth::Recombinations::OnePointCrossover.new
+				@mutation = EvoSynth::Mutations::BinaryMutation.new
 			end
 
 			def run(generations)
-				selection = EvoSynth::Selections::FitnessProportionalSelection.new
-				crossover = EvoSynth::Recombinations::OnePointCrossover.new
-				mutation = EvoSynth::Mutations::BinaryMutation.new
 
 				generations.times do
-					selected_pop = selection.select(@population, @population.size/2)
+					selected_pop = @selection.select(@population, @population.size/2)
 					@population.clear_all
 
 					selected_pop.individuals.each_index do |index_one|
+						# TODO: this could be avoided by #cycle which is introduced by 1.9
 						index_two = index_one + 1
 						index_two = -1 if index_two >= selected_pop.size
 
 						if rand < @recombination_probability
-							recombined = crossover.recombine(selected_pop[index_one], selected_pop[index_two])
+							recombined = @crossover.recombine(selected_pop[index_one], selected_pop[index_two])
 							child_one = recombined[0]
 							child_two = recombined[1]
 						else
@@ -53,8 +57,8 @@ module EvoSynth
 							child_two = selected_pop[index_two]
 						end
 
-						@population.add(mutation.mutate(child_one))
-						@population.add(mutation.mutate(child_two))
+						@population.add(@mutation.mutate(child_one))
+						@population.add(@mutation.mutate(child_two))
 					end
 				end
 

@@ -113,16 +113,24 @@ module GraphColouring
 
 end
 
+generations = 250
+individuals = 10
 
-graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel3.col")
-population = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
+graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
-result = hillclimber.run(100)
+result = hillclimber.run(generations)
 puts "PopulationHillclimber\nbest: #{result.best}"
 puts "worst: #{result.worst}"
 
 ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
-result = ga.run(100)
+result = ga.run(generations)
 puts "GeneticAlgorithm\nbest: #{result.best}"
 puts "worst: #{result.worst}"
+
+steady_state = EvoSynth::Strategies::SteadyStateGA.new(population)
+result = steady_state.run(generations)
+puts "SteadyStateGA\nbest: #{result.best}"
+puts "worst: #{result.worst}"
+puts result.size

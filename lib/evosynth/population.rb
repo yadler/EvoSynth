@@ -59,6 +59,22 @@ module EvoSynth
 		end
 
 
+		def remove(individual)
+			# FIXME: this is a rather ugly hack
+			# -> should be replaced with a cool 1.9 function
+
+			found = nil
+			@individuals.each_index do |index|
+				if @individuals[index] == individual
+					found = index
+					break
+				end
+			end
+
+			@individuals.delete_at(found) if found != nil
+		end
+
+
 		def clear_all
 			@individuals.clear
 		end
