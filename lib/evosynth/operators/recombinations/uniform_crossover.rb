@@ -32,22 +32,15 @@ module EvoSynth
 			def recombine(individual_one, individual_two)
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone
-
-				if individual_one.genome.size > individual_one.genome.size then
-					shorter = individual_two
-					other = individual_one
-				else
-					shorter = individual_one
-					other = individual_two
-				end
+				shorter = EvoSynth::Recombinations.get_shorter_genome(individual_one, individual_two)
 
 				shorter.genome.each_index do |index|
 					if (rand(2) > 0)
-						child_one.genome[index] = shorter.genome[index]
-						child_two.genome[index] = other.genome[index]
+						child_one.genome[index] = individual_one.genome[index]
+						child_two.genome[index] = individual_two.genome[index]
 					else
-						child_one.genome[index] = other.genome[index]
-						child_two.genome[index] = shorter.genome[index]
+						child_one.genome[index] = individual_two.genome[index]
+						child_two.genome[index] = individual_one.genome[index]
 					end
 				end
 

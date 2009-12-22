@@ -24,18 +24,33 @@
 module EvoSynth
 	module Recombinations
 
-		# Returns individual with the shorter genome
+		#	EIN-PUNKT-CROSSOVER (Weicker Page 84)
+		# FIXME: refactor, improve, test me!
 
-		def Recombinations.get_shorter_genome(individual_one, individual_two)
-			if individual_one.genome.size > individual_one.genome.size then
-				individual_two
-			else
-				individual_one
+		class OnePointCrossover
+
+			def recombine(individual_one, individual_two)
+				child_one = individual_one.deep_clone
+				child_two = individual_two.deep_clone
+				shorter = EvoSynth::Recombinations.get_shorter_genome(individual_one, individual_two)
+
+				crossover_point = rand(shorter.genome.size)
+
+				crossover_point.times do |index|
+					child_one.genome[index] = individual_one.genome[index]
+					child_two.genome[index] = individual_two.genome[index]
+				end
+
+				(shorter.genome.size - crossover_point).times do |index|
+					index += crossover_point
+					child_one.genome[index] = individual_two.genome[index]
+					child_two.genome[index] = individual_one.genome[index]
+				end
+
+				[child_one, child_two]
 			end
+
 		end
 
 	end
 end
-
-require 'evosynth/operators/recombinations/uniform_crossover'
-require 'evosynth/operators/recombinations/one_point_crossover'
