@@ -114,7 +114,7 @@ module GraphColouring
 end
 
 
-graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel3.col")
 population = EvoSynth::Population.new(10) { GraphColouring::ColouringIndividual.new(graph) }
 
 hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)

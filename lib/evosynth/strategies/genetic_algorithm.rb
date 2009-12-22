@@ -26,9 +26,9 @@ module EvoSynth
 
 		class GeneticAlgorithm
 
-			def initialize(population)
+			def initialize(population, recombination_probability = 0.6)
 				@population = population
-				@recombination_probability = 0.6
+				@recombination_probability = recombination_probability
 			end
 
 			def run(generations)
@@ -37,17 +37,20 @@ module EvoSynth
 				mutation = EvoSynth::Mutations::BinaryMutation.new
 
 				generations.times do
-					selected_pop = selection.select(@population, @population.size)
+					selected_pop = selection.select(@population, @population.size/2)
 					@population.clear_all
 
-					(selected_pop.size / 2).times do |index|
+					selected_pop.individuals.each_index do |index_one|
+						index_two = index_one + 1
+						index_two = -1 if index_two >= selected_pop.size
+
 						if rand < @recombination_probability
-							recombined = crossover.recombine(selected_pop[2*index - 1], selected_pop[2*index])
+							recombined = crossover.recombine(selected_pop[index_one], selected_pop[index_two])
 							child_one = recombined[0]
 							child_two = recombined[1]
 						else
-							child_one = selected_pop[2*index - 1]
-							child_two = selected_pop[2*index]
+							child_one = selected_pop[index_one]
+							child_two = selected_pop[index_two]
 						end
 
 						@population.add(mutation.mutate(child_one))
