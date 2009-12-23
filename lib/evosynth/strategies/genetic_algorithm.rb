@@ -28,13 +28,13 @@ module EvoSynth
 
 		class GeneticAlgorithm
 
-			def initialize(population, recombination_probability = 0.6)
+			def initialize(population, recombination_probability = 0.75)
 				@population = population
 				@recombination_probability = recombination_probability
 
 				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
 				@crossover = EvoSynth::Recombinations::OnePointCrossover.new
-				@mutation = EvoSynth::Mutations::BinaryMutation.new
+				@mutation = EvoSynth::Mutations::BinaryMutation.new(0.01)
 			end
 
 			def run(generations)
