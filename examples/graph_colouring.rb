@@ -113,11 +113,11 @@ module GraphColouring
 
 end
 
-generations = 25
+generations = 100
 individuals = 10
 
 require 'benchmark'
-require 'profile'
+#require 'profile'
 
 timing = Benchmark.measure do
 	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
@@ -127,15 +127,15 @@ timing = Benchmark.measure do
 	result = hillclimber.run(generations)
 	puts "PopulationHillclimber\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
-#
-#	ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
-#	result = ga.run(generations)
-#	puts "GeneticAlgorithm\nbest: #{result.best}"
-#	puts "worst: #{result.worst}"
-#
-#	steady_state = EvoSynth::Strategies::SteadyStateGA.new(population)
-#	result = steady_state.run(generations)
-#	puts "SteadyStateGA\nbest: #{result.best}"
-#	puts "worst: #{result.worst}"
+
+	ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
+	result = ga.run(generations)
+	puts "GeneticAlgorithm\nbest: #{result.best}"
+	puts "worst: #{result.worst}"
+
+	steady_state = EvoSynth::Strategies::SteadyStateGA.new(population)
+	result = steady_state.run(generations)
+	puts "SteadyStateGA\nbest: #{result.best}"
+	puts "worst: #{result.worst}"
 end
 puts "\nRunning these algorithms took:\n#{timing}"
