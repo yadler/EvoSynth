@@ -69,9 +69,8 @@ module EvoSynth
 
 			def flip_genes(genome)
 				genome.size.times do |index|
-					genome[index].flip if rand <= @probability
+					genome[index] = genome[index].flip if rand <= @probability
 				end
-
 			end
 
 		end

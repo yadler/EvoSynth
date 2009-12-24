@@ -84,10 +84,11 @@ module MaxOnes
 	end
 end
 
-pop_size = 50
+pop_size = 25
 generations = 1000
 
 require 'benchmark'
+#require 'profile'
 
 timing = Benchmark.measure do
 	MaxOnes.use_hillclimber(pop_size, generations)

@@ -41,8 +41,7 @@ module EvoSynth
 					child_two.genome[index] = individual_two.genome[index]
 				end
 
-				(shorter.genome.size - crossover_point).times do |index|
-					index += crossover_point
+				crossover_point.upto(shorter.genome.size - 1) do |index|
 					child_one.genome[index] = individual_two.genome[index]
 					child_two.genome[index] = individual_one.genome[index]
 				end
