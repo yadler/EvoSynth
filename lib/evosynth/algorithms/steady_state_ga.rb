@@ -22,49 +22,38 @@
 
 
 module EvoSynth
-	module Strategies
+	module Algorithms
 
-		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
+		# STEADY-STATE-GA (Weicker Page 129)
 
-		class GeneticAlgorithm
+		class SteadyStateGA
 
-			def initialize(population, recombination_probability = 0.75)
+			def initialize(population, recombination_probability = 0.5)
 				@population = population
+				@parents_size
 				@recombination_probability = recombination_probability
 
+				@mutation = EvoSynth::Mutations::BinaryMutation.new
 				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
-				@crossover = EvoSynth::Recombinations::OnePointCrossover.new
-				@mutation = EvoSynth::Mutations::BinaryMutation.new(0.01)
+				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
 			end
 
 			def run(generations)
-
 				generations.times do
-					selected_pop = @selection.select(@population, @population.size/2)
-					@population.clear_all
+					parents = @selection.select(@population, 2)
 
-					selected_pop.individuals.each_index do |index_one|
-						# TODO: this could be avoided by #cycle which is introduced by 1.9
-						index_two = index_one + 1
-						index_two = -1 if index_two >= selected_pop.size
-
-						if rand < @recombination_probability
-							recombined = @crossover.recombine(selected_pop[index_one], selected_pop[index_two])
-							child_one = recombined[0]
-							child_two = recombined[1]
-						else
-							child_one = selected_pop[index_one]
-							child_two = selected_pop[index_two]
-						end
-
-						@population.add(@mutation.mutate(child_one))
-						@population.add(@mutation.mutate(child_two))
+					if rand < @recombination_probability
+						child = @recombination.recombine(parents[0], parents[1])[0]
+					else
+						child = parents[1]
 					end
+
+					@population.remove(@population.worst)
+					@population.add(@mutation.mutate(child))
 				end
 
 				@population
 			end
-
 		end
 
 	end

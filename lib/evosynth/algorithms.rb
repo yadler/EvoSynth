@@ -21,34 +21,7 @@
 # License::   LGPLv3
 
 
-module EvoSynth
-	module Strategies
-
-		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
-
-		class PopulationHillclimber
-
-			def initialize(population)
-				@population = population
-				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
-			end
-
-			def run(generations)
-				generations.times do
-					@population.map! { |individual| mutate(individual) }
-				end
-
-				@population
-			end
-
-			private
-
-			def mutate(individual)
-				child = @mutation.mutate(individual)
-				individual = child > individual ? child : individual
-			end
-
-		end
-
-	end
-end
+require 'evosynth/algorithms/hillclimber'
+require 'evosynth/algorithms/population_hillclimber'
+require 'evosynth/algorithms/genetic_algorithm'
+require 'evosynth/algorithms/steady_state_ga'

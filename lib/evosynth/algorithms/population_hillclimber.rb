@@ -22,38 +22,32 @@
 
 
 module EvoSynth
-	module Strategies
+	module Algorithms
 
-		# STEADY-STATE-GA (Weicker Page 129)
+		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
-		class SteadyStateGA
+		class PopulationHillclimber
 
-			def initialize(population, recombination_probability = 0.5)
+			def initialize(population)
 				@population = population
-				@parents_size
-				@recombination_probability = recombination_probability
-
-				@mutation = EvoSynth::Mutations::BinaryMutation.new
-				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
-				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
+				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
 			end
 
 			def run(generations)
 				generations.times do
-					parents = @selection.select(@population, 2)
-
-					if rand < @recombination_probability
-						child = @recombination.recombine(parents[0], parents[1])[0]
-					else
-						child = parents[1]
-					end
-
-					@population.remove(@population.worst)
-					@population.add(@mutation.mutate(child))
+					@population.map! { |individual| mutate(individual) }
 				end
 
 				@population
 			end
+
+			private
+
+			def mutate(individual)
+				child = @mutation.mutate(individual)
+				individual = child > individual ? child : individual
+			end
+
 		end
 
 	end

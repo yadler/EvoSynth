@@ -22,7 +22,7 @@
 
 
 module EvoSynth
-	module Strategies
+	module Algorithms
 
 		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
