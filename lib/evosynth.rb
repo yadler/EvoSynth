@@ -20,7 +20,7 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
-require 'evosynth/util'
+require 'evosynth/util/mdarray'
 require 'evosynth/individual'
 require 'evosynth/population'
 require 'evosynth/operators/selections'

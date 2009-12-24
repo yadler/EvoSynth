@@ -35,18 +35,10 @@ module EvoSynth
 			end
 
 			def [](row, col)
-				if row >= @row_count || col >= @col_count
-					raise IndexError
-				end
-
 				@data[row * @col_count + col]
 			end
 
 			def []=(row, col, data)
-				if row >= @row_count || col >= @col_count
-					raise IndexError
-				end
-
 				@data[row * @col_count + col] = data
 			end
 
@@ -64,15 +56,6 @@ module EvoSynth
 
 		end
 
-	end
-
-
-	private
-
-
-	#FIXME: there should be a better way to clone a object!
-	def EvoSynth.deep_copy( object )
-		Marshal.load( Marshal.dump( object ) )
 	end
 
 end

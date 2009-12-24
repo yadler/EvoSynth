@@ -113,24 +113,29 @@ module GraphColouring
 
 end
 
-generations = 250
+generations = 25
 individuals = 10
 
-graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
+require 'benchmark'
+require 'profile'
 
-hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
-result = hillclimber.run(generations)
-puts "PopulationHillclimber\nbest: #{result.best}"
-puts "worst: #{result.worst}"
+timing = Benchmark.measure do
+	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 
-ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
-result = ga.run(generations)
-puts "GeneticAlgorithm\nbest: #{result.best}"
-puts "worst: #{result.worst}"
-
-steady_state = EvoSynth::Strategies::SteadyStateGA.new(population)
-result = steady_state.run(generations)
-puts "SteadyStateGA\nbest: #{result.best}"
-puts "worst: #{result.worst}"
-puts result.size
+	hillclimber = EvoSynth::Strategies::PopulationHillclimber.new(population)
+	result = hillclimber.run(generations)
+	puts "PopulationHillclimber\nbest: #{result.best}"
+	puts "worst: #{result.worst}"
+#
+#	ga = EvoSynth::Strategies::GeneticAlgorithm.new(population)
+#	result = ga.run(generations)
+#	puts "GeneticAlgorithm\nbest: #{result.best}"
+#	puts "worst: #{result.worst}"
+#
+#	steady_state = EvoSynth::Strategies::SteadyStateGA.new(population)
+#	result = steady_state.run(generations)
+#	puts "SteadyStateGA\nbest: #{result.best}"
+#	puts "worst: #{result.worst}"
+end
+puts "\nRunning these algorithms took:\n#{timing}"

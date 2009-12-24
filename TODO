@@ -14,6 +14,11 @@ Anpassungsstrategien:
 
 ------------------------------------------------
 
+Wahrscheinlich sollte RSpec durch shoulda ersetzt werden!
+(siehe ruby 1.9 buch)
+
+------------------------------------------------
+
 class University < Struct.new(:name, :address)
   def to_s
     name

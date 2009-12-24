@@ -33,13 +33,16 @@ describe EvoSynth::Util::MDArray do
 			@mda.each_index { |row, col| @mda[row, col].should be_nil }
 		end
 
-		it "should respect its lower bound" do
-			lambda { @mda[2,1] }.should raise_error(IndexError)
-		end
+#		removed because of performance issues
+#
+#		it "should respect its lower bound" do
+#			lambda { @mda[2,1] }.should raise_error(IndexError)
+#		end
+#
+#		it "should respect its upper bound" do
+#			lambda { @mda[0,2] }.should raise_error(IndexError)
+#		end
 
-		it "should respect its upper bound" do
-			lambda { @mda[0,2] }.should raise_error(IndexError)
-		end
 	end
 
 	describe "when created with default value (0)" do
