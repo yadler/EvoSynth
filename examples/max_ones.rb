@@ -45,7 +45,7 @@ module MaxOnes
 			@genome.map! { rand(2) > 0 ? true : false }
 		end
 
-		def fitness
+		def calculate_fitness
 			@fitness = 0
 			@genome.each { |gene| @fitness += 1 if gene }
 			@fitness
@@ -84,10 +84,15 @@ module MaxOnes
 	end
 end
 
-pop_size = 10
-generations = 100
+pop_size = 50
+generations = 1000
 
-MaxOnes.use_hillclimber(pop_size, generations)
-MaxOnes.use_population_hillclimber(pop_size, generations)
-MaxOnes.use_genetic_algorithm(pop_size, generations)
-MaxOnes.use_steady_state_ga(pop_size, generations)
+require 'benchmark'
+
+timing = Benchmark.measure do
+	MaxOnes.use_hillclimber(pop_size, generations)
+	MaxOnes.use_population_hillclimber(pop_size, generations)
+	MaxOnes.use_genetic_algorithm(pop_size, generations)
+	MaxOnes.use_steady_state_ga(pop_size, generations)
+end
+puts "\nRunning these algorithms took:\n#{timing}"

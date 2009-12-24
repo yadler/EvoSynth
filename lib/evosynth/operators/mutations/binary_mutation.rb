@@ -25,7 +25,7 @@ module EvoSynth
 	module Mutations
 
 		# <b>Relies on:</b> flip (see below)
-		# 
+		#
 		# This mutations flips (inverts) each gene in the genome of a given individual
 		# with a given probability  and returns this mutated individual. It does not
 		# change the given individual
@@ -54,14 +54,24 @@ module EvoSynth
 
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
-			#	
+			#
 			# Returns the mutation of the given individual.
 
 			def mutate(individual)
 				mutated = individual.deep_clone
-				mutated.genome.map! { |gene| rand <= @probability ? gene.flip : gene }
-				mutated.genome.changed = true
+				flip_genes(mutated.genome)
+
 				mutated
+			end
+
+			# flips the genes only and only if it is really needed
+			# NOTE: this might not be as pretty as .map! but its faster
+
+			def flip_genes(genome)
+				genome.size.times do |index|
+					genome[index].flip if rand <= @probability
+				end
+
 			end
 
 		end
