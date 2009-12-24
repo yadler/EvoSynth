@@ -28,9 +28,11 @@ module EvoSynth
 
 		class SteadyStateGA
 
+			attr_accessor :mutation, :selection, :recombination,
+			              :recombination_probability
+
 			def initialize(population, recombination_probability = 0.5)
 				@population = population
-				@parents_size
 				@recombination_probability = recombination_probability
 
 				@mutation = EvoSynth::Mutations::BinaryMutation.new

@@ -28,6 +28,9 @@ module EvoSynth
 
 		class GeneticAlgorithm
 
+			attr_accessor :mutation, :selection, :recombination,
+			              :recombination_probability
+
 			def initialize(population, recombination_probability = 0.75)
 				@population = population
 				@recombination_probability = recombination_probability

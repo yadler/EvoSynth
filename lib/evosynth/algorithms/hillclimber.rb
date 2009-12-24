@@ -28,6 +28,8 @@ module EvoSynth
 
 		class Hillclimber
 
+			attr_accessor :mutation
+
 			def initialize(individual)
 				@individual = individual
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new

@@ -28,6 +28,8 @@ module EvoSynth
 
 		class PopulationHillclimber
 
+			attr_accessor :mutation
+
 			def initialize(population)
 				@population = population
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
