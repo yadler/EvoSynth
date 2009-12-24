@@ -46,9 +46,9 @@ module MaxOnes
 		end
 
 		def calculate_fitness
-			@fitness = 0
-			@genome.each { |gene| @fitness += 1 if gene }
-			@fitness
+			fitness = 0
+			genome.each { |gene| fitness += 1 if gene }
+			fitness
 		end
 	end
 
