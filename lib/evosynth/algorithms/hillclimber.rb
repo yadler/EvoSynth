@@ -27,6 +27,7 @@ module EvoSynth
 		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
 		class Hillclimber
+			include EvoSynth::Algorithms::EA_Algorithm
 
 			attr_accessor :mutation
 
@@ -35,15 +36,20 @@ module EvoSynth
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
 			end
 
-			def run(generations)
-				generations.times do
-					child = @mutation.mutate(@individual)
-					@individual = child if child > @individual
-				end
+			private
 
+			def best_solution
 				@individual
 			end
 
+			def return_result
+				@individual
+			end
+
+			def next_generation
+				child = @mutation.mutate(@individual)
+				@individual = child if child > @individual
+			end
 		end
 
 	end

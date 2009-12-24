@@ -27,6 +27,7 @@ module EvoSynth
 		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
 
 		class GeneticAlgorithm
+			include EvoSynth::Algorithms::EA_Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
 			              :recombination_probability
@@ -40,32 +41,37 @@ module EvoSynth
 				@mutation = EvoSynth::Mutations::BinaryMutation.new(0.01)
 			end
 
-			def run(generations)
+			private
 
-				generations.times do
-					selected_pop = @selection.select(@population, @population.size/2)
-					@population.clear_all
+			def best_solution
+				@population.best
+			end
 
-					selected_pop.individuals.each_index do |index_one|
-						# TODO: this could be avoided by #cycle which is introduced by 1.9
-						index_two = index_one + 1
-						index_two = -1 if index_two >= selected_pop.size
-
-						if rand < @recombination_probability
-							recombined = @crossover.recombine(selected_pop[index_one], selected_pop[index_two])
-							child_one = recombined[0]
-							child_two = recombined[1]
-						else
-							child_one = selected_pop[index_one]
-							child_two = selected_pop[index_two]
-						end
-
-						@population.add(@mutation.mutate(child_one))
-						@population.add(@mutation.mutate(child_two))
-					end
-				end
-
+			def return_result
 				@population
+			end
+
+			def next_generation
+				selected_pop = @selection.select(@population, @population.size/2)
+				@population.clear_all
+
+				selected_pop.individuals.each_index do |index_one|
+					# TODO: this could be avoided by #cycle which is introduced by 1.9
+					index_two = index_one + 1
+					index_two = -1 if index_two >= selected_pop.size
+
+					if rand < @recombination_probability
+						recombined = @crossover.recombine(selected_pop[index_one], selected_pop[index_two])
+						child_one = recombined[0]
+						child_two = recombined[1]
+					else
+						child_one = selected_pop[index_one]
+						child_two = selected_pop[index_two]
+					end
+
+					@population.add(@mutation.mutate(child_one))
+					@population.add(@mutation.mutate(child_two))
+				end
 			end
 
 		end

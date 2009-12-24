@@ -121,18 +121,20 @@ require 'benchmark'
 
 timing = Benchmark.measure do
 	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 
+	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
 	result = hillclimber.run(generations)
 	puts "PopulationHillclimber\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
 
+	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
 	result = ga.run(generations)
 	puts "GeneticAlgorithm\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
 
+	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	steady_state = EvoSynth::Algorithms::SteadyStateGA.new(population)
 	result = steady_state.run(generations)
 	puts "SteadyStateGA\nbest: #{result.best}"

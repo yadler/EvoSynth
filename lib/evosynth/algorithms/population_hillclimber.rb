@@ -27,6 +27,7 @@ module EvoSynth
 		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
 		class PopulationHillclimber
+			include EvoSynth::Algorithms::EA_Algorithm
 
 			attr_accessor :mutation
 
@@ -35,15 +36,19 @@ module EvoSynth
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
 			end
 
-			def run(generations)
-				generations.times do
-					@population.map! { |individual| mutate(individual) }
-				end
+			private
 
+			def best_solution
+				@population.best
+			end
+
+			def return_result
 				@population
 			end
 
-			private
+			def next_generation
+				@population.map! { |individual| mutate(individual) }
+			end
 
 			def mutate(individual)
 				child = @mutation.mutate(individual)

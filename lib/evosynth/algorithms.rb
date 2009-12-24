@@ -21,6 +21,52 @@
 # License::   LGPLv3
 
 
+module EvoSynth
+	module Algorithms
+
+		# This is used by the #run_until_fitness_reached functions
+
+		module EA_Algorithm
+
+			attr_reader :generations_run
+
+			def run(generations)
+				@generations_run = 0
+
+				generations.times do |gen|
+					next_generation
+					@generations_run = gen
+				end
+
+				return_result
+			end
+
+			def run_until_fitness_reached(fitness)
+				@generations_run = 0
+				goal = Goal.new(fitness)
+
+				while best_solution < goal do
+					next_generation
+					@generations_run += 1
+				end
+
+				return_result
+			end
+
+			private
+
+			class Goal
+				def initialize(goal)
+					@goal = goal
+				end
+				def fitness
+					@goal
+				end
+			end
+		end
+	end
+end
+
 require 'evosynth/algorithms/hillclimber'
 require 'evosynth/algorithms/population_hillclimber'
 require 'evosynth/algorithms/genetic_algorithm'

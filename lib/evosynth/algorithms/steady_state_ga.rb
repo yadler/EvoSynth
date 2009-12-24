@@ -27,6 +27,7 @@ module EvoSynth
 		# STEADY-STATE-GA (Weicker Page 129)
 
 		class SteadyStateGA
+			include EvoSynth::Algorithms::EA_Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
 			              :recombination_probability
@@ -40,22 +41,29 @@ module EvoSynth
 				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
 			end
 
-			def run(generations)
-				generations.times do
-					parents = @selection.select(@population, 2)
+			private
 
-					if rand < @recombination_probability
-						child = @recombination.recombine(parents[0], parents[1])[0]
-					else
-						child = parents[1]
-					end
+			def best_solution
+				@population.best
+			end
 
-					@population.remove(@population.worst)
-					@population.add(@mutation.mutate(child))
-				end
-
+			def return_result
 				@population
 			end
+
+			def next_generation
+				parents = @selection.select(@population, 2)
+
+				if rand < @recombination_probability
+					child = @recombination.recombine(parents[0], parents[1])[0]
+				else
+					child = parents[1]
+				end
+
+				@population.remove(@population.worst)
+				@population.add(@mutation.mutate(child))
+			end
+
 		end
 
 	end
