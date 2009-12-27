@@ -107,37 +107,52 @@ module GraphColouring
 
 	end
 
-	def GraphColouring.another_mutation(individual)
-		individual.genome.map! { |gene| rand(individual.genome[index] + 1) if rand(100) >= MUTATION_RATE }
+	class AnotherMutation
+		def mutate(individual)
+			mutated = individual.deep_clone
+			genome = mutated.genome
+			genome.size.times do |index|
+				genome[index] = rand(genome[index] + 1) if rand(100) >= MUTATION_RATE
+			end
+
+			mutated
+		end
+
+		def to_s
+			"custom made mutation for graph colouring"
+		end
 	end
 
+
+	BEST = 5
+	GENERATIONS = 100
+	INDIVIDUALS = 25
+	USE_CUSTOM_MUATION = false
+
+	require 'benchmark'
+	#require 'profile'
+
+	def GraphColouring.run_algorithm(algorithm_class)
+		algorithm = algorithm_class.new(EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) })
+		algorithm.mutation = GraphColouring::AnotherMutation.new if USE_CUSTOM_MUATION
+		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS || best.fitness < BEST }
+
+		puts algorithm
+		puts "\treached goal after #{algorithm.generations_run}"
+		puts "\tbest individual: #{result.best}"
+		puts "\tworst individual: #{result.worst}"
+	end
+
+
+	timing = Benchmark.measure do
+		GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+
+		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber
+		puts
+		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm
+		puts
+		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
+	end
+	puts "\nRunning these algorithms took:\n#{timing}"
+
 end
-
-generations = 100
-individuals = 10
-
-require 'benchmark'
-#require 'profile'
-
-timing = Benchmark.measure do
-	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-
-	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
-	hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-	result = hillclimber.run_until_generations_reached(generations)
-	puts "PopulationHillclimber\nbest: #{result.best}"
-	puts "worst: #{result.worst}"
-
-	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
-	ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
-	result = ga.run_until_generations_reached(generations)
-	puts "GeneticAlgorithm\nbest: #{result.best}"
-	puts "worst: #{result.worst}"
-
-	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
-	steady_state = EvoSynth::Algorithms::SteadyStateGA.new(population)
-	result = steady_state.run_until_generations_reached(generations)
-	puts "SteadyStateGA\nbest: #{result.best}"
-	puts "worst: #{result.worst}"
-end
-puts "\nRunning these algorithms took:\n#{timing}"
