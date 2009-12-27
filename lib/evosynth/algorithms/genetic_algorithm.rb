@@ -27,7 +27,7 @@ module EvoSynth
 		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
 
 		class GeneticAlgorithm
-			include EvoSynth::Algorithms::EA_Algorithm
+			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
 			              :recombination_probability
@@ -37,8 +37,12 @@ module EvoSynth
 				@recombination_probability = recombination_probability
 
 				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
-				@crossover = EvoSynth::Recombinations::OnePointCrossover.new
+				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
 				@mutation = EvoSynth::Mutations::BinaryMutation.new(0.01)
+			end
+
+			def to_s
+				"Basic genetic Algoritm <Mutation: #{@mutation}, Selection: #{@selection}, Recombination: #{@recombination}>"
 			end
 
 			private
@@ -61,7 +65,7 @@ module EvoSynth
 					index_two = -1 if index_two >= selected_pop.size
 
 					if rand < @recombination_probability
-						recombined = @crossover.recombine(selected_pop[index_one], selected_pop[index_two])
+						recombined = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
 						child_one = recombined[0]
 						child_two = recombined[1]
 					else

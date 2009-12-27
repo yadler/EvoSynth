@@ -27,13 +27,17 @@ module EvoSynth
 		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
 		class PopulationHillclimber
-			include EvoSynth::Algorithms::EA_Algorithm
+			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation
 
 			def initialize(population)
 				@population = population
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
+			end
+
+			def to_s
+				"Population based hillclimber <Mutation: #{@mutation}>"
 			end
 
 			private

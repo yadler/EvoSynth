@@ -55,14 +55,14 @@ module MaxOnes
 	def MaxOnes.use_hillclimber(pop_size, generations)
 		individual = MaxOnes::BinaryIndividual.new(10)
 		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
-		result = hillclimber.run(pop_size * generations)
+		result = hillclimber.run_until_generations_reached(pop_size * generations)
 		puts "Hillclimber:\n#{result}"
 	end
 
 	def MaxOnes.use_population_hillclimber(pop_size, generations)
 		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
 		hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-		result = hillclimber.run(generations)
+		result = hillclimber.run_until_generations_reached(generations)
 		puts "PopulationHillclimber\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end
@@ -70,7 +70,7 @@ module MaxOnes
 	def MaxOnes.use_genetic_algorithm(pop_size, generations)
 		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
 		ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
-		result = ga.run(generations)
+		result = ga.run_until_generations_reached(generations)
 		puts "GeneticAlgorithm\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end
@@ -78,7 +78,7 @@ module MaxOnes
 	def MaxOnes.use_steady_state_ga(pop_size, generations)
 		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
 		steady_state_ga = EvoSynth::Algorithms::SteadyStateGA.new(population)
-		result = steady_state_ga.run(generations)
+		result = steady_state_ga.run_until_generations_reached(generations)
 		puts "GeneticAlgorithm\nbest: #{result.best}"
 		puts "worst: #{result.worst}"
 	end

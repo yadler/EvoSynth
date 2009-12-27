@@ -110,52 +110,41 @@ module SPk
 		end
 
 	end
+
+
+	K = 2
+	GENOME_SIZE = 16
+	GOAL = 48
+	MAX_GENERATIONS = 1000
+	INDIVIDUALS = 25
+
+	require 'benchmark'
+	#require 'profile'
+
+	def SPk.run_population_based_algorithm(algorithm_class, &condition)
+		algorithm = algorithm_class.new( EvoSynth::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) } )
+		result = algorithm.run_until &condition
+		puts algorithm
+		puts "\treached goal after #{algorithm.generations_run}"
+		puts "\tbest individual: #{result.best}"
+		puts "\tworst individual: #{result.worst}"
+	end
+
+	timing = Benchmark.measure do
+		individual = SPk::Individual.new(GENOME_SIZE, K)
+		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
+		result = hillclimber.run_until_generations_reached(INDIVIDUALS * MAX_GENERATIONS)
+		puts hillclimber
+		puts "\treached goal after #{hillclimber.generations_run}"
+		puts "\tbest: #{result}"
+
+		puts
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber) { |gen| gen >= MAX_GENERATIONS}
+		puts
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
+		puts
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA) { |gen| gen >= MAX_GENERATIONS}
+	end
+	puts "\nRunning these algorithms took:\n#{timing}"
+
 end
-
-k = 2
-genome_size = 16
-goal = 48
-generations = 1000
-individuals = 25
-
-require 'benchmark'
-#require 'profile'
-
-timing = Benchmark.measure do
-	individual = SPk::Individual.new(genome_size, k)
-	hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
-	result = hillclimber.run(individuals * generations)
-#	result = hillclimber.run_until_fitness_reached(48)
-	puts "Hillclimber:\n#{result}"
-
-	population = EvoSynth::Population.new(individuals) { SPk::Individual.new(genome_size, k) }
-
-	hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-#	result = hillclimber.run(generations)
-	result = hillclimber.run_until_fitness_reached(goal)
-	puts "PopulationHillclimber"
-	puts "-> reached goal after #{hillclimber.generations_run}"
-	puts "best: #{result.best}"
-	puts "worst: #{result.worst}"
-
-	population = EvoSynth::Population.new(individuals) { SPk::Individual.new(genome_size, k) }
-
-	ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
-#	result = ga.run(generations)
-	result = ga.run_until_fitness_reached(goal)
-	puts "GeneticAlgorithm"
-	puts "-> reached goal after #{ga.generations_run}"
-	puts "best: #{result.best}"
-	puts "worst: #{result.worst}"
-
-	population = EvoSynth::Population.new(individuals) { SPk::Individual.new(genome_size, k) }
-
-	steady_state = EvoSynth::Algorithms::SteadyStateGA.new(population)
-#	result = steady_state.run(generations)
-	result = steady_state.run_until_fitness_reached(goal)
-	puts "SteadyStateGA"
-	puts "-> reached goal after #{steady_state.generations_run}"
-	puts "best: #{result.best}"
-	puts "worst: #{result.worst}"
-end
-puts "\nRunning these algorithms took:\n#{timing}"

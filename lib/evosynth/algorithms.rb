@@ -21,31 +21,27 @@
 # License::   LGPLv3
 
 
+require 'delegate'
+
 module EvoSynth
 	module Algorithms
 
-		# This is used by the #run_until_fitness_reached functions
 
-		module EA_Algorithm
+		module Algorithm
 
 			attr_reader :generations_run
 
-			def run(generations)
+			def run_until(&condition)
 				@generations_run = 0
 
-				generations.times do |gen|
-					next_generation
-					@generations_run = gen
+				case condition.arity
+					when 1
+						loop_condition = lambda { !condition.call @generations_run }
+					when 2
+						loop_condition = lambda { !condition.call @generations_run, best_solution }
 				end
 
-				return_result
-			end
-
-			def run_until_fitness_reached(fitness)
-				@generations_run = 0
-				goal = Goal.new(fitness)
-
-				while best_solution < goal do
+				while loop_condition.call
 					next_generation
 					@generations_run += 1
 				end
@@ -53,17 +49,17 @@ module EvoSynth
 				return_result
 			end
 
-			private
-
-			class Goal
-				def initialize(goal)
-					@goal = goal
-				end
-				def fitness
-					@goal
-				end
+			def run_until_generations_reached(max_generations)
+				run_until { |gen| gen == max_generations }
 			end
+
+			def run_until_fitness_reached(fitness)
+				run_until { |gen, best| best.fitness >= fitness }
+			end
+
 		end
+
+
 	end
 end
 

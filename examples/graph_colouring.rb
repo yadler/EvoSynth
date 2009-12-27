@@ -124,19 +124,19 @@ timing = Benchmark.measure do
 
 	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-	result = hillclimber.run(generations)
+	result = hillclimber.run_until_generations_reached(generations)
 	puts "PopulationHillclimber\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
 
 	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
-	result = ga.run(generations)
+	result = ga.run_until_generations_reached(generations)
 	puts "GeneticAlgorithm\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
 
 	population = EvoSynth::Population.new(individuals) { GraphColouring::ColouringIndividual.new(graph) }
 	steady_state = EvoSynth::Algorithms::SteadyStateGA.new(population)
-	result = steady_state.run(generations)
+	result = steady_state.run_until_generations_reached(generations)
 	puts "SteadyStateGA\nbest: #{result.best}"
 	puts "worst: #{result.worst}"
 end

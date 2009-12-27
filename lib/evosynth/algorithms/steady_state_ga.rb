@@ -27,7 +27,7 @@ module EvoSynth
 		# STEADY-STATE-GA (Weicker Page 129)
 
 		class SteadyStateGA
-			include EvoSynth::Algorithms::EA_Algorithm
+			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
 			              :recombination_probability
@@ -39,6 +39,10 @@ module EvoSynth
 				@mutation = EvoSynth::Mutations::BinaryMutation.new
 				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
 				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
+			end
+
+			def to_s
+				"Steady-state genetic Algoritm <Mutation: #{@mutation}, Selection: #{@selection}, Recombination: #{@recombination}>"
 			end
 
 			private

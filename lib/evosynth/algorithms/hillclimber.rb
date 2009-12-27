@@ -27,13 +27,17 @@ module EvoSynth
 		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
 		class Hillclimber
-			include EvoSynth::Algorithms::EA_Algorithm
+			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation
 
 			def initialize(individual)
 				@individual = individual
 				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
+			end
+
+			def to_s
+				"Hillclimber <Mutation: #{@mutation}>"
 			end
 
 			private
