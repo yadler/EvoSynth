@@ -23,6 +23,7 @@
 
 require 'delegate'
 
+
 module EvoSynth
 	module Algorithms
 
@@ -54,7 +55,20 @@ module EvoSynth
 			end
 
 			def run_until_fitness_reached(fitness)
-				run_until { |gen, best| best.fitness >= fitness }
+				goal = Goal.new(fitness)
+				run_until { |gen, best| best > goal }
+			end
+
+			private
+
+			class Goal
+				def initialize(goal)
+					@goal = goal
+				end
+
+				def fitness
+					@goal
+				end
 			end
 
 		end
