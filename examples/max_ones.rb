@@ -56,31 +56,18 @@ module MaxOnes
 		individual = MaxOnes::BinaryIndividual.new(10)
 		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
 		result = hillclimber.run_until_generations_reached(pop_size * generations)
-		puts "Hillclimber:\n#{result}"
+		puts hillclimber
+		puts "\t #{result}"
 	end
 
-	def MaxOnes.use_population_hillclimber(pop_size, generations)
-		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
-		hillclimber = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-		result = hillclimber.run_until_generations_reached(generations)
-		puts "PopulationHillclimber\nbest: #{result.best}"
-		puts "worst: #{result.worst}"
-	end
+	def MaxOnes.run_algorithm(algorithm_class, pop_size, generations)
+		algorithm = algorithm_class.new(EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) })
+		result = algorithm.run_until_generations_reached(generations)
 
-	def MaxOnes.use_genetic_algorithm(pop_size, generations)
-		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
-		ga = EvoSynth::Algorithms::GeneticAlgorithm.new(population)
-		result = ga.run_until_generations_reached(generations)
-		puts "GeneticAlgorithm\nbest: #{result.best}"
-		puts "worst: #{result.worst}"
-	end
-
-	def MaxOnes.use_steady_state_ga(pop_size, generations)
-		population = EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) }
-		steady_state_ga = EvoSynth::Algorithms::SteadyStateGA.new(population)
-		result = steady_state_ga.run_until_generations_reached(generations)
-		puts "GeneticAlgorithm\nbest: #{result.best}"
-		puts "worst: #{result.worst}"
+		puts algorithm
+		puts "\treached goal after #{algorithm.generations_run}"
+		puts "\tbest individual: #{result.best}"
+		puts "\tworst individual: #{result.worst}"
 	end
 end
 
@@ -92,8 +79,11 @@ require 'benchmark'
 
 timing = Benchmark.measure do
 	MaxOnes.use_hillclimber(pop_size, generations)
-	MaxOnes.use_population_hillclimber(pop_size, generations)
-	MaxOnes.use_genetic_algorithm(pop_size, generations)
-	MaxOnes.use_steady_state_ga(pop_size, generations)
+	puts
+	MaxOnes.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, pop_size, generations)
+	puts
+	MaxOnes.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, pop_size, generations)
+	puts
+	MaxOnes.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, pop_size, generations)
 end
 puts "\nRunning these algorithms took:\n#{timing}"
