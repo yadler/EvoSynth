@@ -43,6 +43,10 @@ module EvoSynth
 				selected
 			end
 
+			def to_s
+				"n-stage tournament selection <stages: #{@stages}>"
+			end
+
 			private
 
 			def calculate_scores(population)

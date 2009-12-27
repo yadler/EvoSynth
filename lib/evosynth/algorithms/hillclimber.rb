@@ -37,7 +37,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"Hillclimber <Mutation: #{@mutation}>"
+				"hillclimber <mutation: #{@mutation}>"
 			end
 
 			private

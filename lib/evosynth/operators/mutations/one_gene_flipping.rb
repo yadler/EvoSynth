@@ -45,6 +45,10 @@ module EvoSynth
 				mutated
 			end
 
+			def to_s
+				"one-gene-flipping"
+			end
+
 		end
 
 	end

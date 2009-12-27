@@ -36,6 +36,10 @@ module EvoSynth
 				selected_population
 			end
 
+			def to_s
+				"select best individuals"
+			end
+
 		end
 
 	end

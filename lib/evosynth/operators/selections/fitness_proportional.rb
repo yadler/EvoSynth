@@ -43,6 +43,10 @@ module EvoSynth
 				selected_population
 			end
 
+			def to_s
+				"fitness proportional selection"
+			end
+
 			private
 
 			def select_next_individual(population, fitness_sum)

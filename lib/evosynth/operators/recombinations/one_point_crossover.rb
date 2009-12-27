@@ -49,6 +49,10 @@ module EvoSynth
 				[child_one, child_two]
 			end
 
+			def to_s
+				"1-point crossover"
+			end
+
 		end
 
 	end

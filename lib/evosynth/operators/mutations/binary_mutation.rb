@@ -64,6 +64,12 @@ module EvoSynth
 				mutated
 			end
 
+			def to_s
+				"binary mutation <probability: #{@probability}>"
+			end
+
+			private
+
 			# flips the genes only and only if it is really needed
 			# NOTE: this might not be as pretty as .map! but its faster
 

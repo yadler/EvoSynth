@@ -42,7 +42,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"Steady-state genetic Algoritm <Mutation: #{@mutation}, Selection: #{@selection}, Recombination: #{@recombination}>"
+				"steady-state genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
 			private

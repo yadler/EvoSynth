@@ -37,7 +37,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"Population based hillclimber <Mutation: #{@mutation}>"
+				"population based hillclimber <mutation: #{@mutation}>"
 			end
 
 			private

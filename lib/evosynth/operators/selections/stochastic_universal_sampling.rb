@@ -42,6 +42,10 @@ module EvoSynth
 				end
 			end
 
+			def to_s
+				"stochastic universal sampling"
+			end
+
 			private
 
 			def select_next_individual(population)

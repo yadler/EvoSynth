@@ -61,6 +61,10 @@ module EvoSynth
 				[child_one, child_two]
 			end
 
+			def to_s
+				"k-point crossover <#{@k}>"
+			end
+
 			private
 
 			def calculate_crossover_points(genome_length)

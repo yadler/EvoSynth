@@ -42,7 +42,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"Basic genetic Algoritm <Mutation: #{@mutation}, Selection: #{@selection}, Recombination: #{@recombination}>"
+				"basic genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
 			private

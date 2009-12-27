@@ -47,6 +47,10 @@ module EvoSynth
 				[child_one, child_two]
 			end
 
+			def to_s
+				"uniform crossover"
+			end
+
 		end
 
 	end

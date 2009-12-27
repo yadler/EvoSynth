@@ -46,6 +46,10 @@ module EvoSynth
 				selected_population
 			end
 
+			def to_s
+				"tournament selection <enemies: #{@enemies}>"
+			end
+
 			private
 
 			def fight(population, individual)
