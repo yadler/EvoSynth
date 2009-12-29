@@ -107,7 +107,7 @@ module GraphColouring
 
 	end
 
-	class AnotherMutation
+	class CustomMutation
 		def mutate(individual)
 			mutated = individual.deep_clone
 			genome = mutated.genome
@@ -134,7 +134,7 @@ module GraphColouring
 
 	def GraphColouring.run_algorithm(algorithm_class)
 		algorithm = algorithm_class.new(EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) })
-		algorithm.mutation = GraphColouring::AnotherMutation.new if USE_CUSTOM_MUATION
+		algorithm.mutation = GraphColouring::CustomMutation.new if USE_CUSTOM_MUATION
 		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS || best.fitness < BEST }
 
 		puts algorithm
