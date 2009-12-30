@@ -29,7 +29,8 @@ module EvoSynth
 		include Comparable
 		include Enumerable
 
-		attr_reader :individuals
+		attr_accessor :individuals
+
 		# Setup a population of individuals with the given size
 		# and a block to initialize each individual
 
@@ -38,6 +39,12 @@ module EvoSynth
 			@individuals.map! { |individual| yield } if block_given?
 		end
 
+		def deep_clone
+			my_clone = self.clone
+			my_clone.individuals = self.individuals.clone
+			self.individuals.each_index { |index| my_clone.individuals[index] = self.individuals[index].deep_clone }
+			my_clone
+		end
 
 		def <=>(anOther)
 			@individuals <=> anOther.individuals

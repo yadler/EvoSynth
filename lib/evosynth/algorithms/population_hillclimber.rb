@@ -56,7 +56,7 @@ module EvoSynth
 
 			def mutate(individual)
 				child = @mutation.mutate(individual)
-				individual = child > individual ? child : individual
+				child > individual ? child : individual
 			end
 
 		end

@@ -30,16 +30,20 @@ module EvoSynth
 		class StochasticUniversalSampling
 
 			def select(population, select_count = 1)
+				selected_population = Population.new
+
 				fitness_sum = 0.0
 				population.each { |individual| fitness_sum += individual.fitness }
 
 				limit = rand(fitness_sum / select_count)
 
 				select_count.times do
-					next_individual = select_next_individual(population, fitness_sum)
+					next_individual = select_next_individual(population, limit)
 					selected_population.add(next_individual)
 					limit += fitness_sum / select_count
 				end
+
+				selected_population
 			end
 
 			def to_s
@@ -48,7 +52,7 @@ module EvoSynth
 
 			private
 
-			def select_next_individual(population)
+			def select_next_individual(population, limit)
 				selection_sum = 0.0
 				population.each do |individual|
 					selection_sum += individual.fitness

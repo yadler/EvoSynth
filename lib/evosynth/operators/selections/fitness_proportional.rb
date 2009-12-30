@@ -35,6 +35,7 @@ module EvoSynth
 
 				fitness_sum = 0.0
 				population.each { |individual| fitness_sum += individual.fitness }
+
 				select_count.times do
 					next_individual = select_next_individual(population, fitness_sum)
 					selected_population.add(next_individual)

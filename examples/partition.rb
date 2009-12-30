@@ -37,8 +37,8 @@ module Partitionproblem
 		end
 
 		def calculate_fitness
-			sum_a = @genome[0..@partition_border].inject(0) { |sum, n| sum + n }
-			sum_b = @genome[@partition_border + 1..@genome.size].inject(0) { |sum, n| sum + n }
+			sum_a = @genome[0..@partition_border].inject(0) { |sum, n| n.nil? ? sum : sum + n }
+			sum_b = @genome[@partition_border + 1..@genome.size].inject(0) { |sum, n| n.nil? ? sum : sum + n }
 			(sum_a - sum_b).abs
 		end
 
@@ -51,12 +51,14 @@ module Partitionproblem
 	class PartitionMutation
 
 		def mutate(individual)
+			# FIXME this mutation is absolute bullshit - maybe I should go for a 2 array genome
 			mutated = individual.deep_clone
 			genome = mutated.genome
 
 			if rand(2) > 0
 				rand_index = rand(genome.size - mutated.partition_border)
-				genome.insert(0, genome.delete_at(mutated.partition_border + rand_index))
+				foo = genome.delete_at(mutated.partition_border + rand_index)
+				genome.insert(0, foo)
 				mutated.partition_border += 1
 			else
 				rand_index = rand(mutated.partition_border)
@@ -72,28 +74,55 @@ module Partitionproblem
 		end
 	end
 
+	module Testdata
 
-	def Partitionproblem.gen_tiny_set
-		set = Array.new(25)
-		set.fill { |i| i }
+		def Testdata.gen_tiny_set
+			problem = Array.new(25)
+			problem.fill { |i| i }
+		end
+
+		def Testdata.gen_layer_set
+			problem = Set.new
+			problem.add(rand(1000) * rand(1000)) while problem.size < 200
+			problem.add(rand(1000)) while problem.size < 1000
+			problem.to_a
+		end
+
+		def Testdata.gen_standard_set
+			problem = Array.new
+			1000.times { |i| problem.insert(-1, i)  }
+			problem
+		end
+
+		def Testdata.gen_random_set
+			problem = Set.new
+			problem.add(rand(1000000)) while problem.size < 1000
+			problem.to_a
+		end
+
+		def Testdata.gen_big_set
+			problem = Set.new
+			problem.add(rand(10000) * 100) while problem.size < 1000
+			problem.to_a
+		end
 	end
 
-	def Partitionproblem.gen_layer_set
-		set = Set.new
-		set.add(rand(1000) * rand(1000)) while set.size < 200
-		set.add(rand(1000)) while set.size < 1000
-		set.to_a
+	def Partitionproblem.get_genome_from(problem)
+		genome = EvoSynth::Genome.new(problem)
 	end
 
-	def Partitionproblem.get_genome_from(set)
-		genome = EvoSynth::Genome.new(set.size)
-		genome.each_index { |index| genome[index] = set[index] }
-	end
-
-	def Partitionproblem.run_algorithm(algorithm_class, population_size, generations)
-		population = EvoSynth::Population.new(population_size) { Partitionproblem::PartitionIndividual.new(get_genome_from(gen_layer_set)) }
+	def Partitionproblem.run_algorithm(algorithm_class, population, generations)
 		algorithm = algorithm_class.new(population)
+
+		# Setup custom mutation and never recombine (as it would destroy our genome)
 		algorithm.mutation = PartitionMutation.new
+		algorithm.recombination = EvoSynth::Recombinations::Identity.new if defined? algorithm.recombination
+
+		# algorithm.selection = EvoSynth::Selections::SelectBest.new if defined? algorithm.selection
+		algorithm.selection = EvoSynth::Selections::TournamentSelection.new(3) if defined? algorithm.selection
+		# algorithm.selection = EvoSynth::Selections::StochasticUniversalSampling.new if defined? algorithm.selection
+		# algorithm.selection = EvoSynth::Selections::NStageTournamentSelection.new(3) if defined? algorithm.selection
+		# algorithm.selection = EvoSynth::Selections::FitnessProportionalSelection.new if defined? algorithm.selection
 
 		result = algorithm.run_until_generations_reached(generations)
 		puts algorithm
@@ -107,8 +136,22 @@ module Partitionproblem
 
 end
 
-POPULATION_SIZE = 20
-GENERATIONS = 1000
+POPULATION_SIZE = 1
+GENERATIONS = 100000
 
-#Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, POPULATION_SIZE, GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, POPULATION_SIZE, GENERATIONS)
+problem = Partitionproblem::Testdata.gen_layer_set
+population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem::PartitionIndividual.new(Partitionproblem.get_genome_from(problem)) }
+
+puts "Starting with the following population:"
+puts "\tbest individual: #{population.best}"
+puts "\tworst individual: #{population.worst}"
+puts
+
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, population.deep_clone, GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, population.deep_clone, GENERATIONS)
+#Partitionproblem.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, population.deep_clone, GENERATIONS)
+
+puts
+puts "The startpopulation should not have changed:"
+puts "\tbest individual: #{population.best}"
+puts "\tworst individual: #{population.worst}"
