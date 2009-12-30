@@ -21,6 +21,21 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/identity'
+module EvoSynth
+	module Mutations
+
+		class Identity
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				mutated
+			end
+
+			def to_s
+				"identity (just clones individual)"
+			end
+
+		end
+
+	end
+end

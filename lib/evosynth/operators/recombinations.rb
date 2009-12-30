@@ -40,3 +40,4 @@ end
 require 'evosynth/operators/recombinations/uniform_crossover'
 require 'evosynth/operators/recombinations/one_point_crossover'
 require 'evosynth/operators/recombinations/k_point_crossover'
+require 'evosynth/operators/recombinations/identity'

@@ -21,6 +21,22 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/identity'
+module EvoSynth
+	module Recombinations
+
+		class Identity
+
+			def recombine(individual_one, individual_two)
+				child_one = individual_one.deep_clone
+				child_two = individual_two.deep_clone
+				[child_one, child_two]
+			end
+
+			def to_s
+				"identity (just clones parents)"
+			end
+
+		end
+
+	end
+end
