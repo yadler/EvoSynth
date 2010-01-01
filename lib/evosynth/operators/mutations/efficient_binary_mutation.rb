@@ -21,7 +21,38 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
+module EvoSynth
+	module Mutations
+
+		# EFFIZIENTE-BINÄRE-MUTATION (Seite 130)
+
+		class EfficientBinaryMutation
+
+			attr_accessor :probability
+
+			def initialize(probability = 0.1)
+				@probability = probability
+			end
+
+
+			def mutate(individual1)
+				mutated = individual1.deep_clone
+				@next_index = rand(mutated.genome.size) unless defined? @next_index
+
+				while @next_index < mutated.genome.size
+					mutated.genome[@next_index] = mutated.genome[@next_index].flip
+					@next_index += (Math.log(rand) / Math.log(1 - @probability)).ceil
+				end
+
+				@next_index -= mutated.genome.size
+				mutated
+			end
+
+			def to_s
+				"efficient binary muation"
+			end
+
+		end
+
+	end
+end
