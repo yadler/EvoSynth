@@ -17,7 +17,7 @@
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
 # Author::    Yves Adler (mailto:yves.adler@googlemail.com)
-# Copyright:: Copyright (C) 2009 Yves Adler
+# Copyright:: Copyright (C) 2010 Yves Adler
 # License::   LGPLv3
 
 
@@ -34,6 +34,7 @@ module EvoSynth
 
 				index_one = rand(genome.size)
 				index_two = rand(genome.size)
+				return mutated if index_one == index_two
 
 				genome[index_two] = genome[index_one]
 				if index_one > index_two

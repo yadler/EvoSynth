@@ -20,5 +20,35 @@
 # Copyright:: Copyright (C) 2010 Yves Adler
 # License::   LGPLv3
 
-require 'test/operators/mutations/tc_shifting_muation.rb'
-require 'test/operators/mutations/tc_mixing_mutation.rb'
+
+module EvoSynth
+	module Mutations
+
+		# MISCHENDE-MUTATION (Seite 132)
+
+		class MixingMutation
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				genome = mutated.genome
+
+				index_one = rand(genome.size)
+				index_two = rand(genome.size)
+				index_one, index_two = index_two, index_one if index_one > index_two
+				return mutated if index_one == index_two
+
+				subsection = genome[index_one, index_two]
+				subsection.sort! { rand(3) - 1 }
+				subsection.each_index { |index| genome[index_one + index] = subsection[index] }
+
+				mutated
+			end
+
+			def to_s
+				"mixing muation"
+			end
+
+		end
+
+	end
+end
