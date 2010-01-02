@@ -37,9 +37,9 @@ module EvoSynth
 
 				case condition.arity
 					when 1
-						loop_condition = lambda { !condition.call @generations_run }
+						loop_condition = lambda { !yield @generations_run }
 					when 2
-						loop_condition = lambda { !condition.call @generations_run, best_solution }
+						loop_condition = lambda { !yield @generations_run, best_solution }
 				end
 
 				while loop_condition.call

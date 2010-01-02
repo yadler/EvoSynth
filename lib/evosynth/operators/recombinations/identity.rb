@@ -29,7 +29,7 @@ module EvoSynth
 			def recombine(individual_one, individual_two)
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone
-				[child_one, child_two]
+				return child_one, child_two
 			end
 
 			def to_s

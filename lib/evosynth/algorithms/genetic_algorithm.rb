@@ -65,9 +65,7 @@ module EvoSynth
 					index_two = -1 if index_two >= selected_pop.size
 
 					if rand < @recombination_probability
-						recombined = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
-						child_one = recombined[0]
-						child_two = recombined[1]
+						child_one, child_two = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
 					else
 						child_one = selected_pop[index_one]
 						child_two = selected_pop[index_two]

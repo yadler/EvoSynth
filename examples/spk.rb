@@ -123,7 +123,7 @@ module SPk
 
 	def SPk.run_population_based_algorithm(algorithm_class, &condition)
 		algorithm = algorithm_class.new( EvoSynth::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) } )
-		result = algorithm.run_until &condition
+		result = algorithm.run_until(&condition)
 		puts algorithm
 		puts "\treached goal after #{algorithm.generations_run}"
 		puts "\tbest individual: #{result.best}"

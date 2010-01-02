@@ -46,7 +46,7 @@ module EvoSynth
 					child_two.genome[index] = individual_one.genome[index]
 				end
 
-				[child_one, child_two]
+				return child_one, child_two
 			end
 
 			def to_s
