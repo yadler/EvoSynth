@@ -29,34 +29,40 @@ require 'test/util/test_individuals'
 
 class ShiftingMutationTest < Test::Unit::TestCase
 
-	GENOME_SIZE = 10
+	GENOME_SIZE = 20
 
 	context "a shifting mutation run on binary genome" do
 
 		setup do
 			@mutation = EvoSynth::Mutations::ShiftingMutation.new
 			@individual = TestBinaryIndividual.new(GENOME_SIZE)
-			GENOME_SIZE.times { |index| @individual.genome[index] = (index % 2 == 1) ? true : false}
+			GENOME_SIZE.times { |index| @individual.genome[index] = (index % 2 == 1) ? 0 : 1 }
 		end
 
 		context "before mutation is executed" do
 
-			should "genes should alternate between true and false" do
-				previous = true
+			should "genes should alternate between 0 and 1" do
+				previous = 0
 				@individual.genome.each do |gene|
-					assert_equal !previous, gene
+					assert_not_equal previous, gene
 					previous = gene
 				end
 			end
 
+			should "the count of 0's and 1's should be the same" do
+				count_ones, count_zeros = 0, 0
+				@individual.genome.each { |gene| gene == 0 ? count_zeros += 1 : count_ones += 1 }
+				assert_equal count_ones, count_zeros
+			end
 		end
 
 		context "after mutations is executed" do
 
-			should "no idea how to test it (yet)" do
+			should "the count of 0's and 1's should still be the same" do
 				mutated = @mutation.mutate(@individual)
-#				puts @individual
-#				puts mutated
+				count_ones, count_zeros = 0, 0
+				mutated.genome.each { |gene| gene == 0 ? count_zeros += 1 : count_ones += 1 }
+				assert_equal count_ones, count_zeros
 			end
 
 		end

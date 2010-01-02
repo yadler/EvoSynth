@@ -37,7 +37,7 @@ module EvoSynth
 
 				genome[index_two] = genome[index_one]
 				if index_one > index_two
-					index_two.upto(index_two - 1) { |index| genome[index + 1] = individual.genome[index] }
+					index_two.upto(index_one - 1) { |index| genome[index + 1] = individual.genome[index] }
 				else
 					(index_one + 1).upto(index_two) { |index| genome[index - 1] = individual.genome[index] }
 				end
