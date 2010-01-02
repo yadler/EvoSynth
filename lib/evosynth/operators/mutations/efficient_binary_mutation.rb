@@ -17,7 +17,7 @@
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
 # Author::    Yves Adler (mailto:yves.adler@googlemail.com)
-# Copyright:: Copyright (C) 2009 Yves Adler
+# Copyright:: Copyright (C) 2010 Yves Adler
 # License::   LGPLv3
 
 
