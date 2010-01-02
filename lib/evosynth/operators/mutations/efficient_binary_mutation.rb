@@ -35,8 +35,8 @@ module EvoSynth
 			end
 
 
-			def mutate(individual1)
-				mutated = individual1.deep_clone
+			def mutate(individual)
+				mutated = individual.deep_clone
 				@next_index = rand(mutated.genome.size) unless defined? @next_index
 
 				while @next_index < mutated.genome.size
