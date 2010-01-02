@@ -17,12 +17,50 @@
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
 # Author::    Yves Adler (mailto:yves.adler@googlemail.com)
-# Copyright:: Copyright (C) 2009 Yves Adler
+# Copyright:: Copyright (C) 2010 Yves Adler
 # License::   LGPLv3
 
+require 'test/unit'
+require 'shoulda'
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
+require 'evosynth'
+require 'test/util/test_individuals'
+
+
+class ShiftingMutationTest < Test::Unit::TestCase
+
+	GENOME_SIZE = 10
+
+	context "a shifting mutation run on binary genome" do
+
+		setup do
+			@mutation = EvoSynth::Mutations::ShiftingMutation.new
+			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			GENOME_SIZE.times { |index| @individual.genome[index] = (index % 2 == 1) ? true : false}
+		end
+
+		context "before mutation is executed" do
+
+			should "genes should alternate between true and false" do
+				previous = true
+				@individual.genome.each do |gene|
+					assert_equal !previous, gene
+					previous = gene
+				end
+			end
+
+		end
+
+		context "after mutations is executed" do
+
+			should "no idea how to test it (yet)" do
+				mutated = @mutation.mutate(@individual)
+#				puts @individual
+#				puts mutated
+			end
+
+		end
+
+	end
+
+end

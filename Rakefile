@@ -57,7 +57,7 @@ test_dir = File.expand_path("tests")
 
 Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
-	test.test_files = FileList["tests/tc_*.rb"]
+	test.test_files = FileList["test/ts_*.rb"]
 	test.verbose = true
 end
 

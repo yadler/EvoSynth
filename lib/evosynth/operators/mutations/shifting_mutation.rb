@@ -21,8 +21,35 @@
 # License::   LGPLv3
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
+module EvoSynth
+	module Mutations
+
+		# VERSCHIEBENDE-MUTATION (Seite 132)
+
+		class ShiftingMutation
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				genome = mutated.genome
+
+				index_one = rand(genome.size)
+				index_two = rand(genome.size)
+
+				genome[index_two] = genome[index_one]
+				if index_one > index_two
+					index_two.upto(index_two - 1) { |index| genome[index + 1] = individual.genome[index] }
+				else
+					(index_one + 1).upto(index_two) { |index| genome[index - 1] = individual.genome[index] }
+				end
+
+				mutated
+			end
+
+			def to_s
+				"shifting muation"
+			end
+
+		end
+
+	end
+end

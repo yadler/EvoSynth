@@ -20,9 +20,51 @@
 # Copyright:: Copyright (C) 2009 Yves Adler
 # License::   LGPLv3
 
+require 'evosynth'
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
+
+class TestIndividual
+	attr_accessor :fitness
+
+	def initialize(fitness = 0.0)
+		@genome = EvoSynth::Genome.new
+		@fitness = fitness
+	end
+
+	def calculate_fitness
+		@fitness
+	end
+
+	def to_s
+		@fitness
+	end
+end
+
+
+class TestMinimizingIndividual < TestIndividual
+	include EvoSynth::MinimizingIndividual
+end
+
+
+class TestMaximizingIndividual < TestIndividual
+	include EvoSynth::MaximizingIndividual
+end
+
+
+# FIXME: replace this with a mocked object!
+
+class TestBinaryIndividual
+	include EvoSynth::MinimizingIndividual
+
+	def initialize(genome_size)
+		@genome = EvoSynth::Genome.new(genome_size)
+	end
+
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		"#{@fitness} - #{@genome}"
+	end
+end

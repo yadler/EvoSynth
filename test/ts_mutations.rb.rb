@@ -17,12 +17,7 @@
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
 # Author::    Yves Adler (mailto:yves.adler@googlemail.com)
-# Copyright:: Copyright (C) 2009 Yves Adler
+# Copyright:: Copyright (C) 2010 Yves Adler
 # License::   LGPLv3
 
-
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
+require 'test/operators/mutations/tc_shifting_muation.rb'
