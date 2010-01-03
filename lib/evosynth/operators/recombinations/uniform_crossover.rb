@@ -21,7 +21,6 @@ module EvoSynth
 	module Recombinations
 
 		#	UNIFORMER-CROSSOVER (Weicker Page 80)
-		# FIXME: refactor, improve, test me!
 
 		class UniformCrossover
 
@@ -32,9 +31,6 @@ module EvoSynth
 
 				shorter.genome.each_index do |index|
 					if (rand(2) > 0)
-						child_one.genome[index] = individual_one.genome[index]
-						child_two.genome[index] = individual_two.genome[index]
-					else
 						child_one.genome[index] = individual_two.genome[index]
 						child_two.genome[index] = individual_one.genome[index]
 					end
