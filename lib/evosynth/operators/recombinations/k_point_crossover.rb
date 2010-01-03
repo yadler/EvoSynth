@@ -54,7 +54,7 @@ module EvoSynth
 					end
 				end
 
-				return child_one, child_two
+				[child_one, child_two]
 			end
 
 			def to_s

@@ -20,7 +20,7 @@
 module EvoSynth
 	module Mutations
 
-		# VERSCHIEBENDE-MUTATION (Seite 132)
+		# VERSCHIEBENDE-MUTATION (Page 132)
 
 		class ShiftingMutation
 

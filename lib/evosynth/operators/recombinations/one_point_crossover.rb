@@ -20,7 +20,7 @@
 module EvoSynth
 	module Recombinations
 
-		#	EIN-PUNKT-CROSSOVER (Weicker Page 84)
+		# EIN-PUNKT-CROSSOVER (Weicker Page 84)
 		# FIXME: refactor, improve, test me!
 
 		class OnePointCrossover
@@ -42,7 +42,7 @@ module EvoSynth
 					child_two.genome[index] = individual_one.genome[index]
 				end
 
-				return child_one, child_two
+				[child_one, child_two]
 			end
 
 			def to_s

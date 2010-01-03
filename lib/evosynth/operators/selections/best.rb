@@ -25,7 +25,7 @@ module EvoSynth
 
 		class SelectBest
 
-			def select(population, select_count = 0)
+			def select(population, select_count = 1)
 				selected_population = Population.new
 				best = population.best(select_count)
 				best.each { |individual| selected_population.add(individual) }

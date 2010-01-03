@@ -21,8 +21,9 @@ module EvoSynth
 
 	module Selections
 
-		#	STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
+		# STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
 		# FIXME: add RSPec (find testcase!)
+		# TODO: rename to RoulettewheelSelection or not?
 
 		class StochasticUniversalSampling
 

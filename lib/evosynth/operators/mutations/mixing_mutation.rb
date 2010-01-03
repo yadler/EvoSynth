@@ -20,7 +20,7 @@
 module EvoSynth
 	module Mutations
 
-		# MISCHENDE-MUTATION (Seite 132)
+		# MISCHENDE-MUTATION (Page 132)
 
 		class MixingMutation
 

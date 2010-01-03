@@ -20,7 +20,7 @@
 module EvoSynth
 	module Mutations
 
-		# EFFIZIENTE-BINÄRE-MUTATION (Seite 130)
+		# EFFIZIENTE-BINÄRE-MUTATION (Page 130)
 
 		class EfficientBinaryMutation
 
