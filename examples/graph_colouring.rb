@@ -137,8 +137,9 @@ module GraphColouring
 
 		algorithm = algorithm_class.new(population)
 		algorithm.mutation = GraphColouring::CustomMutation.new if USE_CUSTOM_MUATION
-		algorithm.mutation = EvoSynth::Mutations::Identity.new
-		algorithm.selection = EvoSynth::Selections::SelectBest.new
+		algorithm.recombination = EvoSynth::Recombinations::KPointCrossover.new(4) if defined? algorithm.recombination
+#		algorithm.mutation = EvoSynth::Mutations::Identity.new
+#		algorithm.selection = EvoSynth::Selections::SelectBest.new
 		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS || best.fitness < BEST }
 
 		puts algorithm
@@ -151,11 +152,11 @@ module GraphColouring
 	timing = Benchmark.measure do
 		GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
 
-#		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber
+		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber
 		puts
 		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm
 		puts
-#		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
+		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
 	end
 	puts "\nRunning these algorithms took:\n#{timing}"
 

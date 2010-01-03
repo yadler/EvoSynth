@@ -39,12 +39,13 @@ module EvoSynth
 				crossover_points = random_crossover_points(shorter.genome.size)
 
 				@k.times do |m|
-					range = (crossover_points[m] + 1)..crossover_points[m + 1]
+					begin
+						range = (crossover_points[m] + 1)..crossover_points[m + 1]
+					rescue ArgumentError
+						next
+					end
 
-					if m % 2 == 0
-						child_one.genome[range] = individual_one.genome[range]
-						child_two.genome[range] = individual_two.genome[range]
-					else
+					if m % 2 == 1
 						child_one.genome[range] = individual_two.genome[range]
 						child_two.genome[range] = individual_one.genome[range]
 					end
