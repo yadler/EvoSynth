@@ -21,32 +21,29 @@ module EvoSynth
 	module Recombinations
 
 		# EIN-PUNKT-CROSSOVER (Weicker Page 84)
-		# FIXME: refactor, improve, test me!
 
 		class OnePointCrossover
 
-			def recombine(individual_one, individual_two)
-				child_one = individual_one.deep_clone
-				child_two = individual_two.deep_clone
-				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
+			def recombine(parent_one, parent_two)
+				child_one = parent_one.deep_clone
+				child_two = parent_two.deep_clone
 
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(parent_one, parent_two)
 				crossover_point = rand(shorter.genome.size)
 
-				crossover_point.times do |index|
-					child_one.genome[index] = individual_one.genome[index]
-					child_two.genome[index] = individual_two.genome[index]
-				end
+				first_range = 0..crossover_point
+				child_one.genome[first_range] =  parent_one.genome[first_range]
+				child_two.genome[first_range] =  parent_two.genome[first_range]
 
-				crossover_point.upto(shorter.genome.size - 1) do |index|
-					child_one.genome[index] = individual_two.genome[index]
-					child_two.genome[index] = individual_one.genome[index]
-				end
+				second_range = (crossover_point + 1)..(shorter.genome.size - 1)
+				child_one.genome[second_range] = parent_two.genome[second_range]
+				child_two.genome[second_range] = parent_one.genome[second_range]
 
 				[child_one, child_two]
 			end
 
 			def to_s
-				"1-point crossover"
+				"one-point crossover"
 			end
 
 		end
