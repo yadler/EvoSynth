@@ -17,7 +17,6 @@
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
 
-require 'test/unit'
 require 'shoulda'
 
 require 'evosynth'
