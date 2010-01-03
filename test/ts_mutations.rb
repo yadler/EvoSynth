@@ -1,4 +1,4 @@
-#    Copyright (C) 2009 Yves Adler <yves.adler@googlemail.com>
+#    Copyright (C) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
 #
 #    This file is part of EvoSynth, a framework for rapid prototyping of
 #    evolutionary and genetic algorithms.
@@ -16,9 +16,6 @@
 #    You should have received a copy of the GNU Lesser General Public License
 #    along with EvoSynth.  If not, see <http://www.gnu.org/licenses/>.
 
-# Author::    Yves Adler (mailto:yves.adler@googlemail.com)
-# Copyright:: Copyright (C) 2010 Yves Adler
-# License::   LGPLv3
 
 require 'test/operators/mutations/tc_shifting_muation.rb'
 require 'test/operators/mutations/tc_mixing_mutation.rb'
