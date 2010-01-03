@@ -22,7 +22,7 @@ module EvoSynth
 
 		# Returns individual with the shorter genome
 
-		def Recombinations.get_shorter_genome(individual_one, individual_two)
+		def Recombinations.individual_with_shorter_genome(individual_one, individual_two)
 			if individual_one.genome.size > individual_one.genome.size then
 				individual_two
 			else

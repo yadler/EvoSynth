@@ -36,7 +36,7 @@ module EvoSynth
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone
 
-				shorter = EvoSynth::Recombinations.get_shorter_genome(individual_one, individual_two)
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
 				crossover_points = calculate_crossover_points(shorter.genome.size)
 
 				@k.times do |m|

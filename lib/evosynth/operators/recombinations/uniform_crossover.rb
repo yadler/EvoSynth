@@ -28,7 +28,7 @@ module EvoSynth
 			def recombine(individual_one, individual_two)
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone
-				shorter = EvoSynth::Recombinations.get_shorter_genome(individual_one, individual_two)
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
 
 				shorter.genome.each_index do |index|
 					if (rand(2) > 0)
