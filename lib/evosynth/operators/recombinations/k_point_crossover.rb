@@ -21,14 +21,13 @@ module EvoSynth
 	module Recombinations
 
 		# K-PUNKT-CROSSOVER (Weicker Page 130)
-		# TODO: why k == 3 for 2-point-crossover behaviour?
-		# TODO: implement real 2-point-crossover for better performance
+		# TODO: implement real 2-point-crossover for better performance?
 
 		class KPointCrossover
 
 			attr_accessor :k
 
-			def initialize(k = 3)
+			def initialize(k = 2)
 				@k = k
 			end
 
@@ -37,20 +36,17 @@ module EvoSynth
 				child_two = individual_two.deep_clone
 
 				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
-				crossover_points = calculate_crossover_points(shorter.genome.size)
+				crossover_points = random_crossover_points(shorter.genome.size)
 
 				@k.times do |m|
-					start_index = crossover_points[m] + 1
-					end_index = crossover_points[m + 1]
+					range = (crossover_points[m] + 1)..crossover_points[m + 1]
 
-					start_index.upto(end_index) do |index|
-						if m % 2 == 0
-							child_one.genome[index] = individual_one.genome[index]
-							child_two.genome[index] = individual_two.genome[index]
-						else
-							child_one.genome[index] = individual_two.genome[index]
-							child_two.genome[index] = individual_one.genome[index]
-						end
+					if m % 2 == 0
+						child_one.genome[range] = individual_one.genome[range]
+						child_two.genome[range] = individual_two.genome[range]
+					else
+						child_one.genome[range] = individual_two.genome[range]
+						child_two.genome[range] = individual_one.genome[range]
 					end
 				end
 
@@ -58,17 +54,17 @@ module EvoSynth
 			end
 
 			def to_s
-				"k-point crossover <#{@k}>"
+				"k-point crossover (k=#{@k})"
 			end
 
 			private
 
-			def calculate_crossover_points(genome_length)
+			def random_crossover_points(genome_length)
 				points = []
 				@k.times { points << rand(genome_length) }
 				points.sort!
 				points[0] = 0
-				points << genome_length
+				points[@k-1] = genome_length
 				points
 			end
 
