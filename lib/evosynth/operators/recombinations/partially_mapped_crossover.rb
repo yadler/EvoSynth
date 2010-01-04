@@ -22,27 +22,61 @@ module EvoSynth
 
 		# ABBILDUNGSREKOMBINATION (Weicker Page 133)
 
-		# FIXME: finish implementation
+		# FIXME: refactor, improve and test me some more!
 		
 		class PartiallyMappedCrossover
 
-			def recombine(individual_one, individual_two)
-				child_one = individual_one.deep_clone
-				child_two = individual_two.deep_clone
-
-				mapping_one_two = mapping_array(individual_one.genome, individual_two.genome)
-				mapping_two_one = mapping_array(individual_two.genome, individual_one.genome)
-
-				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
-				index_one = rand(individual_one.genome.size - 2) + 1
-				index_two = rand(shorter.size)
-				index_one, index_two = index_two, index_one if index_one > index_two
+			def recombine(parent_one, parent_two)
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(parent_one, parent_two)
+				index_one, index_two = rand_indexes(shorter)
+				child_one = recombine_to_one(parent_one, parent_two, index_one, index_two)
+				child_two = recombine_to_one(parent_two, parent_one, index_one, index_two)
 
 				[child_one, child_two]
 			end
 
+			def recombine_to_one(parent_one, parent_two, index_one, index_two)
+				child = parent_one.deep_clone
+				child.genome.fill { 0 }
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(parent_one, parent_two)
+
+				range = (index_one..index_two)
+				child.genome[range] = parent_two.genome[range]
+				used_genes = parent_two.genome[range]
+
+				mapping = mapping_array(parent_one.genome, parent_two.genome)
+
+				range = 0..(index_one - 1)
+				range.each do |index|
+					x = parent_one.genome[index]
+					x = mapping[x] while used_genes.include?(x)
+					child.genome[index] = x
+					used_genes << x
+				end
+
+				range = (index_two + 1)..shorter.genome.size
+				range.each do |index|
+					x = parent_one.genome[index]
+					x = mapping[x] while used_genes.include?(x)
+					child.genome[index] = x
+					used_genes << x
+				end
+
+				child
+			end
+
 			def to_s
 				"mapping recombination"
+			end
+
+			private
+
+			def rand_indexes(shorter)
+				index_one = rand(shorter.genome.size - 2) + 1
+				index_two = rand(shorter.genome.size - 2) + 1
+				index_one, index_two = index_two, index_one if index_one > index_two
+				[index_one, index_two]
+				[1,3]
 			end
 
 			def mapping_array(genome_from, genome_to)
@@ -57,15 +91,37 @@ module EvoSynth
 end
 
 require 'evosynth'
+class TestIndividual
+	include EvoSynth::MaximizingIndividual
 
-one = EvoSynth::Genome.new([1,4,6,5,7,2,3])
+	attr_accessor :genome
+
+	def initialize(genes)
+		@genome = EvoSynth::Genome.new(genes)
+		@fitness = 0.0
+	end
+
+	def calculate_fitness
+		@fitness
+	end
+
+	def to_s
+		@genome.to_s
+	end
+end
+
+require 'evosynth'
+
+one = TestIndividual.new([1,4,6,5,7,2,3])
 #one.fill { |i| i }
-two = EvoSynth::Genome.new([1,2,3,4,5,6,7])
+two = TestIndividual.new([1,2,3,4,5,6,7])
 #two.fill { |i| 9-i }
 puts one.to_s
 puts two.to_s
 
 recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 
-puts recombination.mapping_array(one, two)
-puts recombination.mapping_array(two, one)
+puts
+#puts recombination.recombine_to_one(one, two)
+puts
+puts recombination.recombine(one, two)
