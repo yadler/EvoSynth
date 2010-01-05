@@ -65,3 +65,20 @@ class TestBinaryIndividual
 		"#{@fitness} - #{@genome}"
 	end
 end
+
+class TestGenomeIndividual
+	include EvoSynth::MinimizingIndividual
+
+	def initialize(genes)
+		@fitness = 0
+		@genome = EvoSynth::Genome.new(genes)
+	end
+
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		"#{@fitness} - #{@genome}"
+	end
+end
