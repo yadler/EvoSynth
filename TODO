@@ -33,17 +33,6 @@ end
 
 Struct erstellt getter und setter!
 
-------------------------------------------------
-
-"{#foo} blabla {#bar}" ist besser als to_s bullshit!!
-
-------------------------------------------------
-
-contextr wirkt etwas überzogen und ohne sinn für mich,
-vielleicht aber doch? nochmal über verwendungsmölichkeiten
-nachdenken, insgesamt isses ja recht praktische für
-ausgaben zum bleistift!
-
 -----------------------------------------------
 
 für mockups:
@@ -61,8 +50,6 @@ http://charlesmaxwood.com/rspec-vs-testunit/
 
 -----------------------------------------------
 
-(18:37:59) yves: vielleicht sollte ich die möglichkeiten von ruby auch
-so nutzen und sowas machen:
 evolution do
 	population is
 		Population.new(foo)
@@ -71,18 +58,4 @@ evolution do
 		bar
 	end
 end
-(18:39:04) Manuel Unglaub: sieht gut lesbar aus
-(18:39:53) yves: muss ich mir vielleicht wirklich mal gedanken drüber machen
-
------------------------------------------------
-
-(18:44:42) yves: EvoSynth - dynamisch, specification driven, aspect
-oriented framework for rapid prototyping of evolutionary algorithms :D
-(18:45:01) Manuel Unglaub: agile development hast du vergessen
-(18:45:08) yves: und extreme
-
------------------------------------------------
-
-Aspekte für callbacks und so?
-http://www.ironicwolf.com/2009/04/aspect-the-ruby-way/
 
