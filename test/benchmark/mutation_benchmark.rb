@@ -22,34 +22,42 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
-	module Mutations
+require 'benchmark'
+#require 'profile'
 
-		# MISCHENDE-MUTATION (Page 132)
 
-		class MixingMutation
+require 'evosynth'
+require 'test/util/test_individuals'
 
-			def mutate(individual)
-				mutated = individual.deep_clone
-				genome = mutated.genome
+# TODO: how could this be done in a good way?
+# maybe I should do this in evosynth.rb?
+# (see also max_ones.rb!)
 
-				index_one = rand(genome.size)
-				index_two = rand(genome.size)
-				index_one, index_two = index_two, index_one if index_one > index_two
-				return mutated if index_one == index_two
-
-				subsection = genome[index_one..index_two]
-				subsection.sort! { rand(2) }
-				genome[index_one..index_two] = subsection
-
-				mutated
-			end
-
-			def to_s
-				"mixing muation"
-			end
-
-		end
-
+class TrueClass
+	def flip
+		!self
 	end
+end
+
+class FalseClass
+	def flip
+		!self
+	end
+end
+
+
+GENOME_SIZE = 1000
+MUTATE_TIMES = 10000
+
+individual = TestBinaryIndividual.new(GENOME_SIZE)
+GENOME_SIZE.times { |index| individual.genome[index] = (index % 2 == 1) ? true : false }
+
+puts "Running mutation benchmark with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
+EvoSynth::Mutations.constants.each do |mutation|
+	mutation = EvoSynth::Mutations.const_get(mutation).new
+
+	timing = Benchmark.measure do
+		MUTATE_TIMES.times { mutation.mutate(individual) }
+	end
+	puts "\t#{timing.format("%r")} - #{mutation.class}"
 end
