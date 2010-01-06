@@ -22,11 +22,15 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'set'
+
+
 module EvoSynth
 	module Recombinations
 
 		# ABBILDUNGSREKOMBINATION (Weicker Page 133)
-		
+		# FIXME: can the infinite loop problem (with boolean genotype) be solved somehow?
+
 		class PartiallyMappedCrossover
 
 			def recombine(parent_one, parent_two)
@@ -51,7 +55,7 @@ module EvoSynth
 				index_one, index_two = indexes
 				range = (index_one..index_two)
 				child.genome[range] = parent_two.genome[range]
-				used_genes = parent_two.genome[range]
+				used_genes = parent_two.genome[range].to_set
 
 				range = 0..(index_one - 1)
 				fill_range(range, mapping, used_genes, parent_one, child)
@@ -80,7 +84,7 @@ module EvoSynth
 
 			def mapping_array(genome_from, genome_to)
 				mapping = Hash.new
-				genome_to.each_index { |index| mapping[genome_from[index]] = genome_to[index] }
+				genome_from.each_with_index { |gene, index| mapping[gene] = genome_to[index] }
 				mapping
 			end
 
