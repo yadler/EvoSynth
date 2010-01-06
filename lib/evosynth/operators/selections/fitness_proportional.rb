@@ -34,11 +34,11 @@ module EvoSynth
 			def select(population, select_count = 1)
 				selected_population = Population.new
 
-				fitness_sum = 0.0
-				population.each { |individual| fitness_sum += individual.fitness }
+				fitness_hash = generate_fitness_hash(population)
 
 				select_count.times do
-					next_individual = select_next_individual(population, fitness_sum)
+					limit = rand(fitness_hash[population.size - 1])
+					next_individual = select_next_individual(population, limit, fitness_hash)
 					selected_population.add(next_individual)
 				end
 
@@ -51,13 +51,21 @@ module EvoSynth
 
 			private
 
-			def select_next_individual(population, fitness_sum)
-				selection_sum = 0.0
-				limit = rand(fitness_sum)
+			def generate_fitness_hash(population)
+				fitness_hash = {}
+				fitness_sum = 0.0
 
-				population.each do |individual|
-					selection_sum += individual.fitness
-					return individual if (selection_sum >= limit)
+				population.each_with_index do |individual, index|
+					fitness_sum += individual.fitness
+					fitness_hash[index] = fitness_sum
+				end
+
+				fitness_hash
+			end
+
+			def select_next_individual(population, limit, fitness_hash)
+				population.each_with_index do |individual, index|
+					return individual if fitness_hash[index] >= limit
 				end
 			end
 

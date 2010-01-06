@@ -32,8 +32,14 @@ module EvoSynth
 
 			def select(population, select_count = 1)
 				selected_population = Population.new
-				best = population.best(select_count)
-				best.each { |individual| selected_population.add(individual) }
+
+				if select_count > 1
+					best = population.best(select_count)
+					best.each { |individual| selected_population.add(individual) }
+				else
+					selected_population.add(population.best)
+				end
+
 				selected_population
 			end
 

@@ -22,61 +22,27 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
+require 'benchmark'
+#require 'profile'
 
-	module Selections
 
-		# Q-STUFIGE-TURNIER-SELEKTION (Weicker Page 69)
+require 'evosynth'
+require 'test/util/test_individuals'
 
-		class NStageTournamentSelection
+POPULATION_SIZE = 1000
+SELECTION_TIMES = 1000
+SELECT_COUNT = 10
 
-			attr_accessor :stages
+population = EvoSynth::Population.new
+POPULATION_SIZE.times { |i| population.add(TestMaximizingIndividual.new(i)) }
 
-			def initialize(stages = 2)
-				@stages = stages
-			end
+puts "Running selection benchmark with #{SELECTION_TIMES} selections (population size=#{POPULATION_SIZE}, select count=#{SELECT_COUNT}):"
+EvoSynth::Selections.constants.each do |selection|
+	selection = EvoSynth::Selections.const_get(selection).new
+#	selection = EvoSynth::Selections::NStageTournamentSelection.new
 
-			def select(population, select_count = 1)
-				selected_population = Population.new
-
-				scores = calculate_scores(population)
-				scores = scores.sort { |first, second| first[0] <=> second[0] * -1 }
-				scores.first(select_count).each { |winner| selected_population.add(winner[1]) }
-
-				selected_population
-			end
-
-			def to_s
-				"n-stage tournament selection <stages: #{@stages}>"
-			end
-
-			private
-
-			def calculate_scores(population)
-				scores = []
-
-				population.each do |individual|
-					victories = fight(population, individual)
-					scores << [victories, individual]
-				end
-
-				scores
-			end
-
-			def fight(population, individual)
-				victories = 0
-
-				@stages.times do
-					enemy = population[rand(population.size)]
-					victories += 1 if individual > enemy
-				end
-
-				victories
-			end
-
-		end
-
+	timing = Benchmark.measure do
+		SELECTION_TIMES.times { selection.select(population, SELECT_COUNT) }
 	end
-
+	puts "\t#{timing.format("%r")} - #{selection.class}"
 end
-

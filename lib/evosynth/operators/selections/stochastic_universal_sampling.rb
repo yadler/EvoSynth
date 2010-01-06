@@ -29,21 +29,20 @@ module EvoSynth
 		# STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
 		# FIXME: add RSPec (find testcase!)
 		# TODO: rename to RoulettewheelSelection or not?
+		# FIXME: code duplication (see fitness_proportional.rb)
 
 		class StochasticUniversalSampling
 
 			def select(population, select_count = 1)
 				selected_population = Population.new
 
-				fitness_sum = 0.0
-				population.each { |individual| fitness_sum += individual.fitness }
-
-				limit = rand(fitness_sum / select_count)
+				fitness_hash = generate_fitness_hash(population)
+				limit = rand(fitness_hash[population.size - 1] / select_count)
 
 				select_count.times do
-					next_individual = select_next_individual(population, limit)
+					next_individual = select_next_individual(population, limit, fitness_hash)
 					selected_population.add(next_individual)
-					limit += fitness_sum / select_count
+					limit += fitness_hash[population.size - 1] / select_count
 				end
 
 				selected_population
@@ -55,11 +54,21 @@ module EvoSynth
 
 			private
 
-			def select_next_individual(population, limit)
-				selection_sum = 0.0
-				population.each do |individual|
-					selection_sum += individual.fitness
-					return individual if (selection_sum >= limit)
+			def generate_fitness_hash(population)
+				fitness_hash = {}
+				fitness_sum = 0.0
+
+				population.each_with_index do |individual, index|
+					fitness_sum += individual.fitness
+					fitness_hash[index] = fitness_sum
+				end
+
+				fitness_hash
+			end
+
+			def select_next_individual(population, limit, fitness_hash)
+				population.each_with_index do |individual, index|
+					return individual if fitness_hash[index] >= limit
 				end
 			end
 
