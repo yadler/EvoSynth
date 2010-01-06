@@ -23,6 +23,7 @@
 
 
 require 'evosynth'
+require 'set'
 
 # add flip to fixnum (our gene) for mutation
 class Fixnum
@@ -82,14 +83,7 @@ module GraphColouring
 		def randomize_genome
 			max_color = rand(@genome.size > MAX_COLORS ? MAX_COLORS : @genome.size) + 1
 			@genome.map! { |gene| rand(max_color)}
-			@genome.map! { |gene| gene % get_uniq.size }
-		end
-		
-		# workaround because of the rather ugly behaviour of rubys arr.uniq
-		def get_uniq
-			unique_colors = Array.new
-			@genome.each { |gene| unique_colors << gene if !unique_colors.include?(gene)}
-			unique_colors
+			@genome.map! { |gene| gene % @genome.uniq.size }
 		end
 
 		def verletzungen
@@ -103,7 +97,7 @@ module GraphColouring
 		end
 
 		def calculate_fitness
-			fitness = 0.0 + get_uniq.size * (verletzungen + 1)
+			fitness = 0.0 + @genome.uniq.size * (verletzungen + 1)
 			fitness
 		end
 
@@ -145,7 +139,7 @@ module GraphColouring
 		algorithm.recombination = EvoSynth::Recombinations::KPointCrossover.new(4) if defined? algorithm.recombination
 #		algorithm.mutation = EvoSynth::Mutations::Identity.new
 #		algorithm.selection = EvoSynth::Selections::SelectBest.new
-		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS || best.fitness < BEST }
+		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS } #|| best.fitness < BEST }
 
 		puts algorithm
 		puts "\treached goal after #{algorithm.generations_run}"
@@ -153,16 +147,23 @@ module GraphColouring
 		puts "\tworst individual: #{result.worst}"
 	end
 
+	GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
 
 	timing = Benchmark.measure do
-		GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-
 		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber
-		puts
+	end
+	puts "\nRunning these algorithm took:\n#{timing}"
+
+	puts
+	timing = Benchmark.measure do
 		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm
-		puts
+	end
+	puts "\nRunning these algorithm took:\n#{timing}"
+
+	puts
+	timing = Benchmark.measure do
 		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
 	end
-	puts "\nRunning these algorithms took:\n#{timing}"
+	puts "\nRunning these algorithm took:\n#{timing}"
 
 end
