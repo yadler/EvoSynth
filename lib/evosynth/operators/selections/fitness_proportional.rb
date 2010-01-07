@@ -37,7 +37,7 @@ module EvoSynth
 				fitness_hash = generate_fitness_hash(population)
 
 				select_count.times do
-					limit = rand(fitness_hash[population.size - 1])
+					limit = rand(fitness_hash[population.size - 1]).floor
 					next_individual = select_next_individual(population, limit, fitness_hash)
 					selected_population.add(next_individual)
 				end

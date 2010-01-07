@@ -166,18 +166,20 @@ module Ants
 	class AntIndividual
 		include EvoSynth::MinimizingIndividual
 
-		def initialize(problem_matrix, start, exploration_weight = 0.5)
+		def initialize(problem_matrix, pheromon, start, exploration_weight = 0.5)
 			@exploration_weight = exploration_weight
 
 			@problem_matrix = problem_matrix
+			@pheromon = pheromon
+
 			@genome = EvoSynth::ArrayGenome.new
 			@genome << start
 		end
 
-		def generate_route(pheromon)
+		def generate_route!
 			(@problem_matrix.size - 1).times do
 				if rand < @exploration_weight
-					@genome << @problem_matrix.get_next_node(@genome, pheromon, @genome.last)
+					@genome << @problem_matrix.get_next_node(@genome, @pheromon, @genome.last)
 				else
 					@genome << @problem_matrix.get_nearest_node(@genome, @genome.last)
 				end
@@ -195,26 +197,40 @@ module Ants
 			fitness
 		end
 	end
+
+	class SimpleAntMutation
+
+		def mutate(ant)
+			mutated = ant.deep_clone
+			mutated.genome[1..mutated.genome.size-1] = []
+			mutated.generate_route!
+			mutated
+		end
+
+	end
 end
 
 matrix = Ants::ProblemMatrix.new('testdata/ant/bays29.tsp')
 puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 
 PHEROMON = Ants::Pheromon.new(matrix.size)
-ant = Ants::AntIndividual.new(matrix, 1)
 
-class EvoSynth::Algorithms::Hillclimber
+class EvoSynth::Algorithms::SteadyStateGA
 	alias :original_next_generation :next_generation
 
 	def next_generation
 		original_next_generation
-		PHEROMON.update([@individual]);
+		PHEROMON.update(@population);
 	end
 end
 
+population = EvoSynth::Population.new
+10.times { population.add(Ants::AntIndividual.new(matrix, PHEROMON, 1)) }
 
-hillclimber = EvoSynth::Algorithms::Hillclimber.new(ant)
-hillclimber.mutation = EvoSynth::Mutations::Identity.new 
-result = hillclimber.run_until_generations_reached(50)
-puts hillclimber
+algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population)
+#algorithm.mutation = EvoSynth::Mutations::Identity.new
+algorithm.mutation = Ants::SimpleAntMutation.new
+
+result = algorithm.run_until_generations_reached(50)
+puts algorithm
 puts "\t #{result}"
