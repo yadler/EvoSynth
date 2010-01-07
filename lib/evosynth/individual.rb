@@ -32,7 +32,6 @@ module EvoSynth
 			@changed = true
 		end
 
-
 		def [](*n)
 			@changed = true
 			super(*n)

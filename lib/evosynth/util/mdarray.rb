@@ -29,47 +29,70 @@ module EvoSynth
 		# Simple multidimensional Array
 
 		class MDArray
+			attr_reader :rows, :cols
 
 			def initialize(rows, columns, initial_data = nil)
-				@row_count = rows
-				@col_count = columns
-				@data = Array.new(@row_count * @col_count, initial_data)
+				@rows = rows
+				@cols = columns
+				@data = Array.new(@rows * @cols, initial_data)
 			end
 
 			def [](row, col)
-				@data[row * @col_count + col]
+				@data[row * @cols + col]
 			end
 
 			def []=(row, col, data)
-				@data[row * @col_count + col] = data
+				@data[row * @cols + col] = data
+			end
+
+			def row_to_a(row)
+				@data[(row * @cols)..(row * @cols + @cols - 1)]
+			end
+
+			def col_to_a(col)
+				column = []
+				@rows.times { |row| column << @data[@rows * row + col] }
+				column
+			end
+
+			def each
+				@rows.times do	|row|
+					@cols.times do |col|
+						yield @data[row * @cols + col]
+					end
+				end
 			end
 
 			def each_index
-				@row_count.times do	|row|
-					@col_count.times do |col|
+				@rows.times do	|row|
+					@cols.times do |col|
 						yield row, col
 					end
 				end
 			end
 
 			def each_with_index
-				@row_count.times do	|row|
-					@col_count.times do |col|
-						yield @data[row * @col_count + col], row, col
+				@rows.times do	|row|
+					@cols.times do |col|
+						yield @data[row * @cols + col], row, col
 					end
 				end
 			end
 
 			def each_row
-				@row_count.times do	|row|
+				@rows.times do	|row|
 					row_data = []
 
-					@col_count.times do |col|
-						row_data << @data[row * @col_count + col]
+					@cols.times do |col|
+						row_data << @data[row * @cols + col]
 					end
 
-					yield row_data
+					yield row_data, row
 				end
+			end
+
+			def dimensions
+				[@rows, @cols]
 			end
 
 			def to_s
