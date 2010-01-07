@@ -42,7 +42,7 @@ module MaxOnes
 		include EvoSynth::MaximizingIndividual
 
 		def initialize(genome_size)
-			@genome = EvoSynth::Genome.new(genome_size)
+			@genome = EvoSynth::ArrayGenome.new(genome_size)
 			@genome.map! { rand(2) > 0 ? true : false }
 		end
 

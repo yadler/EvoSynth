@@ -52,6 +52,26 @@ module EvoSynth
 				end
 			end
 
+			def each_with_index
+				@row_count.times do	|row|
+					@col_count.times do |col|
+						yield @data[row * @col_count + col], row, col
+					end
+				end
+			end
+
+			def each_row
+				@row_count.times do	|row|
+					row_data = []
+
+					@col_count.times do |col|
+						row_data << @data[row * @col_count + col]
+					end
+
+					yield row_data
+				end
+			end
+
 			def to_s
 				@data.to_s
 			end

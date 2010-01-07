@@ -28,7 +28,7 @@ class TestIndividual
 	attr_accessor :fitness
 
 	def initialize(fitness = 0.0)
-		@genome = EvoSynth::Genome.new
+		@genome = EvoSynth::ArrayGenome.new
 		@fitness = fitness
 	end
 
@@ -58,7 +58,7 @@ class TestBinaryIndividual
 	include EvoSynth::MinimizingIndividual
 
 	def initialize(genome_size)
-		@genome = EvoSynth::Genome.new(genome_size)
+		@genome = EvoSynth::ArrayGenome.new(genome_size)
 	end
 
 	def fitness

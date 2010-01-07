@@ -74,7 +74,7 @@ module GraphColouring
 
 		def initialize(graph)
 			@graph = graph
-			@genome = EvoSynth::Genome.new(graph.node_count)
+			@genome = EvoSynth::ArrayGenome.new(graph.node_count)
 			randomize_genome
 		end
 

@@ -23,7 +23,7 @@
 
 module EvoSynth
 
-	class Genome < Array
+	class ArrayGenome < Array
 
 		attr_accessor :changed
 

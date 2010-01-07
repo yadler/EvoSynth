@@ -121,7 +121,7 @@ module Partitionproblem
 
 	def Partitionproblem.get_new_individual_from(problem)
 		border = rand(problem.size)
-		part_a, part_b = EvoSynth::Genome.new, EvoSynth::Genome.new
+		part_a, part_b = EvoSynth::ArrayGenome.new, EvoSynth::ArrayGenome.new
 
 		problem.size.times do
 			|index| index < border ? part_a << problem[index] : part_b << problem[index]

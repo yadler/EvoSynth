@@ -44,7 +44,7 @@ module SPk
 		attr_accessor :genome
 
 		def initialize(genome_size, k)
-			@genome = EvoSynth::Genome.new(genome_size)
+			@genome = EvoSynth::ArrayGenome.new(genome_size)
 			@genome.map! { rand(2) > 0 ? true : false }
 
 			@valid = false
