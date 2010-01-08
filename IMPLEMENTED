@@ -1,0 +1,44 @@
+List of implemented (and documented!) algorithms from various sources:
+
+<table align="center" border="1" rules=ROWS width="80%" cellpadding="3" cellspacing="3">
+<tr><td><b>code</b></td> <td><b>test case</b></td> <td><b>rdoc</b></td> <td><b>name</b></td> <td><b>source / origin</b></td> </tr>
+
+<tr> <th colspan=4></th> </tr>
+<tr> <th colspan=4 align=left><i>evolution algorithms</i></th> </tr>
+
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>Hillclimber</td>                  <td>BINÄRES-HILLCLIMBING (Weicker Page 49)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>PopulationHillclimber</td>        <td>POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>GeneticAlgorithm</td>             <td>GENETISCHER-ALGORITHMUS (Weicker Page 85)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>SteadyStateGA</td>                <td>STEADY-STATE-GA (Weicker Page 129)</td> </tr>
+
+<tr> <th colspan=4></th> </tr>
+<tr> <th colspan=4 align=left><i>mutations</i></th> </tr>
+
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>Identity</td>                     <td>-</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>x</td> <td>BinaryMutation</td>               <td>BINÄRE-MUTATION (Weicker page 59)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>x</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINÄRE-MUTATION (Weicker page 130)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>InversionMutation</td>            <td>INVERTIERENDE-MUTATION (Weicker page 29)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>MixingMutation</td>               <td>MISCHENDE-MUTATION (Weicker page 132)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>OneGeneFlipping</td>              <td>EIN-BIT-BINÄRE-MUTATION (Weicker page 48)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>ShiftingMutation</td>             <td>VERSCHIEBENDE-MUTATION (Weicker page 132)</td> </tr>
+
+<tr> <th colspan=4></th> </tr>
+<tr> <th colspan=4 align=left>recombination</th> </tr>
+
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>Identity</td>                     <td>-</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>KPointCrossover</td>              <td>K-PUNKT-CROSSOVER (Weicker page 130)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>OnePointCrossover</td>            <td>EIN-PUNKT-CROSSOVER (Weicker page 84)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>PartiallyMappedCrossover</td>     <td>ABBILDUNGSREKOMBINATION (Weicker page 133)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>UniformCrossover</td>             <td>UNIFORMER-CROSSOVER (Weicker page 80)</td> </tr>
+
+<tr> <th colspan=4></th> </tr>
+<tr> <th colspan=4 align=left>selections</th> </tr>
+
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>SelectBest</td>                   <td>BESTEN-SELEKTION (Weicker page 65)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>FitnessProportionalSelection</td> <td>FITNESSPROPORTIONALE-SELETION (Weicker page 71)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>NStageTournamentSelection</td>    <td>Q-STUFIGE-TURNIER-SELEKTION (Weicker page 69)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>StochasticUniversalSampling</td>  <td>STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker page 75)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>TournamentSelection</td>          <td>TURNIER-SELEKTION (Weicker page 76)</td> </tr>
+
+</table>

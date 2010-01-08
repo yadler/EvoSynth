@@ -24,7 +24,9 @@
 
 require 'rake/gempackagetask'
 require 'rake/testtask'
+require 'rake/rdoctask'
 require 'spec/rake/spectask'
+
 
 PKG_NAME = "evosynth"
 PKG_VERSION = "0.1.0"
@@ -46,7 +48,7 @@ package_specification = Gem::Specification.new do |spec|
 	spec.require_paths	<< "lib"
 
 	spec.has_rdoc			= true
-	spec.extra_rdoc_files	= ["COPYING"]
+	spec.extra_rdoc_files	= ["LICENSE"]
 end
 
 Rake::GemPackageTask.new(package_specification) do |pkg|
@@ -63,6 +65,15 @@ desc "print message"
 task :default do
 	puts "You have run rake without a task - please run"
 	puts "rake --tasks"
+end
+
+Rake::RDocTask.new do |rdoc|
+	rdoc.main = "IMPLEMENTED"
+	rdoc.rdoc_dir = "doc"
+	rdoc.title    = "EvoSynth Documentation"
+#	rdoc.options << '--line-numbers' << '--inline-source'
+#	rdoc.template = "kilmer"
+	rdoc.rdoc_files.include("IMPLEMENTED", "LICENSE", "lib/**/*.rb")
 end
 
 # Test tasks and code quality stuff:
