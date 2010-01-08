@@ -1,7 +1,7 @@
 List of implemented algorithms from various sources:
 
 <table align="center" border="1" rules=ROWS width="80%" cellpadding="3" cellspacing="3">
-<tr><td><b>code</b></td> <td><b>test case</b></td> <td><b>rdoc</b></td> <td><b>name</b></td> <td><b>source / origin</b></td> </tr>
+<tr><td><b>code</b></td> <td><b>test</b></td> <td><b>rdoc</b></td> <td><b>name</b></td> <td><b>source / origin</b></td> </tr>
 
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left><i>evolution algorithms</i></th> </tr>
@@ -14,7 +14,7 @@ List of implemented algorithms from various sources:
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left><i>mutations</i></th> </tr>
 
-<tr> <td>x</td> <td>x</td> <td>-</td> <td>Identity</td>                     <td>-</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>x</td> <td>Identity</td>                     <td>-</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>BinaryMutation</td>               <td>BINÄRE-MUTATION (Weicker page 59)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINÄRE-MUTATION (Weicker page 130)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)</td> </tr>

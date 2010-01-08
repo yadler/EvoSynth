@@ -25,12 +25,36 @@
 module EvoSynth
 	module Mutations
 
+		# <b>Relies on:</b> deep_clone (see below)
+		#
+		# This mutations does not change the genome of the given individual,
+		# it will return a clone.
+		#
+		# The given individual has to provide a <i>deep_clone</i> method,
+		# which clones the individual and its genome.
+
 		class Identity
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns a clone of a given individual.
+			#
+			#     m = Identity.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
 				mutated
 			end
+
+			#	:call-seq:
+			#		mutation.to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = Identity.new
+			#     m.to_s                   #=> "identity (just clones individual)"
 
 			def to_s
 				"identity (just clones individual)"
