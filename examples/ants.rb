@@ -224,13 +224,18 @@ class EvoSynth::Algorithms::SteadyStateGA
 	end
 end
 
-population = EvoSynth::Population.new
-10.times { population.add(Ants::AntIndividual.new(matrix, PHEROMON, 1)) }
+population = EvoSynth::Population.new(10) do
+	ant = Ants::AntIndividual.new(matrix, PHEROMON, 1)
+	ant.generate_route!
+	ant
+end
+
+puts "Best Individual before evolution: #{population.best}"
 
 algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population)
-#algorithm.mutation = EvoSynth::Mutations::Identity.new
-algorithm.mutation = Ants::SimpleAntMutation.new
+algorithm.mutation = EvoSynth::Mutations::MixingMutation.new
 
-result = algorithm.run_until_generations_reached(50)
+result = algorithm.run_until_generations_reached(1000)
 puts algorithm
-puts "\t #{result}"
+#puts "\t #{result}"
+puts "Best Individual after evolution:  #{result.best}"
