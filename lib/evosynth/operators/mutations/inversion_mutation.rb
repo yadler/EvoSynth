@@ -22,11 +22,32 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
-require 'evosynth/operators/mutations/mixing_mutation'
-require 'evosynth/operators/mutations/exchange_mutation'
-require 'evosynth/operators/mutations/inversion_mutation'
+module EvoSynth
+	module Mutations
+
+		# INVERTIERENDE-MUTATION (Page 29)
+
+		class InversionMutation
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				genome = mutated.genome
+
+				index_one = rand(genome.size)
+				index_two = rand(genome.size)
+				index_two = rand(genome.size) while index_two == index_one
+				index_one, index_two = index_two, index_one if index_one > index_two
+
+				genome[index_one..index_two] = genome[index_one..index_two].reverse
+
+				mutated
+			end
+
+			def to_s
+				"exchange mutation"
+			end
+
+		end
+
+	end
+end
