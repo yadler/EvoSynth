@@ -106,3 +106,11 @@ task :flog do
 	puts "ERROR: flog not found. please install 'gems install flog'" if $?.exitstatus != 0
 	puts flog_output
 end
+
+desc "Benchmark operators"
+task :benchmark do
+	$:.unshift File.expand_path("../lib", __FILE__)
+	load 'test/benchmark/mutation_benchmark.rb'
+	load 'test/benchmark/recombination_benchmark.rb'
+	load 'test/benchmark/selection_benchmark.rb'
+end

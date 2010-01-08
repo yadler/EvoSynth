@@ -29,20 +29,24 @@ require 'benchmark'
 require 'evosynth'
 require 'test/util/test_helper'
 
-POPULATION_SIZE = 1000
-SELECTION_TIMES = 1000
-SELECT_COUNT = 10
+module SelectionBenchmark
 
-population = EvoSynth::Population.new
-POPULATION_SIZE.times { |i| population.add(TestMaximizingIndividual.new(i)) }
+	POPULATION_SIZE = 1000
+	SELECTION_TIMES = 1000
+	SELECT_COUNT = 10
 
-puts "Running selection benchmark with #{SELECTION_TIMES} selections (population size=#{POPULATION_SIZE}, select count=#{SELECT_COUNT}):"
-EvoSynth::Selections.constants.each do |selection|
-	selection = EvoSynth::Selections.const_get(selection).new
-#	selection = EvoSynth::Selections::NStageTournamentSelection.new
+	population = EvoSynth::Population.new
+	POPULATION_SIZE.times { |i| population.add(TestMaximizingIndividual.new(i)) }
 
-	timing = Benchmark.measure do
-		SELECTION_TIMES.times { selection.select(population, SELECT_COUNT) }
+	puts "Running selection benchmark with #{SELECTION_TIMES} selections (population size=#{POPULATION_SIZE}, select count=#{SELECT_COUNT}):"
+	EvoSynth::Selections.constants.each do |selection|
+		selection = EvoSynth::Selections.const_get(selection).new
+	#	selection = EvoSynth::Selections::NStageTournamentSelection.new
+
+		timing = Benchmark.measure do
+			SELECTION_TIMES.times { selection.select(population, SELECT_COUNT) }
+		end
+		puts "\t#{timing.format("%r")} - #{selection.class}"
 	end
-	puts "\t#{timing.format("%r")} - #{selection.class}"
+
 end

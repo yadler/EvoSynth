@@ -29,20 +29,24 @@ require 'benchmark'
 require 'evosynth'
 require 'test/util/test_helper'
 
-GENOME_SIZE = 1000
-RECOMBINATION_TIMES = 1000
+module RecombinationBenchmark
 
-individual_one = TestBinaryIndividual.new(GENOME_SIZE)
-individual_two = TestBinaryIndividual.new(GENOME_SIZE)
-GENOME_SIZE.times { |index| individual_one.genome[index] = index }
-GENOME_SIZE.times { |index| individual_two.genome[index] = index }
+	GENOME_SIZE = 1000
+	RECOMBINATION_TIMES = 1000
 
-puts "Running recombination benchmark with #{RECOMBINATION_TIMES} recombinations (genome=#{GENOME_SIZE}):"
-EvoSynth::Recombinations.constants.each do |recombination|
-	recombination = EvoSynth::Recombinations.const_get(recombination).new
+	individual_one = TestBinaryIndividual.new(GENOME_SIZE)
+	individual_two = TestBinaryIndividual.new(GENOME_SIZE)
+	GENOME_SIZE.times { |index| individual_one.genome[index] = index }
+	GENOME_SIZE.times { |index| individual_two.genome[index] = index }
 
-	timing = Benchmark.measure do
-		RECOMBINATION_TIMES.times { recombination.recombine(individual_one, individual_two) }
+	puts "Running recombination benchmark with #{RECOMBINATION_TIMES} recombinations (genome=#{GENOME_SIZE}):"
+	EvoSynth::Recombinations.constants.each do |recombination|
+		recombination = EvoSynth::Recombinations.const_get(recombination).new
+
+		timing = Benchmark.measure do
+			RECOMBINATION_TIMES.times { recombination.recombine(individual_one, individual_two) }
+		end
+		puts "\t#{timing.format("%r")} - #{recombination.class}"
 	end
-	puts "\t#{timing.format("%r")} - #{recombination.class}"
+
 end
