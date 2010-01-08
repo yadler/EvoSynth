@@ -28,14 +28,15 @@ require 'evosynth'
 require 'test/util/test_helper'
 
 
-class OnePointCrossoverTest < Test::Unit::TestCase
+class KPointCrossoverTest < Test::Unit::TestCase
 
 	GENOME_SIZE = 2000
+	K = 4
 
-	context "a one-point-crossover run on binary genome" do
+	context "a k-point-crossover (k=#{K}) run on binary genome" do
 
 		setup do
-			@recombination = EvoSynth::Recombinations::OnePointCrossover.new
+			@recombination = EvoSynth::Recombinations::KPointCrossover.new(K)
 
 			@individual_one = TestBinaryIndividual.new(GENOME_SIZE)
 			@individual_one.genome.map! { |gene| true }
@@ -43,7 +44,7 @@ class OnePointCrossoverTest < Test::Unit::TestCase
 			@individual_two.genome.map! { |gene| false }
 		end
 
-		context "before one-point-crossover is executed" do
+		context "before k-point-crossover is executed" do
 
 			should "all genes of individual one should be true" do
 				@individual_one.genome.each { |gene| assert_equal true, gene }
@@ -55,7 +56,7 @@ class OnePointCrossoverTest < Test::Unit::TestCase
 
 		end
 
-		context "after one-point-crossover is executed" do
+		context "after k-point-crossover is executed" do
 
 			setup do
 				@child_one, @child_two = @recombination.recombine(@individual_one, @individual_two)
