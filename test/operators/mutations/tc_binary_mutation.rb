@@ -48,7 +48,7 @@ class BinaryMutationTest < Test::Unit::TestCase
 			end
 		end
 
-		context "after mutations is executed #{TIMES} times (with probability=#{PROBABILITY})" do
+		context "after mutation is executed #{TIMES} times (with probability=#{PROBABILITY})" do
 			setup do
 				binary_mutation = EvoSynth::Mutations::BinaryMutation.new(PROBABILITY)
 				@count = 0.0

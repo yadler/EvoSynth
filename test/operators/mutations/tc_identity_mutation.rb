@@ -28,7 +28,7 @@ require 'evosynth'
 require 'test/util/test_helper'
 
 
-class InversionMutationTest < Test::Unit::TestCase
+class IdentityMutationTest < Test::Unit::TestCase
 
 	MAX_NUM = 20
 
@@ -44,9 +44,9 @@ class InversionMutationTest < Test::Unit::TestCase
 			end
 		end
 
-		context "after inversion mutation is executed" do
+		context "after identity mutation is executed" do
 			setup do
-				mutation = EvoSynth::Mutations::InversionMutation.new
+				mutation = EvoSynth::Mutations::Identity.new
 				@mutated = mutation.mutate(@individual)
 			end
 
@@ -55,14 +55,8 @@ class InversionMutationTest < Test::Unit::TestCase
 				@individual.genome.each { |gene| assert_equal prev + 1, gene; prev = gene }
 			end
 
-			should "one series genes should not be in order" do
-				@mutated.genome.each_with_index do |gene, index|
-					if gene != @individual.genome[index]
-						prev = gene + 1 if prev == nil
-						assert_equal prev - 1, gene
-						prev = gene
-					end
-				end
+			should "all genes of the child should be equal to the parent" do
+				@mutated.genome.each_with_index { |gene, index| assert_equal @individual.genome[index], gene }
 			end
 		end
 	end

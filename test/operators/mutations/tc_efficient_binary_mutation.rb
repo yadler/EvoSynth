@@ -28,43 +28,45 @@ require 'evosynth'
 require 'test/util/test_helper'
 
 
-class InversionMutationTest < Test::Unit::TestCase
+class EfficientBinaryMutationTest < Test::Unit::TestCase
 
-	MAX_NUM = 20
+	GENOME_SIZE = 20
+	PROBABILITY = 0.1
+	TIMES = 1000
+	DELTA = 0.075
+	EXPECTED = PROBABILITY * GENOME_SIZE * TIMES
 
-	context "when run on a permutation genome (size=#{MAX_NUM})" do
+	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@individual = TestGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual.genome.map! { |gene| true }
 		end
 
 		context "before mutation is executed" do
-			should "the genes should be ordered from 0 to #{MAX_NUM}" do
-				prev = -1
-				@individual.genome.each { |gene| assert_equal prev + 1, gene; prev = gene }
+			should "all genes should be true" do
+				@individual.genome.each { |gene| assert_true gene }
 			end
 		end
 
-		context "after inversion mutation is executed" do
+		context "after mutation is executed #{TIMES} times (with probability=#{PROBABILITY})" do
 			setup do
-				mutation = EvoSynth::Mutations::InversionMutation.new
-				@mutated = mutation.mutate(@individual)
-			end
-
-			should "the genes of the parent should (still) be ordered from 0 to #{MAX_NUM}" do
-				prev = -1
-				@individual.genome.each { |gene| assert_equal prev + 1, gene; prev = gene }
-			end
-
-			should "one series genes should not be in order" do
-				@mutated.genome.each_with_index do |gene, index|
-					if gene != @individual.genome[index]
-						prev = gene + 1 if prev == nil
-						assert_equal prev - 1, gene
-						prev = gene
-					end
+				binary_mutation = EvoSynth::Mutations::EfficientBinaryMutation.new(PROBABILITY)
+				@count = 0.0
+				TIMES.times do
+					mutated = binary_mutation.mutate(@individual)
+					mutated.genome.each { |gene| @count += 1 if !gene }
 				end
 			end
+
+			should "all genes of the parent should (still) be true" do
+				@individual.genome.each { |gene| assert_true gene }
+			end
+
+			should "around #{EXPECTED} (+/- #{EXPECTED * DELTA}) genes should have mutated to false" do
+				assert_in_delta EXPECTED, @count, EXPECTED * DELTA
+			end
 		end
+
 	end
 
 end
