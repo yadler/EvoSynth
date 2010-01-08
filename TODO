@@ -2,16 +2,24 @@ Aus Weickers Buch (noch) nicht implementiert:
 
 Rekombinationen:
 	- ARITHMETISCHER-CROSSOVER (Seite 83)
+	- KANTENREKOMBINATION (Seite 29)
+	- ORDNUNGSREKOMBINATION (Seite 29)
 
 Mutationen:
 	- DREIERTAUSCH-MUTATION (Seite 107)
-	- INVERTIERENDE-MUTATION (Seite ???)
+	- INVERTIERENDE-MUTATION (Seite 29)
 	- SELBSTADAPTIVE-GAUSS-MUTATION (Seite 114)
 	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Seite 131)
 
 Anpassungsstrategien:
 	- VORDEFINIERTE-ANPASSUNG (Seite 111)
 	- ADAPTIVE-ANPASSUNG (Seite 113)
+
+Algorithmen:
+	- EA-SCHEMA (Seite 39)
+	- EA-HANDLUNGSREISENDENPROBLEM (Seite 31)
+
+Was ist mit Benchmarkfunktionen?!
 
 ------------------------------------------------
 

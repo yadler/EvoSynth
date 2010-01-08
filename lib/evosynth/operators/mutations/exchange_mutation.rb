@@ -22,10 +22,31 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/operators/mutations/one_gene_flipping'
-require 'evosynth/operators/mutations/binary_mutation'
-require 'evosynth/operators/mutations/efficient_binary_mutation'
-require 'evosynth/operators/mutations/identity'
-require 'evosynth/operators/mutations/shifting_mutation'
-require 'evosynth/operators/mutations/mixing_mutation'
-require 'evosynth/operators/mutations/exchange_mutation'
+module EvoSynth
+	module Mutations
+
+		# VERTAUSCHENDE-MUTATION (Page 27)
+
+		class ExchangeMutation
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+				genome = mutated.genome
+
+				index_one = rand(genome.size)
+				index_two = rand(genome.size)
+				index_two = rand(genome.size) while index_two == index_one
+
+				genome[index_one], genome[index_two] = genome[index_two], genome[index_one]
+
+				mutated
+			end
+
+			def to_s
+				"exchange mutation"
+			end
+
+		end
+
+	end
+end
