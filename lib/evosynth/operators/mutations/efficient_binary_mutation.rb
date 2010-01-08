@@ -25,16 +25,45 @@
 module EvoSynth
 	module Mutations
 
-		# EFFIZIENTE-BINÄRE-MUTATION (Page 130)
+		# This mutation is basically a optimized version of the BinaryMutation and
+		# should have a better performance on long genomes.
+		#
+		# <b>Relies on:</b> flip and deep_clone (see below)
+		#
+		# This mutations flips (inverts) each gene in the genome of a given individual
+		# with a given probability and returns a mutated individual. It does not
+		# change the given individual. To use this mutation each gene of the genome
+		# must provide the <i>flip</i> function, which returns the negation/inverse of
+		# its value. The given individual has to provide a <i>deep_clone</i> method,
+		# which clones the individual and its genome.
 
 		class EfficientBinaryMutation
 
+			# Each gene is flipped with this probability (should be between 0 and 1)
+
 			attr_accessor :probability
+
+			#	:call-seq:
+			#		EfficientBinaryMutation.new
+			#		EfficientBinaryMutation(Float) -> EfficientBinaryMutation (overrides default probability)
+			#
+			# Returns a new EfficientBinaryMutation. In the first form, the default mutation
+			# probability (0.1) is used. In the second it creates a EfficientBinaryMutation with the given probability.
+			#
+			#     EfficientBinaryMutation.new
+			#     EfficientBinaryMutation.new(0.01)
 
 			def initialize(probability = 0.1)
 				@probability = probability
 			end
 
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns the mutation of a given individual.
+			#
+			#     m = EfficientBinaryMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -49,8 +78,16 @@ module EvoSynth
 				mutated
 			end
 
+			#	:call-seq:
+			#		mutation.to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = BinaryMutation.new(0.91)
+			#     m.to_s                   #=> "efficient binary muation <probability: 0.01>"
+
 			def to_s
-				"efficient binary muation"
+				"efficient binary muation <probability: #{@probability}>"
 			end
 
 		end

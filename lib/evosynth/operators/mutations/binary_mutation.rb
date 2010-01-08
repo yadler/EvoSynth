@@ -25,16 +25,14 @@
 module EvoSynth
 	module Mutations
 
-		# <b>Relies on:</b> flip (see below)
+		# <b>Relies on:</b> flip and deep_clone (see below)
 		#
 		# This mutations flips (inverts) each gene in the genome of a given individual
-		# with a given probability  and returns this mutated individual. It does not
-		# change the given individual
-		#
-		# To use this mutation each gene of the genome has to support the "flip"
-		# function as negation/inverse of its value
-		#
-		# The given individual has to provide a deep_clone method
+		# with a given probability and returns a mutated individual. It does not
+		# change the given individual. To use this mutation each gene of the genome
+		# must provide the <i>flip</i> function, which returns the negation/inverse of
+		# its value. The given individual has to provide a <i>deep_clone</i> method,
+		# which clones the individual and its genome.
 
 		class BinaryMutation
 
@@ -43,11 +41,14 @@ module EvoSynth
 			attr_accessor :probability
 
 			#	:call-seq:
-			#		new -> BinaryMutation
-			#		new(Float) -> BinaryMutation (overrides default probability)
+			#		BinaryMutation.new
+			#		BinaryMutation(Float) -> BinaryMutation (overrides default probability)
 			#
-			# Creates a new BinaryMutation. The default mutation
-			# probability is 0.1
+			# Returns a new BinaryMutation. In the first form, the default mutation
+			# probability (0.1) is used. In the second it creates a BinaryMutation with the given probability.
+			#
+			#     BinaryMutation.new
+			#     BinaryMutation.new(0.01)
 
 			def initialize(probability = 0.1)
 				@probability = probability
@@ -56,7 +57,10 @@ module EvoSynth
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
 			#
-			# Returns the mutation of the given individual.
+			# Returns the mutation of a given individual.
+			#
+			#     m = BinaryMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -64,6 +68,14 @@ module EvoSynth
 
 				mutated
 			end
+
+			#	:call-seq:
+			#		mutation.to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = BinaryMutation.new(0.01)
+			#     m.to_s                   #=> "binary mutation <probability: 0.01>"
 
 			def to_s
 				"binary mutation <probability: #{@probability}>"

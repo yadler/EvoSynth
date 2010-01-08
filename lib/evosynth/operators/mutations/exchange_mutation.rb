@@ -25,9 +25,24 @@
 module EvoSynth
 	module Mutations
 
-		# VERTAUSCHENDE-MUTATION (Page 27)
+		# <b>Relies on:</b> deep_clone (see below)
+		#
+		# This mutations exchanges two genes in the genome of a given individual
+		# and returns a mutated individual. It does not change the given individual.
+		#
+		# The given individual has to provide a <i>deep_clone</i> method,
+		# which clones the individual and its genome.
+		
 
 		class ExchangeMutation
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns the mutation of a given individual.
+			#
+			#     m = ExchangeMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -41,6 +56,14 @@ module EvoSynth
 
 				mutated
 			end
+
+			#	:call-seq:
+			#		mutation.to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = ExchangeMutation.new
+			#     m.to_s                   #=> "exchange mutation"
 
 			def to_s
 				"exchange mutation"
