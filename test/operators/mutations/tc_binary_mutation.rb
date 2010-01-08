@@ -22,39 +22,48 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'shoulda'
+
 require 'evosynth'
-require 'spec/test_helper_individual'
+require 'test/util/test_helper'
 
-describe EvoSynth::Mutations::BinaryMutation do
 
-	describe "when run on binary genome (size=100)" do
-		before do
-			@individual = TestBinaryIndividual.new(100)
+class BinaryMutationTest < Test::Unit::TestCase
+
+	GENOME_SIZE = 20
+	PROBABILITY = 0.1
+	TIMES = 1000
+	DELTA = 0.075
+	EXPECTED = PROBABILITY * GENOME_SIZE * TIMES
+
+	context "when run on binary genome (size=#{GENOME_SIZE})" do
+		setup do
+			@individual = TestBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 		end
 
-		describe "before mutation is executed" do
-			it "all genes should be true" do
-				@individual.genome.each { |gene| gene.should be_true }
+		context "before mutation is executed" do
+			should "all genes should be true" do
+				@individual.genome.each { |gene| assert_true gene }
 			end
 		end
 
-		describe "after mutations is executed 100 times (with probability 0.1)" do
-			before do
-				binary_mutation = EvoSynth::Mutations::BinaryMutation.new(0.1)
+		context "after mutations is executed #{TIMES} times (with probability=#{PROBABILITY})" do
+			setup do
+				binary_mutation = EvoSynth::Mutations::BinaryMutation.new(PROBABILITY)
 				@count = 0.0
-				100.times do
+				TIMES.times do
 					mutated = binary_mutation.mutate(@individual)
 					mutated.genome.each { |gene| @count += 1 if !gene }
 				end
 			end
 
-			it "all genes of the parent should (still) be true" do
-				@individual.genome.each { |gene| gene.should be_true }
+			should "all genes of the parent should (still) be true" do
+				@individual.genome.each { |gene| assert_true gene }
 			end
 
-			it "around 1000 (+/- 75)genes should have mutated to false" do
-				@count.should be_close(1000, 75)
+			should "around #{EXPECTED} (+/- #{EXPECTED * DELTA}) genes should have mutated to false" do
+				assert_in_delta EXPECTED, @count, EXPECTED * DELTA
 			end
 		end
 

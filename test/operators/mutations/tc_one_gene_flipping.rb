@@ -22,97 +22,86 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'shoulda'
+
 require 'evosynth'
-require 'spec/test_helper_individual'
+require 'test/util/test_helper'
 
-# TODO: how could this be done in a good way?
-# maybe I should do this in evosynth.rb?
-# (see also max_ones.rb!)
 
-class TrueClass
-	def flip
-		!self
-	end
-end
+class OneGeneFlippingTest < Test::Unit::TestCase
 
-class FalseClass
-	def flip
-		!self
-	end
-end
+	GENOME_SIZE = 20
 
-describe EvoSynth::Mutations::OneGeneFlipping do
-
-	describe "when run on binary genome (size=10)" do
-		before do
-			@individual = TestBinaryIndividual.new(10)
+	context "when run on binary genome (size=#{GENOME_SIZE})" do
+		setup do
+			@individual = TestBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 		end
 
-		describe "before mutation is executed" do
-			it "all genes should be true" do
-				@individual.genome.each { |gene| gene.should be_true }
+		context "before mutation is executed" do
+			should "all genes should be true" do
+				@individual.genome.each { |gene| assert_true gene }
 			end
 		end
 
-		describe "after mutation is executed" do
-			before do
+		context "after mutation is executed" do
+			setup do
 				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
 				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
-			it "all genes of the parent should (still) be true" do
-				@individual.genome.each { |gene| gene.should be_true }
+			should "all genes of the parent should (still) be true" do
+				@individual.genome.each { |gene| assert_true gene }
 			end
 
-			it "one gene should be false" do
+			should "one gene should be false" do
 				count = 0
 				@mutated.genome.each { |gene| count += 1 if !gene }
-				count.should == 1
+				assert_equal 1, count
 			end
 		end
 	end
 
-	describe "when run on binary genome (size=1)" do
-		before do
+	context "when run on binary genome (size=1)" do
+		setup do
 			@individual = TestBinaryIndividual.new(1)
 			@individual.genome.map! { |gene| true }
 		end
 
-		describe "before mutation is executed" do
-			it "the gene should be true" do
-				@individual.genome[0].should be_true
+		context "before mutation is executed" do
+			should "the gene should be true" do
+				assert_true @individual.genome[0]
 			end
 		end
 
-		describe "after mutation is executed" do
-			before do
+		context "after mutation is executed" do
+			setup do
 				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
 				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
-			it "the gene of the parent should (still) be true" do
-				@individual.genome[0].should be_true
+			should "the gene of the parent should (still) be true" do
+				assert_true @individual.genome[0]
 			end
 
-			it "the mutated gene should be false" do
-				@mutated.genome[0].should be_false
+			should "the mutated gene should be false" do
+				assert_false @mutated.genome[0]
 			end
 		end
 
-		describe "after mutation is executed two times" do
-			before do
+		context "after mutation is executed two times" do
+			setup do
 				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
 				@mutated = one_gene_flipping.mutate(@individual)
 				@mutated = one_gene_flipping.mutate(@mutated)
 			end
 
-			it "the gene of the parent should (still) be true" do
-				@individual.genome[0].should be_true
+			should "the gene of the parent should (still) be true" do
+				assert_true @individual.genome[0]
 			end
 
-			it "the mutated gene should be true" do
-				@mutated.genome[0].should be_true
+			should "the mutated gene should be true" do
+				assert_true @mutated.genome[0]
 			end
 		end
 	end

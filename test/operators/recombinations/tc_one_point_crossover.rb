@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require 'test/util/test_individuals'
+require 'test/util/test_helper'
 
 
 class OnePointCrossoverTest < Test::Unit::TestCase

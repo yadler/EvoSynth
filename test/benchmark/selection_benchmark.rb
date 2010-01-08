@@ -27,7 +27,7 @@ require 'benchmark'
 
 
 require 'evosynth'
-require 'test/util/test_individuals'
+require 'test/util/test_helper'
 
 POPULATION_SIZE = 1000
 SELECTION_TIMES = 1000

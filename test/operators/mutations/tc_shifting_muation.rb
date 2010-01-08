@@ -25,14 +25,14 @@
 require 'shoulda'
 
 require 'evosynth'
-require 'test/util/test_individuals'
+require 'test/util/test_helper'
 
 
 class ShiftingMutationTest < Test::Unit::TestCase
 
 	GENOME_SIZE = 20
 
-	context "a shifting mutation run on binary genome" do
+	context "a shifting mutation run on binary genome (size=#{GENOME_SIZE})" do
 
 		setup do
 			@mutation = EvoSynth::Mutations::ShiftingMutation.new

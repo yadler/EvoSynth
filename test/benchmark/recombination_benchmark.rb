@@ -27,7 +27,7 @@ require 'benchmark'
 
 
 require 'evosynth'
-require 'test/util/test_individuals'
+require 'test/util/test_helper'
 
 GENOME_SIZE = 1000
 RECOMBINATION_TIMES = 1000

@@ -24,3 +24,5 @@
 
 require 'test/operators/mutations/tc_shifting_muation.rb'
 require 'test/operators/mutations/tc_mixing_mutation.rb'
+require 'test/operators/mutations/tc_binary_mutation.rb'
+require 'test/operators/mutations/tc_one_gene_flipping.rb'

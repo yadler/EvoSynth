@@ -27,23 +27,7 @@ require 'benchmark'
 
 
 require 'evosynth'
-require 'test/util/test_individuals'
-
-# TODO: how could this be done in a good way?
-# maybe I should do this in evosynth.rb?
-# (see also max_ones.rb!)
-
-class TrueClass
-	def flip
-		!self
-	end
-end
-
-class FalseClass
-	def flip
-		!self
-	end
-end
+require 'test/util/test_helper'
 
 
 GENOME_SIZE = 1000
