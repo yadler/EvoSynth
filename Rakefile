@@ -54,21 +54,6 @@ Rake::GemPackageTask.new(package_specification) do |pkg|
 	pkg.need_tar = true
 end
 
-lib_dir = File.expand_path("lib")
-test_dir = File.expand_path("tests")
-
-Rake::TestTask.new do |test|
-	test.libs = [lib_dir, test_dir]
-	test.test_files = FileList["test/ts_*.rb"]
-	test.verbose = true
-end
-
-desc "Run the specs under spec"
-Spec::Rake::SpecTask.new do |rspec|
-  rspec.spec_opts = ['--format', "nested"]
-  rspec.spec_files = FileList['spec/*_spec.rb']
-end
-
 desc "build latest gem package"
 task :package do
 	Rake::Task["pkg/#{PKG_NAME}-#{PKG_VERSION}.gem"].invoke
@@ -78,4 +63,46 @@ desc "print message"
 task :default do
 	puts "You have run rake without a task - please run"
 	puts "rake --tasks"
+end
+
+# Test tasks and code quality stuff:
+
+task :quality => [:test, :flog, :flay, :roodi]
+
+lib_dir = File.expand_path("lib")
+examples_dir = File.expand_path("examples")
+test_dir = File.expand_path("test")
+
+Rake::TestTask.new do |test|
+	test.libs = [lib_dir, test_dir]
+	test.test_files = FileList["test/ts_*.rb"]
+	test.verbose = true
+end
+
+# FIXME: this is deprecated and should be killed sometime
+desc "Run the specs under spec"
+Spec::Rake::SpecTask.new do |rspec|
+  rspec.spec_opts = ['--format', "nested"]
+  rspec.spec_files = FileList['spec/*_spec.rb']
+end
+
+desc "Analyze the code with roodi (Ruby Object Oriented Design Inferometer)"
+task :roodi do
+	roodi_output = `roodi 'lib/**/*.rb' 'examples/**/*.rb'`
+	puts "ERROR: roodi not found. please install 'gems install roodi'" if $?.exitstatus == 127
+	puts roodi_output
+end
+
+desc "Analyze for code duplication"
+task :flay do
+	flay_output = `flay #{lib_dir} #{examples_dir}`
+	puts "ERROR: flay not found. please install 'gems install flay'" if $?.exitstatus != 0
+	puts flay_output
+end
+
+desc "Analyze for code complexity"
+task :flog do
+	flog_output = `find lib -name \*.rb | xargs flog -g`
+	puts "ERROR: flog not found. please install 'gems install flog'" if $?.exitstatus != 0
+	puts flog_output
 end

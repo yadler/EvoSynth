@@ -2,3 +2,5 @@ pkg
 pkg/*.gem
 doc
 doc/*
+coverage
+coverage/*
