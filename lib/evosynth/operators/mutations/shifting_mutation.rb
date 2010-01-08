@@ -37,13 +37,7 @@ module EvoSynth
 				index_two = rand(genome.size)
 				return mutated if index_one == index_two
 
-				genome[index_two] = genome[index_one]
-				if index_one > index_two
-					genome[(index_two + 1)..index_one] = individual.genome[index_two..(index_one -1 )]
-				else
-					genome[(index_one + 1)..index_two] = individual.genome[index_one..(index_two -1 )]
-				end
-
+				shift_genome(index_one, index_two, genome)
 				mutated
 			end
 
@@ -51,6 +45,21 @@ module EvoSynth
 				"shifting muation"
 			end
 
+			private
+
+			def shift_genome(index_one, index_two, genome)
+				if index_one > index_two
+					## shift right
+					shifted_range = genome[index_two..index_one]
+					shifted_range = shifted_range << shifted_range.shift
+					genome[index_two..index_one] = shifted_range
+				else
+					## shift left
+					shifted_range = genome[index_one..index_two]
+					shifted_range = [shifted_range.pop] + shifted_range
+					genome[index_one..index_two] = shifted_range
+				end
+			end
 		end
 
 	end
