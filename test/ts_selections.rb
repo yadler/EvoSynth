@@ -23,3 +23,4 @@
 
 
 require 'test/operators/selections/tc_select_best.rb'
+require 'test/operators/selections/tc_fitness_proportional_selection.rb'

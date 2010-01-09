@@ -27,7 +27,8 @@ module EvoSynth
 	module Selections
 
 		# FITNESSPROPORTIONALE-SELETION (Weicker Page 71)
-		# FIXME needs proper tests
+
+		# FIXME: this one can only MAXIMIZE!! problem is in select_next_individual / generate_fitness_hash
 
 		class FitnessProportionalSelection
 
@@ -65,7 +66,7 @@ module EvoSynth
 
 			def select_next_individual(population, limit, fitness_hash)
 				population.each_with_index do |individual, index|
-					return individual if fitness_hash[index] >= limit
+					return individual if fitness_hash[index] > limit
 				end
 			end
 
