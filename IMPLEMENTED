@@ -35,7 +35,7 @@ List of implemented algorithms from various sources:
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left>selections</th> </tr>
 
-<tr> <td>x</td> <td>-</td> <td>-</td> <td>SelectBest</td>                   <td>BESTEN-SELEKTION (Weicker page 65)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>SelectBest</td>                   <td>BESTEN-SELEKTION (Weicker page 65)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>FitnessProportionalSelection</td> <td>FITNESSPROPORTIONALE-SELETION (Weicker page 71)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>NStageTournamentSelection</td>    <td>Q-STUFIGE-TURNIER-SELEKTION (Weicker page 69)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>StochasticUniversalSampling</td>  <td>STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker page 75)</td> </tr>
