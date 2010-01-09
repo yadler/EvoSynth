@@ -30,6 +30,7 @@ module EvoSynth
 		# FIXME: add RSPec (find testcase!)
 		# TODO: rename to RoulettewheelSelection or not?
 		# FIXME: code duplication (see fitness_proportional.rb)
+		# FIXME: minimizing does not work -> see fitness_proportional.rb
 
 		class StochasticUniversalSampling
 
