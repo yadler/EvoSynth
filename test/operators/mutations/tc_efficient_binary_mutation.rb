@@ -44,7 +44,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 
 		context "before mutation is executed" do
 			should "all genes should be true" do
-				@individual.genome.each { |gene| assert_true gene }
+				@individual.genome.each { |gene| assert gene }
 			end
 		end
 
@@ -59,7 +59,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 			end
 
 			should "all genes of the parent should (still) be true" do
-				@individual.genome.each { |gene| assert_true gene }
+				@individual.genome.each { |gene| assert gene }
 			end
 
 			should "around #{EXPECTED} (+/- #{EXPECTED * DELTA}) genes should have mutated to false" do

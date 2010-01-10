@@ -41,11 +41,11 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 		context "before the partially mapped crossover is executed" do
 
 			should "individual one should contain all numbers from 1 to 7" do
-				[1,2,3,4,5,6,7].each { |item| assert_true @individual_one.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @individual_one.genome.include? item }
 			end
 
 			should "individual two should contain all numbers from 1 to 7" do
-				[1,2,3,4,5,6,7].each { |item| assert_true @individual_two.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @individual_two.genome.include? item }
 			end
 
 		end
@@ -57,16 +57,16 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 			end
 
 			should "parent one should (still) contain all numbers from 1 to 7" do
-				[1,2,3,4,5,6,7].each { |item| assert_true @individual_one.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @individual_one.genome.include? item }
 			end
 
 			should "parent two should (still) contain all numbers from 1 to 7" do
-				[1,2,3,4,5,6,7].each { |item| assert_true @individual_two.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @individual_two.genome.include? item }
 			end
 
 			should "both children should (still) contain all numbers from 1 to 7" do
-				[1,2,3,4,5,6,7].each { |item| assert_true @child_one.genome.include? item }
-				[1,2,3,4,5,6,7].each { |item| assert_true @child_two.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @child_one.genome.include? item }
+				[1,2,3,4,5,6,7].each { |item| assert @child_two.genome.include? item }
 			end
 
 		end

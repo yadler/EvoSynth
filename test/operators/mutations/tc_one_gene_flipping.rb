@@ -40,7 +40,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 		context "before mutation is executed" do
 			should "all genes should be true" do
-				@individual.genome.each { |gene| assert_true gene }
+				@individual.genome.each { |gene| assert gene }
 			end
 		end
 
@@ -51,7 +51,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 			end
 
 			should "all genes of the parent should (still) be true" do
-				@individual.genome.each { |gene| assert_true gene }
+				@individual.genome.each { |gene| assert gene }
 			end
 
 			should "one gene should be false" do
@@ -70,7 +70,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 		context "before mutation is executed" do
 			should "the gene should be true" do
-				assert_true @individual.genome[0]
+				assert @individual.genome[0]
 			end
 		end
 
@@ -81,11 +81,11 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 			end
 
 			should "the gene of the parent should (still) be true" do
-				assert_true @individual.genome[0]
+				assert @individual.genome[0]
 			end
 
 			should "the mutated gene should be false" do
-				assert_false @mutated.genome[0]
+				assert !@mutated.genome[0]
 			end
 		end
 
@@ -97,11 +97,11 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 			end
 
 			should "the gene of the parent should (still) be true" do
-				assert_true @individual.genome[0]
+				assert @individual.genome[0]
 			end
 
 			should "the mutated gene should be true" do
-				assert_true @mutated.genome[0]
+				assert @mutated.genome[0]
 			end
 		end
 	end

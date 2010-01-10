@@ -46,11 +46,11 @@ class UniformCrossoverTest < Test::Unit::TestCase
 
 		context "before recombination is executed" do
 			should "all genes of individual one should be true" do
-				@individual_one.genome.each { |gene| assert_true gene }
+				@individual_one.genome.each { |gene| assert gene }
 			end
 
 			should "all genes of individual two should be false" do
-				@individual_two.genome.each { |gene| assert_false gene }
+				@individual_two.genome.each { |gene| assert !gene }
 			end
 		end
 
@@ -66,11 +66,11 @@ class UniformCrossoverTest < Test::Unit::TestCase
 			end
 
 			should "all genes of the parent one should (still) be true" do
-				@individual_one.genome.each { |gene| assert_true gene }
+				@individual_one.genome.each { |gene| assert gene }
 			end
 
 			should "all genes of the parent two should (still) be false" do
-				@individual_two.genome.each { |gene| assert_false gene }
+				@individual_two.genome.each { |gene| assert !gene }
 			end
 
 			should "around #{EXPECTED} genes should have mutated to false (in both children)" do
