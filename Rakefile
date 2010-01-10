@@ -106,7 +106,7 @@ end
 
 desc "Analyze for code duplication"
 task :flay do
-	flay_output = `flay #{lib_dir} #{examples_dir}`
+	flay_output = `flay '#{lib_dir}' '#{examples_dir}'`
 	puts "ERROR: flay not found. please install 'gems install flay'" if $?.exitstatus != 0
 	puts flay_output
 end
