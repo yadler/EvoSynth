@@ -65,11 +65,7 @@ module SPk
 		end
 
 		def to_s
-			if is_valid
-				"#{fitness} \t #{@genome} \t valid \t 1's = #{count_ones}"
-			else
-				"#{fitness} \t #{@genome} \t invalid \t 1's = #{count_ones}"
-			end
+			"#{fitness} \t #{@genome} \t #{is_valid ? 'valid' : 'invalid'} \t 1's = #{count_ones}"
 		end
 
 		private
@@ -82,26 +78,10 @@ module SPk
 
 		def is_valid
 			if @genome.changed
-				count = 0
-				len_of_ones = 0
-				end_of_ones = false
-				end_of_zeros = false
-
-				@genome.each do |gene|
-					if !gene && !end_of_ones
-						len_of_ones = count
-						end_of_ones = true
-					else
-						end_of_zeros = true if gene && end_of_ones && !end_of_zeros
-					end
-
-					count += 1
-				end
-
-				len_of_ones = count if !end_of_ones
+				len_of_ones = calc_length_of_ones
 				max_k = (@genome.size.to_f / (3.0 * @k*@k).to_f).ceil
 
-				if len_of_ones / @k <= max_k && len_of_ones % @k == 0 && !end_of_zeros
+				if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
 					@valid = true
 				else
 					@valid = false
@@ -109,6 +89,29 @@ module SPk
 			end
 
 			@valid
+		end
+
+		def calc_length_of_ones
+			count, len_of_ones = 0, 0
+			end_of_ones, end_of_zeros = false, false
+
+			@genome.each do |gene|
+				end_of_ones_reached = !gene && !end_of_ones
+				end_of_zeros_reached = gene && end_of_ones && !end_of_zeros
+
+				if end_of_ones_reached
+					len_of_ones = count
+					end_of_ones = true
+				elsif end_of_zeros_reached
+					end_of_zeros = true
+				end
+
+				count += 1
+			end
+
+			len_of_ones = count if !end_of_ones
+			len_of_ones = nil if end_of_zeros
+			len_of_ones
 		end
 
 	end

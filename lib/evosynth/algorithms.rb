@@ -38,6 +38,8 @@ module EvoSynth
 						loop_condition = lambda { !yield @generations_run }
 					when 2
 						loop_condition = lambda { !yield @generations_run, best_solution }
+				else
+					loop_condition = nil
 				end
 
 				while loop_condition.call
