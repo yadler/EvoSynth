@@ -28,7 +28,7 @@ require 'evosynth'
 require 'test/util/test_helper'
 
 
-class FitnessProportionalSelectionTest < Test::Unit::TestCase
+class RouletteWheelSelectionTest < Test::Unit::TestCase
 
 	INDIVIDUALS = 100
 	SELECT_N_TIMES = 100
@@ -37,7 +37,7 @@ class FitnessProportionalSelectionTest < Test::Unit::TestCase
 	context "when run on a population of minimizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::FitnessProportionalSelection.new
+			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 
@@ -57,7 +57,7 @@ class FitnessProportionalSelectionTest < Test::Unit::TestCase
 	context "when run on a population of maximizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::FitnessProportionalSelection.new
+			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 

@@ -27,12 +27,10 @@ module EvoSynth
 	module Selections
 
 		# STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
-		# FIXME: add RSPec (find testcase!)
-		# TODO: rename to RoulettewheelSelection or not?
-		# FIXME: code duplication (see fitness_proportional.rb)
-		# FIXME: minimizing does not work -> see fitness_proportional.rb
 
-		class StochasticUniversalSampling
+		# FIXME: code duplication (see fitness_proportional.rb)
+
+		class RouletteWheelSelection
 
 			def select(population, select_count = 1)
 				selected_population = Population.new
@@ -50,7 +48,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"stochastic universal sampling"
+				"roulette wheel selection"
 			end
 
 			private
@@ -59,8 +57,16 @@ module EvoSynth
 				fitness_hash = {}
 				fitness_sum = 0.0
 
+				# we need to invert the fitnesse's only if we minimize!
+				max_fitness = population.worst.fitness if population[0].minimizes?
+
 				population.each_with_index do |individual, index|
-					fitness_sum += individual.fitness
+					if population[0].minimizes?
+						fitness_sum +=  max_fitness - individual.fitness + 1
+					else
+						fitness_sum += individual.fitness
+					end
+
 					fitness_hash[index] = fitness_sum
 				end
 

@@ -28,18 +28,14 @@ module EvoSynth
 
 		# FITNESSPROPORTIONALE-SELETION (Weicker Page 71)
 
-		# FIXME: this one can only MAXIMIZE!! problem is in select_next_individual / generate_fitness_hash
-
 		class FitnessProportionalSelection
 
 			def select(population, select_count = 1)
 				selected_population = Population.new
-
 				fitness_hash = generate_fitness_hash(population)
-#				puts fitness_hash
 
 				select_count.times do
-					limit = rand(fitness_hash[population.size - 1]).floor
+					limit = rand(fitness_hash.values.max).floor
 					next_individual = select_next_individual(population, limit, fitness_hash)
 					selected_population.add(next_individual)
 				end
@@ -57,8 +53,16 @@ module EvoSynth
 				fitness_hash = {}
 				fitness_sum = 0.0
 
+				# we need to invert the fitnesse's only if we minimize!
+				max_fitness = population.worst.fitness if population[0].minimizes?
+
 				population.each_with_index do |individual, index|
-					fitness_sum += individual.fitness
+					if population[0].minimizes?
+						fitness_sum +=  max_fitness - individual.fitness + 1
+					else
+						fitness_sum += individual.fitness
+					end
+
 					fitness_hash[index] = fitness_sum
 				end
 
@@ -67,7 +71,7 @@ module EvoSynth
 
 			def select_next_individual(population, limit, fitness_hash)
 				population.each_with_index do |individual, index|
-					return individual if fitness_hash[index] > limit
+					return individual if fitness_hash[index] >= limit
 				end
 			end
 
