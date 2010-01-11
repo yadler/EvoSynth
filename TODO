@@ -22,23 +22,8 @@ Was ist mit Benchmarkfunktionen?!
 
 ------------------------------------------------
 
-Wahrscheinlich sollte RSpec durch shoulda ersetzt werden!
-(siehe ruby 1.9 buch)
-
-------------------------------------------------
-
 evobench (mutationen, selektionen und co)
 diversität und zeugs
-
-------------------------------------------------
-
-class University < Struct.new(:name, :address)
-  def to_s
-    name
-  end
-end
-
-Struct erstellt getter und setter!
 
 -----------------------------------------------
 
@@ -50,12 +35,7 @@ http://github.com/notahat/machinist
 
 -----------------------------------------------
 
-RSPEC: tests umstellen
-
-http://rspec.info/documentation/
-http://charlesmaxwood.com/rspec-vs-testunit/
-
------------------------------------------------
+DSL erstellen?
 
 evolution do
 	population is
