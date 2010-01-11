@@ -22,6 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/selections/tc_select_best.rb'
-require 'test/operators/selections/tc_fitness_proportional_selection.rb'
-require 'test/operators/selections/tc_roulette_wheel_selection.rb'
+require 'test/operators/selections/tc_best_selection'
+require 'test/operators/selections/tc_fitness_proportional_selection'
+require 'test/operators/selections/tc_roulette_wheel_selection'
+require 'test/operators/selections/tc_tournament_selection'

@@ -25,61 +25,59 @@
 require 'shoulda'
 
 require 'evosynth'
-require 'test/util/test_helper'
+require 'test/test_util/test_helper'
 
 
-class SelectBestTest < Test::Unit::TestCase
+class TournamentSelectionTest < Test::Unit::TestCase
+
+	SELECT_N_TIMES = 500
+	DELTA = 0.05
 
 	context "when run on a population of minimizing individuals " do
 
-		should "select the two individuals with the lowest fitness values" do
+		should "select a super-individual" do
+			fitness_proportional_selection = EvoSynth::Selections::TournamentSelection.new
 			population = EvoSynth::Population.new
-			individual1 = TestMinimizingIndividual.new(1)
-			individual2 = TestMinimizingIndividual.new(2)
-			individual3 = TestMinimizingIndividual.new(3)
-			individual4 = TestMinimizingIndividual.new(5)
-			individual5 = TestMinimizingIndividual.new(20)
-			population.add(individual1)
-			population.add(individual2)
-			population.add(individual3)
-			population.add(individual4)
-			population.add(individual5)
-
 			expected = EvoSynth::Population.new
-			expected.add(individual1)
-			expected.add(individual2)
 
-			select_best = EvoSynth::Selections::SelectBest.new
-			result = select_best.select(population, 2)
-			assert_equal expected, result
+			population.add(TestMinimizingIndividual.new(10))
+			population.add(TestMinimizingIndividual.new(1))
+			population.add(TestMinimizingIndividual.new(1))
+
+			expected.add(TestMinimizingIndividual.new(1))
+
+			count = 0
+			SELECT_N_TIMES.times do
+				result = fitness_proportional_selection.select(population, 1)
+				count += 1 if expected != result
+			end
+			assert_in_delta 0, count, SELECT_N_TIMES * DELTA
 		end
 
 	end
 
 	context "when run on a population of maximizing individuals " do
 
-		should "select the two individuals with the highest fitness values" do
+		should "select a super-individual" do
+			fitness_proportional_selection = EvoSynth::Selections::TournamentSelection.new
 			population = EvoSynth::Population.new
-			individual1 = TestMaximizingIndividual.new(1)
-			individual2 = TestMaximizingIndividual.new(2)
-			individual3 = TestMaximizingIndividual.new(3)
-			individual4 = TestMaximizingIndividual.new(5)
-			individual5 = TestMaximizingIndividual.new(20)
-			population.add(individual1)
-			population.add(individual2)
-			population.add(individual3)
-			population.add(individual4)
-			population.add(individual5)
-
 			expected = EvoSynth::Population.new
-			expected.add(individual5)
-			expected.add(individual4)
 
-			select_best = EvoSynth::Selections::SelectBest.new
-			result = select_best.select(population, 2)
-			assert_equal expected, result
+			population.add(TestMaximizingIndividual.new(1))
+			population.add(TestMaximizingIndividual.new(10))
+			population.add(TestMaximizingIndividual.new(10))
+
+			expected.add(TestMaximizingIndividual.new(10))
+
+			count = 0
+			SELECT_N_TIMES.times do
+				result = fitness_proportional_selection.select(population, 1)
+				count += 1 if expected != result
+			end
+			assert_in_delta 0, count, SELECT_N_TIMES * DELTA
 		end
 
 	end
+
 
 end

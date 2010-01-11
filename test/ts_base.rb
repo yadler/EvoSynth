@@ -23,3 +23,4 @@
 
 
 require 'test/base/tc_array_genome'
+require 'test/base/tc_population'

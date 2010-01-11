@@ -27,7 +27,7 @@ require 'benchmark'
 
 
 require 'evosynth'
-require 'test/util/test_helper'
+require 'test/test_util/test_helper'
 
 module MutationBenchmark
 

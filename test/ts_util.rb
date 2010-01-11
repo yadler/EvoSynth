@@ -21,51 +21,5 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
-require 'evosynth'
 
-
-class TestIndividual
-	attr_accessor :fitness
-
-	def initialize(fitness = 0.0)
-		@genome = EvoSynth::ArrayGenome.new
-		@fitness = fitness
-	end
-
-	def calculate_fitness
-		@fitness
-	end
-
-	def to_s
-		@fitness
-	end
-end
-
-
-class TestMinimizingIndividual < TestIndividual
-	include EvoSynth::MinimizingIndividual
-end
-
-
-class TestMaximizingIndividual < TestIndividual
-	include EvoSynth::MaximizingIndividual
-end
-
-
-# FIXME: replace this with a mocked object!
-
-class TestBinaryIndividual
-	include EvoSynth::MinimizingIndividual
-
-	def initialize(genome_size)
-		@genome = EvoSynth::ArrayGenome.new(genome_size)
-	end
-
-	def fitness
-		@fitness
-	end
-
-	def to_s
-		"#{@fitness} - #{@genome}"
-	end
-end
+require 'test/util/tc_mdarray'

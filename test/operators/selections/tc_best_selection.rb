@@ -28,51 +28,58 @@ require 'evosynth'
 require 'test/test_util/test_helper'
 
 
-class RouletteWheelSelectionTest < Test::Unit::TestCase
-
-	INDIVIDUALS = 100
-	SELECT_N_TIMES = 100
-	MAX_VALUE = 1000000
+class SelectBestTest < Test::Unit::TestCase
 
 	context "when run on a population of minimizing individuals " do
 
-		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+		should "select the two individuals with the lowest fitness values" do
 			population = EvoSynth::Population.new
+			individual1 = TestMinimizingIndividual.new(1)
+			individual2 = TestMinimizingIndividual.new(2)
+			individual3 = TestMinimizingIndividual.new(3)
+			individual4 = TestMinimizingIndividual.new(5)
+			individual5 = TestMinimizingIndividual.new(20)
+			population.add(individual1)
+			population.add(individual2)
+			population.add(individual3)
+			population.add(individual4)
+			population.add(individual5)
+
 			expected = EvoSynth::Population.new
+			expected.add(individual1)
+			expected.add(individual2)
 
-			(INDIVIDUALS - 1).times { population.add(TestMinimizingIndividual.new(MAX_VALUE)) }
-			population.add(TestMinimizingIndividual.new(1))
-
-			expected.add(TestMinimizingIndividual.new(1))
-
-			SELECT_N_TIMES.times do
-				result = fitness_proportional_selection.select(population, 1)
-				assert_equal expected, result
-			end
+			select_best = EvoSynth::Selections::SelectBest.new
+			result = select_best.select(population, 2)
+			assert_equal expected, result
 		end
 
 	end
 
 	context "when run on a population of maximizing individuals " do
 
-		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+		should "select the two individuals with the highest fitness values" do
 			population = EvoSynth::Population.new
+			individual1 = TestMaximizingIndividual.new(1)
+			individual2 = TestMaximizingIndividual.new(2)
+			individual3 = TestMaximizingIndividual.new(3)
+			individual4 = TestMaximizingIndividual.new(5)
+			individual5 = TestMaximizingIndividual.new(20)
+			population.add(individual1)
+			population.add(individual2)
+			population.add(individual3)
+			population.add(individual4)
+			population.add(individual5)
+
 			expected = EvoSynth::Population.new
+			expected.add(individual5)
+			expected.add(individual4)
 
-			(INDIVIDUALS - 1).times { population.add(TestMaximizingIndividual.new(1)) }
-			population.add(TestMaximizingIndividual.new(MAX_VALUE))
-
-			expected.add(TestMaximizingIndividual.new(MAX_VALUE))
-
-			SELECT_N_TIMES.times do
-				result = fitness_proportional_selection.select(population, 1)
-				assert_equal expected, result
-			end
+			select_best = EvoSynth::Selections::SelectBest.new
+			result = select_best.select(population, 2)
+			assert_equal expected, result
 		end
 
 	end
-
 
 end

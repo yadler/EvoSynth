@@ -25,7 +25,6 @@
 require 'shoulda'
 
 require 'evosynth'
-require 'test/util/test_helper'
 
 
 class ArrayGenomeTest < Test::Unit::TestCase

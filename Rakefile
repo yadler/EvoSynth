@@ -25,7 +25,6 @@
 require 'rake/gempackagetask'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'spec/rake/spectask'
 
 
 PKG_NAME = "evosynth"
@@ -88,13 +87,6 @@ Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
 	test.test_files = FileList["test/ts_*.rb"]
 	test.verbose = true
-end
-
-# FIXME: this is deprecated and should be killed sometime
-desc "Run the specs under spec"
-Spec::Rake::SpecTask.new do |rspec|
-  rspec.spec_opts = ['--format', "nested"]
-  rspec.spec_files = FileList['spec/*_spec.rb']
 end
 
 desc "Analyze the code with roodi (Ruby Object Oriented Design Inferometer)"

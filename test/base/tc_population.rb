@@ -21,27 +21,31 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
+
+require 'shoulda'
+
 require 'evosynth'
-require 'spec/test_helper_individual'
+require 'test/test_util/test_helper'
 
-describe EvoSynth::Population do
 
-	describe "when initialized without args" do
-		before do
+class PopulationTest < Test::Unit::TestCase
+
+	context "when initialized without args" do
+		setup do
 			@population = EvoSynth::Population.new
 		end
 
-		it "should be empty" do
-			@population.should be_empty
+		should "be empty" do
+			assert @population.empty?
 		end
 
-		it "should have a size of 0" do
-			@population.size.should == 0
+		should "have a size of 0" do
+			assert_equal 0, @population.size
 		end
 	end
 
-	describe "when it contains maximizingIndividuals" do
-		before do
+	context "when it contains maximizingIndividuals" do
+		setup do
 			@population = EvoSynth::Population.new
 			@min = TestMaximizingIndividual.new(1)
 			@second = TestMaximizingIndividual.new(299)
@@ -56,23 +60,23 @@ describe EvoSynth::Population do
 			10.times { @population.add(TestMaximizingIndividual.new(rand(10) + 10)) }
 		end
 
-		it "#best(3) returns 3 individuals ordered by fitness (DESC)" do
+		should "#best(3) return 3 individuals ordered by fitness (DESC)" do
 			expected = []
 			expected << @max << @second << @third
-			@population.best(3).should == expected
+			assert_equal expected, @population.best(3)
 		end
 
-		it "#best returns maximum in population" do
-			@population.best.should == @max
+		should "#best return maximum in population" do
+			assert_equal @max, @population.best
 		end
 
-		it "#worst returns minimum in population" do
-			@population.worst.should == @min
+		should "#worst return minimum in population" do
+			assert_equal @min, @population.worst
 		end
 	end
 
-	describe "when it contains minizingIndividuals" do
-		before do
+	context "when it contains minizingIndividuals" do
+		setup do
 			@population = EvoSynth::Population.new
 			@min = TestMinimizingIndividual.new(1)
 			@second = TestMinimizingIndividual.new(2)
@@ -83,54 +87,54 @@ describe EvoSynth::Population do
 			@population.add(@second)
 			@population.add(@third)
 			@population.add(@max)
-			
+
 			10.times { @population.add(TestMinimizingIndividual.new(rand(10) + 10)) }
 		end
 
-		it "#best(3) returns 3 individuals ordered by fitness (ASC)" do
+		should "#best(3) return 3 individuals ordered by fitness (ASC)" do
 			expected = []
 			expected << @min << @second << @third
-			@population.best(3).should == expected
+			assert_equal expected, @population.best(3)
 		end
 
-		it "#best returns minimum in population" do
-			@population.best.should == @min
+		should "#best returns minimum in population" do
+			assert_equal @min, @population.best
 		end
 
-		it "#worst returns maximum in population" do
-			@population.worst.should == @max
+		should "#worst returns maximum in population" do
+			assert_equal @max, @population.worst
 		end
 	end
 
-	it "[]= and [] should work" do
+	should "[]= and [] work" do
 		population = EvoSynth::Population.new(2) { 0 }
 		population[0] = "foo"
 		population[1] = "bar"
-		population.size.should == 2
-		population[0].should == "foo"
-		population[1].should == "bar"
+		assert_equal 2, population.size
+		assert_equal "foo", population[0]
+		assert_equal "bar", population[1]
 	end
 
-	it "should provide a working map! implementation" do
+	should "provide a working map! implementation" do
 		pop = EvoSynth::Population.new
 		pop.add(TestMinimizingIndividual.new(1))
 		pop.map! { |i| i.fitness = 2; i}
-		pop[0].fitness.should == 2
+		assert_equal 2, pop[0].fitness
 	end
 
-	it "all individuals should be 0 when created with {0}" do
+	should "all individuals should be 0 when created with {0}" do
 		population = EvoSynth::Population.new(1) { 0 }
-		population.each { |individual| individual.should == 0 }
+		population.each { |individual| assert_equal 0, individual }
 	end
 
-	it "it's size should be 100 when we want it to be 100" do
+	should "it's size should be 100 when we want it to be 100" do
 		population = EvoSynth::Population.new(100)
-		population.size == 100
+		assert_equal 100, population.size
 	end
 
-	it "when initialized without block it should only contain nil" do
+	should "when initialized without block it should only contain nil" do
 		population = EvoSynth::Population.new(1)
-		population[0].should be_nil
+		assert_nil population[0]
 	end
 
 end

@@ -22,31 +22,40 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'shoulda'
+
 require 'evosynth'
-require 'spec/test_helper_individual'
 
-describe EvoSynth::Selections::NStageTournamentSelection do
 
-	# FIXME: this does actually fail sometimes
+class ArrayGenomeTest < Test::Unit::TestCase
 
-	it "it should select a super-individual" do
-		pop = EvoSynth::Population.new
-		individual1 = TestMinimizingIndividual.new(13)
-		individual2 = TestMinimizingIndividual.new(12)
-		individual3 = TestMinimizingIndividual.new(11)
-		individual4 = TestMinimizingIndividual.new(10)
-		super_individual = TestMinimizingIndividual.new(0)
-		pop.add(individual1)
-		pop.add(individual2)
-		pop.add(individual3)
-		pop.add(individual4)
-		pop.add(super_individual)
+	#FIXME: this test case is pretty incomplete
 
-		expected = EvoSynth::Population.new
-		expected.add(super_individual)
-		tournament_selection = EvoSynth::Selections::NStageTournamentSelection.new
-		result = tournament_selection.select(pop)
-		result.should == expected
+	context "when first created" do
+		setup do
+			@mda = EvoSynth::Util::MDArray.new(1, 2)
+		end
+
+		should "every element should be nil" do
+			@mda.each_index { |row, col| assert_nil @mda[row, col] }
+		end
+
+	end
+
+	context "when created with default value (0)" do
+		setup do
+			@mda = EvoSynth::Util::MDArray.new(1, 3, 0)
+		end
+
+		should "every element should be 0" do
+			@mda.each_index { |row, col| assert_equal 0, @mda[row, col] }
+		end
+
+		should "after assignment of 1 to a element, it should be one" do
+			assert_equal 0, @mda[0,0]
+			@mda[0,0] = 1
+			assert_equal 1, @mda[0,0]
+		end
 	end
 
 end

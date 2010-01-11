@@ -28,7 +28,7 @@ require 'evosynth'
 require 'test/test_util/test_helper'
 
 
-class RouletteWheelSelectionTest < Test::Unit::TestCase
+class NStageTournamentSelectionTest < Test::Unit::TestCase
 
 	INDIVIDUALS = 100
 	SELECT_N_TIMES = 100
@@ -37,7 +37,7 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 	context "when run on a population of minimizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+			fitness_proportional_selection = EvoSynth::Selections::NStageTournamentSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 
@@ -57,7 +57,7 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 	context "when run on a population of maximizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+			fitness_proportional_selection = EvoSynth::Selections::NStageTournamentSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 
