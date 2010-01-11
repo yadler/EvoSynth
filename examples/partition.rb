@@ -143,8 +143,8 @@ module Partitionproblem
 		result = algorithm.run_until_generations_reached(generations)
 		puts algorithm
 		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tbest individual: #{result.best}"
-		puts "\tworst individual: #{result.worst}"
+		puts "\tbest individual: #{result.best.fitness}"
+		puts "\tworst individual: #{result.worst.fitness}"
 	end
 
 end
@@ -156,8 +156,8 @@ problem = Partitionproblem::Testdata.gen_layer_set
 population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
 puts "Starting with the following population:"
-puts "\tbest individual: #{population.best}"
-puts "\tworst individual: #{population.worst}"
+puts "\tbest individual: #{population.best.fitness}"
+puts "\tworst individual: #{population.worst.fitness}"
 puts
 
 Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, population.deep_clone, GENERATIONS)
