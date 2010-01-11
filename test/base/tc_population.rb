@@ -122,6 +122,20 @@ class PopulationTest < Test::Unit::TestCase
 		assert_equal 2, pop[0].fitness
 	end
 
+	should "provide a working remove implementation" do
+		pop = EvoSynth::Population.new
+		inividual_one = TestMinimizingIndividual.new(1)
+		inividual_two = TestMinimizingIndividual.new(2)
+		pop.add(inividual_one)
+		pop.add(inividual_two)
+		assert_equal 2, pop.size
+		assert_equal inividual_one, pop[0]
+		assert_equal inividual_two, pop[1]
+
+		pop.remove(inividual_one)
+		assert_equal inividual_two, pop[0]
+	end
+
 	should "all individuals should be 0 when created with {0}" do
 		population = EvoSynth::Population.new(1) { 0 }
 		population.each { |individual| assert_equal 0, individual }
