@@ -29,6 +29,7 @@ module EvoSynth
 	module Recombinations
 
 		# ABBILDUNGSREKOMBINATION (Weicker Page 133)
+		# TODO: is this maybe the first recombination (will not be the last) that can only combine permutations?
 		# FIXME: can the infinite loop problem (with boolean genotype) be solved somehow?
 
 		class PartiallyMappedCrossover
