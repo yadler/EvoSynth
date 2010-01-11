@@ -63,11 +63,11 @@ module EvoSynth
 		end
 
 		def minimizes?
-			compare_values(1,0) < 0
+			compare_fitness_values(1,0) < 0
 		end
 
 		def maximizes?
-			compare_values(1,0) > 0
+			compare_fitness_values(1,0) > 0
 		end
 	end
 
