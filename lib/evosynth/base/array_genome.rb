@@ -21,82 +21,51 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
+
+require 'delegate'
+
+
 module EvoSynth
+
+	# Array based genome, which keeps track of changes (changed attribute)
+	# to reduce the need to recalculate the fitness function in the
+	# Individual module
 
 	class ArrayGenome < Array
 
+		# true if the genome has changed - has to be set to false manually
+
 		attr_accessor :changed
 
+		# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9
+		# see rb_ary_store and rb_ary_modify
+
+		METHODS_THAT_CHANGE_ARRAY = ['[]=', 'delete', 'delete_at', 'collect!', 'map!', '<<', 'reject!', 'uniq!', 'unshift', 'shift',
+		                             'sort!', 'pop', 'push', 'flatten!', 'reverse!', 'slice!', 'clear']
+
 		def initialize(*args)
-			super
 			@changed = true
+			super
+			overwrite_methods!
 		end
 
-		def [](*n)
-			@changed = true
-			super(*n)
-		end
+		# Create a printable version of the genome
 
 		def to_s
 			self * ", "
 		end
-	end
 
+		# overwrites all methods of array that are listed in METHODS_THAT_CHANGE_ARRAY
 
-	module Individual
-
-		attr_accessor :genome
-
-		def to_s
-			"fitness = #{fitness}, genome = [#{genome}]"
-		end
-
-		def fitness
-			if genome.changed
-				@fitness = calculate_fitness
-				@genome.changed = false
+		def overwrite_methods!
+			METHODS_THAT_CHANGE_ARRAY.each do |method_name|
+				eval("def #{method_name}(*args)
+				          @changed = true
+				          super
+				      end")
 			end
-
-			@fitness
 		end
-
-		def deep_clone
-			my_clone = self.clone
-			my_clone.genome = self.genome.clone
-			my_clone
-		end
-	end
-
-
-	# The following two mixins decide wether you have a
-	# minimization or maximization Problem
-	#
-	# In either case if you compare individuals with a > b,
-	#	individual a is a better solution than individual b
-
-
-	# Mixin for Individuals (for minimizing Problems)
-
-	module MinimizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			cmp = fitness <=> anOther.fitness
-			-1 * cmp
-		end
-
-	end
-
-	# Mixin for Individuals (for maximizing Problems)
-
-	module MaximizingIndividual
-		include Individual
-		include Comparable
-
-		def <=>(anOther)
-			fitness <=> anOther.fitness
-		end
+		private :overwrite_methods!
 
 	end
 

@@ -48,10 +48,10 @@ describe EvoSynth::Population do
 			@third = TestMaximizingIndividual.new(298)
 			@max = TestMaximizingIndividual.new(300)
 
-			@population.add(@min)
-			@population.add(@second)
-			@population.add(@third)
 			@population.add(@max)
+			@population.add(@min)
+			@population.add(@third)
+			@population.add(@second)
 
 			10.times { @population.add(TestMaximizingIndividual.new(rand(10) + 10)) }
 		end

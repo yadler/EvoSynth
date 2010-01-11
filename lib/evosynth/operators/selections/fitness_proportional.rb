@@ -36,6 +36,7 @@ module EvoSynth
 				selected_population = Population.new
 
 				fitness_hash = generate_fitness_hash(population)
+#				puts fitness_hash
 
 				select_count.times do
 					limit = rand(fitness_hash[population.size - 1]).floor

@@ -22,9 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/base'
-require 'evosynth/algorithms'
-require 'evosynth/operators'
-require 'evosynth/util/mdarray'
-
-# anthing that is needed to setup EvoSynth should be here!
+require 'evosynth/operators/selections'
+require 'evosynth/operators/mutations'
+require 'evosynth/operators/recombinations'

@@ -30,8 +30,8 @@ require 'test/util/test_helper'
 
 class FitnessProportionalSelection < Test::Unit::TestCase
 
-	INDIVIDUALS = 100
-	SELECT_N_TIMES = 100
+	INDIVIDUALS = 2
+	SELECT_N_TIMES = 1
 	MAX_VALUE = 1000000000000000
 
 	context "when run on a population of minimizing individuals " do
@@ -45,7 +45,7 @@ class FitnessProportionalSelection < Test::Unit::TestCase
 			population.add(TestMinimizingIndividual.new(1))
 
 			expected.add(TestMinimizingIndividual.new(1))
-			
+
 			SELECT_N_TIMES.times do
 				result = fitness_proportional_selection.select(population, 1)
 				# FIXME: uncomment assert once fitnessproportional selection can actually minimize!

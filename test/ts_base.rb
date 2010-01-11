@@ -22,9 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/base'
-require 'evosynth/algorithms'
-require 'evosynth/operators'
-require 'evosynth/util/mdarray'
-
-# anthing that is needed to setup EvoSynth should be here!
+require 'test/base/tc_array_genome'
