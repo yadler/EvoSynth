@@ -29,7 +29,6 @@ require 'set'
 module Ants
 
 	class ProblemMatrix
-		attr_accessor :matrix  #FIXME: delete this!
 
 		def initialize(file_name, distance_weight = 2)
 			@distance_weight = distance_weight
