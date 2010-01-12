@@ -29,6 +29,21 @@ require 'test/test_util/test_helper'
 
 class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 
+	context "a partially mapped crossover run on genome's with duplicates" do
+
+		setup do
+			@recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
+
+			@individual_one = TestGenomeIndividual.new([0,1,0,1,0,1,0])
+			@individual_two = TestGenomeIndividual.new([1,0,1,0,1,0,1])
+		end
+
+		should "raise a exception" do
+			assert_raise { @child_one, @child_two = @recombination.recombine(@individual_one, @individual_two) }
+		end
+
+	end
+
 	context "a partially mapped crossover run on example genome (Weicker page 133)" do
 
 		setup do

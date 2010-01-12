@@ -30,7 +30,7 @@ module EvoSynth
 
 		# ABBILDUNGSREKOMBINATION (Weicker Page 133)
 		# TODO: is this maybe the first recombination (will not be the last) that can only combine permutations?
-		# FIXME: can the infinite loop problem (with boolean genotype) be solved somehow?
+		#       -> at least it only works on genomes without duplicate genes!
 
 		class PartiallyMappedCrossover
 
@@ -70,7 +70,13 @@ module EvoSynth
 			def fill_range(range, mapping, used_genes, parent, child)
 				range.each do |index|
 					gene = parent.genome[index]
-					gene = mapping[gene] while used_genes.include?(gene)
+					first_gene = gene
+
+					while used_genes.include?(gene) do
+						gene = mapping[gene]
+						raise "duplicate gene in genome. would cause infinite loop!" if gene == first_gene
+					end
+
 					child.genome[index] = gene
 					used_genes << gene
 				end

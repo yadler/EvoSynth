@@ -30,7 +30,7 @@ require 'test/test_util/test_helper'
 
 class TournamentSelectionTest < Test::Unit::TestCase
 
-	SELECT_N_TIMES = 500
+	SELECT_N_TIMES = 1000
 	DELTA = 0.05
 
 	context "when run on a population of minimizing individuals " do
