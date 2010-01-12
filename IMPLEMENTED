@@ -33,6 +33,7 @@ List of implemented algorithms from various sources:
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>PartiallyMappedCrossover</td>     <td>ABBILDUNGSREKOMBINATION (Weicker page 133)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>UniformCrossover</td>             <td>UNIFORMER-CROSSOVER (Weicker page 80)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>OrderedRecombination</td>         <td>ORDNUNGSREKOMBINATION (Weicker page 29)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>EdgeRecombination</td>            <td>KANTENREKOMBINATION (Weicker page 29)</td> </tr>
 
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left>selections</th> </tr>
