@@ -23,38 +23,28 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Util
 
-		# BINÄRES-HILLCLIMBING (Weicker Page 49)
+		class ConsoleWriter
 
-		class Hillclimber
-			include EvoSynth::Algorithms::Algorithm
-
-			attr_accessor :mutation, :individual
-
-			def initialize(individual)
-				@individual = individual
-				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
+			def initialize(print_gen_step = 10)
+				@print_generation_step = print_gen_step
 			end
 
-			def to_s
-				"hillclimber <mutation: #{@mutation}>"
+			def update(generations_run, algorithm)
+				if generations_run % @print_generation_step == 0
+					best = "no best individual could be retrieved"
+
+					if defined? algorithm.population
+						best = algorithm.population.best
+					elsif defined? algorithm.individual
+						best = algorithm.individual
+					end
+
+					puts "#{generations_run}\t#{best}"
+				end
 			end
 
-			private
-
-			def best_solution
-				@individual
-			end
-
-			def return_result
-				@individual
-			end
-
-			def next_generation
-				child = @mutation.mutate(@individual)
-				@individual = child if child > @individual
-			end
 		end
 
 	end

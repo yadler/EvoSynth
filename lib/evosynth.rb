@@ -25,6 +25,6 @@
 require 'evosynth/base'
 require 'evosynth/algorithms'
 require 'evosynth/operators'
-require 'evosynth/util/mdarray'
+require 'evosynth/util'
 
 # anthing that is needed to setup EvoSynth should be here!

@@ -224,15 +224,23 @@ class EvoSynth::Algorithms::SteadyStateGA
 end
 
 population = EvoSynth::Population.new(10) do
-	ant = Ants::AntIndividual.new(matrix, PHEROMON, 1)
+	ant = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
 	ant.generate_route!
 	ant
 end
 
 puts "Best Individual before evolution: #{population.best}"
 
-algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population)
-algorithm.mutation = EvoSynth::Mutations::InversionMutation.new
+#combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
+#combined_mutatation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
+#combined_mutatation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
+
+writer = EvoSynth::Util::ConsoleWriter.new(50)
+
+algorithm = EvoSynth::Algorithms::PopulationHillclimber.new(population)
+algorithm.mutation = Ants::SimpleAntMutation.new
+#algorithm.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
+algorithm.add_observer(writer)
 
 result = algorithm.run_until_generations_reached(1000)
 puts algorithm

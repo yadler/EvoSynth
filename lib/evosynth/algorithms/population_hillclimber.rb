@@ -30,7 +30,7 @@ module EvoSynth
 		class PopulationHillclimber
 			include EvoSynth::Algorithms::Algorithm
 
-			attr_accessor :mutation
+			attr_accessor :mutation, :population
 
 			def initialize(population)
 				@population = population

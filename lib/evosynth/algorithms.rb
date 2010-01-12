@@ -22,11 +22,15 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
 	module Algorithms
 
 
 		module Algorithm
+			include Observable
 
 			attr_reader :generations_run
 
@@ -45,6 +49,8 @@ module EvoSynth
 				while loop_condition.call
 					next_generation
 					@generations_run += 1
+					changed
+					notify_observers @generations_run, self
 				end
 
 				return_result

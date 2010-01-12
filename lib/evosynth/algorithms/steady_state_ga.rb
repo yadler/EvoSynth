@@ -31,7 +31,7 @@ module EvoSynth
 			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
-			              :recombination_probability
+			              :recombination_probability, :population
 
 			def initialize(population, recombination_probability = 0.5)
 				@population = population

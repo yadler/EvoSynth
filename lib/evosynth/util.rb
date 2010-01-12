@@ -22,40 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
-	module Algorithms
-
-		# BINÄRES-HILLCLIMBING (Weicker Page 49)
-
-		class Hillclimber
-			include EvoSynth::Algorithms::Algorithm
-
-			attr_accessor :mutation, :individual
-
-			def initialize(individual)
-				@individual = individual
-				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
-			end
-
-			def to_s
-				"hillclimber <mutation: #{@mutation}>"
-			end
-
-			private
-
-			def best_solution
-				@individual
-			end
-
-			def return_result
-				@individual
-			end
-
-			def next_generation
-				child = @mutation.mutate(@individual)
-				@individual = child if child > @individual
-			end
-		end
-
-	end
-end
+require 'evosynth/util/mdarray'
+require 'evosynth/util/output/console_writer'
