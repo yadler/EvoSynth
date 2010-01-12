@@ -61,7 +61,7 @@ module EvoSynth
 				range = 0..(index_one - 1)
 				fill_range(range, mapping, used_genes, parent_one, child)
 
-				range = (index_two + 1)..shorter.genome.size
+				range = (index_two + 1)..(shorter.genome.size - 1)
 				fill_range(range, mapping, used_genes, parent_one, child)
 
 				child
