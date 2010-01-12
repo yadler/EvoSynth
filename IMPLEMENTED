@@ -18,7 +18,7 @@ List of implemented algorithms from various sources:
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>CombinedMutation</td>             <td>-</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>BinaryMutation</td>               <td>BINÄRE-MUTATION (Weicker page 59)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINÄRE-MUTATION (Weicker page 130)</td> </tr>
-<tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)<br/>DREIERTAUSCH-MUTATION (Seite 107)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>InversionMutation</td>            <td>INVERTIERENDE-MUTATION (Weicker page 29)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>MixingMutation</td>               <td>MISCHENDE-MUTATION (Weicker page 132)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>OneGeneFlipping</td>              <td>EIN-BIT-BINÄRE-MUTATION (Weicker page 48)</td> </tr>
@@ -40,6 +40,6 @@ List of implemented algorithms from various sources:
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>NStageTournamentSelection</td>    <td>Q-STUFIGE-TURNIER-SELEKTION (Weicker page 69)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>TournamentSelection</td>          <td>TURNIER-SELEKTION (Weicker page 76)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>FitnessProportionalSelection</td> <td>FITNESSPROPORTIONALE-SELETION (Weicker page 71)</td> </tr>
-<tr> <td>x</td> <td>x</td> <td>-</td> <td>RouletteWheelSelection</td>  <td>STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker page 75)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>RouletteWheelSelection</td>       <td>STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker page 75)</td> </tr>
 
 </table>

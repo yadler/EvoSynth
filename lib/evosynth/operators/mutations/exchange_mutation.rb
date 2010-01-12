@@ -32,9 +32,29 @@ module EvoSynth
 		#
 		# The given individual has to provide a <i>deep_clone</i> method,
 		# which clones the individual and its genome.
+		#
+		# This mutations does not destroy permutations.
 		
 
 		class ExchangeMutation
+
+			# The number of genes that will be swapped during this mutation (default is 2).
+
+			attr_accessor :swap_count
+
+			#	:call-seq:
+			#		ExchangeMutation.new
+			#		ExchangeMutation(Fixnum) -> ExchangeMutation (overrides default swap count)
+			#
+			# Returns a new ExchangeMutation. In the first form, the default swap count is used.
+			# In the second it creates a ExchangeMutation with the given swap count.
+			#
+			#     BinaryMutation.new
+			#     BinaryMutation.new(3)
+
+			def initialize(swap_count = 2)
+				@swap_count = swap_count
+			end
 
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
@@ -48,11 +68,15 @@ module EvoSynth
 				mutated = individual.deep_clone
 				genome = mutated.genome
 
-				index_one = rand(genome.size)
-				index_two = rand(genome.size)
-				index_two = rand(genome.size) while index_two == index_one
+				indexes = rand_indexes(genome.size)
 
-				genome[index_one], genome[index_two] = genome[index_two], genome[index_one]
+				(indexes.size - 1).times do |index|
+					index_one = indexes[index]
+					index_two = indexes[index + 1]
+					index_two = indexes[0] if index_two.nil?
+
+					genome[index_one], genome[index_two] = genome[index_two], genome[index_one]
+				end
 
 				mutated
 			end
@@ -66,9 +90,20 @@ module EvoSynth
 			#     m.to_s                   #=> "exchange mutation"
 
 			def to_s
-				"exchange mutation"
+				"exchange mutation <swap count: #{@swap_count}>"
 			end
 
+			private
+
+			def rand_indexes(genome_size)
+				indexes = Set.new
+				@swap_count.times do
+					new_index = rand(genome_size)
+					new_index = rand(genome_size) while indexes.include?(new_index)
+					indexes << new_index
+				end
+				indexes.to_a
+			end
 		end
 
 	end
