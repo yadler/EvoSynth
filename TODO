@@ -3,7 +3,6 @@ Aus Weickers Buch (noch) nicht implementiert:
 Rekombinationen:
 	- ARITHMETISCHER-CROSSOVER (Seite 83)
 	- KANTENREKOMBINATION (Seite 29)
-	- ORDNUNGSREKOMBINATION (Seite 29)
 
 Mutationen:
 	- SELBSTADAPTIVE-GAUSS-MUTATION (Seite 114)
