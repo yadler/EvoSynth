@@ -29,7 +29,7 @@ require 'test/test_util/test_helper'
 
 class OrderedRecombinationTest < Test::Unit::TestCase
 
-	context "a partially mapped crossover run on example genome (Weicker page 29)" do
+	context "a ordered recombination run on example genome (Weicker page 29)" do
 
 		setup do
 			@recombination = EvoSynth::Recombinations::OrderedRecombination.new
@@ -38,7 +38,7 @@ class OrderedRecombinationTest < Test::Unit::TestCase
 			@individual_two = TestGenomeIndividual.new([1,2,3,4,8,5,6,7])
 		end
 
-		context "before the partially mapped crossover is executed" do
+		context "before the ordered recombination is executed" do
 
 			should "individual one should contain all numbers from 1 to 7" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @individual_one.genome.include? item }
@@ -50,7 +50,7 @@ class OrderedRecombinationTest < Test::Unit::TestCase
 
 		end
 
-		context "after the partially mapped crossover is executed" do
+		context "after the ordered recombination is executed" do
 
 			setup do
 				@child_one, @child_two = @recombination.recombine(@individual_one, @individual_two)

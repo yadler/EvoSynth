@@ -45,7 +45,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"mapping recombination"
+				"ordered recombination"
 			end
 
 			private
@@ -67,21 +67,6 @@ module EvoSynth
 				end
 
 				child
-			end
-
-			def fill_range(range, mapping, used_genes, parent, child)
-				range.each do |index|
-					gene = parent.genome[index]
-					first_gene = gene
-
-					while used_genes.include?(gene) do
-						gene = mapping[gene]
-						raise "duplicate gene in genome. would cause infinite loop!" if gene == first_gene
-					end
-
-					child.genome[index] = gene
-					used_genes << gene
-				end
 			end
 
 		end
