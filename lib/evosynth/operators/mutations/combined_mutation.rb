@@ -22,12 +22,61 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/mutations/tc_shifting_muation.rb'
-require 'test/operators/mutations/tc_mixing_mutation.rb'
-require 'test/operators/mutations/tc_binary_mutation.rb'
-require 'test/operators/mutations/tc_one_gene_flipping.rb'
-require 'test/operators/mutations/tc_exchange_mutation.rb'
-require 'test/operators/mutations/tc_inversion_mutation.rb'
-require 'test/operators/mutations/tc_identity_mutation.rb'
-require 'test/operators/mutations/tc_efficient_binary_mutation'
-require 'test/operators/mutations/tc_combined_mutation'
+module EvoSynth
+	module Mutations
+
+		class CombinedMutation
+
+			def initialize
+				@mutations = []
+			end
+
+			def <<(mutation)
+				@mutations << [mutation, 1.0 / (@mutations.size > 0 ? @mutations.size : 1.0)]
+				normalize_possibilities
+			end
+
+			def add_with_possibility(mutation, possibility)
+				@mutations << [mutation, possibility]
+				normalize_possibilities
+			end
+
+			def mutate(individual)
+				mutated = individual
+
+				unless @mutations.empty?
+					mutation = nil
+					rand_value = rand
+
+					sum = 0.0
+					@mutations.each do |m|
+						sum += m[1];
+						mutation = m[0];
+						break if sum >= rand_value
+					end
+
+					mutated = mutation.mutate(individual)
+				end
+
+				mutated
+			end
+
+			def to_s
+				"combinded mutation <mutations: #{@mutations}>"
+			end
+
+			private
+
+			def normalize_possibilities
+				sum = 0.0
+				@mutations.each { |mutation| sum += mutation[1] }
+
+				if sum > 1.0
+					subtract = (sum - 1.0) / (@mutations.size)
+					@mutations.each { |mutation| mutation[1] -= subtract }
+				end
+			end
+		end
+
+	end
+end

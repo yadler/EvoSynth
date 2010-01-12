@@ -15,6 +15,7 @@ List of implemented algorithms from various sources:
 <tr> <th colspan=5 align=left><i>mutations</i></th> </tr>
 
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>Identity</td>                     <td>-</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>CombinedMutation</td>             <td>-</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>BinaryMutation</td>               <td>BINÄRE-MUTATION (Weicker page 59)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINÄRE-MUTATION (Weicker page 130)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)</td> </tr>
