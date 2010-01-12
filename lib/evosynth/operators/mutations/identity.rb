@@ -32,6 +32,8 @@ module EvoSynth
 		#
 		# The given individual has to provide a <i>deep_clone</i> method,
 		# which clones the individual and its genome.
+		#
+		# This mutations does not destroy permutations.
 
 		class Identity
 

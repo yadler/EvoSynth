@@ -26,6 +26,7 @@ module EvoSynth
 	module Mutations
 
 		# INVERTIERENDE-MUTATION (Page 29)
+		# This mutations does not destroy permutations.
 
 		class InversionMutation
 

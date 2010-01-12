@@ -26,6 +26,7 @@ module EvoSynth
 	module Mutations
 
 		# MISCHENDE-MUTATION (Page 132)
+		# This mutations does not destroy permutations.
 
 		class MixingMutation
 
