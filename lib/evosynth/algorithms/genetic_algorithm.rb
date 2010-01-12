@@ -61,9 +61,7 @@ module EvoSynth
 				@population.clear_all
 
 				selected_pop.individuals.each_index do |index_one|
-					# TODO: this could be avoided by #cycle which is introduced by 1.9
-					index_two = index_one + 1
-					index_two = -1 if index_two >= selected_pop.size
+					index_two = (index_one + 1) % selected_pop.size
 
 					if rand < @recombination_probability
 						child_one, child_two = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
