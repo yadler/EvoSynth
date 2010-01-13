@@ -162,6 +162,12 @@ module GraphColouring
 
 	puts
 	timing = Benchmark.measure do
+		GraphColouring.run_algorithm EvoSynth::Algorithms::ElitismGeneticAlgorithm
+	end
+	puts "\nRunning these algorithm took:\n#{timing}"
+
+	puts
+	timing = Benchmark.measure do
 		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"

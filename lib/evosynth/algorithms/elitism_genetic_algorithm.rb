@@ -22,69 +22,26 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
 	module Algorithms
 
+		class ElitismGeneticAlgorithm < EvoSynth::Algorithms::GeneticAlgorithm
+			alias :original_next_generation :next_generation
 
-		module Algorithm
-			include Observable
+			def next_generation
+				best_individual = @population.best
 
-			attr_reader :generations_run
+				original_next_generation
 
-			def run_until(&condition)
-				@generations_run = 0
-
-				case condition.arity
-					when 1
-						loop_condition = lambda { !yield @generations_run }
-					when 2
-						loop_condition = lambda { !yield @generations_run, best_solution }
-				else
-					loop_condition = nil
-				end
-
-				while loop_condition.call
-					next_generation
-					@generations_run += 1
-					changed
-					notify_observers @generations_run, self
-				end
-
-				return_result
+				@population.remove(@population.worst)
+				@population.add(best_individual)
 			end
 
-			def run_until_generations_reached(max_generations)
-				run_until { |gen| gen == max_generations }
-			end
-
-			def run_until_fitness_reached(fitness)
-				goal = Goal.new(fitness)
-				run_until { |gen, best| best > goal }
-			end
-
-			private
-
-			class Goal
-				def initialize(goal)
-					@goal = goal
-				end
-
-				def fitness
-					@goal
-				end
+			def to_s
+				"elitism genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
 		end
 
-
 	end
 end
-
-require 'evosynth/algorithms/hillclimber'
-require 'evosynth/algorithms/population_hillclimber'
-require 'evosynth/algorithms/genetic_algorithm'
-require 'evosynth/algorithms/elitism_genetic_algorithm'
-require 'evosynth/algorithms/steady_state_ga'

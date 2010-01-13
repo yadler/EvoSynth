@@ -163,3 +163,4 @@ puts
 Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, population.deep_clone, GENERATIONS)
 Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, population.deep_clone, GENERATIONS)
 Partitionproblem.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, population.deep_clone, GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, population.deep_clone, GENERATIONS)

@@ -85,6 +85,8 @@ timing = Benchmark.measure do
 	puts
 	MaxOnes.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, pop_size, generations)
 	puts
+	MaxOnes.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, pop_size, generations)
+	puts
 	MaxOnes.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, pop_size, generations)
 end
 puts "\nRunning these algorithms took:\n#{timing}"

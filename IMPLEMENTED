@@ -9,6 +9,7 @@ List of implemented algorithms from various sources:
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>Hillclimber</td>                  <td>BINÄRES-HILLCLIMBING (Weicker Page 49)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>PopulationHillclimber</td>        <td>POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>GeneticAlgorithm</td>             <td>GENETISCHER-ALGORITHMUS (Weicker Page 85)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>ElitismGeneticAlgorithm</td>      <td>-</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>SteadyStateGA</td>                <td>STEADY-STATE-GA (Weicker Page 129)</td> </tr>
 
 <tr> <th colspan=5></th> </tr>

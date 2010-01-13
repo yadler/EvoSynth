@@ -148,6 +148,8 @@ module SPk
 		puts
 		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
 		puts
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm) { |gen| gen >= MAX_GENERATIONS}
+		puts
 		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA) { |gen| gen >= MAX_GENERATIONS}
 	end
 	puts "\nRunning these algorithms took:\n#{timing}"
