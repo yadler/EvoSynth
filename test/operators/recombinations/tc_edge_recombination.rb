@@ -67,12 +67,6 @@ class EdgeRecombinationTest < Test::Unit::TestCase
 			should "both children should (still) contain all numbers from 1 to 7" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @child_one.genome.include? item }
 				[1,2,3,4,5,6,7,8].each { |item| assert @child_two.genome.include? item }
-				puts @individual_one
-				puts @individual_two
-				puts "========"
-				puts @child_one
-				puts @child_two
-				puts
 			end
 
 		end
