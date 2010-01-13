@@ -1,8 +1,5 @@
 Aus Weickers Buch (noch) nicht implementiert:
 
-Rekombinationen:
-	- ARITHMETISCHER-CROSSOVER (Seite 83)
-
 Mutationen:
 	- SELBSTADAPTIVE-GAUSS-MUTATION (Seite 114)
 	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Seite 131)
@@ -12,8 +9,8 @@ Anpassungsstrategien:
 	- ADAPTIVE-ANPASSUNG (Seite 113)
 
 Algorithmen:
-	- EA-SCHEMA (Seite 39)
-	- EA-HANDLUNGSREISENDENPROBLEM (Seite 31)
+	- reichlich grob formuliert:  EA-SCHEMA (Seite 39)
+	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Seite 31)
 
 Was ist mit Benchmarkfunktionen?!
 

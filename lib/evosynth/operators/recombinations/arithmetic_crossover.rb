@@ -25,24 +25,37 @@
 module EvoSynth
 	module Recombinations
 
-		# Returns individual with the shorter genome
+		# ARITHMETISCHER-CROSSOVER (Weicker page 83)
 
-		def Recombinations.individual_with_shorter_genome(individual_one, individual_two)
-			if individual_one.genome.size > individual_one.genome.size then
-				individual_two
-			else
-				individual_one
+		# ATTENTION PLEASE! needs interpolation method to work:
+		#  interpolation_method.call(gene_one, gene_two, factor)
+
+		class ArithmeticCrossover
+
+			def initialize(interpolation_function)
+				@interpolation_function = interpolation_function
 			end
+
+			def recombine(individual_one, individual_two)
+				child_one = individual_one.deep_clone
+				child_two = individual_two.deep_clone
+
+				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
+				shorter.genome.each_with_index do |gene_one, index|
+					gene_two = individual_two.genome[index]
+
+					child_one.genome[index] = @interpolation_function.call(gene_one, gene_two, rand)
+					child_two.genome[index] = @interpolation_function.call(gene_two, gene_one, rand)
+				end
+
+				[child_one, child_two]
+			end
+
+			def to_s
+				"arithmetic crossover"
+			end
+
 		end
 
 	end
 end
-
-require 'evosynth/operators/recombinations/uniform_crossover'
-require 'evosynth/operators/recombinations/one_point_crossover'
-require 'evosynth/operators/recombinations/k_point_crossover'
-require 'evosynth/operators/recombinations/identity'
-require 'evosynth/operators/recombinations/partially_mapped_crossover'
-require 'evosynth/operators/recombinations/ordered_recombination'
-require 'evosynth/operators/recombinations/edge_recombination'
-require 'evosynth/operators/recombinations/arithmetic_crossover'

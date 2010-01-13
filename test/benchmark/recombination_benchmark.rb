@@ -34,6 +34,13 @@ module RecombinationBenchmark
 	GENOME_SIZE = 1000
 	RECOMBINATION_TIMES = 1000
 
+	def RecombinationBenchmark.benchmark_recombination(recombination, individual_one, individual_two)
+		timing = Benchmark.measure do
+			RECOMBINATION_TIMES.times { recombination.recombine(individual_one, individual_two) }
+		end
+		puts "\t#{timing.format("%r")} - #{recombination.class}"
+	end
+
 	individual_one = TestBinaryIndividual.new(GENOME_SIZE)
 	individual_two = TestBinaryIndividual.new(GENOME_SIZE)
 	GENOME_SIZE.times { |index| individual_one.genome[index] = index }
@@ -41,12 +48,11 @@ module RecombinationBenchmark
 
 	puts "Running recombination benchmark with #{RECOMBINATION_TIMES} recombinations (genome=#{GENOME_SIZE}):"
 	EvoSynth::Recombinations.constants.each do |recombination|
-		recombination = EvoSynth::Recombinations.const_get(recombination).new
-
-		timing = Benchmark.measure do
-			RECOMBINATION_TIMES.times { recombination.recombine(individual_one, individual_two) }
-		end
-		puts "\t#{timing.format("%r")} - #{recombination.class}"
+		recombination = EvoSynth::Recombinations.const_get(recombination).new rescue next
+		RecombinationBenchmark.benchmark_recombination(recombination, individual_one, individual_two)
 	end
 
+	interpolation = lambda { |gene_one, gene_two, factor| rand < factor ? gene_one : gene_two }
+	recombination = EvoSynth::Recombinations::ArithmeticCrossover.new(interpolation)
+	RecombinationBenchmark.benchmark_recombination(recombination, individual_one, individual_two)
 end
