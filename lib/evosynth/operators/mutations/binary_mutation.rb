@@ -25,6 +25,8 @@
 module EvoSynth
 	module Mutations
 
+		# FIXME: maybe it is a good idea to switch from "flip" to a lambda (see arithmetic_crossover)
+		#
 		# <b>Relies on:</b> flip and deep_clone (see below)
 		#
 		# This mutations flips (inverts) each gene in the genome of a given individual

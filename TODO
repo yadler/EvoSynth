@@ -1,18 +1,28 @@
 Aus Weickers Buch (noch) nicht implementiert:
 
 Mutationen:
-	- SELBSTADAPTIVE-GAUSS-MUTATION (Seite 114)
-	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Seite 131)
+	- GAUSS-MUTATION (Weicker page 60)
+	- SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114)
+	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Weicker page 131)
 
 Anpassungsstrategien:
-	- VORDEFINIERTE-ANPASSUNG (Seite 111)
-	- ADAPTIVE-ANPASSUNG (Seite 113)
+	- VORDEFINIERTE-ANPASSUNG (Weicker page 111)
+	- ADAPTIVE-ANPASSUNG (Weicker page 113)
 
 Algorithmen:
-	- reichlich grob formuliert:  EA-SCHEMA (Seite 39)
-	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Seite 31)
+	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
+	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
 
 Was ist mit Benchmarkfunktionen?!
+
+------------------------------------------------
+
+FIXME: maybe it is a good idea to switch from "flip" to a lambda (see arithmetic_crossover)
+
+------------------------------------------------
+
+was ist mit pheno/genetyp? sollten nicht langsam doch
+decoder kommen?
 
 ------------------------------------------------
 
