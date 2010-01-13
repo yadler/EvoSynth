@@ -4,3 +4,5 @@ doc
 doc/*
 coverage
 coverage/*
+testdata
+testdata/*
