@@ -112,10 +112,11 @@ module Ants
 
 			File.open(file_name) do |file|
 				file.each_line do |line|
+					break if line =~ /DISPLAY_DATA_SECTION/
 					next if line !~ /^\s*\d+/
 
 					line =~ /(\d+)\s*(\d+.\d+)\s*(\d+.\d+)/
-					nodes << [$2.to_f, $3.to_f]
+					nodes << line.split
 				end
 			end
 
@@ -126,12 +127,10 @@ module Ants
 			@matrix = EvoSynth::Util::MDArray.new(nodes.size, nodes.size)
 
 			@matrix.each_index do |x,y|
-				@matrix[x,y] = calc_distance(nodes[x], nodes[y])
+				@matrix[x,y] = nodes[x][y].to_f
 			end
-		end
 
-		def calc_distance(from, to)
-			Math.sqrt( (from[0] - to[1])**2 + (from[1] - to[1])**2 )
+#			@matrix.each_row { |row| puts row.to_s}
 		end
 	end
 
@@ -189,8 +188,8 @@ module Ants
 			fitness = 0.0
 
 			@genome.each_with_index do |node, index|
-				break if (index + 1) >= @genome.size
-				fitness += @problem_matrix.distance(node, @genome[index + 1])
+				index_two = (index + 1) % @genome.size
+				fitness += @problem_matrix.distance(node, @genome[index_two])
 			end
 
 			fitness
@@ -209,7 +208,7 @@ module Ants
 	end
 end
 
-matrix = Ants::ProblemMatrix.new('testdata/ant/bays29.tsp')
+matrix = Ants::ProblemMatrix.new('testdata/tsp/bays29.tsp')
 puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 
 PHEROMON = Ants::Pheromon.new(matrix.size)
@@ -229,20 +228,27 @@ population = EvoSynth::Population.new(10) do
 	ant
 end
 
+optimal = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
+opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
+optimal.genome = EvoSynth::ArrayGenome.new(opt_tour)
+puts "Optimal Individual for this problem: #{optimal}"
+
 puts "Best Individual before evolution: #{population.best}"
 
-#combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
-#combined_mutatation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
-#combined_mutatation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
+combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
+combined_mutatation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
+combined_mutatation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
 
 writer = EvoSynth::Util::ConsoleWriter.new(50)
 
-algorithm = EvoSynth::Algorithms::PopulationHillclimber.new(population)
-algorithm.mutation = Ants::SimpleAntMutation.new
-#algorithm.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
+algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population)
+#algorithm.mutation = Ants::SimpleAntMutation.new
+algorithm.mutation = combined_mutatation
+algorithm.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 algorithm.add_observer(writer)
 
 result = algorithm.run_until_generations_reached(1000)
 puts algorithm
 #puts "\t #{result}"
 puts "Best Individual after evolution:  #{result.best}"
+puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size
