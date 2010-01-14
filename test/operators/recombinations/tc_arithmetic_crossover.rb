@@ -36,9 +36,7 @@ class ArithmeticCrossoverTest < Test::Unit::TestCase
 	context "a arithmetic crossover run on a Fixnum genome" do
 
 		setup do
-			interpolation_function = lambda do |gene_one, gene_two, factor|
-				factor * gene_one + (1-factor) * gene_two
-			end
+			interpolation_function = EvoSynth::Recombinations::ArithmeticCrossover::INTERPOLATE_NUMBERS
 			@recombination = EvoSynth::Recombinations::ArithmeticCrossover.new(interpolation_function)
 
 			genome_one, genome_two = [], []
