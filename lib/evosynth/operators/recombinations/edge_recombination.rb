@@ -70,14 +70,16 @@ module EvoSynth
 				reachable.each do |gene|
 					next unless adj_matrix.has_key?(gene)
 
-					if min.nil?
-						min = adj_matrix[gene].size
-						next_gene = gene
-					elsif adj_matrix[gene].size <= min
-						next if adj_matrix[gene].size == min && rand(2) > 0 # if equal let the fortune decide
+					adj_size = 1 if adj_matrix[gene].include?(gene) ? adj_matrix[gene].size - 1 : adj_matrix[gene].size
 
+					if min.nil?
+						min = adj_size
 						next_gene = gene
-						min = adj_matrix[gene].size
+					elsif adj_size <= min
+						next if adj_size == min && rand(2) > 0 # if equal let the fortune decide
+
+						min = adj_size
+						next_gene = gene
 					end
 				end
 
