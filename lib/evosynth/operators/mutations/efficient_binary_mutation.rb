@@ -25,6 +25,8 @@
 module EvoSynth
 	module Mutations
 
+		# FIXME: documentation is outdated!
+		# 
 		# This mutation is basically a optimized version of the BinaryMutation and
 		# should have a better performance on long genomes.
 		#
@@ -43,6 +45,11 @@ module EvoSynth
 
 			attr_accessor :probability
 
+			# This function is used to flip each gene
+
+			attr_accessor :flip_function
+
+			# FIXME: documentation is outdated!
 			#	:call-seq:
 			#		EfficientBinaryMutation.new
 			#		EfficientBinaryMutation(Float) -> EfficientBinaryMutation (overrides default probability)
@@ -53,10 +60,12 @@ module EvoSynth
 			#     EfficientBinaryMutation.new
 			#     EfficientBinaryMutation.new(0.01)
 
-			def initialize(probability = 0.1)
+			def initialize(flip_function, probability = 0.1)
+				@flip_function = flip_function
 				@probability = probability
 			end
 
+			# FIXME: documentation is outdated!
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
 			#
@@ -70,7 +79,7 @@ module EvoSynth
 				@next_index = rand(mutated.genome.size) unless defined? @next_index
 
 				while @next_index < mutated.genome.size
-					mutated.genome[@next_index] = mutated.genome[@next_index].flip
+					mutated.genome[@next_index] = @flip_function.call(mutated.genome[@next_index])
 					@next_index += (Math.log(rand) / Math.log(1 - @probability)).ceil
 				end
 
@@ -78,6 +87,7 @@ module EvoSynth
 				mutated
 			end
 
+			# FIXME: documentation is outdated!
 			#	:call-seq:
 			#		mutation.to_s -> string
 			#

@@ -32,9 +32,9 @@ module EvoSynth
 
 			attr_accessor :mutation, :individual
 
-			def initialize(individual)
+			def initialize(individual, mutation)
 				@individual = individual
-				@mutation = EvoSynth::Mutations::OneGeneFlipping.new
+				@mutation = mutation
 			end
 
 			def to_s

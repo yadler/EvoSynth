@@ -24,17 +24,6 @@
 
 require 'evosynth'
 
-class TrueClass
-	def flip
-		!self
-	end
-end
-
-class FalseClass
-	def flip
-		!self
-	end
-end
 
 module SPk
 
@@ -120,37 +109,40 @@ module SPk
 	K = 2
 	GENOME_SIZE = 16
 	GOAL = 48
-	MAX_GENERATIONS = 1000
+	MAX_GENERATIONS = 100
 	INDIVIDUALS = 25
 
 	require 'benchmark'
 	#require 'profile'
 
-	def SPk.run_population_based_algorithm(algorithm_class, &condition)
-		algorithm = algorithm_class.new( EvoSynth::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) } )
+	def SPk.run_population_based_algorithm(algorithm, &condition)
 		result = algorithm.run_until(&condition)
 		puts algorithm
 		puts "\treached goal after #{algorithm.generations_run}"
 		puts "\tbest individual: #{result.best}"
 		puts "\tworst individual: #{result.worst}"
+		puts
 	end
+
+	MUTATION = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 
 	timing = Benchmark.measure do
 		individual = SPk::Individual.new(GENOME_SIZE, K)
-		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
+		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual, MUTATION)
 		result = hillclimber.run_until_generations_reached(INDIVIDUALS * MAX_GENERATIONS)
 		puts hillclimber
 		puts "\treached goal after #{hillclimber.generations_run}"
 		puts "\tbest: #{result}"
 
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber) { |gen| gen >= MAX_GENERATIONS}
+		population = EvoSynth::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population, MUTATION)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm) { |gen| gen >= MAX_GENERATIONS}
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA) { |gen| gen >= MAX_GENERATIONS}
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 	end
 	puts "\nRunning these algorithms took:\n#{timing}"
 

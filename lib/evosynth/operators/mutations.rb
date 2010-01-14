@@ -22,6 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/operators/mutations/_functions'
 require 'evosynth/operators/mutations/one_gene_flipping'
 require 'evosynth/operators/mutations/binary_mutation'
 require 'evosynth/operators/mutations/efficient_binary_mutation'

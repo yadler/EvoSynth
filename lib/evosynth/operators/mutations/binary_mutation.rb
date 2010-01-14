@@ -25,7 +25,7 @@
 module EvoSynth
 	module Mutations
 
-		# FIXME: maybe it is a good idea to switch from "flip" to a lambda (see arithmetic_crossover)
+		# FIXME: documentation is outdated!
 		#
 		# <b>Relies on:</b> flip and deep_clone (see below)
 		#
@@ -42,6 +42,12 @@ module EvoSynth
 
 			attr_accessor :probability
 
+			# This function is used to flip each gene
+
+			attr_accessor :flip_function
+
+			# FIXME: documentation is outdated!
+			# 
 			#	:call-seq:
 			#		BinaryMutation.new
 			#		BinaryMutation(Float) -> BinaryMutation (overrides default probability)
@@ -52,7 +58,8 @@ module EvoSynth
 			#     BinaryMutation.new
 			#     BinaryMutation.new(0.01)
 
-			def initialize(probability = 0.1)
+			def initialize(flip_function, probability = 0.1)
+				@flip_function = flip_function
 				@probability = probability
 			end
 
@@ -71,6 +78,8 @@ module EvoSynth
 				mutated
 			end
 
+			# FIXME: documentation is outdated!
+			# 
 			#	:call-seq:
 			#		mutation.to_s -> string
 			#
@@ -85,12 +94,13 @@ module EvoSynth
 
 			private
 
+			# FIXME: documentation is outdated!
 			# flips the genes only and only if it is really needed
 			# NOTE: this might not be as pretty as .map! but its faster
 
 			def flip_genes(genome)
 				genome.size.times do |index|
-					genome[index] = genome[index].flip if rand <= @probability
+					genome[index] = @flip_function.call(genome[index]) if rand <= @probability
 				end
 			end
 

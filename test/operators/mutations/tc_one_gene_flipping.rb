@@ -31,6 +31,7 @@ require 'test/test_util/test_helper'
 class OneGeneFlippingTest < Test::Unit::TestCase
 
 	GENOME_SIZE = 20
+	FLIP_FUNCTION = EvoSynth::Mutations::Functions::FLIP_BOOLEAN
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
@@ -46,7 +47,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 		context "after mutation is executed" do
 			setup do
-				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new(FLIP_FUNCTION)
 				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
@@ -76,7 +77,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 		context "after mutation is executed" do
 			setup do
-				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new(FLIP_FUNCTION)
 				@mutated = one_gene_flipping.mutate(@individual)
 			end
 
@@ -91,7 +92,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 		context "after mutation is executed two times" do
 			setup do
-				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new
+				one_gene_flipping = EvoSynth::Mutations::OneGeneFlipping.new(FLIP_FUNCTION)
 				@mutated = one_gene_flipping.mutate(@individual)
 				@mutated = one_gene_flipping.mutate(@mutated)
 			end

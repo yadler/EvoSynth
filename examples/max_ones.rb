@@ -21,19 +21,8 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
+
 require 'evosynth'
-
-class TrueClass
-	def flip
-		!self
-	end
-end
-
-class FalseClass
-	def flip
-		!self
-	end
-end
 
 
 module MaxOnes
@@ -53,17 +42,17 @@ module MaxOnes
 		end
 	end
 
-	def MaxOnes.use_hillclimber(pop_size, generations)
+	def MaxOnes.use_hillclimber
 		individual = MaxOnes::BinaryIndividual.new(10)
-		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual)
-		result = hillclimber.run_until_generations_reached(pop_size * generations)
+		mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual, mutation)
+		result = hillclimber.run_until_generations_reached(POP_SIZE * GENERATIONS)
 		puts hillclimber
 		puts "\t #{result}"
 	end
 
-	def MaxOnes.run_algorithm(algorithm_class, pop_size, generations)
-		algorithm = algorithm_class.new(EvoSynth::Population.new(pop_size) { MaxOnes::BinaryIndividual.new(10) })
-		result = algorithm.run_until_generations_reached(generations)
+	def MaxOnes.run_algorithm(algorithm)
+		result = algorithm.run_until_generations_reached(GENERATIONS)
 
 		puts algorithm
 		puts "\treached goal after #{algorithm.generations_run}"
@@ -72,21 +61,49 @@ module MaxOnes
 	end
 end
 
-pop_size = 25
-generations = 1000
+POP_SIZE = 25
+GENERATIONS = 1000
 
 require 'benchmark'
 #require 'profile'
 
 timing = Benchmark.measure do
-	MaxOnes.use_hillclimber(pop_size, generations)
-	puts
-	MaxOnes.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, pop_size, generations)
-	puts
-	MaxOnes.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, pop_size, generations)
-	puts
-	MaxOnes.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, pop_size, generations)
-	puts
-	MaxOnes.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, pop_size, generations)
+	MaxOnes.use_hillclimber
 end
-puts "\nRunning these algorithms took:\n#{timing}"
+puts "\nRunning these algorithm took:\n#{timing}"
+puts
+
+timing = Benchmark.measure do
+	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	algorithm = EvoSynth::Algorithms::PopulationHillclimber.new(population, mutation)
+	MaxOnes.run_algorithm(algorithm)
+end
+puts "\nRunning these algorithm took:\n#{timing}"
+puts
+
+timing = Benchmark.measure do
+	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	algorithm = EvoSynth::Algorithms::GeneticAlgorithm.new(population, mutation)
+	MaxOnes.run_algorithm(algorithm)
+end
+puts "\nRunning these algorithm took:\n#{timing}"
+puts
+
+timing = Benchmark.measure do
+	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, mutation)
+	MaxOnes.run_algorithm(algorithm)
+end
+puts "\nRunning these algorithm took:\n#{timing}"
+puts
+
+timing = Benchmark.measure do
+	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population, mutation)
+	MaxOnes.run_algorithm(algorithm)
+end
+puts "\nRunning these algorithm took:\n#{timing}"

@@ -25,12 +25,6 @@
 require 'evosynth'
 require 'set'
 
-# add flip to fixnum (our gene) for mutation
-class Fixnum
-	def flip
-		rand(self + 2)
-	end
-end
 
 module GraphColouring
 	MUTATION_RATE = 5
@@ -128,17 +122,13 @@ module GraphColouring
 	require 'benchmark'
 	#require 'profile'
 
-	def GraphColouring.run_algorithm(algorithm_class)
-		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+	def GraphColouring.run_algorithm(algorithm)
 		puts "Starting with:"
-		puts "\tbest individual: #{population.best}"
-		puts "\tworst individual: #{population.worst}"
+		puts "\tbest individual: #{algorithm.population.best}"
+		puts "\tworst individual: #{algorithm.population.worst}"
 
-		algorithm = algorithm_class.new(population)
 		algorithm.mutation = GraphColouring::CustomMutation.new if USE_CUSTOM_MUATION
 		algorithm.recombination = EvoSynth::Recombinations::KPointCrossover.new(4) if defined? algorithm.recombination
-#		algorithm.mutation = EvoSynth::Mutations::Identity.new
-#		algorithm.selection = EvoSynth::Selections::SelectBest.new
 		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS } #|| best.fitness < BEST }
 
 		puts algorithm
@@ -147,28 +137,34 @@ module GraphColouring
 		puts "\tworst individual: #{result.worst}"
 	end
 
+	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
 	GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+	MUTATION = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR)
 
 	timing = Benchmark.measure do
-		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber
+		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm
+		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		GraphColouring.run_algorithm EvoSynth::Algorithms::ElitismGeneticAlgorithm
+		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		GraphColouring.run_algorithm EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA
+		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 

@@ -25,6 +25,7 @@
 require 'set'
 require 'evosynth'
 
+
 module Partitionproblem
 
 	class PartitionIndividual
@@ -130,9 +131,7 @@ module Partitionproblem
 		Partitionproblem::PartitionIndividual.new(part_a, part_b)
 	end
 
-	def Partitionproblem.run_algorithm(algorithm_class, population, generations)
-		algorithm = algorithm_class.new(population)
-
+	def Partitionproblem.run_algorithm(algorithm, generations)
 		# Setup custom mutation and never recombine (as it would destroy our genome)
 		algorithm.mutation = PartitionMutation.new
 		algorithm.recombination = EvoSynth::Recombinations::Identity.new if defined? algorithm.recombination
@@ -145,6 +144,7 @@ module Partitionproblem
 		puts "\treached goal after #{algorithm.generations_run}"
 		puts "\tbest individual: #{result.best.fitness}"
 		puts "\tworst individual: #{result.worst.fitness}"
+		puts
 	end
 
 end
@@ -160,7 +160,7 @@ puts "\tbest individual: #{population.best.fitness}"
 puts "\tworst individual: #{population.worst.fitness}"
 puts
 
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, population.deep_clone, GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, population.deep_clone, GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, population.deep_clone, GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, population.deep_clone, GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population.deep_clone, nil), GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population.deep_clone, nil), GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population.deep_clone, nil), GENERATIONS)
+Partitionproblem.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population.deep_clone, nil), GENERATIONS)

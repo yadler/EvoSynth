@@ -25,22 +25,6 @@
 require 'evosynth'
 
 
-# TODO: how could this be done in a good way?
-# maybe I should do this in evosynth.rb?
-# (see also max_ones.rb!)
-
-class TrueClass
-	def flip
-		!self
-	end
-end
-
-class FalseClass
-	def flip
-		!self
-	end
-end
-
 class TestIndividual
 	attr_accessor :fitness
 

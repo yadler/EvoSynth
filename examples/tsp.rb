@@ -113,14 +113,13 @@ puts "Optimal Individual for this problem: #{optimal}"
 population = EvoSynth::Population.new(100) { TSP::TSPIndividual.new(matrix) }
 puts "Best Individual before evolution: #{population.best}"
 
-algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population)
-algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
-
 combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
 combined_mutatation << EvoSynth::Mutations::InversionMutation.new
 combined_mutatation << EvoSynth::Mutations::ShiftingMutation.new
 combined_mutatation << EvoSynth::Mutations::MixingMutation.new
-algorithm.mutation = combined_mutatation
+
+algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, combined_mutatation)
+algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
 algorithm.recombination = EvoSynth::Recombinations::EdgeRecombination.new if defined? algorithm.recombination
 
 result = algorithm.run_until_generations_reached(1000)

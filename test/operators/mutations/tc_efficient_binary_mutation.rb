@@ -35,6 +35,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 	TIMES = 1000
 	DELTA = 0.075
 	EXPECTED = PROBABILITY * GENOME_SIZE * TIMES
+	FLIP_FUNCTION = EvoSynth::Mutations::Functions::FLIP_BOOLEAN
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
@@ -50,7 +51,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 
 		context "after mutation is executed #{TIMES} times (with probability=#{PROBABILITY})" do
 			setup do
-				binary_mutation = EvoSynth::Mutations::EfficientBinaryMutation.new(PROBABILITY)
+				binary_mutation = EvoSynth::Mutations::EfficientBinaryMutation.new(FLIP_FUNCTION, PROBABILITY)
 				@count = 0.0
 				TIMES.times do
 					mutated = binary_mutation.mutate(@individual)

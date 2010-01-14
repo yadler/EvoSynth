@@ -33,11 +33,11 @@ module EvoSynth
 			attr_accessor :mutation, :selection, :recombination,
 			              :recombination_probability, :population
 
-			def initialize(population, recombination_probability = 0.5)
+			def initialize(population, mutation, recombination_probability = 0.5)
 				@population = population
 				@recombination_probability = recombination_probability
 
-				@mutation = EvoSynth::Mutations::BinaryMutation.new
+				@mutation = mutation
 				@selection = EvoSynth::Selections::FitnessProportionalSelection.new
 				@recombination = EvoSynth::Recombinations::OnePointCrossover.new
 			end
