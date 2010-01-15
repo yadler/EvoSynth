@@ -54,7 +54,7 @@ module SPk
 		end
 
 		def to_s
-			"#{fitness} \t #{@genome} \t #{is_valid ? 'valid' : 'invalid'} \t 1's = #{count_ones}"
+			"#{fitness} \t #{is_valid ? ' valid ' : 'invalid'} \t 1's = #{count_ones} \t #{@genome}"
 		end
 
 		private
@@ -112,38 +112,28 @@ module SPk
 	MAX_GENERATIONS = 1000
 	INDIVIDUALS = 25
 
-	require 'benchmark'
 	#require 'profile'
 
-	def SPk.run_population_based_algorithm(algorithm, &condition)
-		result = algorithm.run_until(&condition)
-		puts algorithm
-		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tbest individual: #{result.best}"
-		puts "\tworst individual: #{result.worst}"
-		puts
-	end
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+	profile.individual = SPk::Individual.new(GENOME_SIZE, K)
+	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
+	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
 
-	MUTATION = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, MAX_GENERATIONS * INDIVIDUALS)
 
-	timing = Benchmark.measure do
-		individual = SPk::Individual.new(GENOME_SIZE, K)
-		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual, MUTATION)
-		result = hillclimber.run_until_generations_reached(INDIVIDUALS * MAX_GENERATIONS)
-		puts hillclimber
-		puts "\treached goal after #{hillclimber.generations_run}"
-		puts "\tbest: #{result}"
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile) { |gen| gen >= MAX_GENERATIONS}
 
-		puts
-		population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
-		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population.deep_clone, MUTATION)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
-		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
-		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
-	end
-	puts "\nRunning these algorithms took:\n#{timing}"
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile) { |gen| gen >= MAX_GENERATIONS}
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile) { |gen| gen >= MAX_GENERATIONS}
 
 end

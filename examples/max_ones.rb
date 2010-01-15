@@ -43,45 +43,34 @@ module MaxOnes
 	end
 
 
-	def MaxOnes.run_algorithm(algorithm_class, profile, generations)
-		algorithm = algorithm_class.new(profile)
-		result = nil
+	POP_SIZE = 25
+	GENERATIONS = 1000
 
-		puts "Running #{algorithm}..."
-		timing = Benchmark.measure { result = algorithm.run_until_generations_reached(generations) }
+	#require 'profile'
 
-		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tindividual: #{result}" if defined? result.calculate_fitness
-		puts "\tbest individual: #{result.best}" if defined? result.best
-		puts "\tworst individual: #{result.worst}" if defined? result.worst
-		puts "\tRunning these algorithm took:\n\t\t#{timing}"
-		puts
-	end
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+	profile.individual = MaxOnes::BinaryIndividual.new(10)
+	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
+	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+
+	puts "using profile:"
+	profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
+	puts
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, POP_SIZE * GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
 end
-
-POP_SIZE = 25
-GENERATIONS = 1000
-
-require 'benchmark'
-#require 'profile'
-
-
-profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
-profile.individual = MaxOnes::BinaryIndividual.new(10)
-profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
-profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
-base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
-profile.population = base_population.deep_clone
-
-
-puts "using profile:"
-profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
-puts
-
-
-MaxOnes.run_algorithm(EvoSynth::Algorithms::Hillclimber, profile, POP_SIZE * GENERATIONS)
-MaxOnes.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
-MaxOnes.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
-MaxOnes.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
-MaxOnes.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
