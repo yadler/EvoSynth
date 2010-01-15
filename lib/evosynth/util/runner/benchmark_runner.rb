@@ -22,6 +22,29 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/runner/benchmark_runner'
+module EvoSynth
+	module Util
+
+		def Util.run_algorith_with_benchmark(algorithm_class, profile, generations = 1, &condition)
+			require 'benchmark'
+
+			algorithm = algorithm_class.new(profile)
+			result = nil
+
+			puts "Running #{algorithm}..."
+			if block_given?
+				timing = Benchmark.measure { result = algorithm.run_until(&condition) }
+			else
+				timing = Benchmark.measure { result = algorithm.run_until_generations_reached(generations) }
+			end
+
+			puts "\tevolved #{algorithm.generations_run} generations, this took: #{timing}"
+			puts "\tresult:"
+			puts "\t\tindividual      : #{result}" if defined? result.calculate_fitness
+			puts "\t\tbest individual : #{result.best}" if defined? result.best
+			puts "\t\tworst individual: #{result.worst}" if defined? result.worst
+			puts
+		end
+
+	end
+end
