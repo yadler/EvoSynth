@@ -99,30 +99,41 @@ module TSP
 			fitness
 		end
 	end
+
+	def TSP.optimal_tour(matrix)
+		optimal = TSP::TSPIndividual.new(matrix)
+		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
+		optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
+		optimal
+	end
+
+	def TSP.algorithm_profile(matrix)
+		combined_mutation = EvoSynth::Mutations::CombinedMutation.new
+		combined_mutation << EvoSynth::Mutations::InversionMutation.new
+		combined_mutation << EvoSynth::Mutations::ShiftingMutation.new
+		combined_mutation << EvoSynth::Mutations::MixingMutation.new
+
+		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+		profile.individual = TSP::TSPIndividual.new(matrix)
+		profile.mutation = combined_mutation
+		profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
+		profile.population = EvoSynth::Core::Population.new(100) { TSP::TSPIndividual.new(matrix) }
+		profile.recombination = EvoSynth::Recombinations::EdgeRecombination.new
+		profile
+	end
+
+	matrix = TSP::ProblemMatrix.new('testdata/tsp/bays29.tsp')
+	optimal_tour = TSP.optimal_tour(matrix)
+	profile = TSP.algorithm_profile(matrix)
+
+	puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
+	puts "Optimal Individual for this problem: #{optimal_tour}"
+	puts "Best Individual before evolution: #{profile.population.best}"
+
+	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
+
+	puts "\nRunning #{algorithm}...\n"
+	result = algorithm.run_until_generations_reached(1000)
+	puts "\nBest Individual after evolution:  #{result.best}"
 end
-
-
-matrix = TSP::ProblemMatrix.new('testdata/tsp/bays29.tsp')
-puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
-
-optimal = TSP::TSPIndividual.new(matrix)
-opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
-puts "Optimal Individual for this problem: #{optimal}"
-
-population = EvoSynth::Core::Population.new(100) { TSP::TSPIndividual.new(matrix) }
-puts "Best Individual before evolution: #{population.best}"
-
-combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
-combined_mutatation << EvoSynth::Mutations::InversionMutation.new
-combined_mutatation << EvoSynth::Mutations::ShiftingMutation.new
-combined_mutatation << EvoSynth::Mutations::MixingMutation.new
-
-algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, combined_mutatation)
-algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
-algorithm.recombination = EvoSynth::Recombinations::EdgeRecombination.new if defined? algorithm.recombination
-
-result = algorithm.run_until_generations_reached(1000)
-puts algorithm
-#puts "\t #{result}"
-puts "Best Individual after evolution:  #{result.best}"
