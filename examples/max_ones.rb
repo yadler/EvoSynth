@@ -42,22 +42,20 @@ module MaxOnes
 		end
 	end
 
-	def MaxOnes.use_hillclimber
-		individual = MaxOnes::BinaryIndividual.new(10)
-		mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-		hillclimber = EvoSynth::Algorithms::Hillclimber.new(individual, mutation)
-		result = hillclimber.run_until_generations_reached(POP_SIZE * GENERATIONS)
-		puts hillclimber
-		puts "\t #{result}"
-	end
 
-	def MaxOnes.run_algorithm(algorithm)
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+	def MaxOnes.run_algorithm(algorithm_class, profile, generations)
+		algorithm = algorithm_class.new(profile)
+		result = nil
 
-		puts algorithm
+		puts "Running #{algorithm}..."
+		timing = Benchmark.measure { result = algorithm.run_until_generations_reached(generations) }
+
 		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tbest individual: #{result.best}"
-		puts "\tworst individual: #{result.worst}"
+		puts "\tindividual: #{result}" if defined? result.calculate_fitness
+		puts "\tbest individual: #{result.best}" if defined? result.best
+		puts "\tworst individual: #{result.worst}" if defined? result.worst
+		puts "\tRunning these algorithm took:\n\t\t#{timing}"
+		puts
 	end
 end
 
@@ -67,43 +65,23 @@ GENERATIONS = 1000
 require 'benchmark'
 #require 'profile'
 
-timing = Benchmark.measure do
-	MaxOnes.use_hillclimber
-end
-puts "\nRunning these algorithm took:\n#{timing}"
+
+profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+profile.individual = MaxOnes::BinaryIndividual.new(10)
+profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
+base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+profile.population = base_population.deep_clone
+
+
+puts "using profile:"
+profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
 puts
 
-timing = Benchmark.measure do
-	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
-	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	algorithm = EvoSynth::Algorithms::PopulationHillclimber.new(population, mutation)
-	MaxOnes.run_algorithm(algorithm)
-end
-puts "\nRunning these algorithm took:\n#{timing}"
-puts
 
-timing = Benchmark.measure do
-	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
-	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	algorithm = EvoSynth::Algorithms::GeneticAlgorithm.new(population, mutation)
-	MaxOnes.run_algorithm(algorithm)
-end
-puts "\nRunning these algorithm took:\n#{timing}"
-puts
-
-timing = Benchmark.measure do
-	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
-	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, mutation)
-	MaxOnes.run_algorithm(algorithm)
-end
-puts "\nRunning these algorithm took:\n#{timing}"
-puts
-
-timing = Benchmark.measure do
-	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
-	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population, mutation)
-	MaxOnes.run_algorithm(algorithm)
-end
-puts "\nRunning these algorithm took:\n#{timing}"
+MaxOnes.run_algorithm(EvoSynth::Algorithms::Hillclimber, profile, POP_SIZE * GENERATIONS)
+MaxOnes.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
+MaxOnes.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+MaxOnes.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+MaxOnes.run_algorithm(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
