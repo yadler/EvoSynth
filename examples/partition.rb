@@ -61,7 +61,7 @@ module Partitionproblem
 		end
 
 		def to_s
-			"fitness = #{fitness}, partition_a = #{@partition_a}, partition_b = #{@partition_a}"
+			"fitness = #{fitness}, partition_a.size = #{@partition_a.size}, partition_b.size = #{@partition_b.size}"
 		end
 
 	end
@@ -131,36 +131,37 @@ module Partitionproblem
 		Partitionproblem::PartitionIndividual.new(part_a, part_b)
 	end
 
-	def Partitionproblem.run_algorithm(algorithm, generations)
-		# Setup custom mutation and never recombine (as it would destroy our genome)
-		algorithm.mutation = PartitionMutation.new
-		algorithm.recombination = EvoSynth::Recombinations::Identity.new if defined? algorithm.recombination
+	POPULATION_SIZE = 10
+	GENERATIONS = 1000
 
-		# The tournament selection seems to be the best performing
-		algorithm.selection = EvoSynth::Selections::TournamentSelection.new(3) if defined? algorithm.selection
+	problem = Partitionproblem::Testdata.gen_layer_set
+	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-		result = algorithm.run_until_generations_reached(generations)
-		puts algorithm
-		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tbest individual: #{result.best.fitness}"
-		puts "\tworst individual: #{result.worst.fitness}"
-		puts
-	end
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+	profile.individual = Partitionproblem.get_new_individual_from(problem)
+	profile.mutation = PartitionMutation.new
+	profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
+	profile.recombination = EvoSynth::Recombinations::Identity.new
 
+	puts "Starting with the following population:"
+	puts "\tbest individual: #{base_population.best.fitness}"
+	puts "\tworst individual: #{base_population.worst.fitness}"
+	puts
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, POPULATION_SIZE * GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
 end
 
-POPULATION_SIZE = 10
-GENERATIONS = 1000
 
-problem = Partitionproblem::Testdata.gen_layer_set
-population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
-
-puts "Starting with the following population:"
-puts "\tbest individual: #{population.best.fitness}"
-puts "\tworst individual: #{population.worst.fitness}"
-puts
-
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population.deep_clone, nil), GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population.deep_clone, nil), GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population.deep_clone, nil), GENERATIONS)
-Partitionproblem.run_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population.deep_clone, nil), GENERATIONS)

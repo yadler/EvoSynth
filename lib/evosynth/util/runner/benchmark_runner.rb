@@ -40,7 +40,7 @@ module EvoSynth
 
 			puts "\tevolved #{algorithm.generations_run} generations, this took: #{timing}"
 			puts "\tresult:"
-			puts "\t\tindividual      : #{result}" if defined? result.calculate_fitness
+			puts "\t\tindividual      : #{result}" if defined? result.fitness
 			puts "\t\tbest individual : #{result.best}" if defined? result.best
 			puts "\t\tworst individual: #{result.worst}" if defined? result.worst
 			puts
