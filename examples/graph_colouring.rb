@@ -97,27 +97,8 @@ module GraphColouring
 
 	end
 
-	class CustomMutation
-		def mutate(individual)
-			mutated = individual.deep_clone
-			genome = mutated.genome
-			genome.size.times do |index|
-				genome[index] = rand(genome[index] + 1) if rand(100) >= MUTATION_RATE
-			end
-
-			mutated
-		end
-
-		def to_s
-			"custom made mutation for graph colouring"
-		end
-	end
-
-
-	BEST = 5
 	GENERATIONS = 1000
-	INDIVIDUALS = 25
-	USE_CUSTOM_MUATION = false
+	INDIVIDUALS = 10
 	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
 
 	require 'benchmark'
@@ -125,7 +106,7 @@ module GraphColouring
 
 	def GraphColouring.algorithm_profile(graph)
 		profile = Struct.new(:mutation, :selection, :recombination, :population).new
-		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR)
+		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01)
 		profile.selection = EvoSynth::Selections::RouletteWheelSelection.new
 		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(graph) }
 		profile.recombination = EvoSynth::Recombinations::KPointCrossover.new
@@ -133,18 +114,20 @@ module GraphColouring
 	end
 
 	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+	GOAL = 5
 	profile = GraphColouring.algorithm_profile(graph)
 	base_population = profile.population
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+		profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
+
 end
