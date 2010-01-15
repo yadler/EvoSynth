@@ -118,54 +118,33 @@ module GraphColouring
 	GENERATIONS = 1000
 	INDIVIDUALS = 25
 	USE_CUSTOM_MUATION = false
+	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
 
 	require 'benchmark'
 	#require 'profile'
 
-	def GraphColouring.run_algorithm(algorithm)
-		puts "Starting with:"
-		puts "\tbest individual: #{algorithm.population.best}"
-		puts "\tworst individual: #{algorithm.population.worst}"
-
-		algorithm.mutation = GraphColouring::CustomMutation.new if USE_CUSTOM_MUATION
-		algorithm.recombination = EvoSynth::Recombinations::KPointCrossover.new(4) if defined? algorithm.recombination
-		result = algorithm.run_until() { |gen, best| gen >= GENERATIONS } #|| best.fitness < BEST }
-
-		puts algorithm
-		puts "\treached goal after #{algorithm.generations_run}"
-		puts "\tbest individual: #{result.best}"
-		puts "\tworst individual: #{result.worst}"
+	def GraphColouring.algorithm_profile(graph)
+		profile = Struct.new(:mutation, :selection, :recombination, :population).new
+		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR)
+		profile.selection = EvoSynth::Selections::RouletteWheelSelection.new
+		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(graph) }
+		profile.recombination = EvoSynth::Recombinations::KPointCrossover.new
+		profile
 	end
 
-	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
-	GRAPH = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-	MUTATION = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR)
+	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+	profile = GraphColouring.algorithm_profile(graph)
+	base_population = profile.population
 
-	timing = Benchmark.measure do
-		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
-		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber.new(population, MUTATION)
-	end
-	puts "\nRunning these algorithm took:\n#{timing}"
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
 
-	puts
-	timing = Benchmark.measure do
-		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
-		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm.new(population, MUTATION)
-	end
-	puts "\nRunning these algorithm took:\n#{timing}"
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
 
-	puts
-	timing = Benchmark.measure do
-		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
-		GraphColouring.run_algorithm EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, MUTATION)
-	end
-	puts "\nRunning these algorithm took:\n#{timing}"
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
 
-	puts
-	timing = Benchmark.measure do
-		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
-		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA.new(population, MUTATION)
-	end
-	puts "\nRunning these algorithm took:\n#{timing}"
-
+	profile.population = base_population.deep_clone
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
 end

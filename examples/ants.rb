@@ -218,7 +218,7 @@ module Ants
 		combined_mutation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
 		combined_mutation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
 
-		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+		profile = Struct.new(:mutation, :selection, :recombination, :population).new
 		profile.mutation = combined_mutation
 		profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 		profile.population = population
