@@ -206,6 +206,25 @@ module Ants
 		end
 
 	end
+
+	def Ants.algorithm_profile(matrix, pheromon)
+		population = EvoSynth::Core::Population.new(10) do
+			ant = Ants::AntIndividual.new(matrix, pheromon, 1, 0.2)
+			ant.generate_route!
+			ant
+		end
+
+		combined_mutation = EvoSynth::Mutations::CombinedMutation.new
+		combined_mutation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
+		combined_mutation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
+
+		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+		profile.mutation = combined_mutation
+		profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+		profile.population = population
+		profile.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
+		profile
+	end
 end
 
 matrix = Ants::ProblemMatrix.new('testdata/tsp/bays29.tsp')
@@ -222,30 +241,20 @@ class EvoSynth::Algorithms::SteadyStateGA
 	end
 end
 
-population = EvoSynth::Core::Population.new(10) do
-	ant = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
-	ant.generate_route!
-	ant
-end
+profile = Ants.algorithm_profile(matrix, PHEROMON)
+
 
 optimal = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
 opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
 puts "Optimal Individual for this problem: #{optimal}"
 
-puts "Best Individual before evolution: #{population.best}"
+puts "Best Individual before evolution: #{profile.population.best}"
 
-combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
-combined_mutatation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
-combined_mutatation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
-
-algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, combined_mutatation)
-
-algorithm.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
+algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
 algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
 
 result = algorithm.run_until_generations_reached(1000)
 puts algorithm
-#puts "\t #{result}"
 puts "Best Individual after evolution:  #{result.best}"
 puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size
