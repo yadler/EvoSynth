@@ -126,7 +126,7 @@ module EvoSynth
 
 
 			def to_s
-				"Population (size=#{@individuals.size}, individuals=#{@individuals})"
+				"Population (size=#{@individuals.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
 			end
 
 		end
