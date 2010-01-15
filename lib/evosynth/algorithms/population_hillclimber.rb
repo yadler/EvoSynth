@@ -32,9 +32,9 @@ module EvoSynth
 
 			attr_accessor :mutation, :population
 
-			def initialize(population, mutation)
-				@population = population
-				@mutation = mutation
+			def initialize(profile)
+				@population = profile.population
+				@mutation = profile.mutation
 			end
 
 			def to_s

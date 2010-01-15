@@ -30,15 +30,13 @@ module EvoSynth
 		class Hillclimber
 			include EvoSynth::Algorithms::Algorithm
 
-			attr_accessor :mutation, :individual
-
-			def initialize(individual, mutation)
-				@individual = individual
-				@mutation = mutation
+			def initialize(profile)
+				@mutation = profile.mutation
+				@individual = profile.individual
 			end
 
 			def to_s
-				"hillclimber <mutation: #{@mutation}>"
+				"hillclimber <mutation: #{@mutation}, individual: #{@individual}>"
 			end
 
 			private
