@@ -29,7 +29,7 @@ class TestIndividual
 	attr_accessor :fitness
 
 	def initialize(fitness = 0.0)
-		@genome = EvoSynth::ArrayGenome.new
+		@genome = EvoSynth::Core::ArrayGenome.new
 		@fitness = fitness
 	end
 
@@ -44,22 +44,22 @@ end
 
 
 class TestMinimizingIndividual < TestIndividual
-	include EvoSynth::MinimizingIndividual
+	include EvoSynth::Core::MinimizingIndividual
 end
 
 
 class TestMaximizingIndividual < TestIndividual
-	include EvoSynth::MaximizingIndividual
+	include EvoSynth::Core::MaximizingIndividual
 end
 
 
 # FIXME: replace this with a mocked object!
 
 class TestBinaryIndividual
-	include EvoSynth::MinimizingIndividual
+	include EvoSynth::Core::MinimizingIndividual
 
 	def initialize(genome_size)
-		@genome = EvoSynth::ArrayGenome.new(genome_size)
+		@genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 	end
 
 	def fitness
@@ -72,11 +72,11 @@ class TestBinaryIndividual
 end
 
 class TestGenomeIndividual
-	include EvoSynth::MinimizingIndividual
+	include EvoSynth::Core::MinimizingIndividual
 
 	def initialize(genes)
 		@fitness = 0
-		@genome = EvoSynth::ArrayGenome.new(genes)
+		@genome = EvoSynth::Core::ArrayGenome.new(genes)
 	end
 
 	def fitness

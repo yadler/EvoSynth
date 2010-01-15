@@ -31,7 +31,7 @@ module EvoSynth
 		class SelectBest
 
 			def select(population, select_count = 1)
-				selected_population = Population.new
+				selected_population = EvoSynth::Core::Population.new
 
 				if select_count > 1
 					best = population.best(select_count)

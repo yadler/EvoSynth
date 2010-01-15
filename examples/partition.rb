@@ -122,7 +122,7 @@ module Partitionproblem
 
 	def Partitionproblem.get_new_individual_from(problem)
 		border = rand(problem.size)
-		part_a, part_b = EvoSynth::ArrayGenome.new, EvoSynth::ArrayGenome.new
+		part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
 
 		problem.size.times do
 			|index| index < border ? part_a << problem[index] : part_b << problem[index]
@@ -153,7 +153,7 @@ POPULATION_SIZE = 10
 GENERATIONS = 1000
 
 problem = Partitionproblem::Testdata.gen_layer_set
-population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
+population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
 puts "Starting with the following population:"
 puts "\tbest individual: #{population.best.fitness}"

@@ -32,7 +32,7 @@ class PopulationTest < Test::Unit::TestCase
 
 	context "when initialized without args" do
 		setup do
-			@population = EvoSynth::Population.new
+			@population = EvoSynth::Core::Population.new
 		end
 
 		should "be empty" do
@@ -46,7 +46,7 @@ class PopulationTest < Test::Unit::TestCase
 
 	context "when it contains maximizingIndividuals" do
 		setup do
-			@population = EvoSynth::Population.new
+			@population = EvoSynth::Core::Population.new
 			@min = TestMaximizingIndividual.new(1)
 			@second = TestMaximizingIndividual.new(299)
 			@third = TestMaximizingIndividual.new(298)
@@ -77,7 +77,7 @@ class PopulationTest < Test::Unit::TestCase
 
 	context "when it contains minizingIndividuals" do
 		setup do
-			@population = EvoSynth::Population.new
+			@population = EvoSynth::Core::Population.new
 			@min = TestMinimizingIndividual.new(1)
 			@second = TestMinimizingIndividual.new(2)
 			@third = TestMinimizingIndividual.new(3)
@@ -107,7 +107,7 @@ class PopulationTest < Test::Unit::TestCase
 	end
 
 	should "[]= and [] work" do
-		population = EvoSynth::Population.new(2) { 0 }
+		population = EvoSynth::Core::Population.new(2) { 0 }
 		population[0] = "foo"
 		population[1] = "bar"
 		assert_equal 2, population.size
@@ -116,14 +116,14 @@ class PopulationTest < Test::Unit::TestCase
 	end
 
 	should "provide a working map! implementation" do
-		pop = EvoSynth::Population.new
+		pop = EvoSynth::Core::Population.new
 		pop.add(TestMinimizingIndividual.new(1))
 		pop.map! { |i| i.fitness = 2; i}
 		assert_equal 2, pop[0].fitness
 	end
 
 	should "provide a working remove implementation" do
-		pop = EvoSynth::Population.new
+		pop = EvoSynth::Core::Population.new
 		inividual_one = TestMinimizingIndividual.new(1)
 		inividual_two = TestMinimizingIndividual.new(2)
 		pop.add(inividual_one)
@@ -137,17 +137,17 @@ class PopulationTest < Test::Unit::TestCase
 	end
 
 	should "all individuals should be 0 when created with {0}" do
-		population = EvoSynth::Population.new(1) { 0 }
+		population = EvoSynth::Core::Population.new(1) { 0 }
 		population.each { |individual| assert_equal 0, individual }
 	end
 
 	should "it's size should be 100 when we want it to be 100" do
-		population = EvoSynth::Population.new(100)
+		population = EvoSynth::Core::Population.new(100)
 		assert_equal 100, population.size
 	end
 
 	should "when initialized without block it should only contain nil" do
-		population = EvoSynth::Population.new(1)
+		population = EvoSynth::Core::Population.new(1)
 		assert_nil population[0]
 	end
 

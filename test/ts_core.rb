@@ -22,51 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'delegate'
-
-
-module EvoSynth
-
-	# Array based genome, which keeps track of changes (changed attribute)
-	# to reduce the need to recalculate the fitness function in the
-	# Individual module
-
-	class ArrayGenome < Array
-
-		# true if the genome has changed - has to be set to false manually
-
-		attr_accessor :changed
-
-		# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9
-		# see rb_ary_store and rb_ary_modify
-
-		METHODS_THAT_CHANGE_ARRAY = ['[]=', 'delete', 'delete_at', 'collect!', 'map!', '<<', 'reject!', 'uniq!', 'unshift', 'shift',
-		                             'sort!', 'pop', 'push', 'flatten!', 'reverse!', 'slice!', 'clear']
-
-		def initialize(*args)
-			@changed = true
-			super
-			overwrite_methods!
-		end
-
-		# Create a printable version of the genome
-
-		def to_s
-			self * ", "
-		end
-
-		# overwrites all methods of array that are listed in METHODS_THAT_CHANGE_ARRAY
-
-		def overwrite_methods!
-			METHODS_THAT_CHANGE_ARRAY.each do |method_name|
-				eval("def #{method_name}(*args)
-				          @changed = true
-				          super
-				      end")
-			end
-		end
-		private :overwrite_methods!
-
-	end
-
-end
+require 'test/core/tc_array_genome'
+require 'test/core/tc_population'

@@ -21,6 +21,6 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
-
-require 'test/base/tc_array_genome'
-require 'test/base/tc_population'
+require 'evosynth/core/array_genome'
+require 'evosynth/core/individuals'
+require 'evosynth/core/population'

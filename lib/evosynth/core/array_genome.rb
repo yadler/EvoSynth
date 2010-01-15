@@ -22,49 +22,53 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'delegate'
+
+
 module EvoSynth
+	module Core
 
-	module Selections
+		# Array based genome, which keeps track of changes (changed attribute)
+		# to reduce the need to recalculate the fitness function in the
+		# Individual module
 
-		# TURNIER-SELEKTION (Weicker Page 76)
+		class ArrayGenome < Array
 
-		class TournamentSelection
+			# true if the genome has changed - has to be set to false manually
 
-			attr_accessor :enemies
+			attr_accessor :changed
 
-			def initialize(enemies = 2)
-				@enemies = enemies
+			# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9
+			# see rb_ary_store and rb_ary_modify
+
+			METHODS_THAT_CHANGE_ARRAY = ['[]=', 'delete', 'delete_at', 'collect!', 'map!', '<<', 'reject!', 'uniq!', 'unshift', 'shift',
+										 'sort!', 'pop', 'push', 'flatten!', 'reverse!', 'slice!', 'clear']
+
+			def initialize(*args)
+				@changed = true
+				super
+				overwrite_methods!
 			end
 
-
-			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
-
-				select_count.times do
-					individual = fight(population, population[rand(population.size)])
-					selected_population.add(individual)
-				end
-
-				selected_population
-			end
+			# Create a printable version of the genome
 
 			def to_s
-				"tournament selection <enemies: #{@enemies}>"
+				self * ", "
 			end
 
-			private
+			# overwrites all methods of array that are listed in METHODS_THAT_CHANGE_ARRAY
 
-			def fight(population, individual)
-				@enemies.times do
-					enemy = population[rand(population.size)]
-					individual = enemy if enemy > individual
+			def overwrite_methods!
+				METHODS_THAT_CHANGE_ARRAY.each do |method_name|
+					eval("def #{method_name}(*args)
+							  @changed = true
+							  super
+						  end")
 				end
-
-				individual
 			end
+			private :overwrite_methods!
 
 		end
 
 	end
-
 end

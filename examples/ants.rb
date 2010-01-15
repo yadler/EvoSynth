@@ -162,7 +162,7 @@ module Ants
 	end
 
 	class AntIndividual
-		include EvoSynth::MinimizingIndividual
+		include EvoSynth::Core::MinimizingIndividual
 
 		def initialize(problem_matrix, pheromon, start, exploration_weight = 0.5)
 			@exploration_weight = exploration_weight
@@ -170,7 +170,7 @@ module Ants
 			@problem_matrix = problem_matrix
 			@pheromon = pheromon
 
-			@genome = EvoSynth::ArrayGenome.new
+			@genome = EvoSynth::Core::ArrayGenome.new
 			@genome << start
 		end
 
@@ -222,7 +222,7 @@ class EvoSynth::Algorithms::SteadyStateGA
 	end
 end
 
-population = EvoSynth::Population.new(10) do
+population = EvoSynth::Core::Population.new(10) do
 	ant = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
 	ant.generate_route!
 	ant
@@ -230,7 +230,7 @@ end
 
 optimal = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
 opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-optimal.genome = EvoSynth::ArrayGenome.new(opt_tour)
+optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
 puts "Optimal Individual for this problem: #{optimal}"
 
 puts "Best Individual before evolution: #{population.best}"
@@ -239,13 +239,10 @@ combined_mutatation = EvoSynth::Mutations::CombinedMutation.new
 combined_mutatation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
 combined_mutatation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
 
-writer = EvoSynth::Util::ConsoleWriter.new(50)
+algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, combined_mutatation)
 
-algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population)
-#algorithm.mutation = Ants::SimpleAntMutation.new
-algorithm.mutation = combined_mutatation
 algorithm.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
-algorithm.add_observer(writer)
+algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
 
 result = algorithm.run_until_generations_reached(1000)
 puts algorithm

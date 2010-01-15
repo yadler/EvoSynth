@@ -80,12 +80,12 @@ module TSP
 	end
 
 	class TSPIndividual
-		include EvoSynth::MinimizingIndividual
+		include EvoSynth::Core::MinimizingIndividual
 
 		def initialize(problem_matrix)
 			@problem_matrix = problem_matrix
 			shuffeld = (0..@problem_matrix.size - 1).to_a.sort_by { rand(2) }
-			@genome = EvoSynth::ArrayGenome.new(shuffeld)
+			@genome = EvoSynth::Core::ArrayGenome.new(shuffeld)
 		end
 
 		def calculate_fitness
@@ -107,10 +107,10 @@ puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 
 optimal = TSP::TSPIndividual.new(matrix)
 opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-optimal.genome = EvoSynth::ArrayGenome.new(opt_tour)
+optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
 puts "Optimal Individual for this problem: #{optimal}"
 
-population = EvoSynth::Population.new(100) { TSP::TSPIndividual.new(matrix) }
+population = EvoSynth::Core::Population.new(100) { TSP::TSPIndividual.new(matrix) }
 puts "Best Individual before evolution: #{population.best}"
 
 combined_mutatation = EvoSynth::Mutations::CombinedMutation.new

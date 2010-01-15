@@ -35,7 +35,7 @@ module SelectionBenchmark
 	SELECTION_TIMES = 1000
 	SELECT_COUNT = 10
 
-	population = EvoSynth::Population.new
+	population = EvoSynth::Core::Population.new
 	POPULATION_SIZE.times { |i| population.add(TestMaximizingIndividual.new(i)) }
 
 	puts "Running selection benchmark with #{SELECTION_TIMES} selections (population size=#{POPULATION_SIZE}, select count=#{SELECT_COUNT}):"

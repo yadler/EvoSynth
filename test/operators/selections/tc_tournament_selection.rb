@@ -37,8 +37,8 @@ class TournamentSelectionTest < Test::Unit::TestCase
 
 		should "select a super-individual" do
 			fitness_proportional_selection = EvoSynth::Selections::TournamentSelection.new
-			population = EvoSynth::Population.new
-			expected = EvoSynth::Population.new
+			population = EvoSynth::Core::Population.new
+			expected = EvoSynth::Core::Population.new
 
 			population.add(TestMinimizingIndividual.new(10))
 			population.add(TestMinimizingIndividual.new(1))
@@ -60,8 +60,8 @@ class TournamentSelectionTest < Test::Unit::TestCase
 
 		should "select a super-individual" do
 			fitness_proportional_selection = EvoSynth::Selections::TournamentSelection.new
-			population = EvoSynth::Population.new
-			expected = EvoSynth::Population.new
+			population = EvoSynth::Core::Population.new
+			expected = EvoSynth::Core::Population.new
 
 			population.add(TestMaximizingIndividual.new(1))
 			population.add(TestMaximizingIndividual.new(10))

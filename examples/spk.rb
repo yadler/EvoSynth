@@ -28,12 +28,12 @@ require 'evosynth'
 module SPk
 
 	class Individual
-		include EvoSynth::MaximizingIndividual
+		include EvoSynth::Core::MaximizingIndividual
 
 		attr_accessor :genome
 
 		def initialize(genome_size, k)
-			@genome = EvoSynth::ArrayGenome.new(genome_size)
+			@genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 			@genome.map! { rand(2) > 0 ? true : false }
 
 			@valid = false
@@ -109,7 +109,7 @@ module SPk
 	K = 2
 	GENOME_SIZE = 16
 	GOAL = 48
-	MAX_GENERATIONS = 100
+	MAX_GENERATIONS = 1000
 	INDIVIDUALS = 25
 
 	require 'benchmark'
@@ -135,14 +135,14 @@ module SPk
 		puts "\tbest: #{result}"
 
 		puts
-		population = EvoSynth::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
+		population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::PopulationHillclimber.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population, MUTATION)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::GeneticAlgorithm.new(population.deep_clone, MUTATION)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 		puts
-		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
+		SPk.run_population_based_algorithm(EvoSynth::Algorithms::SteadyStateGA.new(population.deep_clone, MUTATION)) { |gen| gen >= MAX_GENERATIONS}
 	end
 	puts "\nRunning these algorithms took:\n#{timing}"
 

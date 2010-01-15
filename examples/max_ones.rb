@@ -28,10 +28,10 @@ require 'evosynth'
 module MaxOnes
 
 	class BinaryIndividual
-		include EvoSynth::MaximizingIndividual
+		include EvoSynth::Core::MaximizingIndividual
 
 		def initialize(genome_size)
-			@genome = EvoSynth::ArrayGenome.new(genome_size)
+			@genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 			@genome.map! { rand(2) > 0 ? true : false }
 		end
 
@@ -74,7 +74,7 @@ puts "\nRunning these algorithm took:\n#{timing}"
 puts
 
 timing = Benchmark.measure do
-	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
 	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	algorithm = EvoSynth::Algorithms::PopulationHillclimber.new(population, mutation)
 	MaxOnes.run_algorithm(algorithm)
@@ -83,7 +83,7 @@ puts "\nRunning these algorithm took:\n#{timing}"
 puts
 
 timing = Benchmark.measure do
-	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
 	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	algorithm = EvoSynth::Algorithms::GeneticAlgorithm.new(population, mutation)
 	MaxOnes.run_algorithm(algorithm)
@@ -92,7 +92,7 @@ puts "\nRunning these algorithm took:\n#{timing}"
 puts
 
 timing = Benchmark.measure do
-	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
 	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, mutation)
 	MaxOnes.run_algorithm(algorithm)
@@ -101,7 +101,7 @@ puts "\nRunning these algorithm took:\n#{timing}"
 puts
 
 timing = Benchmark.measure do
-	population = EvoSynth::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
+	population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes::BinaryIndividual.new(10) }
 	mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	algorithm = EvoSynth::Algorithms::SteadyStateGA.new(population, mutation)
 	MaxOnes.run_algorithm(algorithm)

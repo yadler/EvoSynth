@@ -64,11 +64,11 @@ module GraphColouring
 
 
 	class ColouringIndividual
-		include EvoSynth::MinimizingIndividual
+		include EvoSynth::Core::MinimizingIndividual
 
 		def initialize(graph)
 			@graph = graph
-			@genome = EvoSynth::ArrayGenome.new(graph.node_count)
+			@genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
 			randomize_genome
 		end
 
@@ -142,28 +142,28 @@ module GraphColouring
 	MUTATION = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR)
 
 	timing = Benchmark.measure do
-		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
 		GraphColouring.run_algorithm EvoSynth::Algorithms::PopulationHillclimber.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
 		GraphColouring.run_algorithm EvoSynth::Algorithms::GeneticAlgorithm.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
 		GraphColouring.run_algorithm EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
 
 	puts
 	timing = Benchmark.measure do
-		population = EvoSynth::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
+		population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(GRAPH) }
 		GraphColouring.run_algorithm EvoSynth::Algorithms::SteadyStateGA.new(population, MUTATION)
 	end
 	puts "\nRunning these algorithm took:\n#{timing}"
