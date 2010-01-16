@@ -66,7 +66,7 @@ class CombinedMutationTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE}) without a mutation" do
 		setup do
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 			@mutation = EvoSynth::Mutations::CombinedMutation.new
 		end
@@ -79,7 +79,7 @@ class CombinedMutationTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations" do
 		setup do
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new
 			@combinded_mutation << TestMutationA.new
@@ -103,7 +103,7 @@ class CombinedMutationTest < Test::Unit::TestCase
 
 	context "when run with three mutations with different possibilities" do
 		setup do
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new
 			@combinded_mutation.add_with_possibility(TestMutationA.new, 0.5)

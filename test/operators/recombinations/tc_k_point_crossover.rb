@@ -38,9 +38,9 @@ class KPointCrossoverTest < Test::Unit::TestCase
 		setup do
 			@recombination = EvoSynth::Recombinations::KPointCrossover.new(K)
 
-			@individual_one = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual_one = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_one.genome.map! { |gene| true }
-			@individual_two = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_two.genome.map! { |gene| false }
 		end
 

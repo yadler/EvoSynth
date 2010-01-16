@@ -35,7 +35,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 		end
 
@@ -65,7 +65,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=1)" do
 		setup do
-			@individual = TestBinaryIndividual.new(1)
+			@individual = TestArrayBinaryIndividual.new(1)
 			@individual.genome.map! { |gene| true }
 		end
 

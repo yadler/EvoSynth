@@ -41,8 +41,8 @@ module RecombinationBenchmark
 		puts "\t#{timing.format("%r")} - #{recombination.class}"
 	end
 
-	individual_one = TestBinaryIndividual.new(GENOME_SIZE)
-	individual_two = TestBinaryIndividual.new(GENOME_SIZE)
+	individual_one = TestArrayBinaryIndividual.new(GENOME_SIZE)
+	individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)
 	GENOME_SIZE.times { |index| individual_one.genome[index] = index }
 	GENOME_SIZE.times { |index| individual_two.genome[index] = index }
 

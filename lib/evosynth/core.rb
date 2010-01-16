@@ -21,6 +21,8 @@
 #	FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 #	OTHER DEALINGS IN THE SOFTWARE.
 
+
+require 'evosynth/core/binary_genome'
 require 'evosynth/core/array_genome'
 require 'evosynth/core/individuals'
 require 'evosynth/core/population'

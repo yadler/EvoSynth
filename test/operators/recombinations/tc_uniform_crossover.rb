@@ -38,9 +38,9 @@ class UniformCrossoverTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@individual_one = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual_one = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_one.genome.map! { |gene| true }
-			@individual_two = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_two.genome.map! { |gene| false }
 		end
 

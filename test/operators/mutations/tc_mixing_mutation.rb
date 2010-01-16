@@ -36,7 +36,7 @@ class MixingMutationTest < Test::Unit::TestCase
 
 		setup do
 			@mutation = EvoSynth::Mutations::MixingMutation.new
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			GENOME_SIZE.times { |index| @individual.genome[index] = (index % 2 == 1) ? 0 : 1 }
 		end
 

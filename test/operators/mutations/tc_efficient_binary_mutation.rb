@@ -39,7 +39,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@individual = TestBinaryIndividual.new(GENOME_SIZE)
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 		end
 

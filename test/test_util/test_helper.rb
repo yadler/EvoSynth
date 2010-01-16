@@ -53,9 +53,25 @@ class TestMaximizingIndividual < TestIndividual
 end
 
 
-# FIXME: replace this with a mocked object!
+# FIXME: replace these individuals with mocked objects!
 
-class TestBinaryIndividual
+class TestBinaryGenomeIndividual
+	include EvoSynth::Core::MinimizingIndividual
+
+	def initialize(value)
+		@genome = EvoSynth::Core::BinaryGenome.new(value)
+	end
+
+	def fitness
+		@fitness
+	end
+
+	def to_s
+		"#{@fitness} - #{@genome}"
+	end
+end
+
+class TestArrayBinaryIndividual
 	include EvoSynth::Core::MinimizingIndividual
 
 	def initialize(genome_size)

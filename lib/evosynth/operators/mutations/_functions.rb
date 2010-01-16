@@ -28,6 +28,7 @@ module EvoSynth
 		module Functions
 
 			FLIP_BOOLEAN = lambda { |gene| !gene }
+			FLIP_BINARY = lambda { |gene| gene == 0 ? 1 : 0 }
 			FLIP_NEGATE_NUMBER = lambda { |gene| gene * -1 }
 
 		end

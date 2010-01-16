@@ -33,7 +33,6 @@ module MutationBenchmark
 
 	GENOME_SIZE = 1000
 	MUTATE_TIMES = 10000
-	FLIP_FUNCTION = EvoSynth::Mutations::Functions::FLIP_BOOLEAN
 
 	def MutationBenchmark.benchmark_mutation(mutation, individual)
 		timing = Benchmark.measure do
@@ -42,18 +41,36 @@ module MutationBenchmark
 		puts "\t#{timing.format("%r")} - #{mutation.class}"
 	end
 
-	individual = TestBinaryIndividual.new(GENOME_SIZE)
+	individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 	GENOME_SIZE.times { |index| individual.genome[index] = (index % 2 == 1) ? true : false }
 
-	puts "Running mutation benchmark with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
+	puts "Running mutation benchmark (on ArrayGenome) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
 	EvoSynth::Mutations.constants.each do |mutation|
 		begin
 			mutation = EvoSynth::Mutations.const_get(mutation).new
 		rescue
-			mutation = EvoSynth::Mutations.const_get(mutation).new(FLIP_FUNCTION) rescue next
+			mutation = EvoSynth::Mutations.const_get(mutation).new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN) rescue next
 		end
 
 		MutationBenchmark.benchmark_mutation(mutation, individual)
 	end
 
+	number = 2 ** (GENOME_SIZE - 1)
+	add = number
+	while add > 2
+		add = add / 4
+		number += add
+	end
+
+	individual = TestBinaryGenomeIndividual.new(number)
+	puts "Running mutation benchmark (on BinaryGenome) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
+	EvoSynth::Mutations.constants.each do |mutation|
+		begin
+			mutation = EvoSynth::Mutations.const_get(mutation).new
+		rescue
+			mutation = EvoSynth::Mutations.const_get(mutation).new(EvoSynth::Mutations::Functions::FLIP_BINARY) rescue next
+		end
+
+		MutationBenchmark.benchmark_mutation(mutation, individual)
+	end
 end
