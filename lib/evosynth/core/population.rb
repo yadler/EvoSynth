@@ -37,7 +37,7 @@ module EvoSynth
 			# and a block to initialize each individual
 
 			def initialize(size = 0)
-				@individuals = ArrayGenome.new(size)
+				@individuals = Array.new(size)
 				@individuals.map! { |individual| yield } if block_given?
 			end
 
