@@ -22,5 +22,29 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/decoder/tc_gray'
+module EvoSynth
+	module Decoder
+
+		def Decoder.gray_to_binary(gray)
+			rev_stdbin = Array.new(gray.size)
+			gray.reverse!
+
+			rev_stdbin[gray.size - 1] = gray[gray.size - 1]
+			(gray.size - 2).downto(0) { |index| rev_stdbin[index] = rev_stdbin[index + 1] ^ gray[index] }
+
+			rev_stdbin.reverse
+		end
+
+		def Decoder.binary_to_gray(binary)
+			gray = Array.new(binary)
+
+			popped = gray.pop
+			gray.unshift(popped ^ popped)
+			gray.each_index { |index| gray[index] = binary[index] ^ gray[index]}
+
+			gray
+		end
+
+	end
+
+end

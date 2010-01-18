@@ -23,5 +23,6 @@
 
 
 require 'evosynth/util/mdarray'
+require 'evosynth/util/decoder/gray'
 require 'evosynth/util/output/console_writer'
 require 'evosynth/util/runner/benchmark_runner'
