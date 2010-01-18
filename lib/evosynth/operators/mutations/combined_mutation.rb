@@ -62,7 +62,9 @@ module EvoSynth
 			end
 
 			def to_s
-				"combinded mutation <mutations: #{@mutations}>"
+				mutations_to_s = []
+				@mutations.each { |mut| mutations_to_s << "#{mut[0].to_s} (probability: #{mut[1]})" }
+				"combinded mutation <mutations: #{mutations_to_s.join(', ')}>"
 			end
 
 			private
