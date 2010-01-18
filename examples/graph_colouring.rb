@@ -27,8 +27,14 @@ require 'set'
 
 
 module GraphColouring
+
 	MUTATION_RATE = 5
 	MAX_COLORS = 10
+	GENERATIONS = 1000
+	INDIVIDUALS = 10
+	GOAL = 5
+	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
+
 
 	class Graph
 		attr_reader :node_count
@@ -63,60 +69,59 @@ module GraphColouring
 	end
 
 
-	class ColouringIndividual
-		include EvoSynth::Core::MinimizingIndividual
+	class ColourFitnessCalculator
+		include EvoSynth::Core::FitnessCalculator
 
 		def initialize(graph)
 			@graph = graph
-			@genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
-			randomize_genome
+			super()
 		end
 
-		private
-
-		def randomize_genome
-			max_color = rand(@genome.size > MAX_COLORS ? MAX_COLORS : @genome.size) + 1
-			@genome.map! { |gene| rand(max_color)}
-			@genome.map! { |gene| gene % @genome.uniq.size }
-		end
-
-		def verletzungen
+		def verletzungen(genome)
 			verletzungen = 0
 			@graph.matrix.each_index do |row, col|
-				if @graph.matrix[row, col] == 1 && @genome[row] == @genome[col]
+				if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
 					verletzungen += 1
 				end
 			end
 			verletzungen
 		end
 
-		def calculate_fitness
-			fitness = 0.0 + @genome.uniq.size * (verletzungen + 1)
+		def calculate_fitness(individual)
+			fitness = 0.0 + individual.genome.uniq.size * (verletzungen(individual.genome) + 1)
 			fitness
 		end
-
 	end
 
-	GENERATIONS = 1000
-	INDIVIDUALS = 10
-	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
+
+	def GraphColouring.create_random_individual(graph)
+		genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
+		max_color = rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
+		genome.map! { |gene| rand(max_color)}
+		genome.map! { |gene| gene % genome.uniq.size }
+		inidividual = EvoSynth::Core::MinimizingIndividual.new(genome)
+		inidividual
+	end
+
+
 
 	require 'benchmark'
 	#require 'profile'
 
 	def GraphColouring.algorithm_profile(graph)
-		profile = Struct.new(:mutation, :selection, :recombination, :population).new
+		profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile.fitness_calculator = GraphColouring::ColourFitnessCalculator.new(graph)
 		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01)
 		profile.selection = EvoSynth::Selections::RouletteWheelSelection.new
-		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring::ColouringIndividual.new(graph) }
+		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) }
 		profile.recombination = EvoSynth::Recombinations::KPointCrossover.new
 		profile
 	end
 
 	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-	GOAL = 5
 	profile = GraphColouring.algorithm_profile(graph)
 	base_population = profile.population
+
 
 	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
@@ -127,7 +132,7 @@ module GraphColouring
 	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 
-		profile.population = base_population.deep_clone
+	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 
 end

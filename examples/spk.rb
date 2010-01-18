@@ -27,64 +27,49 @@ require 'evosynth'
 
 module SPk
 
-	class Individual
-		include EvoSynth::Core::MaximizingIndividual
+	class SPkFitnessCalculator
+		include EvoSynth::Core::FitnessCalculator
 
-		attr_accessor :genome
-
-		def initialize(genome_size, k)
-			@genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-			@genome.map! { rand(2) > 0 ? true : false }
-
-			@valid = false
+		def initialize(k)
 			@k = k
-			@muation_probability = 0.5
+			super()
 		end
 
-		def calculate_fitness
+		def calculate_fitness(individual)
 			fitness = 0.0
 
-			if is_valid
-				fitness = @genome.size * (count_ones + 1)
+			ones = 0
+			individual.genome.each { |gene| ones += 1 if gene }
+			ones
+
+			if is_valid(individual.genome)
+				fitness = individual.genome.size * (ones + 1)
 			else
-				fitness = @genome.size - count_ones
+				fitness = individual.genome.size - ones
 			end
 
 			fitness
 		end
 
-		def to_s
-			"#{fitness} \t #{is_valid ? ' valid ' : 'invalid'} \t 1's = #{count_ones} \t #{@genome}"
-		end
 
-		private
+		def is_valid(genome)
+			valid = false
 
-		def count_ones
-			ones = 0
-			@genome.each { |gene| ones += 1 if gene }
-			ones
-		end
+			if genome.changed
+				len_of_ones = calc_length_of_ones(genome)
+				max_k = (genome.size.to_f / (3.0 * @k*@k).to_f).ceil
 
-		def is_valid
-			if @genome.changed
-				len_of_ones = calc_length_of_ones
-				max_k = (@genome.size.to_f / (3.0 * @k*@k).to_f).ceil
-
-				if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
-					@valid = true
-				else
-					@valid = false
-				end
+				valid = true if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
 			end
 
-			@valid
+			valid
 		end
 
-		def calc_length_of_ones
+		def calc_length_of_ones(genome)
 			count, len_of_ones = 0, 0
 			end_of_ones, end_of_zeros = false, false
 
-			@genome.each do |gene|
+			genome.each do |gene|
 				end_of_ones_reached = !gene && !end_of_ones
 				end_of_zeros_reached = gene && end_of_ones && !end_of_zeros
 
@@ -105,6 +90,12 @@ module SPk
 
 	end
 
+	def SPk.create_individual(genome_size)
+		genome = EvoSynth::Core::ArrayGenome.new(genome_size)
+		genome.map! { rand(2) > 0 ? true : false }
+		inidividual = EvoSynth::Core::MaximizingIndividual.new(genome)
+		inidividual
+	end
 
 	K = 2
 	GENOME_SIZE = 16
@@ -114,12 +105,13 @@ module SPk
 
 	#require 'profile'
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
-	profile.individual = SPk::Individual.new(GENOME_SIZE, K)
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
+	profile.fitness_calculator = SPkFitnessCalculator.new(K)
+	profile.individual = SPk.create_individual(GENOME_SIZE)
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
-	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk::Individual.new(GENOME_SIZE, K) }
+	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
 	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, MAX_GENERATIONS * INDIVIDUALS)

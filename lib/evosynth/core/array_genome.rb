@@ -39,6 +39,11 @@ module EvoSynth
 				self * ", "
 			end
 
+			def clone
+				my_clone = super
+				@changed = false
+				my_clone
+			end
 		end
 
 		# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9

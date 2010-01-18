@@ -13,11 +13,9 @@ Algorithmen:
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
 
-Was ist mit Benchmarkfunktionen?!
-
 ------------------------------------------------
 
-FIXME: maybe it is a good idea to switch from "flip" to a lambda (see arithmetic_crossover)
+Was ist mit Benchmarkfunktionen?! (SPk und co)
 
 ------------------------------------------------
 
@@ -27,6 +25,9 @@ decoder kommen?
 ------------------------------------------------
 
 evobench (mutationen, selektionen und co)
+
+------------------------------------------------
+
 diversität und zeugs
 
 -----------------------------------------------

@@ -70,38 +70,40 @@ module TSP
 
 		def create_matrix(nodes)
 			@matrix = EvoSynth::Util::MDArray.new(nodes.size, nodes.size)
-
-			@matrix.each_index do |x,y|
-				@matrix[x,y] = nodes[x][y].to_f
-			end
-
-#			@matrix.each_row { |row| puts row.to_s}
+			@matrix.each_index { |x,y| @matrix[x,y] = nodes[x][y].to_f }
 		end
 	end
 
-	class TSPIndividual
-		include EvoSynth::Core::MinimizingIndividual
 
-		def initialize(problem_matrix)
-			@problem_matrix = problem_matrix
-			shuffeld = (0..@problem_matrix.size - 1).to_a.sort_by { rand(2) }
-			@genome = EvoSynth::Core::ArrayGenome.new(shuffeld)
+	class TSPFitnessCalculator
+		include EvoSynth::Core::FitnessCalculator
+
+		def initialize(problem_matix)
+			super()
+			@problem_matrix = problem_matix
 		end
 
-		def calculate_fitness
+		def calculate_fitness(individual)
 			fitness = 0.0
 
-			@genome.each_with_index do |node, index|
-				index_two = (index + 1) % @genome.size
-				fitness += @problem_matrix.distance(node, @genome[index_two])
+			individual.genome.each_with_index do |node, index|
+				index_two = (index + 1) % individual.genome.size
+				fitness += @problem_matrix.distance(node, individual.genome[index_two])
 			end
 
 			fitness
 		end
 	end
 
+	def TSP.create_individual(problem_matrix)
+		individual = EvoSynth::Core::MinimizingIndividual.new
+		shuffeld = (0..problem_matrix.size - 1).to_a.sort_by { rand(2) }
+		individual.genome = EvoSynth::Core::ArrayGenome.new(shuffeld)
+		individual
+	end
+
 	def TSP.optimal_tour(matrix)
-		optimal = TSP::TSPIndividual.new(matrix)
+		optimal = TSP.create_individual(matrix)
 		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 		optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
 		optimal
@@ -113,18 +115,20 @@ module TSP
 		combined_mutation << EvoSynth::Mutations::ShiftingMutation.new
 		combined_mutation << EvoSynth::Mutations::MixingMutation.new
 
-		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
-		profile.individual = TSP::TSPIndividual.new(matrix)
+		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile.individual = TSP.create_individual(matrix)
 		profile.mutation = combined_mutation
 		profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
-		profile.population = EvoSynth::Core::Population.new(100) { TSP::TSPIndividual.new(matrix) }
+		profile.population = EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) }
 		profile.recombination = EvoSynth::Recombinations::EdgeRecombination.new
+		profile.fitness_calculator = TSP::TSPFitnessCalculator.new(matrix)
 		profile
 	end
 
 	matrix = TSP::ProblemMatrix.new('testdata/tsp/bays29.tsp')
 	optimal_tour = TSP.optimal_tour(matrix)
 	profile = TSP.algorithm_profile(matrix)
+	profile.fitness_calculator.calculate_and_set_fitness(optimal_tour)
 
 	puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 	puts "Optimal Individual for this problem: #{optimal_tour}"

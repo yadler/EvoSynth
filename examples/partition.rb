@@ -28,24 +28,48 @@ require 'evosynth'
 
 module Partitionproblem
 
-	class PartitionIndividual
-		include Comparable
+
+	class PartitionFitnessCalculator
+		include EvoSynth::Core::FitnessCalculator
+
+		# TODO: is there a better way then to overwrite these function?
+
+		def calculate_and_set_fitness(individual)
+			@called += 1
+
+			if individual.partition_a.changed || individual.partition_b.changed
+				@calculated += 1
+				individual.fitness = calculate_fitness(individual)
+			end
+
+			individual.fitness
+		end
+
+		def calculate_fitness(individual)
+			sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
+			sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
+			(sum_a - sum_b).abs
+		end
+
+	end
+
+
+	# We've to carefully overwrite functions here!
+
+	class PartitionIndividual < EvoSynth::Core::MinimizingIndividual
 
 		attr_accessor :partition_a, :partition_b
 
 		def initialize(partition_a, partition_b)
 			@partition_a = partition_a;
 			@partition_b = partition_b;
+			@fitness = Float::MAX
 		end
 
-		def fitness
-			if @partition_a.changed || @partition_b.changed
-				sum_a = @partition_a.inject(0) { |sum, n| sum + n }
-				sum_b = @partition_b.inject(0) { |sum, n| sum + n }
-				@fitness = (sum_a - sum_b).abs
-			end
-
-			@fitness
+		def fitness=(value)
+			@fitness = value
+			@partition_a.changed = false
+			@partition_b.changed = false
 		end
 
 		def deep_clone
@@ -55,13 +79,8 @@ module Partitionproblem
 			my_clone
 		end
 
-		def <=>(anOther)
-			cmp = fitness <=> anOther.fitness
-			-1 * cmp
-		end
-
 		def to_s
-			"fitness = #{fitness}, partition_a.size = #{@partition_a.size}, partition_b.size = #{@partition_b.size}"
+			"partition individual <fitness = #{fitness}, partition_a.size = #{@partition_a.size}, partition_b.size = #{@partition_b.size}>"
 		end
 
 	end
@@ -86,6 +105,7 @@ module Partitionproblem
 		end
 
 	end
+
 
 	module Testdata
 
@@ -137,11 +157,12 @@ module Partitionproblem
 	problem = Partitionproblem::Testdata.gen_layer_set
 	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population).new
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
 	profile.individual = Partitionproblem.get_new_individual_from(problem)
 	profile.mutation = PartitionMutation.new
 	profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
 	profile.recombination = EvoSynth::Recombinations::Identity.new
+	profile.fitness_calculator = Partitionproblem::PartitionFitnessCalculator.new
 
 	puts "Starting with the following population:"
 	puts "\tbest individual: #{base_population.best.fitness}"
@@ -163,5 +184,4 @@ module Partitionproblem
 	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
 end
-
 

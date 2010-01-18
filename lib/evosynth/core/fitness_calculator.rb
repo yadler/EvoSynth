@@ -22,55 +22,41 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth'
+module EvoSynth
+	module Core
 
+		module FitnessCalculator
 
-# FIXME: replace these individuals with mocked objects!
+			attr_reader :called, :calculated
 
+			def initialize
+				reset_counters
+			end
 
-class TestMinimizingIndividual < EvoSynth::Core::MinimizingIndividual
+			def calculate_and_set_fitness(individual)
+				@called += 1
 
-	def initialize(fitness = 0.0)
-		@fitness = fitness
-		@genome = EvoSynth::Core::ArrayGenome.new
+				if individual.genome.changed
+					@calculated += 1
+					individual.fitness = calculate_fitness(individual)
+				end
+
+				individual.fitness
+			end
+
+			def calculate_fitness(individual)
+				raise NotImplementedError, "please implement calculate_fitness!"
+			end
+
+			def reset_counters
+				@called = 0
+				@calculated = 0
+			end
+
+			def to_s
+				"fitness calculator <called: #{@called}, calculated: #{@calculated}"
+			end
+		end
+
 	end
-
-end
-
-
-class TestMaximizingIndividual < EvoSynth::Core::MaximizingIndividual
-
-	def initialize(fitness = 0.0)
-		@fitness = fitness
-		@genome = EvoSynth::Core::ArrayGenome.new
-	end
-
-end
-
-
-class TestBinaryGenomeIndividual < EvoSynth::Core::MinimizingIndividual
-
-	def initialize(value)
-		@genome = EvoSynth::Core::BinaryGenome.new(value)
-	end
-
-end
-
-
-class TestArrayBinaryIndividual < EvoSynth::Core::MinimizingIndividual
-
-	def initialize(genome_size)
-		@genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-	end
-
-end
-
-
-class TestGenomeIndividual < EvoSynth::Core::MinimizingIndividual
-
-	def initialize(genes)
-		@fitness = 0.0
-		@genome = EvoSynth::Core::ArrayGenome.new(genes)
-	end
-
 end

@@ -34,17 +34,13 @@ module EvoSynth
 
 			attr_accessor :genome
 
-			def to_s
-				"fitness = #{fitness}, genome = [#{genome}]"
+			def fitness
+				@fitness
 			end
 
-			def fitness
-				if genome.changed
-					@fitness = calculate_fitness
-					@genome.changed = false
-				end
-
-				@fitness
+			def fitness=(value)
+				@fitness = value
+				@genome.changed = false
 			end
 
 			def deep_clone
@@ -63,6 +59,10 @@ module EvoSynth
 				compare_fitness_values(fitness, another.fitness)
 			end
 
+			def compare_fitness_values(one, two)
+				raise NotImplementedError, "please implement compare_fitness_values!"
+			end
+
 			def minimizes?
 				compare_fitness_values(1,0) < 0
 			end
@@ -70,30 +70,51 @@ module EvoSynth
 			def maximizes?
 				compare_fitness_values(1,0) > 0
 			end
+
 		end
 
-		# Mixin for Individuals (for minimizing problems)
+		# Class for Individuals (for minimizing problems)
 
-		module MinimizingIndividual
+		class MinimizingIndividual
 			include Individual
+
+			def initialize(genome = nil)
+				@genome = genome
+				@fitness = Float::MAX
+			end
 
 			# compares two fitness values for minimizing problems
 
 			def compare_fitness_values(one, two)
 				-1 * (one <=> two)
 			end
+
+			def to_s
+				"minimizing individual <fitness = #{fitness}, genome = [#{genome}]>"
+			end
+
 		end
 
-		# Mixin for Individuals (for maximizing problems)
+		# Class for Individuals (for maximizing problems)
 
-		module MaximizingIndividual
+		class MaximizingIndividual
 			include Individual
+
+			def initialize(genome = nil)
+				@genome = genome
+				@fitness = Float::MIN
+			end
 
 			# compares two fitness values for maximizing problems
 
 			def compare_fitness_values(one, two)
 				one <=> two
 			end
+
+			def to_s
+				"maximizing individual <fitness = #{fitness}, genome = [#{genome}]>"
+			end
+
 		end
 
 	end

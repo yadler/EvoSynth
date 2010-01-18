@@ -31,19 +31,23 @@ module EvoSynth
 			include EvoSynth::Algorithms::Algorithm
 
 			attr_accessor :mutation, :selection, :recombination,
-			              :recombination_probability, :population
+			              :recombination_probability, :population,
+						  :fitness_calculator
 
 			def initialize(profile)
 				@population = profile.population
 				@selection = profile.selection
 				@recombination = profile.recombination
 				@mutation = profile.mutation
+				@fitness_calculator = profile.fitness_calculator
 
 				if defined? profile.recombination_probability
 					@recombination_probability = profile.recombination_probability
 				else
 					@recombination_probability = 0.75
 				end
+
+				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
@@ -69,8 +73,11 @@ module EvoSynth
 					child = parents[1]
 				end
 
+				child = @mutation.mutate(child)
+				@fitness_calculator.calculate_and_set_fitness(child)
+
 				@population.remove(@population.worst)
-				@population.add(@mutation.mutate(child))
+				@population.add(child)
 			end
 
 		end

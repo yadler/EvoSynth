@@ -125,12 +125,7 @@ module Ants
 
 		def create_matrix(nodes)
 			@matrix = EvoSynth::Util::MDArray.new(nodes.size, nodes.size)
-
-			@matrix.each_index do |x,y|
-				@matrix[x,y] = nodes[x][y].to_f
-			end
-
-#			@matrix.each_row { |row| puts row.to_s}
+			@matrix.each_index { |x,y| @matrix[x,y] = nodes[x][y].to_f }
 		end
 	end
 
@@ -161,100 +156,119 @@ module Ants
 
 	end
 
-	class AntIndividual
-		include EvoSynth::Core::MinimizingIndividual
 
-		def initialize(problem_matrix, pheromon, start, exploration_weight = 0.5)
-			@exploration_weight = exploration_weight
+	class AntFitnessCalculator
+		include EvoSynth::Core::FitnessCalculator
 
+		def initialize(problem_matrix)
 			@problem_matrix = problem_matrix
-			@pheromon = pheromon
-
-			@genome = EvoSynth::Core::ArrayGenome.new
-			@genome << start
+			super()
 		end
 
-		def generate_route!
-			(@problem_matrix.size - 1).times do
-				if rand < @exploration_weight
-					@genome << @problem_matrix.get_next_node(@genome, @pheromon, @genome.last)
-				else
-					@genome << @problem_matrix.get_nearest_node(@genome, @genome.last)
-				end
-			end
-		end
-
-		def calculate_fitness
+		def calculate_fitness(individual)
 			fitness = 0.0
 
-			@genome.each_with_index do |node, index|
-				index_two = (index + 1) % @genome.size
-				fitness += @problem_matrix.distance(node, @genome[index_two])
+			individual.genome.each_with_index do |node, index|
+				index_two = (index + 1) % individual.genome.size
+				fitness += @problem_matrix.distance(node, individual.genome[index_two])
 			end
 
 			fitness
 		end
+
 	end
 
+
 	class SimpleAntMutation
+
+		def initialize(problem_matrix, pheromon, start, exploration_weight = 0.5)
+			@problem_matrix = problem_matrix
+			@pheromon = pheromon
+			@start = start
+			@exploration_weight = exploration_weight
+		end
 
 		def mutate(ant)
 			mutated = ant.deep_clone
 			mutated.genome[1..mutated.genome.size-1] = []
-			mutated.generate_route!
+			mutated.genome = rand_route
 			mutated
+		end
+
+		def to_s
+			"simple ant mutation <start: #{@start}, exploration_weight: #{@exploration_weight}>"
+		end
+
+		private
+
+		def rand_route
+			genome = EvoSynth::Core::ArrayGenome.new
+			genome << @start
+
+			(@problem_matrix.size - 1).times do
+				if rand < @exploration_weight
+					genome << @problem_matrix.get_next_node(genome, @pheromon, genome.last)
+				else
+					genome << @problem_matrix.get_nearest_node(genome, genome.last)
+				end
+			end
+
+			genome
 		end
 
 	end
 
+
 	def Ants.algorithm_profile(matrix, pheromon)
+		ant_mutation = Ants::SimpleAntMutation.new(matrix, pheromon, 1, 0.2)
+
 		population = EvoSynth::Core::Population.new(10) do
-			ant = Ants::AntIndividual.new(matrix, pheromon, 1, 0.2)
-			ant.generate_route!
-			ant
+			ant = EvoSynth::Core::MinimizingIndividual.new(EvoSynth::Core::ArrayGenome.new)
+			ant_mutation.mutate(ant)
 		end
 
 		combined_mutation = EvoSynth::Mutations::CombinedMutation.new
 		combined_mutation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
-		combined_mutation.add_with_possibility(Ants::SimpleAntMutation.new, 0.75)
+		combined_mutation.add_with_possibility(ant_mutation, 0.75)
 
-		profile = Struct.new(:mutation, :selection, :recombination, :population).new
+		profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile.fitness_calculator = Ants::AntFitnessCalculator.new(matrix)
 		profile.mutation = combined_mutation
 		profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 		profile.population = population
 		profile.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 		profile
 	end
-end
 
-matrix = Ants::ProblemMatrix.new('testdata/tsp/bays29.tsp')
-puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
+	matrix = Ants::ProblemMatrix.new('testdata/tsp/bays29.tsp')
+	puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 
-PHEROMON = Ants::Pheromon.new(matrix.size)
+	PHEROMON = Ants::Pheromon.new(matrix.size)
 
-class EvoSynth::Algorithms::SteadyStateGA
-	alias :original_next_generation :next_generation
+	class EvoSynth::Algorithms::ElitismGeneticAlgorithm
+		alias :ant_next_generation :next_generation
 
-	def next_generation
-		original_next_generation
-		PHEROMON.update(@population);
+		def next_generation
+			ant_next_generation
+			PHEROMON.update(@population);
+		end
 	end
+
+	profile = Ants.algorithm_profile(matrix, PHEROMON)
+
+	opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
+	optimal = EvoSynth::Core::MinimizingIndividual.new(EvoSynth::Core::ArrayGenome.new(opt_tour))
+	profile.fitness_calculator.calculate_and_set_fitness(optimal)
+	puts "Optimal Individual for this problem: #{optimal}"
+
+	puts "Best Individual before evolution: #{profile.population.best}"
+
+	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
+
+	result = algorithm.run_until_generations_reached(1000)
+	puts algorithm
+
+	puts "Best Individual after evolution:  #{result.best}"
+	puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size
 end
-
-profile = Ants.algorithm_profile(matrix, PHEROMON)
-
-
-optimal = Ants::AntIndividual.new(matrix, PHEROMON, 1, 0.2)
-opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
-puts "Optimal Individual for this problem: #{optimal}"
-
-puts "Best Individual before evolution: #{profile.population.best}"
-
-algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
-algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
-
-result = algorithm.run_until_generations_reached(1000)
-puts algorithm
-puts "Best Individual after evolution:  #{result.best}"
-puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size
