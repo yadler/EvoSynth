@@ -28,9 +28,10 @@ require 'evosynth'
 
 module BenchmarkFunctionExample
 
-	VALUE_BITS = 32
-	DIMENSIONS = 6
+	VALUE_BITS = 16
+	DIMENSIONS = 5
 	GENERATIONS = 10000
+	POPULATION_SIZE = 25
 
 	class BenchmarkCalculator
 		include EvoSynth::Core::FitnessCalculator
@@ -42,7 +43,7 @@ module BenchmarkFunctionExample
 		end
 
 		def calculate_fitness(individual)
-			EvoSynth::BenchmarkFuntions.sphere(decode(individual))
+			EvoSynth::BenchmarkFuntions.rastgrin(decode(individual))
 		end
 
 	end
@@ -57,15 +58,20 @@ module BenchmarkFunctionExample
 
 
 	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
-	profile.individual = BenchmarkFunctionExample.create_individual(VALUE_BITS*DIMENSIONS)
-	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	profile.fitness_calculator = BenchmarkCalculator.new
 
-	algorithm = EvoSynth::Algorithms::Hillclimber.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(1000))
+	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 
+	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { BenchmarkFunctionExample.create_individual(VALUE_BITS*DIMENSIONS) }
+	profile.population = base_population.deep_clone
+
+	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = algorithm.run_until_generations_reached(GENERATIONS)
 
+	puts
 	puts result
 	puts profile.fitness_calculator
 end
