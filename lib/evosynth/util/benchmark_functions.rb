@@ -79,5 +79,15 @@ module EvoSynth
 			20 + Math::E - 20 * Math.exp(-0.2 * Math.sqrt( (1.0 / xs.size) * quad_sum )) - Math.exp( (1.0 / xs.size) * cos_sum )
 		end
 
+		# Griewank (Törn & Zilinskas 1989)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+
+		def BenchmarkFuntions.griewank(xs)
+			product = 1.0
+			xs.each_with_index { |x, i| product *= Math.cos x / Math.sqrt(i+1) }
+			1 + xs.inject(0.0) { |sum, x| sum += x**2 / (400 * xs.size) } - product
+		end
+
 	end
 end

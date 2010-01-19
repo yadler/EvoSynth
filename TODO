@@ -13,6 +13,12 @@ Algorithmen:
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
 
+Benchmarkfunktionen:
+	- Einsenzählproblem (Seite 272)
+	- Royal-Road (Seite 272)
+	- C-Funktion (Seite 272)
+	- sämtliche mit Randbedingungen (Seite 274)
+
 ------------------------------------------------
 
 Was ist mit Benchmarkfunktionen?! (SPk und co)

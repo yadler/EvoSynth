@@ -88,4 +88,13 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 	end
 
+	context "the griewak function" do
+
+		should "be near zero at [0,0,0,0,0,0,0]" do
+			xs = [0,0,0,0,0,0,0]
+			assert_in_delta 0, EvoSynth::BenchmarkFuntions.griewank(xs), 0.0001
+		end
+
+	end
+
 end
