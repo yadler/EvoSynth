@@ -69,5 +69,15 @@ module EvoSynth
 			end
 		end
 
+		# Ackley (Ackley 1987)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+
+		def BenchmarkFuntions.ackley(xs)
+			quad_sum = xs.inject(0.0) { |sum, x| sum += x**2 }
+			cos_sum = xs.inject(0.0) { |sum, x| sum += Math.cos(2 * Math::PI * x) }
+			20 + Math::E - 20 * Math.exp(-0.2 * Math.sqrt( (1.0 / xs.size) * quad_sum )) - Math.exp( (1.0 / xs.size) * cos_sum )
+		end
+
 	end
 end
