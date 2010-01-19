@@ -22,8 +22,16 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/decoder/tc_gray'
-require 'test/util/decoder/tc_binary_to_real'
-require 'test/util/benchmark_functions/tc_schwefel'
-require 'test/util/benchmark_functions/tc_sphere'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class SphereFunctionTest < Test::Unit::TestCase
+
+	should "be near zero at [0,0,0,0,0,0,0]" do
+		xs = [0,0,0,0,0,0,0]
+		assert_in_delta 0, EvoSynth::BenchmarkFuntions.sphere(xs), 0.0001
+	end
+
+end

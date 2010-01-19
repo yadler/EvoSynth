@@ -22,8 +22,18 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/decoder/tc_gray'
-require 'test/util/decoder/tc_binary_to_real'
-require 'test/util/benchmark_functions/tc_schwefel'
-require 'test/util/benchmark_functions/tc_sphere'
+module EvoSynth
+	module BenchmarkFuntions
+
+		# Sphere function (source? - dejong and rechenberg?)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+
+		def BenchmarkFuntions.sphere(xs)
+			sum = 0.0
+			xs.each { |x| sum += x**2 }
+			sum
+		end
+
+	end
+end

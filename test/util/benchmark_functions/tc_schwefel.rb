@@ -27,7 +27,7 @@ require 'shoulda'
 require 'evosynth'
 
 
-class SchwefelTest < Test::Unit::TestCase
+class SchwefelFunctionTest < Test::Unit::TestCase
 
 	should "be near zero at [420.9687463, 420.9687463, 420.9687463]" do
 		xs = [420.9687463, 420.9687463, 420.9687463]
