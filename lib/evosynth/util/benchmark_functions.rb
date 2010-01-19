@@ -25,14 +25,22 @@
 module EvoSynth
 	module BenchmarkFuntions
 
-		# Schwefel function (Schwefel 1995)
+		# Sinus Sum function (Schwefel 1995)
 		#
 		# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
 
-		def BenchmarkFuntions.schwefel(xs)
-			sum = 0.0
-			xs.each { |x| sum += -x * (Math.sin Math.sqrt x.abs) }
-			418.98289 * xs.size + sum
+		def BenchmarkFuntions.sinus_sum(xs)
+			418.98289 * xs.size + xs.inject(0.0) { |sum, x| sum += -x * (Math.sin Math.sqrt x.abs) }
+		end
+
+		# Double Sum function (Schwefel 1977)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+
+		def BenchmarkFuntions.double_sum(xs)
+			xs.inject(0.0) do |sum, i|
+				sum += xs[0..i].inject(0.0) { |sum, x| sum += x }
+			end
 		end
 
 		# Sphere function (Rechenberg 1973 and De Jong 1975)
@@ -40,9 +48,7 @@ module EvoSynth
 		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
 		def BenchmarkFuntions.sphere(xs)
-			sum = 0.0
-			xs.each { |x| sum += x**2 }
-			sum
+			xs.inject(0.0) { |sum, x| sum += x**2 }
 		end
 
 		# Rastgrin (Törn & Zilinskas 1989)
@@ -50,9 +56,7 @@ module EvoSynth
 		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
 		def BenchmarkFuntions.rastgrin(xs)
-			sum = 0.0
-			xs.each { |x| sum += x**2 - 10 * Math.cos(2 * Math::PI * x) }
-			10 * xs.size + sum
+			10 * xs.size + xs.inject(0.0) { |sum, x| sum += x**2 - 10 * Math.cos(2 * Math::PI * x) }
 		end
 
 	end
