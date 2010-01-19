@@ -27,21 +27,25 @@ module EvoSynth
 
 		class ConsoleWriter
 
-			def initialize(print_gen_step = 10)
+			def initialize(print_gen_step = 10, verbose = true)
 				@print_generation_step = print_gen_step
+				@verbose = verbose
 			end
 
 			def update(generations_run, algorithm)
 				if generations_run % @print_generation_step == 0
 					best = "no best individual could be retrieved"
+					worst = "no worst individual could be retrieved"
 
 					if defined? algorithm.population
-						best = algorithm.population.best
+						best = @verbose ? algorithm.population.best : algorithm.population.best.fitness
+						worst = @verbose ? algorithm.population.worst : algorithm.population.worst.fitness
 					elsif defined? algorithm.individual
-						best = algorithm.individual
+						best = @verbose ? algorithm.individual : algorithm.individual.fitness
+						worst = @verbose ? algorithm.individual : algorithm.individual.fitness
 					end
 
-					puts "#{generations_run}\t#{best}"
+					puts "#{generations_run}\t#{best}\t#{worst}"
 				end
 			end
 
