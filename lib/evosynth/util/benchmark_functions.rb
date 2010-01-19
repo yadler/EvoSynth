@@ -25,7 +25,7 @@
 module EvoSynth
 	module BenchmarkFuntions
 
-		# Schwefel function (source?)
+		# Schwefel function (Schwefel 1995)
 		#
 		# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
 
@@ -35,7 +35,7 @@ module EvoSynth
 			418.98289 * xs.size + sum
 		end
 
-		# Sphere function (source? - dejong and rechenberg?)
+		# Sphere function (Rechenberg 1973 and De Jong 1975)
 		#
 		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
@@ -43,6 +43,16 @@ module EvoSynth
 			sum = 0.0
 			xs.each { |x| sum += x**2 }
 			sum
+		end
+
+		# Rastgrin (Törn & Zilinskas 1989)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+
+		def BenchmarkFuntions.rastgrin(xs)
+			sum = 0.0
+			xs.each { |x| sum += x**2 - 10 * Math.cos(2 * Math::PI * x) }
+			10 * xs.size + sum
 		end
 
 	end
