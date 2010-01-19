@@ -27,7 +27,7 @@ require 'shoulda'
 require 'evosynth'
 
 
-class GrayDecoderTest < Test::Unit::TestCase
+class BinaryToRealTest < Test::Unit::TestCase
 
 	should "decode [0,0,0,0,0] to lower bound" do
 		binary = [0,0,0,0,0]

@@ -22,9 +22,21 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/decoder/gray'
-require 'evosynth/util/decoder/binary_to_real'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/runner/benchmark_runner'
-require 'evosynth/util/benchmark_functions/schwefel'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class SchwefelTest < Test::Unit::TestCase
+
+	should "be near zero at [420.9687463, 420.9687463, 420.9687463]" do
+		xs = [420.9687463, 420.9687463, 420.9687463]
+		assert_in_delta 0, EvoSynth::BenchmarkFuntions.schwefel(xs), 0.0001
+	end
+
+	should "be near 48.452841639435974 at [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]" do
+		xs = [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]
+		assert_in_delta 48.452841639435974, EvoSynth::BenchmarkFuntions.schwefel(xs), 0.0001
+	end
+
+end

@@ -22,9 +22,19 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/decoder/gray'
-require 'evosynth/util/decoder/binary_to_real'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/runner/benchmark_runner'
-require 'evosynth/util/benchmark_functions/schwefel'
+module EvoSynth
+	module BenchmarkFuntions
+
+		# Schwefel function (source?)
+		#
+		# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
+
+		def BenchmarkFuntions.schwefel(xs)
+			sum = 0.0
+			xs.each { |x| sum += -x * (Math.sin Math.sqrt x.abs) }
+			f = 418.98289 * xs.size + sum
+			f
+		end
+
+	end
+end

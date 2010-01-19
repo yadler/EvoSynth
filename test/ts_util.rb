@@ -24,3 +24,5 @@
 
 require 'test/util/tc_mdarray'
 require 'test/util/decoder/tc_gray'
+require 'test/util/decoder/tc_binary_to_real'
+require 'test/util/benchmark_functions/tc_schwefel'
