@@ -38,9 +38,7 @@ module SPk
 		def calculate_fitness(individual)
 			fitness = 0.0
 
-			ones = 0
-			individual.genome.each { |gene| ones += 1 if gene }
-			ones
+			ones = individual.genome.inject(0) { |ones, gene| ones += 1 if gene }
 
 			if is_valid(individual.genome)
 				fitness = individual.genome.size * (ones + 1)

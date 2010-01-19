@@ -70,8 +70,7 @@ module EvoSynth
 			private
 
 			def normalize_possibilities
-				sum = 0.0
-				@mutations.each { |mutation| sum += mutation[1] }
+				sum = @mutations.inject(0.0) { |sum, mutation| sum += mutation[1] }
 
 				if sum > 1.0
 					subtract = (sum - 1.0) / (@mutations.size)
