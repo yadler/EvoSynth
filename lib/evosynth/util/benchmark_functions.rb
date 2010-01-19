@@ -59,5 +59,15 @@ module EvoSynth
 			10 * xs.size + xs.inject(0.0) { |sum, x| sum += x**2 - 10 * Math.cos(2 * Math::PI * x) }
 		end
 
+		# Rosenbrock (De Jong 1975)
+		#
+		# global minimum: f(x) = 0 at x(i) = 1, i = 1..n
+
+		def BenchmarkFuntions.rosenbrock(xs)
+			(0..xs.size - 2).inject(0.0) do |sum, i|
+				sum += 100 * (xs[i]**2 - xs[i+1])**2 + (1 - xs[i])**2
+			end
+		end
+
 	end
 end

@@ -70,4 +70,13 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 	end
 
+	context "the rosenbrock function" do
+
+		should "be near zero at [1,1,1,1,1,1,1]" do
+			xs = [1,1,1,1,1,1,1]
+			assert_in_delta 0, EvoSynth::BenchmarkFuntions.rosenbrock(xs), 0.0001
+		end
+
+	end
+
 end
