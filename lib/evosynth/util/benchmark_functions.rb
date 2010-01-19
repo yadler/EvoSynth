@@ -22,16 +22,28 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'shoulda'
+module EvoSynth
+	module BenchmarkFuntions
 
-require 'evosynth'
+		# Schwefel function (source?)
+		#
+		# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
 
+		def BenchmarkFuntions.schwefel(xs)
+			sum = 0.0
+			xs.each { |x| sum += -x * (Math.sin Math.sqrt x.abs) }
+			418.98289 * xs.size + sum
+		end
 
-class SphereFunctionTest < Test::Unit::TestCase
+		# Sphere function (source? - dejong and rechenberg?)
+		#
+		# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-	should "be near zero at [0,0,0,0,0,0,0]" do
-		xs = [0,0,0,0,0,0,0]
-		assert_in_delta 0, EvoSynth::BenchmarkFuntions.sphere(xs), 0.0001
+		def BenchmarkFuntions.sphere(xs)
+			sum = 0.0
+			xs.each { |x| sum += x**2 }
+			sum
+		end
+
 	end
-
 end

@@ -23,9 +23,8 @@
 
 
 require 'evosynth/util/mdarray'
+require 'evosynth/util/benchmark_functions'
 require 'evosynth/util/decoder/gray'
 require 'evosynth/util/decoder/binary_to_real'
 require 'evosynth/util/output/console_writer'
 require 'evosynth/util/runner/benchmark_runner'
-require 'evosynth/util/benchmark_functions/schwefel'
-require 'evosynth/util/benchmark_functions/sphere'

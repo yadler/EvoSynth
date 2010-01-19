@@ -23,7 +23,6 @@
 
 
 require 'test/util/tc_mdarray'
+require 'test/util/tc_benchmark_functions'
 require 'test/util/decoder/tc_gray'
 require 'test/util/decoder/tc_binary_to_real'
-require 'test/util/benchmark_functions/tc_schwefel'
-require 'test/util/benchmark_functions/tc_sphere'
