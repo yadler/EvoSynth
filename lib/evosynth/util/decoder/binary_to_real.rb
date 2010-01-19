@@ -22,8 +22,29 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/decoder/gray'
-require 'evosynth/util/decoder/binary_to_real'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/runner/benchmark_runner'
+module EvoSynth
+	module Decoder
+
+		def Decoder.binary_to_real(binary, min_bound = -1.0, max_bound = 1.0)
+			binary = binary.map do |bin|
+				case bin
+					when false then 0
+					when true then 1
+					else bin
+				end
+			end
+#			puts binary.to_s
+
+			max_bound, min_bound = min_bound, max_bound if min_bound > max_bound
+
+			range_size = max_bound.to_f - min_bound.to_f
+			integer = Integer("0b#{binary.join}")
+			max_integer = Integer("0b" + ("1" * binary.size))
+
+			float = integer * (range_size / max_integer) + min_bound;
+			float
+		end
+
+	end
+
+end

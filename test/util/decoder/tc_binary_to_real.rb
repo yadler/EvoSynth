@@ -22,8 +22,31 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/decoder/gray'
-require 'evosynth/util/decoder/binary_to_real'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/runner/benchmark_runner'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class GrayDecoderTest < Test::Unit::TestCase
+
+	should "decode [0,0,0,0,0] to lower bound" do
+		binary = [0,0,0,0,0]
+		assert_equal -5, EvoSynth::Decoder.binary_to_real(binary, -5.0, 5.0)
+	end
+
+	should "decode [1,1,1,1,1] to upper bound" do
+		binary = [1,1,1,1,1]
+		assert_equal 5, EvoSynth::Decoder.binary_to_real(binary, -5, 5)
+	end
+
+	should "decode [true,false,false,false,false] to lower bound" do
+		binary = [false,false,false,false,false]
+		assert_equal -5, EvoSynth::Decoder.binary_to_real(binary, -5.0, 5.0)
+	end
+
+	should "decode [true,true,true,true,true] to upper bound" do
+		binary = [true,true,true,true,true]
+		assert_equal 5, EvoSynth::Decoder.binary_to_real(binary, -5, 5)
+	end
+
+end

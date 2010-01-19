@@ -113,6 +113,7 @@ end
 desc "Benchmark operators"
 task :benchmark do
 	$:.unshift File.expand_path("../lib", __FILE__)
+	load 'test/benchmark/decoder_benchmark.rb'
 	load 'test/benchmark/mutation_benchmark.rb'
 	load 'test/benchmark/recombination_benchmark.rb'
 	load 'test/benchmark/selection_benchmark.rb'
