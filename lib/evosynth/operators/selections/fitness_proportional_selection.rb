@@ -63,6 +63,7 @@ module EvoSynth
 						fitness_sum += individual.fitness
 					end
 
+					fitness_sum = fitness_sum.infinite? * Float::MAX if fitness_sum.infinite?
 					fitness_hash[index] = fitness_sum
 				end
 
