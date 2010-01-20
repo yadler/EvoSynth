@@ -54,11 +54,15 @@ module EvoSynth
 				"steady-state genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
-			private
-
 			def best_solution
 				@population.best
 			end
+
+			def worst_solution
+				@population.worst
+			end
+
+			private
 
 			def return_result
 				@population

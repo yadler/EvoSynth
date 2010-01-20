@@ -37,13 +37,8 @@ module EvoSynth
 					best = "no best individual could be retrieved"
 					worst = "no worst individual could be retrieved"
 
-					if defined? algorithm.population
-						best = @verbose ? algorithm.population.best : algorithm.population.best.fitness
-						worst = @verbose ? algorithm.population.worst : algorithm.population.worst.fitness
-					elsif defined? algorithm.individual
-						best = @verbose ? algorithm.individual : algorithm.individual.fitness
-						worst = @verbose ? algorithm.individual : algorithm.individual.fitness
-					end
+					best = (@verbose || !defined? algorithm.best_solution.fitness) ? algorithm.best_solution : algorithm.best_solution.fitness
+					worst = (@verbose || !defined? algorithm.worst_solution.fitness) ? algorithm.worst_solution : algorithm.worst_solution.fitness
 
 					puts "#{generations_run}\t#{best}\t#{worst}"
 				end

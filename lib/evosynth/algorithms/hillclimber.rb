@@ -44,11 +44,15 @@ module EvoSynth
 				"hillclimber <mutation: #{@mutation}, individual: #{@individual}>"
 			end
 
-			private
-
 			def best_solution
 				@individual
 			end
+
+			def worst_solution
+				@individual
+			end
+
+			private
 
 			def return_result
 				@individual
