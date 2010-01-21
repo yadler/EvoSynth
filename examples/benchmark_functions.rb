@@ -121,8 +121,8 @@ module BenchmarkFunctionExample
 
 
 	algorithm = EvoSynth::Algorithms::GeneticAlgorithm.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50, false))
-	result = algorithm.run_until_generations_reached(GENERATIONS)
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 
 	# -------------------------------------------------------------------------------------- #
 
@@ -143,11 +143,9 @@ module BenchmarkFunctionExample
 
 	algorithm = EvoSynth::Algorithms::CCGA1.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
-	result = algorithm.run_until_generations_reached(GENERATIONS)
 
-	puts
-	puts result
-	puts profile.populations
-	puts profile.fitness_calculator
+	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+	puts "best 'combined' individual: #{result.to_s}"
+	puts "fitness = #{EvoSynth::BenchmarkFuntions.sphere(result)}"
 
 end
