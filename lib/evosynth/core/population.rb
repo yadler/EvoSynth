@@ -37,7 +37,7 @@ module EvoSynth
 			# and a block to initialize each individual
 
 			def initialize(size = 0)
-				@individuals = Array.new(size)
+				@individuals = EvoSynth::Core::ArrayGenome.new(size)
 				@individuals.map! { |individual| yield } if block_given?
 			end
 
@@ -92,7 +92,8 @@ module EvoSynth
 			# TODO: optimize me, remove sort! and maybe we can cache things for a while
 
 			def best(count = 1)
-				@individuals.sort!
+				@individuals.sort! if @individuals.changed
+				@individuals.changed = false
 				count == 1 ? @individuals.last : @individuals.last(count).reverse
 			end
 
@@ -100,7 +101,8 @@ module EvoSynth
 			# TODO: optimize me, remove sort! and maybe we can cache things for a while
 
 			def worst(count = 1)
-				@individuals.sort!
+				@individuals.sort! if @individuals.changed
+				@individuals.changed = false
 				count == 1 ? @individuals.first : @individuals.first(count).reverse
 			end
 
