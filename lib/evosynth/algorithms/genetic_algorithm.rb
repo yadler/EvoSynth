@@ -70,9 +70,9 @@ module EvoSynth
 
 			def next_generation
 				selected_pop = @selection.select(@population, @population.size/2)
-				@population.clear_all
+				@population.clear
 
-				selected_pop.individuals.each_index do |index_one|
+				selected_pop.each_index do |index_one|
 					index_two = (index_one + 1) % selected_pop.size
 
 					if rand < @recombination_probability

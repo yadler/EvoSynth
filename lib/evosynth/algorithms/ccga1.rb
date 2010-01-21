@@ -83,9 +83,9 @@ module EvoSynth
 				best_individual = sub_population.best
 
 				selected_pop = @selection.select(sub_population, sub_population.size/2)
-				sub_population.clear_all
+				sub_population.clear
 
-				selected_pop.individuals.each_index do |index_one|
+				selected_pop.each_index do |index_one|
 					index_two = (index_one + 1) % selected_pop.size
 
 					if rand < @recombination_probability

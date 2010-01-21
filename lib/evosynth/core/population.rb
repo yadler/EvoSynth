@@ -27,44 +27,26 @@ module EvoSynth
 
 		# This class is used to create and maintain a population
 
-		class Population
-			include Comparable
-			include Enumerable
-
-			attr_accessor :individuals
+		class Population <  EvoSynth::Core::ArrayGenome
 
 			# Setup a population of individuals with the given size
 			# and a block to initialize each individual
 
-			def initialize(size = 0)
-				@individuals = EvoSynth::Core::ArrayGenome.new(size)
-				@individuals.map! { |individual| yield } if block_given?
+			def initialize(*args)
+				super(*args)
+				self.map! { |individual| yield } if block_given?
 			end
+
 
 			def deep_clone
 				my_clone = self.clone
-				my_clone.individuals = self.individuals.clone
-				self.individuals.each_index { |index| my_clone.individuals[index] = self.individuals[index].deep_clone }
+				self.each_index { |index| my_clone[index] = self[index].deep_clone }
 				my_clone
-			end
-
-			def <=>(anOther)
-				@individuals <=> anOther.individuals
-			end
-
-
-			def each
-				@individuals.each { |individual| yield individual }
-			end
-
-
-			def map!
-				@individuals.map! { |individual| yield individual }
 			end
 
 
 			def add(individual)
-				@individuals << individual
+				self << individual
 			end
 
 
@@ -73,62 +55,33 @@ module EvoSynth
 				# -> should be replaced with a cool 1.9 function
 
 				found = nil
-				@individuals.each_index do |index|
-					if @individuals[index] == individual
+				self.each_index do |index|
+					if self[index] == individual
 						found = index
 						break
 					end
 				end
 
-				@individuals.delete_at(found) if found != nil
+				self.delete_at(found) if found != nil
 			end
 
-
-			def clear_all
-				@individuals.clear
-			end
-
-
-			# TODO: optimize me, remove sort! and maybe we can cache things for a while
 
 			def best(count = 1)
-				@individuals.sort! if @individuals.changed
-				@individuals.changed = false
-				count == 1 ? @individuals.last : @individuals.last(count).reverse
+				self.sort! if self.changed
+				self.changed = false
+				count == 1 ? self.last : self.last(count).reverse
 			end
 
-
-			# TODO: optimize me, remove sort! and maybe we can cache things for a while
 
 			def worst(count = 1)
-				@individuals.sort! if @individuals.changed
-				@individuals.changed = false
-				count == 1 ? @individuals.first : @individuals.first(count).reverse
-			end
-
-
-			def [](index)
-				@individuals[index]
-			end
-
-
-			def []=(index, individual)
-				@individuals[index] = individual
-			end
-
-
-			def empty?
-				@individuals.empty?
-			end
-
-
-			def size
-				@individuals.size
+				self.sort! if self.changed
+				self.changed = false
+				count == 1 ? self.first : self.first(count).reverse
 			end
 
 
 			def to_s
-				"Population (size=#{@individuals.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
+				"Population (size=#{self.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
 			end
 
 		end
