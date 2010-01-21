@@ -170,18 +170,18 @@ module Partitionproblem
 	puts
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, POPULATION_SIZE * GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POPULATION_SIZE * GENERATIONS)
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile), GENERATIONS)
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile), GENERATIONS)
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
 
 	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile), GENERATIONS)
 end
 

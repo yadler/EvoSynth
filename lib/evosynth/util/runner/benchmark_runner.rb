@@ -25,10 +25,8 @@
 module EvoSynth
 	module Util
 
-		def Util.run_algorith_with_benchmark(algorithm_class, profile, generations = 1, &condition)
+		def Util.run_algorith_with_benchmark(algorithm, generations = 1, &condition)
 			require 'benchmark'
-
-			algorithm = algorithm_class.new(profile)
 			result = nil
 
 			puts "Running #{algorithm}..."
@@ -44,6 +42,8 @@ module EvoSynth
 			puts "\t\tbest individual : #{result.best}" if defined? result.best
 			puts "\t\tworst individual: #{result.worst}" if defined? result.worst
 			puts
+
+			result
 		end
 
 	end

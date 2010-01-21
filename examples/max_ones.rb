@@ -64,30 +64,30 @@ module MaxOnes
 	profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
 	puts
 
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, POP_SIZE * GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
 	puts profile.fitness_calculator
 	puts
 
 	profile.population = base_population.deep_clone
 	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile), GENERATIONS)
 	puts profile.fitness_calculator
 	puts
 
 	profile.population = base_population.deep_clone
 	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile), GENERATIONS)
 	puts profile.fitness_calculator
 	puts
 
 	profile.population = base_population.deep_clone
 	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
 	puts profile.fitness_calculator
 	puts
 
 	profile.population = base_population.deep_clone
 	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile, GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile), GENERATIONS)
 	puts profile.fitness_calculator
 end

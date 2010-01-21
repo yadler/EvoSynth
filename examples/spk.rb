@@ -38,7 +38,9 @@ module SPk
 		def calculate_fitness(individual)
 			fitness = 0.0
 
-			ones = individual.genome.inject(0) { |ones, gene| ones += 1 if gene }
+			ones = individual.genome.inject(0) do |ones, gene|
+				ones += gene ? 1 : 0
+			end
 
 			if is_valid(individual.genome)
 				fitness = individual.genome.size * (ones + 1)
@@ -111,19 +113,18 @@ module SPk
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber, profile, MAX_GENERATIONS * INDIVIDUALS)
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber, profile) { |gen| gen >= MAX_GENERATIONS}
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm, profile) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm, profile) { |gen| gen >= MAX_GENERATIONS}
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA, profile) { |gen| gen >= MAX_GENERATIONS}
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), MAX_GENERATIONS * INDIVIDUALS)
+#
+#	profile.population = base_population.deep_clone
+#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile)) { |gen| gen >= MAX_GENERATIONS}
+#
+#	profile.population = base_population.deep_clone
+#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
+#
+#	profile.population = base_population.deep_clone
+#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)) { |gen| gen >= MAX_GENERATIONS}
+#
+#	profile.population = base_population.deep_clone
+#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile)) { |gen| gen >= MAX_GENERATIONS}
 
 end
