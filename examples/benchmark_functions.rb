@@ -119,10 +119,11 @@ module BenchmarkFunctionExample
 
 	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { BenchmarkFunctionExample.create_individual(VALUE_BITS*DIMENSIONS, 0) }
 
-
-	algorithm = EvoSynth::Algorithms::GeneticAlgorithm.new(profile)
+	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+	puts profile.fitness_calculator
+	puts
 
 	# -------------------------------------------------------------------------------------- #
 
@@ -144,7 +145,10 @@ module BenchmarkFunctionExample
 	algorithm = EvoSynth::Algorithms::CCGA1.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
+	profile.fitness_calculator.reset_counters
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+	puts profile.fitness_calculator
+	puts
 	puts "best 'combined' individual: #{result.to_s}"
 	puts "fitness = #{EvoSynth::BenchmarkFuntions.sphere(result)}"
 

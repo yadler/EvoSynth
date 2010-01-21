@@ -8,23 +8,24 @@ Legend: x == done; - == not done; o == outdated
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left><i>evolution algorithms</i></th> </tr>
 
-<tr> <td>x</td> <td>-</td> <td>-</td> <td>Hillclimber</td>                  <td>BINÄRES-HILLCLIMBING (Weicker Page 49)</td> </tr>
-<tr> <td>x</td> <td>-</td> <td>-</td> <td>PopulationHillclimber</td>        <td>POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>Hillclimber</td>                  <td>BINAERES-HILLCLIMBING (Weicker Page 49)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>PopulationHillclimber</td>        <td>POPULATIONSBASIERTES-BINAERES-HILLCLIMBING (Weicker Page 65)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>GeneticAlgorithm</td>             <td>GENETISCHER-ALGORITHMUS (Weicker Page 85)</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>ElitismGeneticAlgorithm</td>      <td>-</td> </tr>
 <tr> <td>x</td> <td>-</td> <td>-</td> <td>SteadyStateGA</td>                <td>STEADY-STATE-GA (Weicker Page 129)</td> </tr>
+<tr> <td>x</td> <td>-</td> <td>-</td> <td>CCGA-1</td>                       <td>CCGA-1 (Mitchell A. Potter and Kenneth A. De Jong, 1994)</td> </tr>
 
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left><i>mutations</i></th> </tr>
 
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>Identity</td>                     <td>-</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>CombinedMutation</td>             <td>-</td> </tr>
-<tr> <td>x</td> <td>x</td> <td>o</td> <td>BinaryMutation</td>               <td>BINÄRE-MUTATION (Weicker page 59)</td> </tr>
-<tr> <td>x</td> <td>x</td> <td>o</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINÄRE-MUTATION (Weicker page 130)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>o</td> <td>BinaryMutation</td>               <td>BINAERE-MUTATION (Weicker page 59)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>o</td> <td>EfficientBinaryMutation</td>      <td>EFFIZIENTE-BINAERE-MUTATION (Weicker page 130)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>x</td> <td>ExchangeMutation</td>             <td>VERTAUSCHENDE-MUTATION (Weicker page 27)<br/>DREIERTAUSCH-MUTATION (Seite 107)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>InversionMutation</td>            <td>INVERTIERENDE-MUTATION (Weicker page 29)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>MixingMutation</td>               <td>MISCHENDE-MUTATION (Weicker page 132)</td> </tr>
-<tr> <td>x</td> <td>x</td> <td>o</td> <td>OneGeneFlipping</td>              <td>EIN-BIT-BINÄRE-MUTATION (Weicker page 48)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>o</td> <td>OneGeneFlipping</td>              <td>EIN-BIT-BINAERE-MUTATION (Weicker page 48)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>ShiftingMutation</td>             <td>VERSCHIEBENDE-MUTATION (Weicker page 132)</td> </tr>
 
 <tr> <th colspan=5></th> </tr>

@@ -80,6 +80,8 @@ module EvoSynth
 
 			def next_generation
 				sub_population = @populations[@next_index]
+				best_individual = sub_population.best
+
 				selected_pop = @selection.select(sub_population, sub_population.size/2)
 				sub_population.clear_all
 
@@ -98,6 +100,9 @@ module EvoSynth
 				end
 
 				sub_population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				sub_population.remove(sub_population.worst)
+				sub_population.add(best_individual)
+
 				@next_index = (@next_index + 1) % @populations.size
 			end
 
