@@ -30,22 +30,10 @@ module EvoSynth
 		class CCGA1
 			include EvoSynth::Algorithms::Algorithm
 
-			attr_accessor :mutation, :selection, :recombination,
-			              :recombination_probability, :populations,
-						  :fitness_calculator
 
 			def initialize(profile)
-				@populations = profile.populations
-				@selection = profile.selection
-				@recombination = profile.recombination
-				@mutation = profile.mutation
-				@fitness_calculator = profile.fitness_calculator
-
-				if defined? profile.recombination_probability
-					@recombination_probability = profile.recombination_probability
-				else
-					@recombination_probability = 0.75
-				end
+				set_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75
+				use_profile profile
 
 				@populations.each do |sub_population|
 					sub_population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }

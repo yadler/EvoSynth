@@ -28,9 +28,7 @@ require 'observer'
 module EvoSynth
 	module Algorithms
 
-
-		module Algorithm
-			include Observable
+		module RunnableAlgorithm
 
 			attr_reader :generations_run
 
@@ -74,6 +72,43 @@ module EvoSynth
 
 				def fitness
 					@goal
+				end
+			end
+
+		end
+
+		module Algorithm
+			include Observable
+			include RunnableAlgorithm
+
+			def set_profile(*properties)
+				@properties = properties
+				@properties.each do |property|
+					if property.is_a?(Symbol)
+						self.class.send(:attr_accessor, property)
+					elsif property.is_a?(Hash)
+						property.keys.each { |key| self.class.send(:attr_accessor, key) }
+					else
+						raise ArgumentError, "argument type not supported"
+					end
+				end
+			end			
+
+			def use_profile(profile)
+				@properties.each do |property|
+					if property.is_a?(Symbol)
+						accessor_symbol = "#{property.id2name}=".to_sym
+						value = profile.send(property.to_sym) rescue value = nil
+						raise "algorithm profile is missing '#{property.id2name}' field" if value.nil?
+						self.send(accessor_symbol, value)
+					elsif property.is_a?(Hash)
+						property.each_pair do |key, default_value|
+							accessor_symbol = "#{key.id2name}=".to_sym
+							value = profile.send(key.to_sym) rescue value = nil
+							value = default_value if value.nil?
+							self.send(accessor_symbol, value)
+						end
+					end
 				end
 			end
 

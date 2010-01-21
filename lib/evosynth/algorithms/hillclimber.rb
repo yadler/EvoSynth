@@ -30,12 +30,9 @@ module EvoSynth
 		class Hillclimber
 			include EvoSynth::Algorithms::Algorithm
 
-			attr_accessor :individual, :mutation, :fitness_calculator
-
 			def initialize(profile)
-				@mutation = profile.mutation
-				@individual = profile.individual
-				@fitness_calculator = profile.fitness_calculator
+				set_profile :individual, :mutation, :fitness_calculator
+				use_profile profile
 
 				@fitness_calculator.calculate_and_set_fitness(@individual)
 			end

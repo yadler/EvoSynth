@@ -30,12 +30,9 @@ module EvoSynth
 		class PopulationHillclimber
 			include EvoSynth::Algorithms::Algorithm
 
-			attr_accessor :mutation, :population, :fitness_calculator
-
 			def initialize(profile)
-				@population = profile.population
-				@mutation = profile.mutation
-				@fitness_calculator = profile.fitness_calculator
+				set_profile :mutation, :population, :fitness_calculator
+				use_profile profile
 
 				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
 			end
