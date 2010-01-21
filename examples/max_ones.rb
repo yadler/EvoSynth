@@ -59,6 +59,7 @@ module MaxOnes
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = OnesCalculator.new
 	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(10) }
+	profile.population = base_population
 
 	puts "using profile:"
 	profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
