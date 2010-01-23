@@ -31,7 +31,7 @@ module EvoSynth
 			include EvoSynth::Algorithms::Algorithm
 
 			def initialize(profile)
-				set_profile :mutation, :selection, :recombination, :population, :fitness_calculator, :recombination_probability => 0.75
+				init_profile :mutation, :selection, :recombination, :population, :fitness_calculator, :recombination_probability => 0.75
 				use_profile profile
 
 				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }

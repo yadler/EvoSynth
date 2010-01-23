@@ -81,7 +81,7 @@ module EvoSynth
 			include Observable
 			include RunnableAlgorithm
 
-			def set_profile(*properties)
+			def init_profile(*properties)
 				@properties = properties
 				@properties.each do |property|
 					if property.is_a?(Symbol)
@@ -96,19 +96,29 @@ module EvoSynth
 
 			def use_profile(profile)
 				@properties.each do |property|
-					if property.is_a?(Symbol)
-						accessor_symbol = "#{property.id2name}=".to_sym
-						value = profile.send(property.to_sym) rescue value = nil
-						raise "algorithm profile is missing '#{property.id2name}' field" if value.nil?
-						self.send(accessor_symbol, value)
-					elsif property.is_a?(Hash)
-						property.each_pair do |key, default_value|
-							accessor_symbol = "#{key.id2name}=".to_sym
-							value = profile.send(key.to_sym) rescue value = nil
-							value = default_value if value.nil?
-							self.send(accessor_symbol, value)
-						end
+					if property.is_a? Symbol
+							use_property(profile, property)
+					elsif property.is_a? Hash
+							use_property_hash(profile, property)
 					end
+				end
+			end
+
+			private
+
+			def use_property(profile, property)
+				accessor_symbol = "#{property.id2name}=".to_sym
+				value = profile.send(property.to_sym) rescue value = nil
+				raise "algorithm profile is missing '#{property.id2name}' field" if value.nil?
+				self.send(accessor_symbol, value)
+			end
+
+			def use_property_hash(profile, property_hash)
+				property_hash.each_pair do |key, default_value|
+					accessor_symbol = "#{key.id2name}=".to_sym
+					value = profile.send(key.to_sym) rescue value = nil
+					value = default_value if value.nil?
+					self.send(accessor_symbol, value)
 				end
 			end
 

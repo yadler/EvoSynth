@@ -31,7 +31,7 @@ module EvoSynth
 			include EvoSynth::Algorithms::Algorithm
 
 			def initialize(profile)
-				set_profile :mutation, :population, :fitness_calculator
+				init_profile :mutation, :population, :fitness_calculator
 				use_profile profile
 
 				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }

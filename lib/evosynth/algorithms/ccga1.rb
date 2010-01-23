@@ -32,7 +32,7 @@ module EvoSynth
 
 
 			def initialize(profile)
-				set_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75
+				init_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75
 				use_profile profile
 
 				@populations.each do |sub_population|
