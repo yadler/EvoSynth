@@ -27,6 +27,7 @@ Legend: x == done; - == not done; o == outdated
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>MixingMutation</td>               <td>MISCHENDE-MUTATION (Weicker page 132)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>o</td> <td>OneGeneFlipping</td>              <td>EIN-BIT-BINAERE-MUTATION (Weicker page 48)</td> </tr>
 <tr> <td>x</td> <td>x</td> <td>-</td> <td>ShiftingMutation</td>             <td>VERSCHIEBENDE-MUTATION (Weicker page 132)</td> </tr>
+<tr> <td>x</td> <td>x</td> <td>-</td> <td>GaussMutation</td>                <td>GAUSS-MUTATION (Weicker page 60)</td> </tr>
 
 <tr> <th colspan=5></th> </tr>
 <tr> <th colspan=5 align=left>recombination</th> </tr>

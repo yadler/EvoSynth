@@ -66,7 +66,7 @@ class TestArrayBinaryIndividual < EvoSynth::Core::MinimizingIndividual
 end
 
 
-class TestGenomeIndividual < EvoSynth::Core::MinimizingIndividual
+class TestArrayGenomeIndividual < EvoSynth::Core::MinimizingIndividual
 
 	def initialize(genes)
 		@fitness = 0.0

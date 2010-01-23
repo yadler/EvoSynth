@@ -41,19 +41,26 @@ module MutationBenchmark
 		puts "\t#{timing.format("%r")} - #{mutation.class}"
 	end
 
+	def MutationBenchmark.run_benchmark(individual, flip_function)
+		EvoSynth::Mutations.constants.each do |mutation|
+			mutation_class = EvoSynth::Mutations.const_get(mutation)
+			next if mutation_class == EvoSynth::Mutations::GaussMutation
+
+			begin
+				mutation = mutation_class.new
+			rescue
+				mutation = mutation_class.new(flip_function) rescue next
+			end
+
+			MutationBenchmark.benchmark_mutation(mutation, individual)
+		end
+	end
+
 	individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 	GENOME_SIZE.times { |index| individual.genome[index] = (index % 2 == 1) ? true : false }
 
 	puts "Running mutation benchmark (on ArrayGenome) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
-	EvoSynth::Mutations.constants.each do |mutation|
-		begin
-			mutation = EvoSynth::Mutations.const_get(mutation).new
-		rescue
-			mutation = EvoSynth::Mutations.const_get(mutation).new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN) rescue next
-		end
-
-		MutationBenchmark.benchmark_mutation(mutation, individual)
-	end
+	MutationBenchmark.run_benchmark(individual, EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 
 	number = 2 ** (GENOME_SIZE - 1)
 	add = number
@@ -64,13 +71,10 @@ module MutationBenchmark
 
 	individual = TestBinaryGenomeIndividual.new(number)
 	puts "Running mutation benchmark (on BinaryGenome) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
-	EvoSynth::Mutations.constants.each do |mutation|
-		begin
-			mutation = EvoSynth::Mutations.const_get(mutation).new
-		rescue
-			mutation = EvoSynth::Mutations.const_get(mutation).new(EvoSynth::Mutations::Functions::FLIP_BINARY) rescue next
-		end
+	MutationBenchmark.run_benchmark(individual, EvoSynth::Mutations::Functions::FLIP_BINARY)
 
-		MutationBenchmark.benchmark_mutation(mutation, individual)
-	end
+	individual = TestArrayGenomeIndividual.new([rand]*GENOME_SIZE)
+	puts "Running mutation benchmark (on ArrayGenome filled with Float's) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
+	mutation = EvoSynth::Mutations::GaussMutation.new
+	MutationBenchmark.benchmark_mutation(mutation, individual)
 end

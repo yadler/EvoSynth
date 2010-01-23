@@ -34,8 +34,8 @@ class OrderedRecombinationTest < Test::Unit::TestCase
 		setup do
 			@recombination = EvoSynth::Recombinations::OrderedRecombination.new
 
-			@individual_one = TestGenomeIndividual.new([1,4,8,6,5,7,2,3])
-			@individual_two = TestGenomeIndividual.new([1,2,3,4,8,5,6,7])
+			@individual_one = TestArrayGenomeIndividual.new([1,4,8,6,5,7,2,3])
+			@individual_two = TestArrayGenomeIndividual.new([1,2,3,4,8,5,6,7])
 		end
 
 		context "before the ordered recombination is executed" do

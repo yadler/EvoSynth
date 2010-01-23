@@ -34,7 +34,7 @@ class InversionMutationTest < Test::Unit::TestCase
 
 	context "when run on a permutation genome (size=#{MAX_NUM})" do
 		setup do
-			@individual = TestGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)
 		end
 
 		context "before mutation is executed" do

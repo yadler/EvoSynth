@@ -1,7 +1,6 @@
 Aus Weickers Buch (noch) nicht implementiert:
 
 Mutationen:
-	- GAUSS-MUTATION (Weicker page 60)
 	- SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114)
 	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Weicker page 131)
 

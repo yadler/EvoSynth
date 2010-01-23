@@ -28,37 +28,37 @@ require 'evosynth'
 require 'test/test_util/test_helper'
 
 
-class IdentityMutationTest < Test::Unit::TestCase
+class GaussMutationTest < Test::Unit::TestCase
 
-	MAX_NUM = 20
+	VALUE = 4.0
+	DELTA = 0.1
 
-	context "when run on a permutation genome (size=#{MAX_NUM})" do
+	context "when run on a float genome = #{VALUE}" do
 		setup do
-			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestArrayGenomeIndividual.new([VALUE]*5)
 		end
 
 		context "before mutation is executed" do
-			should "the genes should be ordered from 0 to #{MAX_NUM}" do
-				prev = -1
-				@individual.genome.each { |gene| assert_equal prev + 1, gene; prev = gene }
+			should "each gene should equal #{VALUE}" do
+				@individual.genome.each { |gene| assert_equal VALUE, gene }
 			end
 		end
 
 		context "after identity mutation is executed" do
 			setup do
-				mutation = EvoSynth::Mutations::Identity.new
+				mutation = EvoSynth::Mutations::GaussMutation.new
 				@mutated = mutation.mutate(@individual)
 			end
 
-			should "the genes of the parent should (still) be ordered from 0 to #{MAX_NUM}" do
-				prev = -1
-				@individual.genome.each { |gene| assert_equal prev + 1, gene; prev = gene }
+			should "all genes of the parent should (still) equal #{VALUE}" do
+				@individual.genome.each { |gene| assert_equal VALUE, gene }
 			end
 
-			should "all genes of the child should be equal to the parent" do
-				@mutated.genome.each_with_index { |gene, index| assert_equal @individual.genome[index], gene }
+			should "all genes of the child be in the around +/- #{DELTA} of #{VALUE}" do
+				@mutated.genome.each { |gene| assert_in_delta VALUE, gene, DELTA }
 			end
+
 		end
-	end
 
+	end
 end

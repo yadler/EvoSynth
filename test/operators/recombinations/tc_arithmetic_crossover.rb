@@ -41,8 +41,8 @@ class ArithmeticCrossoverTest < Test::Unit::TestCase
 
 			genome_one, genome_two = [], []
 			GENOME_SIZE.times { |i| genome_one << i; genome_two << GENOME_SIZE - i }
-			@individual_one = TestGenomeIndividual.new(genome_one)
-			@individual_two = TestGenomeIndividual.new(genome_two)
+			@individual_one = TestArrayGenomeIndividual.new(genome_one)
+			@individual_two = TestArrayGenomeIndividual.new(genome_two)
 		end
 
 		context "before recombination is executed" do

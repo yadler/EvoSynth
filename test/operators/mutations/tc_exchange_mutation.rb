@@ -34,7 +34,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 
 	context "when run on a permutation genome (size=#{MAX_NUM})" do
 		setup do
-			@individual = TestGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)
 		end
 
 		context "before mutation is executed" do
@@ -65,7 +65,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 
 	context "when run on a permutation genome (size=#{MAX_NUM}) with swap_count = 3" do
 		setup do
-			@individual = TestGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)
 		end
 
 		context "before mutation is executed" do
@@ -98,7 +98,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 
 	context "when run on a permutation genome (size=#{MAX_NUM}) with swap_count = 4" do
 		setup do
-			@individual = TestGenomeIndividual.new((0..MAX_NUM).to_a)
+			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)
 		end
 
 		context "before mutation is executed" do

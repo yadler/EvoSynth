@@ -34,8 +34,8 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 		setup do
 			@recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 
-			@individual_one = TestGenomeIndividual.new([0,1,0,1,0,1,0])
-			@individual_two = TestGenomeIndividual.new([1,0,1,0,1,0,1])
+			@individual_one = TestArrayGenomeIndividual.new([0,1,0,1,0,1,0])
+			@individual_two = TestArrayGenomeIndividual.new([1,0,1,0,1,0,1])
 		end
 
 		should "raise a exception" do
@@ -49,8 +49,8 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 		setup do
 			@recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 
-			@individual_one = TestGenomeIndividual.new([1,4,6,5,7,2,3])
-			@individual_two = TestGenomeIndividual.new([1,2,3,4,5,6,7])
+			@individual_one = TestArrayGenomeIndividual.new([1,4,6,5,7,2,3])
+			@individual_two = TestArrayGenomeIndividual.new([1,2,3,4,5,6,7])
 		end
 
 		context "before the partially mapped crossover is executed" do

@@ -45,7 +45,7 @@ module EvoSynth
 
 			def deep_clone
 				my_clone = self.clone
-				my_clone.genome = self.genome.clone
+				my_clone.genome = self.genome.clone rescue self.genome
 				my_clone
 			end
 
