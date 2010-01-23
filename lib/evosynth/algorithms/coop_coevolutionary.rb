@@ -25,20 +25,17 @@
 module EvoSynth
 	module Algorithms
 
-		# CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
+		# based on CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
 
-		class CCGA
+		class CoopCoevolutionary
 			include EvoSynth::Algorithms::Algorithm
 
-
 			def initialize(profile)
-				init_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75
+				init_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75,
+					:sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
 				use_profile profile
 
-				@populations.each do |sub_population|
-					sub_population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
-				end
-
+				initialize_sub_algorithms(profile)
 				@next_index = 0
 			end
 
@@ -58,8 +55,6 @@ module EvoSynth
 				worst.to_s
 			end
 
-			private
-
 			def return_result
 				best = []
 				@populations.each { |pop| best << pop.best.fitness }
@@ -67,31 +62,30 @@ module EvoSynth
 			end
 
 			def next_generation
-				sub_population = @populations[@next_index]
-				best_individual = sub_population.best
-
-				selected_pop = @selection.select(sub_population, sub_population.size/2)
-				sub_population.clear
-
-				selected_pop.each_index do |index_one|
-					index_two = (index_one + 1) % selected_pop.size
-
-					if rand < @recombination_probability
-						child_one, child_two = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
-					else
-						child_one = selected_pop[index_one]
-						child_two = selected_pop[index_two]
-					end
-
-					sub_population.add(@mutation.mutate(child_one))
-					sub_population.add(@mutation.mutate(child_two))
-				end
-
-				sub_population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
-				sub_population.remove(sub_population.worst)
-				sub_population.add(best_individual)
-
+				@algorithms[@next_index].next_generation
 				@next_index = (@next_index + 1) % @populations.size
+			end
+
+			private
+
+			def get_sub_profile(profile)
+				sub_profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator, :recombination_probability).new
+				sub_profile.mutation = profile.mutation
+				sub_profile.selection = profile.selection
+				sub_profile.recombination = profile.recombination
+				sub_profile.fitness_calculator = profile.fitness_calculator
+				sub_profile.recombination_probability = profile.recombination_probability
+				sub_profile
+			end
+
+			def initialize_sub_algorithms(profile)
+				sub_profile = get_sub_profile(profile)
+
+				@algorithms = []
+				@populations.each do |sub_population|
+					sub_profile.population = sub_population
+					@algorithms << @sub_algorithm.new(sub_profile)
+				end
 			end
 
 		end

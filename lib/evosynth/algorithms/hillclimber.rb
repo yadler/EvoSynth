@@ -49,8 +49,6 @@ module EvoSynth
 				@individual
 			end
 
-			private
-
 			def return_result
 				@individual
 			end

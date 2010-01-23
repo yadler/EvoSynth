@@ -49,8 +49,6 @@ module EvoSynth
 				@population.worst
 			end
 
-			private
-
 			def return_result
 				@population
 			end

@@ -160,7 +160,7 @@ module BenchmarkFunctionExample
 	end
 #	puts profile.populations
 
-	algorithm = EvoSynth::Algorithms::CCGA.new(profile)
+	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters
@@ -186,7 +186,7 @@ module BenchmarkFunctionExample
 	end
 #	puts profile.populations
 
-	algorithm = EvoSynth::Algorithms::CCGA.new(profile)
+	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters
