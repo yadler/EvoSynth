@@ -103,7 +103,7 @@ module BenchmarkFunctionExample
 			best = BenchmarkFunctionExample.fitness_function(decode(individual))
 			rand = BenchmarkFunctionExample.fitness_function(decode_rand(individual))
 
-			best < rand ? best : rand
+			individual.compare_fitness_values(best, rand) == 1 ? best : rand
 		end
 
 	end
