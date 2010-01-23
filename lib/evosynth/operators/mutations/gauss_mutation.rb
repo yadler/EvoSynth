@@ -40,8 +40,8 @@ module EvoSynth
 
 				mutated.genome.map! do |gene|
 					gene += rand * density_function(gene) - density_function(gene)/2
-#					gene = @lower_bound if gene < @lower_bound
-#					gene = @upper_bound if gene > @upper_bound
+					gene = @lower_bound if gene < @lower_bound
+					gene = @upper_bound if gene > @upper_bound
 					gene
 				end
 
