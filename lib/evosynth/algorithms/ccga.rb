@@ -25,9 +25,9 @@
 module EvoSynth
 	module Algorithms
 
-		# CCGA-1 (Mitchell A. Potter and Kenneth A. De Jong)
+		# CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
 
-		class CCGA1
+		class CCGA
 			include EvoSynth::Algorithms::Algorithm
 
 
