@@ -100,7 +100,7 @@ module SPk
 	K = 2
 	GENOME_SIZE = 16
 	GOAL = 48
-	MAX_GENERATIONS = 1000
+	GENERATIONS = 1000
 	INDIVIDUALS = 25
 
 	#require 'profile'
@@ -113,18 +113,15 @@ module SPk
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), MAX_GENERATIONS * INDIVIDUALS)
-#
-#	profile.population = base_population.deep_clone
-#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile)) { |gen| gen >= MAX_GENERATIONS}
-#
-#	profile.population = base_population.deep_clone
-#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile)) { |gen, best| best.fitness >= GOAL || gen > MAX_GENERATIONS }
-#
-#	profile.population = base_population.deep_clone
-#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)) { |gen| gen >= MAX_GENERATIONS}
-#
-#	profile.population = base_population.deep_clone
-#	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile)) { |gen| gen >= MAX_GENERATIONS}
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), INDIVIDUALS * GENERATIONS)
+
+	EvoSynth::Algorithms.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+		next unless defined? algorithm_class.new
+		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
+
+		profile.population = base_population.deep_clone
+		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
+	end
 
 end

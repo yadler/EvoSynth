@@ -122,17 +122,12 @@ module GraphColouring
 	profile = GraphColouring.algorithm_profile(graph)
 	base_population = profile.population
 
+	EvoSynth::Algorithms.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+		next unless defined? algorithm_class.new
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
+		profile.population = base_population.deep_clone
+		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS } rescue next
+	end
 
 end

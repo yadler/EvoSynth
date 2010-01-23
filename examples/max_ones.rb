@@ -69,26 +69,15 @@ module MaxOnes
 	puts profile.fitness_calculator
 	puts
 
-	profile.population = base_population.deep_clone
-	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
-	puts
+	EvoSynth::Algorithms.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+		next unless defined? algorithm_class.new
+		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
 
-	profile.population = base_population.deep_clone
-	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
-	puts
-
-	profile.population = base_population.deep_clone
-	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
-	puts
-
-	profile.population = base_population.deep_clone
-	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
+		profile.population = base_population.deep_clone
+		profile.fitness_calculator.reset_counters
+		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next # coop_coevolutionary would skream with our profile
+		puts profile.fitness_calculator
+		puts
+	end
 end

@@ -172,16 +172,14 @@ module Partitionproblem
 	profile.population = base_population.deep_clone
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POPULATION_SIZE * GENERATIONS)
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::GeneticAlgorithm.new(profile), GENERATIONS)
+	EvoSynth::Algorithms.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+		next unless defined? algorithm_class.new
+		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::SteadyStateGA.new(profile), GENERATIONS)
+		profile.population = base_population.deep_clone
+		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
+	end
 
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::PopulationHillclimber.new(profile), GENERATIONS)
 end
 
