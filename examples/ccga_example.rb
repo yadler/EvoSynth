@@ -26,14 +26,14 @@ require 'evosynth'
 #require 'profile'
 
 
-module BenchmarkFunctionExample
+module CCGAExample
 
 	VALUE_BITS = 16
 	DIMENSIONS = 10
 	GENERATIONS = 1000
 	POPULATION_SIZE = 25
 
-	def BenchmarkFunctionExample.fitness_function(xs)
+	def CCGAExample.fitness_function(xs)
 		EvoSynth::BenchmarkFuntions.rastgrin(xs)
 	end
 
@@ -47,7 +47,7 @@ module BenchmarkFunctionExample
 		end
 
 		def calculate_fitness(individual)
-			BenchmarkFunctionExample.fitness_function(decode(individual))
+			CCGAExample.fitness_function(decode(individual))
 		end
 
 	end
@@ -88,11 +88,11 @@ module BenchmarkFunctionExample
 		end
 
 		def calculate_fitness(individual)
-			BenchmarkFunctionExample.fitness_function(decode(individual))
+			CCGAExample.fitness_function(decode(individual))
 		end
 
 		def calculate_intitial_fitness(individual)
-			BenchmarkFunctionExample.fitness_function(decode_rand(individual))
+			CCGAExample.fitness_function(decode_rand(individual))
 		end
 
 	end
@@ -100,8 +100,8 @@ module BenchmarkFunctionExample
 	class CCGA2BenchmarkCalculator < CCGABenchmarkCalculator
 
 		def calculate_fitness(individual)
-			best = BenchmarkFunctionExample.fitness_function(decode(individual))
-			rand = BenchmarkFunctionExample.fitness_function(decode_rand(individual))
+			best = CCGAExample.fitness_function(decode(individual))
+			rand = CCGAExample.fitness_function(decode_rand(individual))
 
 			individual.compare_fitness_values(best, rand) == 1 ? best : rand
 		end
@@ -117,7 +117,7 @@ module BenchmarkFunctionExample
 		end
 	end
 
-	def BenchmarkFunctionExample.create_individual(genome_size, index)
+	def CCGAExample.create_individual(genome_size, index)
 		individual = CCGAIndividual.new(index)
 		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 		individual.genome.map! { rand(2) > 0 ? true : false }
@@ -134,7 +134,7 @@ module BenchmarkFunctionExample
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.recombination_probability = 0.6
 
-	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { BenchmarkFunctionExample.create_individual(VALUE_BITS*DIMENSIONS, 0) }
+	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) }
 
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
@@ -149,7 +149,7 @@ module BenchmarkFunctionExample
 
 	profile.populations = []
 	DIMENSIONS.times do |dim|
-		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { BenchmarkFunctionExample.create_individual(VALUE_BITS, dim) }
+		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 	end
 
 	profile.fitness_calculator = CCGABenchmarkCalculator.new(profile.populations)
@@ -168,14 +168,14 @@ module BenchmarkFunctionExample
 	puts profile.fitness_calculator
 	puts
 	puts "CCGA-1: best 'combined' individual: #{result.to_s}"
-	puts "CCGA-1: fitness = #{BenchmarkFunctionExample.fitness_function(result)}"
+	puts "CCGA-1: fitness = #{CCGAExample.fitness_function(result)}"
 	puts
 
 	puts "# --- CCGA-2 ----------------------------------------------------------------------------------- #"
 
 	profile.populations = []
 	DIMENSIONS.times do |dim|
-		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { BenchmarkFunctionExample.create_individual(VALUE_BITS, dim) }
+		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 	end
 
 	profile.fitness_calculator = CCGA2BenchmarkCalculator.new(profile.populations)
@@ -194,5 +194,5 @@ module BenchmarkFunctionExample
 	puts profile.fitness_calculator
 	puts
 	puts "CCGA-2: best 'combined' individual: #{result.to_s}"
-	puts "CCGA-2: fitness = #{BenchmarkFunctionExample.fitness_function(result)}"
+	puts "CCGA-2: fitness = #{CCGAExample.fitness_function(result)}"
 end
