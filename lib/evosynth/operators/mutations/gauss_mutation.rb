@@ -53,7 +53,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"identity (just clones individual)"
+				"gauss mutation <sigma: #{@sigma}, lower bound: #{@lower_bound}, upper_bound: #{@upper_bound}>"
 			end
 
 			private
