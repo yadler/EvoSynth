@@ -22,9 +22,23 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/selections/tc_best_selection'
-require 'test/operators/selections/tc_fitness_proportional_selection'
-require 'test/operators/selections/tc_roulette_wheel_selection'
-require 'test/operators/selections/tc_tournament_selection'
-require 'test/operators/selections/tc_random_selection'
-require 'test/operators/selections/tc_n_stage_tournament'
+module EvoSynth
+	module Selections
+
+		class RandomSelection
+
+			def select(population, select_count = 1)
+				selected_population = EvoSynth::Core::Population.new
+				select_count.times { selected_population << population[rand(population.size)] }
+				selected_population
+			end
+
+			def to_s
+				"select random individuals"
+			end
+
+		end
+
+	end
+
+end

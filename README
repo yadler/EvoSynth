@@ -25,6 +25,7 @@ License::   MIT (see LICENSE)
 * EvoSynth::Selections::TournamentSelection
 * EvoSynth::Selections::FitnessProportionalSelection
 * EvoSynth::Selections::RouletteWheelSelection
+* EvoSynth::Selections::RandomSelection
 
 === mutations
 
