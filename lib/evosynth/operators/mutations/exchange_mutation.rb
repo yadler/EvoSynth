@@ -44,6 +44,8 @@ module EvoSynth
 
 			attr_accessor :swap_count
 
+			DEFAULT_SWAP_COUNT = 2
+
 			#	:call-seq:
 			#		ExchangeMutation.new
 			#		ExchangeMutation(Fixnum) -> ExchangeMutation (overrides default swap count)
@@ -54,7 +56,7 @@ module EvoSynth
 			#     BinaryMutation.new
 			#     BinaryMutation.new(3)
 
-			def initialize(swap_count = 2)
+			def initialize(swap_count = DEFAULT_SWAP_COUNT)
 				@swap_count = swap_count
 			end
 

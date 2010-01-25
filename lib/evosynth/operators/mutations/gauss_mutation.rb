@@ -29,7 +29,9 @@ module EvoSynth
 
 		class GaussMutation
 
-			def initialize(sigma = 1.0, lower_bound = Float::MIN, upper_bound = Float::MAX)
+			DEFAULT_SIGMA = 1.0
+
+			def initialize(sigma = DEFAULT_SIGMA, lower_bound = Float::MIN, upper_bound = Float::MAX)
 				@sigma = sigma
 				@precalculated_part_one = 1.0 / (Math.sqrt(2 * Math::PI) * @sigma)
 				@pre_calculated_part_two = -1.0 / (2 * @sigma**2)

@@ -47,6 +47,8 @@ module EvoSynth
 
 			attr_accessor :flip_function
 
+			DEFAULT_PROBABILITY = 0.1
+
 			# FIXME: documentation is outdated!
 			# 
 			#	:call-seq:
@@ -59,7 +61,7 @@ module EvoSynth
 			#     BinaryMutation.new
 			#     BinaryMutation.new(0.01)
 
-			def initialize(flip_function, probability = 0.1)
+			def initialize(flip_function, probability = DEFAULT_PROBABILITY)
 				@flip_function = flip_function
 				@probability = probability
 			end

@@ -32,10 +32,11 @@ module EvoSynth
 
 			attr_accessor :enemies
 
-			def initialize(enemies = 2)
+			DEFAULT_ENEMIES = 2
+
+			def initialize(enemies = DEFAULT_ENEMIES)
 				@enemies = enemies
 			end
-
 
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Core::Population.new

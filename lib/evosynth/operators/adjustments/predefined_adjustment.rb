@@ -30,7 +30,9 @@ module EvoSynth
 		class PredifinedAdjustment
 			attr_accessor :alpha
 
-			def initialize(alpha = 0.99)
+			DEFAULT_ALPHA = 0.99
+
+			def initialize(alpha = DEFAULT_ALPHA)
 				@alpha = alpha
 			end
 

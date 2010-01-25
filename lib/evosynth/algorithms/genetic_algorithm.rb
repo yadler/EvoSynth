@@ -30,8 +30,11 @@ module EvoSynth
 		class GeneticAlgorithm
 			include EvoSynth::Algorithms::Algorithm
 
+			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
+
 			def initialize(profile)
-				init_profile :mutation, :selection, :recombination, :population, :fitness_calculator, :recombination_probability => 0.75
+				init_profile :mutation, :selection, :recombination, :population, 
+				    :fitness_calculator, :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
 				use_profile profile
 
 				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }

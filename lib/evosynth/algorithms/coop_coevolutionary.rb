@@ -30,9 +30,12 @@ module EvoSynth
 		class CoopCoevolutionary
 			include EvoSynth::Algorithms::Algorithm
 
+			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
+
 			def initialize(profile)
-				init_profile :mutation, :selection, :recombination, :populations, :fitness_calculator, :recombination_probability => 0.75,
-					:sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
+				init_profile :mutation, :selection, :recombination, :populations,
+				    :fitness_calculator, :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
+				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
 				use_profile profile
 
 				initialize_sub_algorithms(profile)

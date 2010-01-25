@@ -32,7 +32,9 @@ module EvoSynth
 
 			attr_accessor :stages
 
-			def initialize(stages = 2)
+			DEFAULT_STAGES = 2
+
+			def initialize(stages = DEFAULT_STAGES)
 				@stages = stages
 			end
 

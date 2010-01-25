@@ -33,7 +33,6 @@ module EvoSynth
 					else bin
 				end
 			end
-#			puts binary.to_s
 
 			max_bound, min_bound = min_bound, max_bound if min_bound > max_bound
 

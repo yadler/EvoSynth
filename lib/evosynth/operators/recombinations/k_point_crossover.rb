@@ -32,7 +32,9 @@ module EvoSynth
 
 			attr_accessor :k
 
-			def initialize(k = 2)
+			DEFAULT_K = 2
+
+			def initialize(k = DEFAULT_K)
 				@k = k
 			end
 
