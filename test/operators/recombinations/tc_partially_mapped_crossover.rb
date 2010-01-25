@@ -39,7 +39,7 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 		end
 
 		should "raise a exception" do
-			assert_raise { @child_one, @child_two = @recombination.recombine(@individual_one, @individual_two) }
+			assert_raise(RuntimeError) { @child_one, @child_two = @recombination.recombine(@individual_one, @individual_two) }
 		end
 
 	end

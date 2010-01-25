@@ -103,11 +103,11 @@ class BinaryGenomeTest < Test::Unit::TestCase
 		end
 
 		should "@genome['foo'] raise a exception" do
-			assert_raise_kind_of(ArgumentError) { @genome['foo'] }
+			assert_raise(ArgumentError) { @genome['foo'] }
 		end
 
 		should "@genome[1,2,3] raise a exception" do
-			assert_raise_kind_of(ArgumentError) { @genome[1,2,3] }
+			assert_raise(ArgumentError) { @genome[1,2,3] }
 		end
 
 		should "to_s == '1000011', after 2 flips at the correct position" do
@@ -169,11 +169,11 @@ class BinaryGenomeTest < Test::Unit::TestCase
 		end
 
 		should "@genome['foo'] raise a exception" do
-			assert_raise_kind_of(ArgumentError) { @genome['foo'] }
+			assert_raise(ArgumentError) { @genome['foo'] }
 		end
 
 		should "@genome[1,2,3] raise a exception" do
-			assert_raise_kind_of(ArgumentError) { @genome[1,2,3] }
+			assert_raise(ArgumentError) { @genome[1,2,3] }
 		end
 	end
 end

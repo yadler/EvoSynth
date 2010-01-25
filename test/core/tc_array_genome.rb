@@ -40,9 +40,6 @@ class ArrayGenomeTest < Test::Unit::TestCase
 			assert @genome.changed
 		end
 
-		should "#overwrite_methods! should be private" do
-			assert_raise_kind_of(NoMethodError) { @genome.overwrite_methods! }
-		end
 	end
 
 	context "after #changed is set to false" do
