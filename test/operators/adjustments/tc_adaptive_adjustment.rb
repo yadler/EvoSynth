@@ -22,34 +22,42 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
-	module Adjustments
+require 'shoulda'
 
-		# ADAPTIVE-ANPASSUNG (Weicker page 113)
+require 'evosynth'
+require 'test/test_util/test_helper'
 
-		class AdaptiveAdjustment
-			attr_accessor :alpha, :theta
 
-			DEFAULT_ALPHA = 1.2
-			DEFAULT_THETA = 0.2
-			DEFAULT_SUCCESS_RATE = 0.0
+class AdaptiveAjustmentTest < Test::Unit::TestCase
 
-			def initialize(alpha = DEFAULT_ALPHA, theta = DEFAULT_THETA)
-				@alpha = alpha
-				@theta = theta
-			end
+	ALPHA = 0.9
+	THETA = 0.2
 
-			def adjust(sigma, success_rate = DEFAULT_SUCCESS_RATE)
-				if success_rate > @theta
-					sigma * @alpha
-				elsif success_rate < @theta
-					sigma / @alpha
-				else
-					sigma
-				end
-			end
-
+	context "a adaptive adjustment with alpha = #{ALPHA}, theta = #{THETA}" do
+		setup do
+			@adjustment = EvoSynth::Adjustments::AdaptiveAdjustment.new(ALPHA, THETA)
 		end
 
+		should "divide a value with #{ALPHA} when adjust is called without success_rate" do
+			sigma = 1
+			assert_equal sigma / ALPHA,  @adjustment.adjust(sigma)
+			sigma = 3
+			assert_equal sigma / ALPHA,  @adjustment.adjust(sigma)
+		end
+
+		should "divide a value with #{ALPHA} when adjust is called with a success_rate > #{THETA}" do
+			sigma = 1
+			assert_equal sigma * ALPHA,  @adjustment.adjust(sigma, THETA*2)
+			sigma = 3
+			assert_equal sigma * ALPHA,  @adjustment.adjust(sigma, THETA*2)
+		end
+
+		should "return the given value when success_rate == #{THETA}" do
+			sigma = 1
+			assert_equal sigma,  @adjustment.adjust(sigma, THETA)
+			sigma = 3
+			assert_equal sigma,  @adjustment.adjust(sigma, THETA)
+		end
 	end
+
 end

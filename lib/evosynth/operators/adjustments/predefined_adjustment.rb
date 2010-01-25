@@ -28,6 +28,7 @@ module EvoSynth
 		# VORDEFINIERTE-ANPASSUNG (Weicker page 111)
 
 		class PredifinedAdjustment
+			attr_accessor :alpha
 
 			def initialize(alpha = 0.99)
 				@alpha = alpha

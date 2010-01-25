@@ -23,3 +23,4 @@
 
 
 require 'test/operators/adjustments/tc_predefined_adjustment'
+require 'test/operators/adjustments/tc_adaptive_adjustment'
