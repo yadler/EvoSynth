@@ -1,8 +1,11 @@
 Aus Weickers Buch (noch) nicht implementiert:
 
 Mutationen:
-	- SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114)
-	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Weicker page 131)
+	- SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114
+		-> hier ist zu klären wie S1 pro individuum gespeichert wird?!
+			- metaprogramming: mutation fügt das einfach hinzu
+							oder
+			- individuen müssen das der mutation zur verfügung stellen
 
 Algorithmen:
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)

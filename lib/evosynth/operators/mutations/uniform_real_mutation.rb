@@ -22,40 +22,34 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'shoulda'
+module EvoSynth
+	module Mutations
 
-require 'evosynth'
-require 'test/test_util/test_helper'
+		# GLEICHVERTEILTE-REELWERTIGE-MUTATION (Weicker page 131)
 
+		class UniformRealMutation
 
-class GaussMutationTest < Test::Unit::TestCase
+			DEFAULT_PROBABILITY = 0.1
+			DEFAULT_STEP_SIZE = 0.1
 
-	VALUE = 4.0
-	DELTA = 0.1
-
-	context "when run on a float genome = #{VALUE}" do
-		setup do
-			@individual = TestArrayGenomeIndividual.new([VALUE]*5)
-		end
-
-		context "before mutation is executed" do
-			should "each gene should equal #{VALUE}" do
-				@individual.genome.each { |gene| assert_equal VALUE, gene }
-			end
-		end
-
-		context "after mutation is executed" do
-			setup do
-				mutation = EvoSynth::Mutations::GaussMutation.new
-				@mutated = mutation.mutate(@individual)
+			def initialize(probability = DEFAULT_PROBABILITY, step_size = DEFAULT_STEP_SIZE)
+				@probability = probability
+				@step_size = step_size
 			end
 
-			should "all genes of the parent should (still) equal #{VALUE}" do
-				@individual.genome.each { |gene| assert_equal VALUE, gene }
+			def mutate(individual)
+				mutated = individual.deep_clone
+				genome = mutated.genome
+
+				genome.size.times do |index|
+					genome[index] += @step_size - 2 * rand * @step_size if rand <= @probability
+				end
+
+				mutated
 			end
 
-			should "all genes of the child be in the around +/- #{DELTA} of #{VALUE}" do
-				@mutated.genome.each { |gene| assert_in_delta VALUE, gene, DELTA }
+			def to_s
+				"uniform real mutation <probability: #{@probability}>"
 			end
 
 		end

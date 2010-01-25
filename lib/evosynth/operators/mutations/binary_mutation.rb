@@ -76,7 +76,11 @@ module EvoSynth
 
 			def mutate(individual)
 				mutated = individual.deep_clone
-				flip_genes(mutated.genome)
+				genome = mutated.genome
+
+				genome.size.times do |index|
+					genome[index] = @flip_function.call(genome[index]) if rand <= @probability
+				end
 
 				mutated
 			end
@@ -93,18 +97,6 @@ module EvoSynth
 
 			def to_s
 				"binary mutation <probability: #{@probability}>"
-			end
-
-			private
-
-			# FIXME: documentation is outdated!
-			# flips the genes only and only if it is really needed
-			# NOTE: this might not be as pretty as .map! but its faster
-
-			def flip_genes(genome)
-				genome.size.times do |index|
-					genome[index] = @flip_function.call(genome[index]) if rand <= @probability
-				end
 			end
 
 		end

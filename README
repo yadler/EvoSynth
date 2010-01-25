@@ -28,28 +28,38 @@ License::   MIT (see LICENSE)
 
 === mutations
 
+work on every genome:
 * EvoSynth::Mutations::Identity
 * EvoSynth::Mutations::CombinedMutation
+
+work on arrays (need flip function):
 * EvoSynth::Mutations::BinaryMutation
 * EvoSynth::Mutations::EfficientBinaryMutation
+* EvoSynth::Mutations::OneGeneFlipping
+
+work on permutations:
 * EvoSynth::Mutations::ExchangeMutation
 * EvoSynth::Mutations::InversionMutation
 * EvoSynth::Mutations::MixingMutation
-* EvoSynth::Mutations::OneGeneFlipping
 * EvoSynth::Mutations::ShiftingMutation
-* EvoSynth::Mutations::GaussMutation
 
+work on (arrays of) floats:
+* EvoSynth::Mutations::GaussMutation
+* EvoSynth::Mutations::UniformRealMutation
 
 === recombinations
 
+work on every genome:
 * EvoSynth::Recombinations::Identity
-* EvoSynth::Recombinations::KPointCrossover
 * EvoSynth::Recombinations::OnePointCrossover
-* EvoSynth::Recombinations::PartiallyMappedCrossover
+* EvoSynth::Recombinations::KPointCrossover
 * EvoSynth::Recombinations::UniformCrossover
+* EvoSynth::Recombinations::ArithmeticCrossover (needs interpolation function)
+
+work on permutations (no duplicates):
+* EvoSynth::Recombinations::PartiallyMappedCrossover
 * EvoSynth::Recombinations::OrderedRecombination
 * EvoSynth::Recombinations::EdgeRecombination
-* EvoSynth::Recombinations::ArithmeticCrossover
 
 === adjustment strategies
 

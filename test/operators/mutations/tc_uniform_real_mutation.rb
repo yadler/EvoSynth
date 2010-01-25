@@ -28,10 +28,11 @@ require 'evosynth'
 require 'test/test_util/test_helper'
 
 
-class GaussMutationTest < Test::Unit::TestCase
+class UniformRealMutationTest < Test::Unit::TestCase
 
 	VALUE = 4.0
-	DELTA = 0.1
+	PROBABILITY = 1.0
+	DELTA = 0.4
 
 	context "when run on a float genome = #{VALUE}" do
 		setup do
@@ -44,9 +45,9 @@ class GaussMutationTest < Test::Unit::TestCase
 			end
 		end
 
-		context "after mutation is executed" do
+		context "after mutation is executed (probability = #{PROBABILITY})" do
 			setup do
-				mutation = EvoSynth::Mutations::GaussMutation.new
+				mutation = EvoSynth::Mutations::UniformRealMutation.new(PROBABILITY, DELTA)
 				@mutated = mutation.mutate(@individual)
 			end
 
