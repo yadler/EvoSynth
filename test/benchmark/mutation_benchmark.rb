@@ -45,6 +45,7 @@ module MutationBenchmark
 		EvoSynth::Mutations.constants.each do |mutation|
 			mutation_class = EvoSynth::Mutations.const_get(mutation)
 			next if mutation_class == EvoSynth::Mutations::GaussMutation
+			next if mutation_class == EvoSynth::Mutations::UniformRealMutation
 
 			begin
 				mutation = mutation_class.new
@@ -76,5 +77,8 @@ module MutationBenchmark
 	individual = TestArrayGenomeIndividual.new([rand]*GENOME_SIZE)
 	puts "Running mutation benchmark (on ArrayGenome filled with Float's) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
 	mutation = EvoSynth::Mutations::GaussMutation.new
+	MutationBenchmark.benchmark_mutation(mutation, individual)
+
+	mutation = EvoSynth::Mutations::UniformRealMutation.new
 	MutationBenchmark.benchmark_mutation(mutation, individual)
 end
