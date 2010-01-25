@@ -67,12 +67,12 @@ task :default do
 end
 
 Rake::RDocTask.new do |rdoc|
-	rdoc.main = "IMPLEMENTED"
+	rdoc.main = "README"
 	rdoc.rdoc_dir = "doc"
 	rdoc.title    = "EvoSynth Documentation"
 #	rdoc.options << '--line-numbers' << '--inline-source'
 #	rdoc.template = "kilmer"
-	rdoc.rdoc_files.include("IMPLEMENTED", "LICENSE", "lib/**/*.rb")
+	rdoc.rdoc_files.include("README", "LICENSE", "lib/**/*.rb")
 end
 
 # Test tasks and code quality stuff:

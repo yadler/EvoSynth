@@ -25,6 +25,8 @@
 module EvoSynth
 	module Mutations
 
+		# VERTAUSCHENDE-MUTATION (Weicker, page 27)<br/>DREIERTAUSCH-MUTATION (Weicker, page 27 107)
+		#
 		# <b>Relies on:</b> deep_clone (see below)
 		#
 		# This mutations exchanges two genes in the genome of a given individual

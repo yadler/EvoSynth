@@ -1,0 +1,57 @@
+== About EvoSynth
+
+EvoSynth is a framework for rapid prototyping of evolutionary and genetic algorithms.
+
+Sourcecode:: http://gitorious.org/evosynth
+Author::    Yves Adler (mailto:yves.adler@googlemail.com)
+Copyright:: Copyright (c) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
+License::   MIT (see LICENSE)
+
+== Implemented Features
+
+=== evolution algorithms
+
+* EvoSynth::Algorithms::Hillclimber
+* EvoSynth::Algorithms::PopulationHillclimber
+* EvoSynth::Algorithms::GeneticAlgorithm
+* EvoSynth::Algorithms::ElitismGeneticAlgorithm
+* EvoSynth::Algorithms::SteadyStateGA
+* EvoSynth::Algorithms::CoopCoevolutionary
+
+=== selections
+
+* EvoSynth::Selections::SelectBest
+* EvoSynth::Selections::NStageTournamentSelection
+* EvoSynth::Selections::TournamentSelection
+* EvoSynth::Selections::FitnessProportionalSelection
+* EvoSynth::Selections::RouletteWheelSelection
+
+=== mutations
+
+* EvoSynth::Mutations::Identity
+* EvoSynth::Mutations::CombinedMutation
+* EvoSynth::Mutations::BinaryMutation
+* EvoSynth::Mutations::EfficientBinaryMutation
+* EvoSynth::Mutations::ExchangeMutation
+* EvoSynth::Mutations::InversionMutation
+* EvoSynth::Mutations::MixingMutation
+* EvoSynth::Mutations::OneGeneFlipping
+* EvoSynth::Mutations::ShiftingMutation
+* EvoSynth::Mutations::GaussMutation
+
+
+=== recombinations
+
+* EvoSynth::Recombinations::Identity
+* EvoSynth::Recombinations::KPointCrossover
+* EvoSynth::Recombinations::OnePointCrossover
+* EvoSynth::Recombinations::PartiallyMappedCrossover
+* EvoSynth::Recombinations::UniformCrossover
+* EvoSynth::Recombinations::OrderedRecombination
+* EvoSynth::Recombinations::EdgeRecombination
+* EvoSynth::Recombinations::ArithmeticCrossover
+
+=== adjustment strategies
+
+* EvoSynth::Adjustments::PredifinedAdjustment
+* EvoSynth::Adjustments::AdaptiveAdjustment

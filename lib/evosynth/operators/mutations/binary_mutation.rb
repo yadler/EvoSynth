@@ -25,6 +25,7 @@
 module EvoSynth
 	module Mutations
 
+		# BINAERE-MUTATION (Weicker page 59)
 		# FIXME: documentation is outdated!
 		#
 		# <b>Relies on:</b> flip and deep_clone (see below)

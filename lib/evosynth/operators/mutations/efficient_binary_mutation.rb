@@ -25,6 +25,7 @@
 module EvoSynth
 	module Mutations
 
+		# EFFIZIENTE-BINAERE-MUTATION (Weicker page 130)
 		# FIXME: documentation is outdated!
 		# 
 		# This mutation is basically a optimized version of the BinaryMutation and

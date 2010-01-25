@@ -26,7 +26,7 @@ module EvoSynth
 	module Recombinations
 
 		# ARITHMETISCHER-CROSSOVER (Weicker page 83)
-
+		# 
 		# ATTENTION PLEASE! needs interpolation method to work:
 		#  interpolation_method.call(gene_one, gene_two, factor)
 

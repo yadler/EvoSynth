@@ -4,10 +4,6 @@ Mutationen:
 	- SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114)
 	- GLEICHVERTEILTE-REELWERTIGE-MUTATION (Weicker page 131)
 
-Anpassungsstrategien:
-	- VORDEFINIERTE-ANPASSUNG (Weicker page 111)
-	- ADAPTIVE-ANPASSUNG (Weicker page 113)
-
 Algorithmen:
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)

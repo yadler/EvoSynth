@@ -25,3 +25,4 @@
 require 'evosynth/operators/selections'
 require 'evosynth/operators/mutations'
 require 'evosynth/operators/recombinations'
+require 'evosynth/operators/adjustments'

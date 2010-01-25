@@ -25,6 +25,8 @@
 module EvoSynth
 	module Mutations
 
+		# GAUSS-MUTATION (Weicker page 60)
+
 		class GaussMutation
 
 			def initialize(sigma = 1.0, lower_bound = Float::MIN, upper_bound = Float::MAX)
