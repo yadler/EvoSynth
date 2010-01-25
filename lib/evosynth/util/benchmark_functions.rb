@@ -30,7 +30,7 @@ module EvoSynth
 		# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
 
 		def BenchmarkFuntions.sinus_sum(xs)
-			418.98289 * xs.size + xs.inject(0.0) { |sum, x| sum += -x * (Math.sin Math.sqrt x.abs) }
+			418.98289 * xs.size + xs.inject(0.0) { |sum, x| sum += -x * Math.sin(Math.sqrt(x.abs)) }
 		end
 
 		# Double Sum function (Schwefel 1977)

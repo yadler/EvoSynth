@@ -156,24 +156,5 @@ class BinaryGenomeTest < Test::Unit::TestCase
 			assert_equal [1,1,1], @genome[3,3]
 		end
 
-		should "@genome[1,3] == [1,1,0]" do
-			assert_equal [1,1,0], @genome[1,3]
-		end
-
-		should "@genome[3,4] == [0,1,0,1]" do
-			assert_equal [0,1,0,1], @genome[3,4]
-		end
-
-		should "@genome[1..3] == [1,1,0]" do
-			assert_equal [1,1,0], @genome[1..3]
-		end
-
-		should "@genome['foo'] raise a exception" do
-			assert_raise(ArgumentError) { @genome['foo'] }
-		end
-
-		should "@genome[1,2,3] raise a exception" do
-			assert_raise(ArgumentError) { @genome[1,2,3] }
-		end
 	end
 end

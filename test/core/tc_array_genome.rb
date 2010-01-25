@@ -137,12 +137,6 @@ class ArrayGenomeTest < Test::Unit::TestCase
 			@genome.changed = false
 		end
 
-		should "reject! set changed to true" do
-			@genome.reject! { |foo| foo != nil }
-			assert @genome.changed
-			@genome.changed = false
-		end
-
 		should "uniq! set changed to true" do
 			@genome.uniq!
 			assert @genome.changed
