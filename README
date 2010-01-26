@@ -7,7 +7,7 @@ Author::    Yves Adler (mailto:yves.adler@googlemail.com)
 Copyright:: Copyright (c) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
 License::   MIT (see LICENSE)
 
-== Implemented Features
+== Features
 
 === evolution algorithms
 
@@ -71,6 +71,10 @@ work on permutations (no duplicates):
 * EvoSynth::Recombinations::PartiallyMappedCrossover
 * EvoSynth::Recombinations::OrderedRecombination
 * EvoSynth::Recombinations::EdgeRecombination
+
+=== global recombinations
+
+* EvoSynth::GlobalRecombinations::GlobalUniformCrossover
 
 === adjustment strategies
 

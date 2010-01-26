@@ -22,8 +22,28 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/operators/selections'
-require 'evosynth/operators/mutations'
-require 'evosynth/operators/recombinations'
-require 'evosynth/operators/global_recombinations'
-require 'evosynth/operators/adjustments'
+module EvoSynth
+	module GlobalRecombinations
+
+		#	GLOBALER-UNIFORMER-CROSSOVER (Weicker Page 137)
+
+		class GlobalUniformCrossover
+
+			def recombine(population)
+				child = population[rand(population.size)].deep_clone
+
+				child.genome.each_index do |index|
+					child.genome[index] = population[rand(population.size)].genome[index]
+				end
+
+				child
+			end
+
+			def to_s
+				"global uniform crossover"
+			end
+
+		end
+
+	end
+end

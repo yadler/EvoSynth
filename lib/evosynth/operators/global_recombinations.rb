@@ -22,8 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/operators/selections'
-require 'evosynth/operators/mutations'
-require 'evosynth/operators/recombinations'
-require 'evosynth/operators/global_recombinations'
-require 'evosynth/operators/adjustments'
+require 'evosynth/operators/global_recombinations/global_uniform_crossover'
