@@ -30,11 +30,18 @@ module EvoSynth
 		class SteadyStateGA
 			include EvoSynth::Algorithms::Algorithm
 
+			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
+			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
 			def initialize(profile)
-				init_profile :mutation, :selection, :recombination, :population,
-				    :fitness_calculator, :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
+				init_profile :population,
+				    :fitness_calculator,
+				    :mutation,
+				    :selection => DEFAULT_SELECTION,
+				    :recombination => DEFAULT_RECOMBINATION,
+				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
+
 				use_profile profile
 
 				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }

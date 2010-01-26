@@ -30,13 +30,19 @@ module EvoSynth
 		class CoopCoevolutionary
 			include EvoSynth::Algorithms::Algorithm
 
+			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
+			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
 			def initialize(profile)
-				init_profile :mutation, :selection, :recombination, :populations,
+				init_profile :populations,
 				    :fitness_calculator,
+				    :mutation,
+				    :selection => DEFAULT_SELECTION,
+				    :recombination => DEFAULT_RECOMBINATION,
 				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
 				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
+
 				use_profile profile
 
 				initialize_sub_algorithms(profile)
