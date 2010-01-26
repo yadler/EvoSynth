@@ -28,15 +28,16 @@ module EvoSynth
 		# GAUSS-MUTATION (Weicker page 60)
 
 		class GaussMutation
+			attr_accessor :lower_bound, :upper_bound
+			attr_reader :sigma
 
 			DEFAULT_SIGMA = 1.0
 
 			def initialize(sigma = DEFAULT_SIGMA, lower_bound = Float::MIN, upper_bound = Float::MAX)
 				@sigma = sigma
-				@precalculated_part_one = 1.0 / (Math.sqrt(2 * Math::PI) * @sigma)
-				@pre_calculated_part_two = -1.0 / (2 * @sigma**2)
 				@lower_bound = lower_bound
 				@upper_bound = upper_bound
+				precalculate_parts
 			end
 
 			def mutate(individual)
@@ -52,15 +53,26 @@ module EvoSynth
 				mutated
 			end
 
+			def sigma=(sigma)
+				@sigma = sigma
+				precalculate_parts
+			end
+
 			def to_s
 				"gauss mutation <sigma: #{@sigma}, lower bound: #{@lower_bound}, upper_bound: #{@upper_bound}>"
 			end
 
 			private
 
+			def precalculate_parts
+				@precalculated_part_one = 1.0 / (Math.sqrt(2 * Math::PI) * @sigma)
+				@pre_calculated_part_two = -1.0 / (2 * @sigma**2)
+			end
+
 			def density_function(x)
 				@precalculated_part_one * Math.exp(@pre_calculated_part_two * x**2)
 			end
+
 		end
 
 	end
