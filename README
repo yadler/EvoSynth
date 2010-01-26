@@ -11,12 +11,21 @@ License::   MIT (see LICENSE)
 
 === evolution algorithms
 
+basic hillclimber:
 * EvoSynth::Algorithms::Hillclimber
 * EvoSynth::Algorithms::PopulationHillclimber
+
+genetic algorithms:
 * EvoSynth::Algorithms::GeneticAlgorithm
 * EvoSynth::Algorithms::ElitismGeneticAlgorithm
 * EvoSynth::Algorithms::SteadyStateGA
+
+coevolutionary algorithms:
 * EvoSynth::Algorithms::CoopCoevolutionary
+
+evolution strategies (TODO: need some refactoring):
+* EvoSynth::Algorithms::AdaptiveES
+* EvoSynth::Algortihms::SelfAdaptiveES
 
 === selections
 
@@ -45,8 +54,9 @@ work on permutations:
 * EvoSynth::Mutations::ShiftingMutation
 
 work on (arrays of) floats:
-* EvoSynth::Mutations::GaussMutation
+* EvoSynth::Mutations::GaussMutation (TODO: check usage of density_function):
 * EvoSynth::Mutations::UniformRealMutation
+* EvoSynth::Mutations::SelfAdaptiveGaussMutation (TODO: check usage of density_function):
 
 === recombinations
 

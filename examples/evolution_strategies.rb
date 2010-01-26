@@ -78,15 +78,20 @@ module EsExample
 	profile.modification_frequency = 100
 	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
 
-	puts "\t\tbest individual : #{profile.population.best}" if defined? profile.population.best
-	puts "\t\tworst individual: #{profile.population.worst}" if defined? profile.population.worst
-
 	algorithm = EvoSynth::Algorithms::AdaptiveES.new(profile)
-	algorithm.add_observer(EsExample::ConsoleWriter.new(50, false))
+	algorithm.add_observer(EsExample::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
 	puts
 	puts "Adaptive ES: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
+	puts
+
+	algorithm = EvoSynth::Algorithms::SelfAdaptiveES.new(profile)
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+	puts profile.fitness_calculator
+	puts
+	puts "Self-Adaptive ES: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
 	puts
 
 end

@@ -32,7 +32,7 @@ require 'test/test_util/test_helper'
 module MutationBenchmark
 
 	GENOME_SIZE = 1000
-	MUTATE_TIMES = 10000
+	MUTATE_TIMES = 1000
 
 	def MutationBenchmark.benchmark_mutation(mutation, individual)
 		timing = Benchmark.measure do
@@ -45,6 +45,7 @@ module MutationBenchmark
 		EvoSynth::Mutations.constants.each do |mutation|
 			mutation_class = EvoSynth::Mutations.const_get(mutation)
 			next if mutation_class == EvoSynth::Mutations::GaussMutation
+			next if mutation_class == EvoSynth::Mutations::SelfAdaptiveGaussMutation
 			next if mutation_class == EvoSynth::Mutations::UniformRealMutation
 
 			begin
@@ -77,6 +78,9 @@ module MutationBenchmark
 	individual = TestArrayGenomeIndividual.new([rand]*GENOME_SIZE)
 	puts "Running mutation benchmark (on ArrayGenome filled with Float's) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
 	mutation = EvoSynth::Mutations::GaussMutation.new
+	MutationBenchmark.benchmark_mutation(mutation, individual)
+
+	mutation = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
 	MutationBenchmark.benchmark_mutation(mutation, individual)
 
 	mutation = EvoSynth::Mutations::UniformRealMutation.new
