@@ -62,7 +62,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"adaptive ES <mutation: #{@mutation}, individual: #{@individual}>"
+				"adaptive ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, selection: #{@selection}>"
 			end
 
 			def best_solution
