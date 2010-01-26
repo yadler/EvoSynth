@@ -1,49 +1,37 @@
-Aus Weickers Buch (noch) nicht implementiert:
-
 Algorithmen:
+	- DERANDOMISIERTE-ES (Weicker page 139)
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
+	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite unterscheidung gemacht werden?
 
 Benchmarkfunktionen:
-	- Einsenzählproblem (Seite 272)
-	- Royal-Road (Seite 272)
-	- C-Funktion (Seite 272)
-	- sämtliche mit Randbedingungen (Seite 274)
+	- Einsenzählproblem (Weicker page 272)
+	- Royal-Road (Weicker page 272)
+	- C-Funktion (Weicker page 272)
+	- sämtliche mit Randbedingungen (Weicker page 274)
 
-------------------------------------------------
+Decoder/Encoder:
+	- RealToBinary
 
-Was ist mit Benchmarkfunktionen?! (SPk und co)
+EvoBench: Benchmark für Evolutionäre Algorithmen
+	- mutationen, selektionen und co
+	- diversität und co
 
-------------------------------------------------
+Domain specific language, wie z.B.:
 
-was ist mit pheno/genetyp? reichen decoder oder sollte explizite unterscheidung gemacht werden?
+	evolution do |profile|
+		profile.population Population.new(foo)
 
-------------------------------------------------
-
-evobench (mutationen, selektionen und co)
-
-------------------------------------------------
-
-diversität und zeugs
-
------------------------------------------------
-
-für mockups:
-
-http://flexmock.rubyforge.org/
-http://mocha.rubyforge.org/
-http://github.com/notahat/machinist
-
------------------------------------------------
-
-DSL erstellen?
-
-evolution do
-	population is
-		Population.new(foo)
+		mutation is
+			bar
+		end
 	end
-	mutation is
-		bar
-	end
-end
+
+Testfälle:
+	- mockups nutzen?
+
+		http://flexmock.rubyforge.org/
+		http://mocha.rubyforge.org/
+		http://github.com/notahat/machinist
 
