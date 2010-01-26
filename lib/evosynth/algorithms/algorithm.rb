@@ -32,7 +32,7 @@ module EvoSynth
 
 			attr_reader :generations_computed
 
-			def run_until(&condition)
+			def run_until(&condition) # :yields: generations computed, best solution
 				@generations_computed = 0
 				changed
 				notify_observers @generations_computed, self
