@@ -23,8 +23,8 @@
 
 
 require 'evosynth/core'
-require 'evosynth/algorithms'
-require 'evosynth/operators'
 require 'evosynth/util'
+require 'evosynth/operators'
+require 'evosynth/algorithms'
 
 # anthing that is needed to setup EvoSynth should be here!
