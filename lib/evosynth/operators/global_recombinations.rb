@@ -23,3 +23,4 @@
 
 
 require 'evosynth/operators/global_recombinations/global_uniform_crossover'
+require 'evosynth/operators/global_recombinations/global_arithmetic_crossover'

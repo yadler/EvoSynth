@@ -22,5 +22,29 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/global_recombinations/tc_global_uniform_crossover'
-require 'test/operators/global_recombinations/tc_global_arithmetic_crossover'
+module EvoSynth
+	module GlobalRecombinations
+
+		#	GLOBALER-ARITHMETISCHER-CROSSOVER (Weicker Page 138)
+
+		class GlobalArithmeticCrossover
+
+			def recombine(population)
+				child = population[rand(population.size)].deep_clone
+
+				child.genome.each_index do |index|
+					sum = population.inject(0.0) { |sum, individual| sum += individual.genome[index] }
+					child.genome[index] = (1.0 / population.size) * sum
+				end
+
+				child
+			end
+
+			def to_s
+				"global arithmetic crossover"
+			end
+
+		end
+
+	end
+end

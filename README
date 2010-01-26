@@ -75,6 +75,7 @@ work on permutations (no duplicates):
 === global recombinations
 
 * EvoSynth::GlobalRecombinations::GlobalUniformCrossover
+* EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover
 
 === adjustment strategies
 
