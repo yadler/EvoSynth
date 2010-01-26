@@ -45,11 +45,12 @@ module EvoSynth
 			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
 			def initialize(profile)
-				init_profile :population, :fitness_calculator,
-					:child_factor => DEFAULT_CHILD_FACTOR,
-					:modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
+				init_profile :population,
+				    :fitness_calculator,
+				    :child_factor => DEFAULT_CHILD_FACTOR,
+				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :mutation => DEFAULT_MUTATION,
-					:adjustment => DEFAULT_ADJUSTMENT,
+				    :adjustment => DEFAULT_ADJUSTMENT,
 				    :selection => DEFAULT_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
@@ -85,8 +86,6 @@ module EvoSynth
 					child = @mutation.mutate(parent)
 
 					@fitness_calculator.calculate_and_set_fitness(child)
-#					puts child, parent
-#					puts "..."
 					@success += 1 if child > parent
 					child_population << child
 				end

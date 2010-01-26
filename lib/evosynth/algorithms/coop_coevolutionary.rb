@@ -34,7 +34,8 @@ module EvoSynth
 
 			def initialize(profile)
 				init_profile :mutation, :selection, :recombination, :populations,
-				    :fitness_calculator, :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
+				    :fitness_calculator,
+				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
 				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
 				use_profile profile
 
