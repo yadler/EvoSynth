@@ -135,7 +135,7 @@ module TSP
 	puts "Best Individual before evolution: #{profile.population.best}"
 
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50, false))
 
 	puts "\nRunning #{algorithm}...\n"
 	result = algorithm.run_until_generations_reached(1000)
