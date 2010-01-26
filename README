@@ -15,6 +15,13 @@ basic hillclimber:
 * EvoSynth::Algorithms::Hillclimber
 * EvoSynth::Algorithms::PopulationHillclimber
 
+local search:
+* EvoSynth::Algorithms::LocalSearch
+* EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
+* EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance (need's work)
+* EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance (need's work)
+* EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance (need's work)
+
 genetic algorithms:
 * EvoSynth::Algorithms::GeneticAlgorithm
 * EvoSynth::Algorithms::ElitismGeneticAlgorithm

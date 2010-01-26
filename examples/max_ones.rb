@@ -28,6 +28,7 @@ require 'evosynth'
 
 module MaxOnes
 
+	GENOME_SIZE = 25
 	POP_SIZE = 25
 	GENERATIONS = 1000
 
@@ -51,14 +52,14 @@ module MaxOnes
 	end
 
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
-	profile.individual = MaxOnes.create_individual(10)
+	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator, :acceptance).new
+	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 #	profile.mutation = EvoSynth::Mutations::Identity.new
 	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = OnesCalculator.new
-	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(10) }
+	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(GENOME_SIZE) }
 	profile.population = base_population
 
 	puts "using profile:"
@@ -69,10 +70,32 @@ module MaxOnes
 	puts profile.fitness_calculator
 	puts
 
+	puts "Local Search with Hillclimber"
+	profile.fitness_calculator.reset_counters
+	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
+	puts profile.fitness_calculator
+	puts
+
+	puts "Local Search with Simulated Annealing"
+	profile.fitness_calculator.reset_counters
+	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
+	puts profile.fitness_calculator
+
+	puts "Local Search with Threshold Acceptance"
+	profile.fitness_calculator.reset_counters
+	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
+	puts profile.fitness_calculator
+
 	EvoSynth::Algorithms.constants.each do |algorithm|
 		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
 		next unless defined? algorithm_class.new
 		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
+		next if algorithm_class == EvoSynth::Algorithms::LocalSearch
 		next if algorithm_class == EvoSynth::Algorithms::CoopCoevolutionary
 		next if algorithm_class == EvoSynth::Algorithms::AdaptiveES
 

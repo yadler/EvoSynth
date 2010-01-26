@@ -1,8 +1,16 @@
+Testfälle:
+	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
+	- EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance (need's work)
+	- EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance (need's work)
+	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance (need's work)
+
 Algorithmen:
+	- AKZEPTANZ-RR (Weicker Page 158)
 	- DERANDOMISIERTE-ES (Weicker page 139)
+	- eventuell diese ganzen Acceptance Bedingungen in eigenes file? Umstrukturieren der Algorithmen?
+	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
-	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite unterscheidung gemacht werden?
 
 Benchmarkfunktionen:
@@ -27,11 +35,3 @@ Domain specific language, wie z.B.:
 			bar
 		end
 	end
-
-Testfälle:
-	- mockups nutzen?
-
-		http://flexmock.rubyforge.org/
-		http://mocha.rubyforge.org/
-		http://github.com/notahat/machinist
-
