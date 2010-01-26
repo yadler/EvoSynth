@@ -34,6 +34,8 @@ module EvoSynth
 
 			def run_until(&condition)
 				@generations_computed = 0
+				changed
+				notify_observers @generations_computed, self
 
 				case condition.arity
 					when 1

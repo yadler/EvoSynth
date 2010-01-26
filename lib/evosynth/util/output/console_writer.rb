@@ -32,15 +32,15 @@ module EvoSynth
 				@verbose = verbose
 			end
 
-			def update(generations_run, algorithm)
-				if generations_run % @print_generation_step == 0
+			def update(generations_computed, algorithm)
+				if generations_computed % @print_generation_step == 0
 					best = "no best individual could be retrieved"
 					worst = "no worst individual could be retrieved"
 
 					best = (@verbose || !defined? algorithm.best_solution.fitness) ? algorithm.best_solution : algorithm.best_solution.fitness
 					worst = (@verbose || !defined? algorithm.worst_solution.fitness) ? algorithm.worst_solution : algorithm.worst_solution.fitness
 
-					puts "#{generations_run}\t#{best}\t#{worst}"
+					puts "#{generations_computed}\t#{best}\t#{worst}"
 				end
 			end
 
