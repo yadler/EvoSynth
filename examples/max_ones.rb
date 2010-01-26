@@ -73,10 +73,12 @@ module MaxOnes
 		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
 		next unless defined? algorithm_class.new
 		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
+		next if algorithm_class == EvoSynth::Algorithms::CoopCoevolutionary
+		next if algorithm_class == EvoSynth::Algorithms::AdaptiveES
 
 		profile.population = base_population.deep_clone
 		profile.fitness_calculator.reset_counters
-		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next # coop_coevolutionary would skream with our profile
+		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS)
 		puts profile.fitness_calculator
 		puts
 	end
