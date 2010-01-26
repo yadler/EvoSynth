@@ -30,25 +30,25 @@ module EvoSynth
 
 		module RunnableAlgorithm
 
-			attr_reader :generations_run
+			attr_reader :generations_computed
 
 			def run_until(&condition)
-				@generations_run = 0
+				@generations_computed = 0
 
 				case condition.arity
 					when 1
-						loop_condition = lambda { !yield @generations_run }
+						loop_condition = lambda { !yield @generations_computed }
 					when 2
-						loop_condition = lambda { !yield @generations_run, best_solution }
+						loop_condition = lambda { !yield @generations_computed, best_solution }
 				else
 					loop_condition = nil
 				end
 
 				while loop_condition.call
 					next_generation
-					@generations_run += 1
+					@generations_computed += 1
 					changed
-					notify_observers @generations_run, self
+					notify_observers @generations_computed, self
 				end
 
 				return_result

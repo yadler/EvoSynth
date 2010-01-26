@@ -36,7 +36,7 @@ module EvoSynth
 				timing = Benchmark.measure { result = algorithm.run_until_generations_reached(generations) }
 			end
 
-			puts "\tevolved #{algorithm.generations_run} generations, this took: #{timing}"
+			puts "\tevolved #{algorithm.generations_computed} generations, this took: #{timing}"
 			puts "\tresult:"
 			puts "\t\tindividual      : #{result}" if defined? result.fitness
 			puts "\t\tbest individual : #{result.best}" if defined? result.best
