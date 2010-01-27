@@ -29,7 +29,7 @@ require 'evosynth'
 module LocalSearch
 
 	VALUE_BITS = 16
-	DIMENSIONS = 5
+	DIMENSIONS = 10
 	GENERATIONS = 5000
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
@@ -49,21 +49,31 @@ module LocalSearch
 	end
 
 	def LocalSearch.create_individual(genome_size)
-		individual = EvoSynth::Core::MaximizingIndividual.new
+		individual = EvoSynth::Core::MinimizingIndividual.new
 		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 		individual.genome.map! { rand(2) > 0 ? true : false }
 		individual
 	end
 
+	def LocalSearch.print_acceptance_state(algorithm)
+		puts "\nAcceptacne state:" unless algorithm.acceptance.instance_variables.empty?
+		algorithm.acceptance.instance_variables.each do |var|
+			puts "\t#{var} = #{algorithm.acceptance.instance_variable_get(var)}"
+		end
+		puts
+	end
+
 	def LocalSearch.run_with(profile, individual)
-		puts "Local Search with #{profile.acceptance.to_s}\n\n"
+		puts "--- Local Search with #{profile.acceptance.to_s} ---\n"
 
 		profile.individual = individual.deep_clone
 		algorithm = EvoSynth::Algorithms::LocalSearch.new(profile)
+		LocalSearch.print_acceptance_state(algorithm)
 		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(500, false));
 		algorithm.run_until_generations_reached(GENERATIONS)
+		LocalSearch.print_acceptance_state(algorithm)
 
-		puts "\n--> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(profile.individual)}\n\n"
+		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(profile.individual)} <\n\n"
 	end
 
 	profile = Struct.new(:individual, :mutation, :fitness_calculator, :acceptance).new
@@ -74,13 +84,15 @@ module LocalSearch
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance.new
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance.new
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance.new(-2500.0)
 	LocalSearch.run_with(profile, individual)
 
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)
+	LocalSearch.run_with(profile, individual)
 end

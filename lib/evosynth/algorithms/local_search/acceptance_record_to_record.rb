@@ -22,52 +22,47 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/algorithms/local_search/acceptance_hillclimber'
-require 'evosynth/algorithms/local_search/acceptance_simulated_annealing'
-require 'evosynth/algorithms/local_search/acceptance_threshold'
-require 'evosynth/algorithms/local_search/acceptance_great_deluge'
-require 'evosynth/algorithms/local_search/acceptance_record_to_record'
-
-
 module EvoSynth
 	module Algorithms
 
-		# LOKALE-SUCHE (Weicker Page 155)
-
 		class LocalSearch
-			include EvoSynth::Algorithms::Algorithm
 
-			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
+			# AKZEPTANZ-RR (Weicker Page 158)
 
-			def initialize(profile)
-				init_profile :individual, :mutation, :fitness_calculator, :acceptance => DEFAULT_ACCEPTANCE
+			class RecordToRecordTravelAcceptance
+				attr_accessor :delta, :alpha
 
-				use_profile profile
+				DEFAULT_START_DELTA = Float::MAX
+				DEFAULT_ALPHA = 0.9
 
-				@fitness_calculator.calculate_and_set_fitness(@individual)
+				def initialize(start_delta = DEFAULT_START_DELTA, alpha = DEFAULT_ALPHA)
+					@delta = start_delta
+					@alpha = alpha
+					@best = nil
+				end
+
+				def accepts(parent, child, generation)
+					@best = parent if @best.nil?
+					accepted = false
+
+					if child > @best
+						@best = child
+						accepted = true
+					else
+						threshold = Math.sqrt( (child.fitness - @best.fitness)**2 )
+						accepted = threshold < @delta
+					end
+
+					@delta *= @alpha
+					accepted
+				end
+
+				def to_s
+					"Record-to-Record-Travel Acceptance"
+				end
+
 			end
 
-			def to_s
-				"local search <mutation: #{@mutation}, individual: #{@individual}>"
-			end
-
-			def best_solution
-				@individual
-			end
-
-			def worst_solution
-				@individual
-			end
-
-			def return_result
-				@individual
-			end
-
-			def next_generation
-				child = @mutation.mutate(@individual)
-				@fitness_calculator.calculate_and_set_fitness(child)
-				@individual = child if @acceptance.accepts(@individual, child, @generations_computed)
-			end
 		end
 
 	end
