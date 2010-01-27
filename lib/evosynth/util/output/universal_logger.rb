@@ -39,23 +39,16 @@ module EvoSynth
 			LOG_TO_CONSOLE = lambda { |line| puts "#{line.join("\t")}"}
 			DEFAULT_LOG_TARGET = LOG_TO_CONSOLE
 
-			def initialize(print_generation_step = 10, things_to_log = {}, log_target = DEFAULT_LOG_TARGET)
-				@log_target = log_target
+			def initialize(print_generation_step, show_errors, things_to_log = {}, log_target = DEFAULT_LOG_TARGET)
 				@print_generation_step = print_generation_step
 				@things_to_log = things_to_log
+				@show_errors = show_errors
+				@log_target = log_target
 			end
 
 			def column_names
 				line = []
-				@things_to_log.each_pair do |key, value|
-					if value.is_a?(Symbol)
-						line << "#{key.class}##{value}"
-					elsif value.is_a?(Array)
-						value.each do |sub_value|
-							line << "#{key.class}##{sub_value}"
-						end
-					end
-				end
+				@things_to_log.each_pair { |key, value|	line << key }
 				line
 			end
 
@@ -64,12 +57,10 @@ module EvoSynth
 
 				line = []
 				@things_to_log.each_pair do |key, value|
-					if value.is_a?(Symbol)
-						line << key.send(value) rescue line << "ERROR while retrieving #{value.inspect}"
-					elsif value.is_a?(Array)
-						value.each do |sub_value|
-							line << key.send(sub_value) rescue line << "ERROR while retrieving #{sub_value.inspect}"
-						end
+					begin
+						line << value.call
+					rescue
+						@show_errors ? line << "ERROR while retrieving #{value.inspect}" : line << "\t"
 					end
 				end
 

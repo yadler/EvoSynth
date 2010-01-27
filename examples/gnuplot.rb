@@ -30,7 +30,7 @@ require 'gnuplot'
 module Gnuplot
 
 	VALUE_BITS = 16
-	DIMENSIONS = 2
+	DIMENSIONS = 6
 	POP_SIZE = 25
 	GENERATIONS = 1000
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
@@ -66,30 +66,44 @@ module Gnuplot
 
 	profile.fitness_calculator.reset_counters
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
-	algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(100,
-		algorithm => :generations_computed,
-		# FIXME: this needs to be something like profile.population => :best.fitness,
-		profile.population => :best,
-		profile.population => :worst
-#		profile.acceptance => [:temperature, :alpha, :delta]
+
+	data = []
+	algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(10, false,
+		{"gen" => ->{ algorithm.generations_computed },
+		"best" => ->{ profile.population.best.fitness },
+		"worst" => ->{ profile.population.worst.fitness }},
+		->(line) { data << line }
 	))
 
 	algorithm.run_until_generations_reached(GENERATIONS)
 
+	# for details take a look at http://rgplot.rubyforge.org/
+
 	Gnuplot.open do |gp|
 		Gnuplot::Plot.new( gp ) do |plot|
 
-			plot.xrange "[-10:10]"
-			plot.title  "Sin Wave Example"
-			plot.ylabel "x"
-			plot.xlabel "sin(x)"
+			plot.title  "Rastgrin function with Elistism GA"
+			plot.ylabel "fitness"
+			plot.xlabel "generation"
 
-			plot.data << Gnuplot::DataSet.new( "sin(x)" ) do |ds|
-				ds.with = "lines"
-				ds.linewidth = 4
+			x, y1, y2 = [], [], []
+			data.each do |record|
+				x << record[0]
+				y1 << record[1]
+				y2 << record[2]
 			end
 
+			plot.data << Gnuplot::DataSet.new( [x, y1] ) do |ds|
+				ds.with = "lines"
+				ds.title = "best individual"
+			end
+
+			plot.data << Gnuplot::DataSet.new( [x, y2] ) do |ds|
+				ds.with = "lines"
+				ds.title = "worst individual"
+			end
 		end
 	end
+
 
 end

@@ -70,10 +70,12 @@ module LocalSearch
 		algorithm = EvoSynth::Algorithms::LocalSearch.new(profile)
 		LocalSearch.print_acceptance_state(algorithm)
 
-		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500,
-			algorithm => :generations_computed,
-			profile.individual => :fitness,
-			profile.acceptance => [:temperature, :alpha, :delta]
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500, false,
+			"generations" => ->{ algorithm.generations_computed },
+			"fitness" => ->{ profile.individual.fitness },
+			"temperature" => ->{ profile.acceptance.temperature },
+			"alpha" => ->{ profile.acceptance.alpha },
+			"delta" => ->{ profile.acceptance.delta }
 		))
 
 		algorithm.run_until_generations_reached(GENERATIONS)
