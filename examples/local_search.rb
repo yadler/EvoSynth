@@ -69,7 +69,13 @@ module LocalSearch
 		profile.individual = individual.deep_clone
 		algorithm = EvoSynth::Algorithms::LocalSearch.new(profile)
 		LocalSearch.print_acceptance_state(algorithm)
-		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(500, false));
+
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500,
+			algorithm => :generations_computed,
+			profile.individual => :fitness,
+			profile.acceptance => [:temperature, :alpha, :delta]
+		))
+
 		algorithm.run_until_generations_reached(GENERATIONS)
 		LocalSearch.print_acceptance_state(algorithm)
 

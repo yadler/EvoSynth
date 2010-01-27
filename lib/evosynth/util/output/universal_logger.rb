@@ -25,23 +25,55 @@
 module EvoSynth
 	module Util
 
-		class ConsoleWriter
+		# Customizable logger
+		#
+		#	algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500,
+		#		algorithm => :generations_computed,
+		#		profile.individual => :fitness,
+		#		profile.acceptance => [:temperature, :alpha, :delta]
+		#	))
 
-			def initialize(print_gen_step = 10, verbose = true)
-				@print_generation_step = print_gen_step
-				@verbose = verbose
+		class UniversalLogger
+			attr_accessor :things_to_log
+
+			LOG_TO_CONSOLE = lambda { |line| puts "#{line.join("\t")}"}
+			DEFAULT_LOG_TARGET = LOG_TO_CONSOLE
+
+			def initialize(print_generation_step = 10, things_to_log = {}, log_target = DEFAULT_LOG_TARGET)
+				@log_target = log_target
+				@print_generation_step = print_generation_step
+				@things_to_log = things_to_log
+			end
+
+			def column_names
+				line = []
+				@things_to_log.each_pair do |key, value|
+					if value.is_a?(Symbol)
+						line << "#{key.class}##{value}"
+					elsif value.is_a?(Array)
+						value.each do |sub_value|
+							line << "#{key.class}##{sub_value}"
+						end
+					end
+				end
+				line
 			end
 
 			def update(generations_computed, algorithm)
 				return unless generations_computed % @print_generation_step == 0
 
-				best = "no best individual could be retrieved"
-				worst = "no worst individual could be retrieved"
+				line = []
+				@things_to_log.each_pair do |key, value|
+					if value.is_a?(Symbol)
+						line << key.send(value) rescue line << "ERROR while retrieving #{value.inspect}"
+					elsif value.is_a?(Array)
+						value.each do |sub_value|
+							line << key.send(sub_value) rescue line << "ERROR while retrieving #{sub_value.inspect}"
+						end
+					end
+				end
 
-				best = (@verbose || !defined? algorithm.best_solution.fitness) ? algorithm.best_solution : algorithm.best_solution.fitness
-				worst = (@verbose || !defined? algorithm.worst_solution.fitness) ? algorithm.worst_solution : algorithm.worst_solution.fitness
-
-				puts "#{generations_computed}\t#{best}\t#{worst}"
+				@log_target.call(line)
 			end
 
 		end
