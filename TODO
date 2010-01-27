@@ -1,8 +1,9 @@
 Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
-	- EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance (need's work)
-	- EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance (need's work)
-	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance (need's work)
+	- EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance
+	- EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance
+	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance
+	- EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
 
 Algorithmen:
 	- AKZEPTANZ-RR (Weicker Page 158)
