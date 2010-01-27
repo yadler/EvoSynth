@@ -49,6 +49,7 @@ module EvoSynth
 				def to_s
 					"Great Deluge Acceptance"
 				end
+
 			end
 
 		end

@@ -46,12 +46,14 @@ module EvoSynth
 					threshold = Math.sqrt( (child.fitness - parent.fitness)**2 )
 					accepted = child > parent || threshold < @temperature ? true : false
 					@temperature *= @alpha
+
 					accepted
 				end
 
 				def to_s
 					"Threshold Acceptance"
 				end
+
 			end
 
 		end

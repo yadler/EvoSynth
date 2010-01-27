@@ -30,6 +30,7 @@ module EvoSynth
 			# AKZEPTANZ-HC (Weicker Page 156)
 
 			class HillclimberAcceptance
+
 				def accepts(parent, child, generation)
 					child > parent
 				end
@@ -37,6 +38,7 @@ module EvoSynth
 				def to_s
 					"Hillclimber Acceptance"
 				end
+
 			end
 
 		end

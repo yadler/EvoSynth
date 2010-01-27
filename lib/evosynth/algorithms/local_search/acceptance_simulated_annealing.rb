@@ -52,6 +52,7 @@ module EvoSynth
 				def to_s
 					"Simulated Annealing Acceptance"
 				end
+
 			end
 
 		end
