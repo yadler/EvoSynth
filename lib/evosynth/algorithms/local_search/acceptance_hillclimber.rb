@@ -22,18 +22,24 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/algorithms/algorithm'
+module EvoSynth
+	module Algorithms
 
-require 'evosynth/algorithms/hillclimber/hillclimber'
-require 'evosynth/algorithms/hillclimber/population_hillclimber'
+		class LocalSearch
 
-require 'evosynth/algorithms/genetic_algortihms/genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/elitism_genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/steady_state_ga'
+			# AKZEPTANZ-HC (Weicker Page 156)
 
-require 'evosynth/algorithms/evolution_strategies/adaptive_es'
-require 'evosynth/algorithms/evolution_strategies/selfadaptive_es'
+			class HillclimberAcceptance
+				def accepts(parent, child, generation)
+					child > parent
+				end
 
-require 'evosynth/algorithms/local_search/local_search'
+				def to_s
+					"Hillclimber Acceptance"
+				end
+			end
 
-require 'evosynth/algorithms/coevolutionary/coop_coevolutionary'
+		end
+
+	end
+end

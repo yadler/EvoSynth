@@ -55,7 +55,6 @@ module MaxOnes
 	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator, :acceptance).new
 	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-#	profile.mutation = EvoSynth::Mutations::Identity.new
 	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = OnesCalculator.new
@@ -70,24 +69,10 @@ module MaxOnes
 	puts profile.fitness_calculator
 	puts
 
-	puts "Local Search with Hillclimber"
-	profile.fitness_calculator.reset_counters
-	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.fitness_calculator
-	puts
-
 	puts "Local Search with Simulated Annealing"
 	profile.fitness_calculator.reset_counters
 	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.fitness_calculator
-
-	puts "Local Search with Threshold Acceptance"
-	profile.fitness_calculator.reset_counters
-	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
 	puts profile.fitness_calculator
 

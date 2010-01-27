@@ -22,18 +22,39 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/algorithms/algorithm'
+module EvoSynth
+	module Algorithms
 
-require 'evosynth/algorithms/hillclimber/hillclimber'
-require 'evosynth/algorithms/hillclimber/population_hillclimber'
+		class LocalSearch
 
-require 'evosynth/algorithms/genetic_algortihms/genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/elitism_genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/steady_state_ga'
+			# AKZEPTANZ-TA (Weicker Page 157)
+			#
+			# FIXME: can't maximize
 
-require 'evosynth/algorithms/evolution_strategies/adaptive_es'
-require 'evosynth/algorithms/evolution_strategies/selfadaptive_es'
+			class ThresholdAcceptance
+				attr_accessor :temperature, :alpha
 
-require 'evosynth/algorithms/local_search/local_search'
+				DEFAULT_START_TEMP = Float::MAX
+				DEFAULT_ALPHA = 0.9
 
-require 'evosynth/algorithms/coevolutionary/coop_coevolutionary'
+				def initialize(start_temp = DEFAULT_START_TEMP, alpha = DEFAULT_ALPHA)
+					@temperature = start_temp
+					@alpha = alpha
+				end
+
+				def accepts(parent, child, generation)
+					threshold = Math.sqrt( (child.fitness - parent.fitness)**2 )
+					accepted = child > parent || threshold < @temperature ? true : false
+					@temperature *= @alpha
+					accepted
+				end
+
+				def to_s
+					"Threshold Acceptance"
+				end
+			end
+
+		end
+
+	end
+end
