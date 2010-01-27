@@ -29,7 +29,7 @@ require 'evosynth'
 module LocalSearch
 
 	VALUE_BITS = 16
-	DIMENSIONS = 10
+	DIMENSIONS = 5
 	GENERATIONS = 5000
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
@@ -50,6 +50,7 @@ module LocalSearch
 
 	def LocalSearch.create_individual(genome_size)
 		individual = EvoSynth::Core::MinimizingIndividual.new
+#		individual = EvoSynth::Core::MaximizingIndividual.new
 		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 		individual.genome.map! { rand(2) > 0 ? true : false }
 		individual
@@ -72,10 +73,10 @@ module LocalSearch
 
 		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500, false,
 			"generations" => ->{ algorithm.generations_computed },
-			"fitness" => ->{ profile.individual.fitness },
-			"temperature" => ->{ profile.acceptance.temperature },
-			"alpha" => ->{ profile.acceptance.alpha },
-			"delta" => ->{ profile.acceptance.delta }
+			"fitness"     => ->{ algorithm.best_solution.fitness },
+			"temperature" => ->{ algorithm.acceptance.temperature },
+			"alpha"       => ->{ algorithm.acceptance.alpha },
+			"delta"       => ->{ algorithm.acceptance.delta }
 		))
 
 		algorithm.run_until_generations_reached(GENERATIONS)
@@ -98,7 +99,7 @@ module LocalSearch
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance.new(-2500.0)
+	profile.acceptance = EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance.new(2500.0)
 	LocalSearch.run_with(profile, individual)
 
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)

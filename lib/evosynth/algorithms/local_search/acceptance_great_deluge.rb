@@ -28,14 +28,12 @@ module EvoSynth
 		class LocalSearch
 
 			# AKZEPTANZ-GD (Weicker Page 158)
-			#
-			# FIXME: can't minimize
 
 			class GreatDelugeAcceptance
 				attr_accessor :water, :rain_speed
 
 				DEFAULT_WATER_LEVEL = Float::MIN
-				DEFAULT_RAIN_SPEED = 10.0
+				DEFAULT_RAIN_SPEED = 1.0
 
 				def initialize(start_water_level = DEFAULT_WATER_LEVEL, rain_speed = DEFAULT_RAIN_SPEED)
 					@water = start_water_level
@@ -43,7 +41,11 @@ module EvoSynth
 				end
 
 				def accepts(parent, child, generation)
-					child.fitness > @water + generation * @rain_speed
+					if parent.maximizes?
+						child.fitness > @water + generation * @rain_speed
+					else
+						child.fitness < @water - generation * @rain_speed
+					end
 				end
 
 				def to_s

@@ -28,8 +28,6 @@ module EvoSynth
 		class LocalSearch
 
 			# AKZEPTANZ-SA (Weicker Page 156)
-			#
-			# FIXME: can't maximize
 
 			class SimulatedAnnealingAcceptance
 				attr_accessor :temperature, :alpha
@@ -46,7 +44,7 @@ module EvoSynth
 					threshold = Math.exp( -1 * Math.sqrt( (child.fitness - parent.fitness)**2 ) / @temperature)
 					@temperature *= @alpha
 
-					child > parent || rand <= threshold ? true : false
+					child > parent || rand <= threshold
 				end
 
 				def to_s
