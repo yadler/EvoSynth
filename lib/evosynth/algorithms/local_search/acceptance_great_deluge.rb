@@ -32,7 +32,7 @@ module EvoSynth
 			# FIXME: can't minimize
 
 			class GreatDelugeAcceptance
-				attr_accessor :temperature, :alpha
+				attr_accessor :water, :rain_speed
 
 				DEFAULT_WATER_LEVEL = Float::MIN
 				DEFAULT_RAIN_SPEED = 10.0
