@@ -28,8 +28,6 @@ module EvoSynth
 		class LocalSearch
 
 			# AKZEPTANZ-TA (Weicker Page 157)
-			#
-			# FIXME: can't maximize
 
 			class ThresholdAcceptance
 				attr_accessor :temperature, :alpha
