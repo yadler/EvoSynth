@@ -55,12 +55,9 @@ module SPk
 		def is_valid(genome)
 			valid = false
 
-			if genome.changed
-				len_of_ones = calc_length_of_ones(genome)
-				max_k = (genome.size.to_f / (3.0 * @k*@k).to_f).ceil
-
-				valid = true if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
-			end
+			len_of_ones = calc_length_of_ones(genome)
+			max_k = (genome.size.to_f / (3.0 * @k*@k).to_f).ceil
+			valid = true if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
 
 			valid
 		end
