@@ -37,7 +37,7 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		end
 
 		should "#changed be true" do
-			assert @genome.changed
+			assert @genome.changed?
 		end
 
 	end
@@ -50,102 +50,102 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		end
 
 		should "#changed be false" do
-			assert !@genome.changed
+			assert !@genome.changed?
 		end
 
 		should "sort do nothing" do
 			@genome.sort
-			assert !@genome.changed
+			assert !@genome.changed?
 			@genome.changed = false
 		end
 
 		should "reject! set changed to true" do
 			@genome.reject! { |foo| foo != nil }
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "reverse! set changed to true" do
 			@genome.reverse!
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "slice! set changed to true" do
 			@genome.slice!(0)
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "flatten! set changed to true" do
 			@genome.flatten!
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "push set changed to true" do
 			@genome.push(2)
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "pop set changed to true" do
 			@genome.pop
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "sort! set changed to true" do
 			@genome.sort!
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "shift set changed to true" do
 			@genome.shift
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "unshift set changed to true" do
 			@genome.unshift("bar")
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "[]= set changed to true" do
 			@genome[0] = "foo"
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "collect! set changed to true" do
 			@genome.collect! { |foo| "foo" }
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "map! set changed to true" do
 			@genome.map! { |foo| "foo" }
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "<< set changed to true" do
 			@genome << "baz"
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "uniq! set changed to true" do
 			@genome.uniq!
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 
 		should "clear set changed to true" do
 			@genome.clear
-			assert @genome.changed
+			assert @genome.changed?
 			@genome.changed = false
 		end
 

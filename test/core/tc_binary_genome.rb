@@ -35,7 +35,7 @@ class BinaryGenomeTest < Test::Unit::TestCase
 		end
 
 		should "#changed be true" do
-			assert @genome.changed
+			assert @genome.changed?
 		end
 
 		should "size == 1" do
@@ -65,7 +65,7 @@ class BinaryGenomeTest < Test::Unit::TestCase
 		end
 
 		should "#changed be true" do
-			assert @genome.changed
+			assert @genome.changed?
 		end
 
 		should "genome have the correct bits" do

@@ -27,16 +27,25 @@ module EvoSynth
 
 		class BinaryGenome < Array
 
-			# true if the genome has changed - has to be set to false manually
-			attr_accessor :changed
-
 			def initialize(intial_value = 0)
 				@data = intial_value
 				@changed = true
 			end
 
+			def changed=(value)
+				@changed = value
+			end
+
+			# true if the genome has changed - has to be set to false manually
+
+			def changed?
+				@changed
+			end
+
 			def clone
-				BinaryGenome.new(@data)
+				my_clone = BinaryGenome.new(@data)
+				my_clone.changed = false
+				my_clone
 			end
 
 

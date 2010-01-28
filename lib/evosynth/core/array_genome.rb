@@ -31,17 +31,25 @@ module EvoSynth
 
 		class ArrayGenome < Array
 
+			def changed=(value)
+				@changed = value
+			end
+
 			# true if the genome has changed - has to be set to false manually
-			attr_accessor :changed
+
+			def changed?
+				@changed
+			end
 
 			# Create a printable version of the genome
+
 			def to_s
 				self * ", "
 			end
 
 			def clone
 				my_clone = super
-				@changed = false
+				my_clone.changed = false
 				my_clone
 			end
 		end

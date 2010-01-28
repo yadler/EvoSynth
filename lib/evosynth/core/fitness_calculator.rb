@@ -36,7 +36,7 @@ module EvoSynth
 			def calculate_and_set_fitness(individual)
 				@called += 1
 
-				if individual.genome.changed
+				if individual.changed?
 					@calculated += 1
 					individual.fitness = calculate_fitness(individual)
 				end

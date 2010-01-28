@@ -32,19 +32,6 @@ module Partitionproblem
 	class PartitionFitnessCalculator
 		include EvoSynth::Core::FitnessCalculator
 
-		# TODO: is there a better way then to overwrite these function?
-
-		def calculate_and_set_fitness(individual)
-			@called += 1
-
-			if individual.partition_a.changed || individual.partition_b.changed
-				@calculated += 1
-				individual.fitness = calculate_fitness(individual)
-			end
-
-			individual.fitness
-		end
-
 		def calculate_fitness(individual)
 			sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
 			sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
@@ -70,6 +57,10 @@ module Partitionproblem
 			@fitness = value
 			@partition_a.changed = false
 			@partition_b.changed = false
+		end
+
+		def changed?
+			@partition_a.changed? || @partition_b.changed?
 		end
 
 		def deep_clone

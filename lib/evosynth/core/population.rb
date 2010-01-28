@@ -67,14 +67,14 @@ module EvoSynth
 
 
 			def best(count = 1)
-				self.sort! if self.changed
+				self.sort! if self.changed?
 				self.changed = false
 				count == 1 ? self.last : self.last(count).reverse
 			end
 
 
 			def worst(count = 1)
-				self.sort! if self.changed
+				self.sort! if self.changed?
 				self.changed = false
 				count == 1 ? self.first : self.first(count).reverse
 			end
