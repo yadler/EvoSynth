@@ -25,9 +25,6 @@
 require 'evosynth'
 
 
-# FIXME: replace these individuals with mocked objects!
-
-
 class TestMinimizingIndividual < EvoSynth::Core::MinimizingIndividual
 
 	def initialize(fitness = 0.0)
