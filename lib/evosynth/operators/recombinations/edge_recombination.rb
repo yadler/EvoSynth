@@ -30,7 +30,7 @@ module EvoSynth
 
 		# KANTENREKOMBINATION (Weicker page 29)
 		#
-		# TODO: this can only recombine permutations (see partially mapped crossover)
+		# this can only recombine permutations (see partially mapped crossover).
 
 		class EdgeRecombination
 

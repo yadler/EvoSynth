@@ -29,8 +29,9 @@ module EvoSynth
 	module Recombinations
 
 		# ABBILDUNGSREKOMBINATION (Weicker Page 133)
-		# TODO: is this maybe the first recombination (will not be the last) that can only combine permutations?
-		#       -> at least it only works on genomes without duplicate genes!
+		#
+		# this recombination can only combine permutations, at least
+		# it only works on genomes without duplicate genes!
 
 		class PartiallyMappedCrossover
 

@@ -30,8 +30,8 @@ module EvoSynth
 
 		# ORDNUNGSREKOMBINATION (Weicker page 29)
 		# 
-		# TODO: this can only recombine permutations? (see partially mapped crossover)
-		#       -> at least it only works on genomes without duplicate genes!
+		# this can only recombine permutations (see partially mapped crossover).
+		# at least it only works on genomes without duplicate genes!
 
 		class OrderedRecombination
 
