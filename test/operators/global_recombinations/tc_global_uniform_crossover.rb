@@ -80,8 +80,8 @@ class GlobalUniformCrossoverTest < Test::Unit::TestCase
 			end
 
 			should "around 50% of the genes should have mutated to false" do
-				assert_in_delta (GENOME_SIZE/2)*TIMES, @count_true, DELTA * (GENOME_SIZE/2) * TIMES
-				assert_in_delta (GENOME_SIZE/2)*TIMES, @count_false, DELTA * (GENOME_SIZE/2) * TIMES
+				assert_in_delta((GENOME_SIZE/2)*TIMES, @count_true, DELTA * (GENOME_SIZE/2) * TIMES)
+				assert_in_delta((GENOME_SIZE/2)*TIMES, @count_false, DELTA * (GENOME_SIZE/2) * TIMES)
 			end
 		end
 
