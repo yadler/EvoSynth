@@ -24,15 +24,16 @@
 
 require 'evosynth'
 require 'gnuplot'
+require 'gruff'
 #require 'profile'
 
 
-module Gnuplot
+module DataViz
 
 	VALUE_BITS = 16
 	DIMENSIONS = 6
 	POP_SIZE = 25
-	GENERATIONS = 1000
+	GENERATIONS = 250
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
 	class FitnessCalculator
@@ -50,7 +51,58 @@ module Gnuplot
 
 	end
 
-	def Gnuplot.create_individual(genome_size)
+	def DataViz.paint_with_gnuplot(data)
+		# for details take a look at http://rgplot.rubyforge.org/
+
+		Gnuplot.open do |gp|
+			Gnuplot::Plot.new( gp ) do |plot|
+
+				plot.title  "Rastgrin function with Elistism GA"
+				plot.ylabel "fitness"
+				plot.xlabel "generation"
+
+				x, y1, y2 = [], [], []
+				data.each do |record|
+					x << record[0]
+					y1 << record[1]
+					y2 << record[2]
+				end
+
+				plot.data << Gnuplot::DataSet.new( [x, y1] ) do |ds|
+					ds.with = "lines"
+					ds.title = "best individual"
+				end
+
+				plot.data << Gnuplot::DataSet.new( [x, y2] ) do |ds|
+					ds.with = "lines"
+					ds.title = "worst individual"
+				end
+			end
+		end
+	end
+
+	def DataViz.paint_with_gruff(data)
+		x, y1, y2 = [], [], []
+		data.each do |record|
+			x << record[0]
+			y1 << record[1]
+			y2 << record[2]
+		end
+
+		g = Gruff::Line.new
+		g.title = "Rastgrin function with Elistism GA"
+
+		g.data("best individual", y1)
+		g.data("worst individual", y2)
+
+		labels = {}
+		x.each_with_index { |gen, index| labels[index] = "#{gen}"}
+		g.labels = labels
+
+		g.write('/home/yves/Desktop/evosynth_viz_gruff.png')
+	end
+
+	def DataViz.create_individual(genome_size)
 		individual = EvoSynth::Core::MinimizingIndividual.new
 		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
 		individual.genome.map! { rand(2) > 0 ? true : false }
@@ -62,7 +114,7 @@ module Gnuplot
 	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = FitnessCalculator.new
-	profile.population = EvoSynth::Core::Population.new(POP_SIZE) { Gnuplot.create_individual(GENOME_SIZE) }
+	profile.population = EvoSynth::Core::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) }
 
 	profile.fitness_calculator.reset_counters
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
@@ -76,34 +128,6 @@ module Gnuplot
 	))
 
 	algorithm.run_until_generations_reached(GENERATIONS)
-
-	# for details take a look at http://rgplot.rubyforge.org/
-
-	Gnuplot.open do |gp|
-		Gnuplot::Plot.new( gp ) do |plot|
-
-			plot.title  "Rastgrin function with Elistism GA"
-			plot.ylabel "fitness"
-			plot.xlabel "generation"
-
-			x, y1, y2 = [], [], []
-			data.each do |record|
-				x << record[0]
-				y1 << record[1]
-				y2 << record[2]
-			end
-
-			plot.data << Gnuplot::DataSet.new( [x, y1] ) do |ds|
-				ds.with = "lines"
-				ds.title = "best individual"
-			end
-
-			plot.data << Gnuplot::DataSet.new( [x, y2] ) do |ds|
-				ds.with = "lines"
-				ds.title = "worst individual"
-			end
-		end
-	end
-
-
+	DataViz.paint_with_gnuplot(data)
+	DataViz.paint_with_gruff(data)
 end
