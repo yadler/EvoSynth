@@ -34,7 +34,7 @@ module EvoSynth
 
 			def run_until(&condition) # :yields: generations computed, best solution
 				@generations_computed = 0
-				changed?
+				changed
 				notify_observers @generations_computed, self
 
 				case condition.arity
@@ -49,7 +49,7 @@ module EvoSynth
 				while loop_condition.call
 					next_generation
 					@generations_computed += 1
-					changed?
+					changed
 					notify_observers @generations_computed, self
 				end
 
