@@ -50,7 +50,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"CCGA-1 <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
+				"cooperative coevolutionary algorithm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
 			def best_solution
