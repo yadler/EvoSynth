@@ -1,3 +1,7 @@
+Fehler:
+	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
+	- Eltern/Umweltselektion klar trennen!
+
 Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
 	- EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance
@@ -5,10 +9,11 @@ Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance
 	- EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
 
+Selektionen:
+	- IdentitySelection
+
 Algorithmen:
-	- AKZEPTANZ-RR (Weicker Page 158)
 	- DERANDOMISIERTE-ES (Weicker page 139)
-	- eventuell diese ganzen Acceptance Bedingungen in eigenes file? Umstrukturieren der Algorithmen?
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
 	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
