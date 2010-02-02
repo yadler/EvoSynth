@@ -22,8 +22,15 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/tc_benchmark_functions'
-require 'test/util/tc_math'
-require 'test/util/decoder/tc_gray'
-require 'test/util/decoder/tc_binary_to_real'
+module EvoSynth
+	module Util
+		module EvoMath
+
+			def EvoMath.probability_density_function(x, sigma, mu)
+				x += mu
+				1.0 / (Math.sqrt(2.0 * Math::PI) * sigma) * Math.exp(-1.0 / (2.0 * sigma**2.0) * x**2.0)
+			end
+
+		end
+	end
+end
