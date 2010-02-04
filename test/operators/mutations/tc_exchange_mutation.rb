@@ -94,8 +94,6 @@ class ExchangeMutationTest < Test::Unit::TestCase
 		end
 	end
 
-	# FIXME: remove this code duplication in a boring moment (swap_count should be automated)
-
 	context "when run on a permutation genome (size=#{MAX_NUM}) with swap_count = 4" do
 		setup do
 			@individual = TestArrayGenomeIndividual.new((0..MAX_NUM).to_a)

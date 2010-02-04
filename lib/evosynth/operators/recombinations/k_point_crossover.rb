@@ -26,7 +26,6 @@ module EvoSynth
 	module Recombinations
 
 		# K-PUNKT-CROSSOVER (Weicker Page 130)
-		# TODO: implement real 2-point-crossover for better performance?
 
 		class KPointCrossover
 

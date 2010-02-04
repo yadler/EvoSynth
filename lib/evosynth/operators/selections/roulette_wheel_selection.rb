@@ -27,8 +27,6 @@ module EvoSynth
 	module Selections
 
 		# STOCHASTISCHES-UNIVERSELLES-SAMPLING (Weicker Page 75)
-		#
-		# FIXME: code duplication (see fitness_proportional.rb)
 
 		class RouletteWheelSelection < EvoSynth::Selections::FitnessProportionalSelection
 
