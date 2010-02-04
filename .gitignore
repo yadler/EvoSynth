@@ -1,7 +1,9 @@
 pkg
 pkg/*.gem
-doc
-doc/*
+rdoc
+rdoc/*
+docs
+docs/*
 coverage
 coverage/*
 testdata
