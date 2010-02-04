@@ -44,7 +44,7 @@ module EvoSynth
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :mutation => DEFAULT_MUTATION,
 				    :adjustment => DEFAULT_ADJUSTMENT,
-				    :selection => DEFAULT_SELECTION,
+				    :enviromental_selection => DEFAULT_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
 				use_profile profile
@@ -53,7 +53,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"selfadaptive ES <mutation: #{@mutation}, parent selection: #{@parent_selection}, selection: #{@selection}>"
+				"selfadaptive ES <mutation: #{@mutation}, parent selection: #{@parent_selection}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
 			def best_solution
@@ -78,7 +78,7 @@ module EvoSynth
 					child_population << child
 				end
 
-				@population = @selection.select(child_population, @population.size)
+				@population = @enviromental_selection.select(child_population, @population.size)
 			end
 		end
 

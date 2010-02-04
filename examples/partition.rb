@@ -148,10 +148,10 @@ module Partitionproblem
 	problem = Partitionproblem::Testdata.gen_layer_set
 	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
+	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
 	profile.individual = Partitionproblem.get_new_individual_from(problem)
 	profile.mutation = PartitionMutation.new
-	profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
+	profile.parent_selection = EvoSynth::Selections::TournamentSelection.new(3)
 	profile.recombination = EvoSynth::Recombinations::Identity.new
 	profile.fitness_calculator = Partitionproblem::PartitionFitnessCalculator.new
 

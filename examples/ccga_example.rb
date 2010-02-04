@@ -126,11 +126,11 @@ module CCGAExample
 
 	puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :populations, :fitness_calculator, :recombination_probability).new
+	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :populations, :fitness_calculator, :recombination_probability).new
 	profile.fitness_calculator = BenchmarkCalculator.new
 
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.recombination_probability = 0.6
 

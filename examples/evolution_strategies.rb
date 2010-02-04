@@ -28,7 +28,7 @@ require 'evosynth'
 
 module EsExample
 
-	DIMENSIONS = 5
+	DIMENSIONS = 10
 	GENERATIONS = 1000
 	POPULATION_SIZE = 25
 

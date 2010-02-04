@@ -231,10 +231,10 @@ module Ants
 		combined_mutation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
 		combined_mutation.add_with_possibility(ant_mutation, 0.75)
 
-		profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile = Struct.new(:mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
 		profile.fitness_calculator = Ants::AntFitnessCalculator.new(matrix)
 		profile.mutation = combined_mutation
-		profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+		profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
 		profile.population = population
 		profile.recombination = EvoSynth::Recombinations::PartiallyMappedCrossover.new
 		profile

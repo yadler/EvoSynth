@@ -38,19 +38,19 @@ module EvoSynth
 				init_profile :populations,
 				    :fitness_calculator,
 				    :mutation,
-				    :selection => DEFAULT_SELECTION,
+				    :parent_selection => DEFAULT_SELECTION,
+					:enviromental_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
 				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
 				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
 
 				use_profile profile
-
-				initialize_sub_algorithms(profile)
+				initialize_sub_algorithms!
 				@next_index = 0
 			end
 
 			def to_s
-				"cooperative coevolutionary algorithm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
+				"cooperative coevolutionary algorithm <mutation: #{@mutation}, recombination: #{@recombination}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
 			def best_solution
@@ -78,18 +78,19 @@ module EvoSynth
 
 			private
 
-			def get_sub_profile(profile)
-				sub_profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator, :recombination_probability).new
-				sub_profile.mutation = profile.mutation
-				sub_profile.selection = profile.selection
-				sub_profile.recombination = profile.recombination
-				sub_profile.fitness_calculator = profile.fitness_calculator
-				sub_profile.recombination_probability = profile.recombination_probability
+			def get_sub_profile
+				sub_profile = Struct.new(:mutation, :parent_selection, :enviromental_selection, :recombination, :population, :fitness_calculator, :recombination_probability).new
+				sub_profile.mutation = @mutation
+				sub_profile.parent_selection = @parent_selection
+				sub_profile.enviromental_selection = @enviromental_selection
+				sub_profile.recombination = @recombination
+				sub_profile.fitness_calculator = @fitness_calculator
+				sub_profile.recombination_probability = @recombination_probability
 				sub_profile
 			end
 
-			def initialize_sub_algorithms(profile)
-				sub_profile = get_sub_profile(profile)
+			def initialize_sub_algorithms!
+				sub_profile = get_sub_profile
 
 				@algorithms = []
 				@populations.each do |sub_population|

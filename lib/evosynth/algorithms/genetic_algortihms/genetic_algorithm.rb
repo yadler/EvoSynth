@@ -38,7 +38,7 @@ module EvoSynth
 				init_profile :population, 
 				    :fitness_calculator,
 				    :mutation,
-				    :selection => DEFAULT_SELECTION,
+				    :parent_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
 				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
 
@@ -48,7 +48,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"basic genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
+				"basic genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
 			def best_solution
@@ -64,7 +64,7 @@ module EvoSynth
 			end
 
 			def next_generation
-				selected_pop = @selection.select(@population, @population.size/2)
+				selected_pop = @parent_selection.select(@population, @population.size/2)
 				@population.clear
 
 				selected_pop.each_index do |index_one|

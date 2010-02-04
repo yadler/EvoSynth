@@ -109,10 +109,10 @@ module GraphColouring
 	#require 'profile'
 
 	def GraphColouring.algorithm_profile(graph)
-		profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile = Struct.new(:mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
 		profile.fitness_calculator = GraphColouring::ColourFitnessCalculator.new(graph)
 		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01)
-		profile.selection = EvoSynth::Selections::RouletteWheelSelection.new
+		profile.parent_selection = EvoSynth::Selections::RouletteWheelSelection.new
 		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) }
 		profile.recombination = EvoSynth::Recombinations::KPointCrossover.new
 		profile

@@ -1,6 +1,5 @@
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
-	- Eltern/Umweltselektion klar trennen!
 
 Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance

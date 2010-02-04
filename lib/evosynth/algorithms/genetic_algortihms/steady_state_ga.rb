@@ -38,7 +38,7 @@ module EvoSynth
 				init_profile :population,
 				    :fitness_calculator,
 				    :mutation,
-				    :selection => DEFAULT_SELECTION,
+				    :parent_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
 				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
 
@@ -48,7 +48,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"steady-state genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
+				"steady-state genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
 			def best_solution
@@ -64,7 +64,7 @@ module EvoSynth
 			end
 
 			def next_generation
-				parents = @selection.select(@population, 2)
+				parents = @parent_selection.select(@population, 2)
 
 				if rand < @recombination_probability
 					child = @recombination.recombine(parents[0], parents[1])[0]

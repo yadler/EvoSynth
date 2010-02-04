@@ -109,9 +109,9 @@ module DataViz
 		individual
 	end
 
-	profile = Struct.new(:mutation, :selection, :recombination, :population, :fitness_calculator).new
+	profile = Struct.new(:mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = FitnessCalculator.new
 	profile.population = EvoSynth::Core::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) }

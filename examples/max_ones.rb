@@ -30,7 +30,7 @@ module MaxOnes
 
 	GENOME_SIZE = 25
 	POP_SIZE = 25
-	GENERATIONS = 1
+	GENERATIONS = 1000
 
 	class OnesCalculator
 		include EvoSynth::Core::FitnessCalculator
@@ -52,10 +52,10 @@ module MaxOnes
 	end
 
 
-	profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator, :acceptance).new
+	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator, :acceptance).new
 	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
 	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.selection = EvoSynth::Selections::FitnessProportionalSelection.new
+	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
 	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
 	profile.fitness_calculator = OnesCalculator.new
 	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(GENOME_SIZE) }

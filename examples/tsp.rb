@@ -115,10 +115,10 @@ module TSP
 		combined_mutation << EvoSynth::Mutations::ShiftingMutation.new
 		combined_mutation << EvoSynth::Mutations::MixingMutation.new
 
-		profile = Struct.new(:individual, :mutation, :selection, :recombination, :population, :fitness_calculator).new
+		profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
 		profile.individual = TSP.create_individual(matrix)
 		profile.mutation = combined_mutation
-		profile.selection = EvoSynth::Selections::TournamentSelection.new(3)
+		profile.parent_selection = EvoSynth::Selections::TournamentSelection.new(3)
 		profile.population = EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) }
 		profile.recombination = EvoSynth::Recombinations::EdgeRecombination.new
 		profile.fitness_calculator = TSP::TSPFitnessCalculator.new(matrix)

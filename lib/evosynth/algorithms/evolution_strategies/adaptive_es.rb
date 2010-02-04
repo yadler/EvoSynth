@@ -51,7 +51,7 @@ module EvoSynth
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :mutation => DEFAULT_MUTATION,
 				    :adjustment => DEFAULT_ADJUSTMENT,
-				    :selection => DEFAULT_SELECTION,
+				    :enviromental_selection => DEFAULT_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
 				use_profile profile
@@ -62,7 +62,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"adaptive ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, selection: #{@selection}>"
+				"adaptive ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
 			def best_solution
@@ -90,7 +90,7 @@ module EvoSynth
 					child_population << child
 				end
 
-				@population = @selection.select(child_population, @population.size)
+				@population = @enviromental_selection.select(child_population, @population.size)
 				if @generations_computed % @modification_frequency == 0
 					success_rate =  @success / (@modification_frequency - (@child_factor * @population.size))
 					@sigma = @adjustment.adjust(@sigma, success_rate) # FIXME: remove this strong dependency on AdaptiveAdjustment
