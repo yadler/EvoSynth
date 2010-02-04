@@ -61,10 +61,6 @@ module MaxOnes
 	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(GENOME_SIZE) }
 	profile.population = base_population
 
-#	algorithm = EvoSynth::Algorithms::Hillclimber.new(profile)
-#	EvoSynth::Util.tracer { algorithm.run_until_generations_reached(GENERATIONS) }
-#	$lines.each { |line| puts line }
-
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
 	puts profile.fitness_calculator
 	puts
