@@ -58,7 +58,7 @@ module EvoSynth
 
 				population.each_with_index do |individual, index|
 					if population[0].minimizes?
-						fitness_sum +=  max_fitness - individual.fitness + 1
+						fitness_sum += max_fitness - individual.fitness + 1
 					else
 						fitness_sum += individual.fitness
 					end

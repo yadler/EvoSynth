@@ -30,12 +30,12 @@ module EvoSynth
 		#
 		# FIXME: code duplication (see fitness_proportional.rb)
 
-		class RouletteWheelSelection
+		class RouletteWheelSelection < EvoSynth::Selections::FitnessProportionalSelection
 
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Core::Population.new
-
 				fitness_hash = generate_fitness_hash(population)
+
 				limit = rand(fitness_hash[population.size - 1] / select_count)
 
 				select_count.times do
@@ -49,35 +49,6 @@ module EvoSynth
 
 			def to_s
 				"roulette wheel selection"
-			end
-
-			private
-
-			def generate_fitness_hash(population)
-				fitness_hash = {}
-				fitness_sum = 0.0
-
-				# we need to invert the fitnesse's only if we minimize!
-				max_fitness = population.worst.fitness if population[0].minimizes?
-
-				population.each_with_index do |individual, index|
-					if population[0].minimizes?
-						fitness_sum += max_fitness - individual.fitness + 1
-					else
-						fitness_sum += individual.fitness
-					end
-
-					fitness_sum = fitness_sum.infinite? * Float::MAX if fitness_sum.infinite?
-					fitness_hash[index] = fitness_sum
-				end
-
-				fitness_hash
-			end
-
-			def select_next_individual(population, limit, fitness_hash)
-				population.each_with_index do |individual, index|
-					return individual if fitness_hash[index] >= limit
-				end
 			end
 
 		end
