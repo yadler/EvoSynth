@@ -77,6 +77,28 @@ class CombinedMutationTest < Test::Unit::TestCase
 		end
 	end
 
+	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations (constructor)" do
+		setup do
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
+			@individual.genome.map! { |gene| true }
+			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new(TestMutationA.new, TestMutationB.new)
+		end
+
+		should "both mutations should have been used (nearly) equally often" do
+			count_a, count_b = 0, 0
+
+			ITERATIONS.times do
+				mutated = @combinded_mutation.mutate(@individual)
+				count_a += 1 if mutated == "A"
+				count_b += 1 if mutated == "B"
+			end
+
+			assert_equal ITERATIONS, count_a + count_b
+			assert_in_delta ITERATIONS/2, count_a, DELTA * ITERATIONS
+			assert_in_delta ITERATIONS/2, count_b, DELTA * ITERATIONS
+		end
+	end
+
 	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations" do
 		setup do
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)

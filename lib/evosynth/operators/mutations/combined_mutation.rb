@@ -27,8 +27,9 @@ module EvoSynth
 
 		class CombinedMutation
 
-			def initialize
+			def initialize(*args)
 				@mutations = []
+				args.each { |mutation| self << mutation }
 			end
 
 			def <<(mutation)
