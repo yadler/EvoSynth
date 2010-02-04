@@ -37,6 +37,7 @@ evolution strategies (TODO: need some refactoring):
 
 === selections
 
+* EvoSynth::Selections::Identity
 * EvoSynth::Selections::SelectBest
 * EvoSynth::Selections::NStageTournamentSelection
 * EvoSynth::Selections::TournamentSelection

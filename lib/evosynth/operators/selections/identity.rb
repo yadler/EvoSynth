@@ -22,10 +22,27 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/selections/tc_best_selection'
-require 'test/operators/selections/tc_fitness_proportional_selection'
-require 'test/operators/selections/tc_roulette_wheel_selection'
-require 'test/operators/selections/tc_tournament_selection'
-require 'test/operators/selections/tc_random_selection'
-require 'test/operators/selections/tc_n_stage_tournament'
-require 'test/operators/selections/tc_identity'
+module EvoSynth
+
+	module Selections
+
+		# Selects select_count (from beginning of population)
+
+		class Identity
+
+			def select(population, select_count = 1)
+				selected_population = EvoSynth::Core::Population.new
+				selected_population << population.first(select_count)
+				selected_population.flatten!
+				selected_population
+			end
+
+			def to_s
+				"identity selection"
+			end
+
+		end
+
+	end
+
+end
