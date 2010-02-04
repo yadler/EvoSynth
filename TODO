@@ -1,3 +1,18 @@
+Features:
+	- RunnableAlgortihm (run_until) geschickt mit FitnessCalculator koppeln,
+	um nur eine bestimmt "evaluierungsanzahl" zu rennen
+	- CCGA example überarbeiten und eventuell toolklassen extrahieren
+	- EvoSynth:Util überarbeiten
+	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
+	die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
+
+	- CombinedMutation zu ProportionalCombinedMutation umbenennen
+	- SequentiallyCombinedMutation erstellen (alle nacheinander)
+	- analog dazu combined rekombinationen erstellen
+	- ist sowas bei selektionen nützlich? eher nicht!
+
+	- variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
+
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
 
@@ -7,9 +22,6 @@ Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance
 	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance
 	- EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
-
-Selektionen:
-	- IdentitySelection
 
 Algorithmen:
 	- DERANDOMISIERTE-ES (Weicker page 139)
@@ -30,13 +42,3 @@ Decoder/Encoder:
 EvoBench: Benchmark für Evolutionäre Algorithmen
 	- mutationen, selektionen und co
 	- diversität und co
-
-Domain specific language, wie z.B.:
-
-	evolution do |profile|
-		profile.population Population.new(foo)
-
-		mutation is
-			bar
-		end
-	end
