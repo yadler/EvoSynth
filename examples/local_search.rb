@@ -85,9 +85,10 @@ module LocalSearch
 		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(profile.individual)} <\n\n"
 	end
 
-	profile = Struct.new(:individual, :mutation, :fitness_calculator, :acceptance).new
-	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.fitness_calculator = FitnessCalculator.new
+	profile = EvoSynth::Core::Profile.new(
+		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
+		:fitness_calculator => FitnessCalculator.new
+	)
 	individual = LocalSearch.create_individual(GENOME_SIZE)
 
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance.new

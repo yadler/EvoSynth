@@ -51,19 +51,15 @@ module MaxOnes
 		individual
 	end
 
-
-	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator, :acceptance).new
-	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
-	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
-	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
-	profile.fitness_calculator = OnesCalculator.new
+	profile = EvoSynth::Core::Profile.new(
+		:individual			=> MaxOnes.create_individual(GENOME_SIZE),
+		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
+		:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
+		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
+		:fitness_calculator => OnesCalculator.new
+	)
 	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(GENOME_SIZE) }
 	profile.population = base_population
-
-	puts "using profile:"
-	profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
-	puts
 
 #	algorithm = EvoSynth::Algorithms::Hillclimber.new(profile)
 #	EvoSynth::Util.tracer { algorithm.run_until_generations_reached(GENERATIONS) }

@@ -45,7 +45,7 @@ module EvoSynth
 				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
 
 				use_profile profile
-				initialize_sub_algorithms!
+				initialize_sub_algorithms(profile)
 				@next_index = 0
 			end
 
@@ -78,19 +78,8 @@ module EvoSynth
 
 			private
 
-			def get_sub_profile
-				sub_profile = Struct.new(:mutation, :parent_selection, :enviromental_selection, :recombination, :population, :fitness_calculator, :recombination_probability).new
-				sub_profile.mutation = @mutation
-				sub_profile.parent_selection = @parent_selection
-				sub_profile.enviromental_selection = @enviromental_selection
-				sub_profile.recombination = @recombination
-				sub_profile.fitness_calculator = @fitness_calculator
-				sub_profile.recombination_probability = @recombination_probability
-				sub_profile
-			end
-
-			def initialize_sub_algorithms!
-				sub_profile = get_sub_profile
+			def initialize_sub_algorithms(profile)
+				sub_profile = profile.clone
 
 				@algorithms = []
 				@populations.each do |sub_population|

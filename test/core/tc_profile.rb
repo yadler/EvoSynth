@@ -22,9 +22,43 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core/binary_genome'
-require 'evosynth/core/array_genome'
-require 'evosynth/core/individuals'
-require 'evosynth/core/fitness_calculator'
-require 'evosynth/core/population'
-require 'evosynth/core/profile'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class ProfileTest < Test::Unit::TestCase
+
+	context "when initialized with a symbol" do
+
+		should "work as expected with simple stuff" do
+			profile = EvoSynth::Core::Profile.new
+			assert_raise(ArgumentError) { (profile.foo) }
+			assert_raise(ArgumentError) { (profile.bar) }
+			profile.foo= "foo"
+			profile.bar= "bar"
+			assert_equal("foo", profile.foo)
+			assert_equal("bar", profile.bar)
+		end
+
+		should "work as expected with more complex stuff" do
+			profile = EvoSynth::Core::Profile.new
+			assert_raise(ArgumentError) { (profile.foo) }
+			assert_raise(ArgumentError) { (profile.bar) }
+			profile.foo= [1,2,3,4,5]
+			struct = Struct.new(:foo,:bar,:baz)
+			profile.bar= struct
+			assert_equal([1,2,3,4,5], profile.foo)
+			assert_equal(struct, profile.bar)
+		end
+
+		should "work with defaults" do
+			profile = EvoSynth::Core::Profile.new(:foo, :bar => "bar", :baz => "baz")
+			assert_nil(profile.foo)
+			assert_equal("bar", profile.bar)
+			assert_equal("baz", profile.baz)
+		end
+
+	end
+
+end

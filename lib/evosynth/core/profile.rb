@@ -22,9 +22,52 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core/binary_genome'
-require 'evosynth/core/array_genome'
-require 'evosynth/core/individuals'
-require 'evosynth/core/fitness_calculator'
-require 'evosynth/core/population'
-require 'evosynth/core/profile'
+module EvoSynth
+	module Core
+
+		# This class is used to create and maintain a algorithm profile
+
+		class Profile
+
+			def initialize(*properties)
+				@properties = {}
+
+				properties.each do |property|
+					if property.is_a?(Symbol)
+						add_symbol(property, nil)
+					elsif property.is_a?(Hash)
+						add_hash(property)
+					else
+						raise ArgumentError, "argument type not supported"
+					end
+				end
+			end
+
+			def method_missing(method_name, *args)
+				if method_name[-1] == "="
+					args = args[0] if args.size == 1
+					add_symbol(method_name[0..method_name.size-2].to_sym, args)
+				else
+					super(*args) unless @properties.has_key?(method_name)
+					@properties[method_name]
+				end
+			end
+
+			def to_s
+				"algorithm profile <#{@properties.to_s}>"
+			end
+
+			private
+
+			def add_symbol(symbol, value)
+				@properties[symbol] = value
+			end
+
+			def add_hash(hash)
+				hash.each_pair { |key, default_value| @properties[key] = default_value }
+			end
+
+		end
+
+	end
+end

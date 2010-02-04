@@ -52,10 +52,11 @@ module EsExample
 		individual
 	end
 
-	profile = Struct.new(:population, :fitness_calculator, :modification_frequency).new
-	profile.fitness_calculator = BenchmarkCalculator.new
-	profile.modification_frequency = 100
-	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
+	profile = EvoSynth::Core::Profile.new(
+		:population				=> EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
+		:modification_frequency => 100,
+		:fitness_calculator		=> BenchmarkCalculator.new
+	)
 
 	algorithm = EvoSynth::Algorithms::AdaptiveES.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))

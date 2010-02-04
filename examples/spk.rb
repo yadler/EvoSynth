@@ -102,12 +102,13 @@ module SPk
 
 	#require 'profile'
 
-	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
-	profile.fitness_calculator = SPkFitnessCalculator.new(K)
-	profile.individual = SPk.create_individual(GENOME_SIZE)
-	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
-	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
+	profile = EvoSynth::Core::Profile.new(
+		:individual			=> SPk.create_individual(GENOME_SIZE),
+		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
+		:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
+		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
+		:fitness_calculator => SPkFitnessCalculator.new(K)
+	)
 	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), INDIVIDUALS * GENERATIONS)

@@ -126,15 +126,14 @@ module CCGAExample
 
 	puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
 
-	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :populations, :fitness_calculator, :recombination_probability).new
-	profile.fitness_calculator = BenchmarkCalculator.new
-
-	profile.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	profile.parent_selection = EvoSynth::Selections::FitnessProportionalSelection.new
-	profile.recombination = EvoSynth::Recombinations::KPointCrossover.new(2)
-	profile.recombination_probability = 0.6
-
-	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) }
+	profile = EvoSynth::Core::Profile.new(
+		:population					=> EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) },
+		:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
+		:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
+		:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
+		:recombination_probability	=> 0.6,
+		:fitness_calculator			=> BenchmarkCalculator.new
+	)
 
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))

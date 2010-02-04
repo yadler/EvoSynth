@@ -109,25 +109,19 @@ module TSP
 		optimal
 	end
 
-	def TSP.algorithm_profile(matrix)
-		combined_mutation = EvoSynth::Mutations::CombinedMutation.new
-		combined_mutation << EvoSynth::Mutations::InversionMutation.new
-		combined_mutation << EvoSynth::Mutations::ShiftingMutation.new
-		combined_mutation << EvoSynth::Mutations::MixingMutation.new
-
-		profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
-		profile.individual = TSP.create_individual(matrix)
-		profile.mutation = combined_mutation
-		profile.parent_selection = EvoSynth::Selections::TournamentSelection.new(3)
-		profile.population = EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) }
-		profile.recombination = EvoSynth::Recombinations::EdgeRecombination.new
-		profile.fitness_calculator = TSP::TSPFitnessCalculator.new(matrix)
-		profile
-	end
-
 	matrix = TSP::ProblemMatrix.new('testdata/tsp/bays29.tsp')
 	optimal_tour = TSP.optimal_tour(matrix)
-	profile = TSP.algorithm_profile(matrix)
+
+	profile = EvoSynth::Core::Profile.new(
+		:individual			=> TSP.create_individual(matrix),
+		:mutation			=> EvoSynth::Mutations::CombinedMutation.new(EvoSynth::Mutations::InversionMutation.new,
+																		 EvoSynth::Mutations::ShiftingMutation.new,
+																		 EvoSynth::Mutations::MixingMutation.new),
+		:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
+		:recombination		=> EvoSynth::Recombinations::EdgeRecombination.new,
+		:population			=> EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) },
+		:fitness_calculator => TSP::TSPFitnessCalculator.new(matrix)
+	)
 	profile.fitness_calculator.calculate_and_set_fitness(optimal_tour)
 
 	puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."

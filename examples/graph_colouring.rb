@@ -104,22 +104,18 @@ module GraphColouring
 	end
 
 
-
 	require 'benchmark'
 	#require 'profile'
 
-	def GraphColouring.algorithm_profile(graph)
-		profile = Struct.new(:mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
-		profile.fitness_calculator = GraphColouring::ColourFitnessCalculator.new(graph)
-		profile.mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01)
-		profile.parent_selection = EvoSynth::Selections::RouletteWheelSelection.new
-		profile.population = EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) }
-		profile.recombination = EvoSynth::Recombinations::KPointCrossover.new
-		profile
-	end
-
 	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-	profile = GraphColouring.algorithm_profile(graph)
+
+	profile = EvoSynth::Core::Profile.new(
+		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
+		:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
+		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
+		:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
+		:fitness_calculator => GraphColouring::ColourFitnessCalculator.new(graph)
+	)
 	base_population = profile.population
 
 	EvoSynth::Algorithms.constants.each do |algorithm|

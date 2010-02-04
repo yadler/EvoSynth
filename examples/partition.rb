@@ -148,12 +148,13 @@ module Partitionproblem
 	problem = Partitionproblem::Testdata.gen_layer_set
 	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-	profile = Struct.new(:individual, :mutation, :parent_selection, :recombination, :population, :fitness_calculator).new
-	profile.individual = Partitionproblem.get_new_individual_from(problem)
-	profile.mutation = PartitionMutation.new
-	profile.parent_selection = EvoSynth::Selections::TournamentSelection.new(3)
-	profile.recombination = EvoSynth::Recombinations::Identity.new
-	profile.fitness_calculator = Partitionproblem::PartitionFitnessCalculator.new
+	profile = EvoSynth::Core::Profile.new(
+		:individual			=> Partitionproblem.get_new_individual_from(problem),
+		:mutation			=> PartitionMutation.new,
+		:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
+		:recombination		=> EvoSynth::Recombinations::Identity.new,
+		:fitness_calculator => Partitionproblem::PartitionFitnessCalculator.new
+	)
 
 	puts "Starting with the following population:"
 	puts "\tbest individual: #{base_population.best.fitness}"
