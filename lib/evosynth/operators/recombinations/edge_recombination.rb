@@ -49,15 +49,16 @@ module EvoSynth
 
 			def recombine_to_one(parent_one, parent_two)
 				child = parent_one.deep_clone
+				child_genome = child.genome
 				adj_matrix = generate_adj_matrix(parent_one.genome)
 
 				start = rand(2) > 0 ? parent_one.genome[0] : parent_two.genome[0]
-				child.genome[0] = start
+				child_genome[0] = start
 
-				child.genome.each_index do |index|
+				child_genome.each_index do |index|
 					next if index == 0
-					child.genome[index] = find_next_gene(adj_matrix, start)
-					start = child.genome[index]
+					child_genome[index] = find_next_gene(adj_matrix, start)
+					start = child_genome[index]
 				end
 
 				child
@@ -70,7 +71,8 @@ module EvoSynth
 				reachable.each do |gene|
 					next unless adj_matrix.has_key?(gene)
 
-					adj_size = 1 if adj_matrix[gene].include?(gene) ? adj_matrix[gene].size - 1 : adj_matrix[gene].size
+					neighbors = adj_matrix[gene]
+					adj_size = 1 if neighbors.include?(gene) ? neighbors.size - 1 : neighbors.size
 
 					if min.nil?
 						min = adj_size
