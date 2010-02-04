@@ -28,7 +28,7 @@ require 'evosynth'
 
 module EsExample
 
-	DIMENSIONS = 10
+	DIMENSIONS = 5
 	GENERATIONS = 1000
 	POPULATION_SIZE = 25
 
@@ -41,27 +41,6 @@ module EsExample
 
 		def calculate_fitness(individual)
 			EsExample.fitness_function(individual.genome)
-		end
-
-	end
-
-	class ConsoleWriter
-
-		def initialize(print_gen_step = 10, verbose = true)
-			@print_generation_step = print_gen_step
-			@verbose = verbose
-		end
-
-		def update(generations_computed, algorithm)
-			if generations_computed % @print_generation_step == 0
-				best = "no best individual could be retrieved"
-				worst = "no worst individual could be retrieved"
-
-				best = (@verbose || !defined? algorithm.best_solution.fitness) ? algorithm.best_solution : algorithm.best_solution.fitness
-				worst = (@verbose || !defined? algorithm.worst_solution.fitness) ? algorithm.worst_solution : algorithm.worst_solution.fitness
-
-				puts "#{generations_computed}\t#{best}\t#{worst}\t#{algorithm.sigma}\t#{algorithm.success}"
-			end
 		end
 
 	end
@@ -79,7 +58,7 @@ module EsExample
 	profile.population = EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
 
 	algorithm = EvoSynth::Algorithms::AdaptiveES.new(profile)
-	algorithm.add_observer(EsExample::ConsoleWriter.new(100, false))
+	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
 	puts
