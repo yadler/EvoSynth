@@ -22,12 +22,44 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/util/mdarray'
-require 'evosynth/util/benchmark_functions'
-require 'evosynth/util/math'
-require 'evosynth/util/decoder/gray'
-require 'evosynth/util/decoder/binary_to_real'
-require 'evosynth/util/output/console_writer'
-require 'evosynth/util/output/universal_logger'
-require 'evosynth/util/output/tracer'
-require 'evosynth/util/runner/benchmark_runner'
+module EvoSynth
+	module Util
+
+#		NODE_STRING = "\\node[box] (one) [below=0.6cm of #{$parent.delete(".:")}] {Software Schicht 1};"
+
+		def Util.tracer(&block)
+			$parent = "start"
+			$parents = [] << $parent
+			$lines = []
+
+			set_trace_func lambda { |event, file, line, id, binding, classname|
+				next if classname.to_s =~ /Genome/
+
+				if (event == "call" || event == "return") && classname.inspect =~ /EvoSynth/
+#					puts "#{classname}.#{id}"
+					if event == "return"
+						$parent = $parents.pop
+						name = classname.to_s.gsub(/.*(::)/, "")
+#						$parent = $parents.pop if name == $parent
+						$lines << "#{name} --> #{$parent}:#{id}"
+						$lines << "deactivate #{name}"
+#						$lines << "REMOVED: #{$parent} \t\t PARENTS = #{$parents.to_s}"
+					elsif event == "call"
+						name = classname.to_s.gsub(/.*(::)/, "")
+						$lines << "#{$parent} -> #{name}:#{id}"
+						$lines << "activate #{name}"
+
+						$parents << name if name != $parents.last
+#						$lines << "ADDED  : #{name} \t\t PARENTS = #{$parents.to_s}"
+						$parent = name
+					end
+				end
+			}
+
+			block.call
+
+			set_trace_func nil
+		end
+
+	end
+end

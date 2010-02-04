@@ -30,7 +30,7 @@ module MaxOnes
 
 	GENOME_SIZE = 25
 	POP_SIZE = 25
-	GENERATIONS = 1000
+	GENERATIONS = 1
 
 	class OnesCalculator
 		include EvoSynth::Core::FitnessCalculator
@@ -64,6 +64,10 @@ module MaxOnes
 	puts "using profile:"
 	profile.each_pair { |key, value| puts "\t#{key} => #{value}" }
 	puts
+
+#	algorithm = EvoSynth::Algorithms::Hillclimber.new(profile)
+#	EvoSynth::Util.tracer { algorithm.run_until_generations_reached(GENERATIONS) }
+#	$lines.each { |line| puts line }
 
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
 	puts profile.fitness_calculator
