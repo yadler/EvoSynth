@@ -137,11 +137,11 @@ module CCGAExample
 
 	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
-	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+#	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
 	puts
-	puts "Elistism GA: best 'combined' individual: #{profile.fitness_calculator.decode(result.best).to_s}"
-	puts "Elistism GA: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
+#	puts "Elistism GA: best 'combined' individual: #{profile.fitness_calculator.decode(result.best).to_s}"
+#	puts "Elistism GA: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
 	puts
 
 	puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
@@ -160,14 +160,27 @@ module CCGAExample
 #	puts profile.populations
 
 	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+#	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
 	puts
-	puts "CCGA-1: best 'combined' individual: #{result.to_s}"
-	puts "CCGA-1: fitness = #{CCGAExample.fitness_function(result)}"
+
+	best = []
+	result.each { |pop| best << pop.best }
+
+	puts "CCGA-1: best 'combined' individual:"
+	puts best
+	puts
+
+	best_genome = []
+	best.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
+
+	puts "CCGA-1: best 'combined' genome:"
+	puts best_genome
+	puts
+	puts "CCGA-1: fitness = #{CCGAExample.fitness_function(best_genome)}"
 	puts
 
 	puts "# --- CCGA-2 ----------------------------------------------------------------------------------- #"
@@ -186,12 +199,26 @@ module CCGAExample
 #	puts profile.populations
 
 	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+#	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
 	puts
-	puts "CCGA-2: best 'combined' individual: #{result.to_s}"
-	puts "CCGA-2: fitness = #{CCGAExample.fitness_function(result)}"
+
+	best = []
+	result.each { |pop| best << pop.best }
+
+	puts "CCGA-2: best 'combined' individual:"
+	puts best
+	puts
+
+	best_genome = []
+	best.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
+
+	puts "CCGA-2: best 'combined' genome:"
+	puts best_genome
+	puts
+	puts "CCGA-2: fitness = #{CCGAExample.fitness_function(best_genome)}"
+	puts
 end

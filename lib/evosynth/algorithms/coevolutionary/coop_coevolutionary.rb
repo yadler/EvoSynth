@@ -55,20 +55,18 @@ module EvoSynth
 
 			def best_solution
 				best = []
-				@populations.each { |pop| best << pop.best.fitness }
+				@populations.each { |pop| best << pop.best }
 				best.to_s
 			end
 
 			def worst_solution
 				worst = []
-				@populations.each { |pop| worst << pop.worst.fitness }
+				@populations.each { |pop| worst << pop.worst }
 				worst.to_s
 			end
 
 			def return_result
-				best = []
-				@populations.each { |pop| best << pop.best.fitness }
-				best
+				@populations
 			end
 
 			def next_generation
