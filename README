@@ -1,9 +1,9 @@
 == About EvoSynth
 
-EvoSynth is a framework for rapid prototyping of evolutionary and genetic algorithms.
+EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary and genetic algorithms.
 
-Sourcecode:: http://gitorious.org/evosynth
-Author::    Yves Adler (mailto:yves.adler@googlemail.com)
+Sourcecode:: http://gitorious.org/evosynth and http://github.com/yadler/EvoSynth
+Author::    Yves Adler (http://yadler.wordpress.com/, mailto:yves.adler@googlemail.com)
 Copyright:: Copyright (c) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
 License::   MIT (see LICENSE)
 

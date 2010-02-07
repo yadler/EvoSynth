@@ -2,19 +2,33 @@ Features:
 	- RunnableAlgortihm (run_until) geschickt mit FitnessCalculator koppeln,
 	um nur eine bestimmt "evaluierungsanzahl" zu rennen
 	- CCGA example überarbeiten und eventuell toolklassen extrahieren
-	- EvoSynth:Util überarbeiten
 	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
 	die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
+
+	- BinaryGenome mittels inline C optimieren
 
 	- CombinedMutation zu ProportionalCombinedMutation umbenennen
 	- SequentiallyCombinedMutation erstellen (alle nacheinander)
 	- analog dazu combined rekombinationen erstellen
 	- ist sowas bei selektionen nützlich? eher nicht!
+		=> vielleicht CombinedOperator erstellen? (method_missing magie!)
+
 
 	- variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
 
+	- weak und strong elistism (elitären GA überarbeiten)
+		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
+
+	- Algorithm zu Evolver umbenennen? scheint gebräuchlich zu sein
+	- Bootstrap zeugs, inspiriert von OpenBEAGLE
+	- Operationen je nach Repräsentation gruppieren
+	- EvoSynth:Util überarbeiten
+
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
+		=> eigenen Randomizer schreiben?! eher nicht!
+	- ES überarbeiten und glatt ziehen
+	- ES: mü+lambda und mu,lambda klären!
 
 Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
@@ -24,6 +38,8 @@ Testfälle:
 	- EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
 
 Algorithmen:
+	- Mehrzieloptimierung
+	- Gentische Programmierung (Ruby programme wäre geil!)
 	- DERANDOMISIERTE-ES (Weicker page 139)
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
