@@ -36,54 +36,25 @@ module MaxOnes
 		include EvoSynth::Core::FitnessCalculator
 
 		def calculate_fitness(individual)
-			fitness = 0.0
-			individual.genome.each { |gene| fitness += 1 if gene }
-			fitness
+			individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
 		end
-
 	end
 
-
-	def MaxOnes.create_individual(genome_size)
-		individual = EvoSynth::Core::MaximizingIndividual.new
-		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-		individual.genome.map! { rand(2) > 0 ? true : false }
-		individual
+	def MaxOnes.create_individual
+		EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
 	end
 
 	profile = EvoSynth::Core::Profile.new(
-		:individual			=> MaxOnes.create_individual(GENOME_SIZE),
-		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-		:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
-		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
-		:fitness_calculator => OnesCalculator.new
+		:individual			=> MaxOnes.create_individual,
+		:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
+		:fitness_calculator => MaxOnes::OnesCalculator.new,
+		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	)
-	base_population = EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual(GENOME_SIZE) }
-	profile.population = base_population
 
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.fitness_calculator
-	puts
+	puts profile.fitness_calculator, ""
 
-	puts "Local Search with Simulated Annealing"
 	profile.fitness_calculator.reset_counters
-	profile.individual = MaxOnes.create_individual(GENOME_SIZE)
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::LocalSearch.new(profile), POP_SIZE * GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
 	puts profile.fitness_calculator
-
-	EvoSynth::Algorithms.constants.each do |algorithm|
-		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
-		next unless defined? algorithm_class.new
-		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
-		next if algorithm_class == EvoSynth::Algorithms::LocalSearch
-		next if algorithm_class == EvoSynth::Algorithms::CoopCoevolutionary
-		next if algorithm_class == EvoSynth::Algorithms::AdaptiveES
-
-		profile.population = base_population.deep_clone
-		profile.fitness_calculator.reset_counters
-		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS)
-		puts profile.fitness_calculator
-		puts
-	end
 end
