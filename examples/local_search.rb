@@ -32,34 +32,34 @@ module LocalSearch
 	DIMENSIONS = 5
 	GENERATIONS = 5000
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
+	UPPER_LIMIT = 5.12
+	LOWER_LIMIT = -5.12
 
 	class FitnessCalculator
 		include EvoSynth::Core::FitnessCalculator
 
 		def decode(individual)
 			values = []
-			DIMENSIONS.times { |dim| values << EvoSynth::Decoder.binary_to_real(individual.genome[dim * VALUE_BITS, VALUE_BITS], -5.12, 5.12) }
+			DIMENSIONS.times do |dim|
+				values << EvoSynth::Decoder.binary_to_real(individual.genome[dim * VALUE_BITS, VALUE_BITS], LOWER_LIMIT, UPPER_LIMIT)
+			end
 			values
 		end
 
 		def calculate_fitness(individual)
 			EvoSynth::BenchmarkFuntions.sphere(decode(individual))
 		end
-
 	end
 
-	def LocalSearch.create_individual(genome_size)
-		individual = EvoSynth::Core::MinimizingIndividual.new
-#		individual = EvoSynth::Core::MaximizingIndividual.new
-		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-		individual.genome.map! { rand(2) > 0 ? true : false }
-		individual
+	def LocalSearch.create_individual
+		EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
 	end
 
 	def LocalSearch.print_acceptance_state(algorithm)
-		puts "\nAcceptacne state:" unless algorithm.acceptance.instance_variables.empty?
+		puts "\nAcceptance:" unless algorithm.acceptance.instance_variables.empty?
 		algorithm.acceptance.instance_variables.each do |var|
-			puts "\t#{var} = #{algorithm.acceptance.instance_variable_get(var)}"
+			is_accessor = (var.to_s.gsub("@", "") + "=").to_sym
+			puts "\t#{var} = #{algorithm.acceptance.instance_variable_get(var)}" if algorithm.acceptance.respond_to?(is_accessor)
 		end
 		puts
 	end
@@ -79,17 +79,17 @@ module LocalSearch
 			"delta"       => ->{ algorithm.acceptance.delta }
 		))
 
-		algorithm.run_until_generations_reached(GENERATIONS)
+		result = algorithm.run_until_generations_reached(GENERATIONS)
 		LocalSearch.print_acceptance_state(algorithm)
 
-		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(profile.individual)} <\n\n"
+		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(result)}\n\n"
 	end
 
 	profile = EvoSynth::Core::Profile.new(
 		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 		:fitness_calculator => FitnessCalculator.new
 	)
-	individual = LocalSearch.create_individual(GENOME_SIZE)
+	individual = LocalSearch.create_individual
 
 	profile.acceptance = EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance.new
 	LocalSearch.run_with(profile, individual)
