@@ -1,7 +1,15 @@
+Was sind zwingend umzusetzen, um mal ein 0.1 Release mit allem pipapo zu machen?!
+
 Features:
 	- RunnableAlgortihm (run_until) geschickt mit FitnessCalculator koppeln,
 	um nur eine bestimmt "evaluierungsanzahl" zu rennen
+		=> lohnt sich dafür ein Termination Operator oder ist ein lambda ausdruck
+		   ausreichend
+
+	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
+
 	- CCGA example überarbeiten und eventuell toolklassen extrahieren
+
 	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
 	die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
 
@@ -12,17 +20,35 @@ Features:
 	- analog dazu combined rekombinationen erstellen
 	- ist sowas bei selektionen nützlich? eher nicht!
 		=> vielleicht CombinedOperator erstellen? (method_missing magie!)
-
+		=> was ist mit einem if-then-else CombinedOperator wie in OpenBEAGLE?
+		=> bei diesen generischen combined operatoren ist das problem der default
+		   rückgabewert! (was wenn keine operation genutzt wird)
 
 	- variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
 
 	- weak und strong elistism (elitären GA überarbeiten)
 		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
 
-	- Algorithm zu Evolver umbenennen? scheint gebräuchlich zu sein
-	- Bootstrap zeugs, inspiriert von OpenBEAGLE
-	- Operationen je nach Repräsentation gruppieren
-	- EvoSynth:Util überarbeiten
+	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
+		=> Breeder klingt am besten (siehe ECJ)
+
+	- EvoSynth modul struktur überarbeiten!
+		=> Algorithm zu Evolver umbenennen? scheint gebräuchlich zu sein
+		=> Operationen je nach Repräsentation gruppieren
+		=> EvoSynth:Util überarbeiten
+		=> FitnessCalculator zu Evaluator umbenennen
+
+	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
+		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
+
+	- OpenBEAGLE hat ein relativ interessantes Operator Konzept:
+		=> siehe: http://beagle.gel.ulaval.ca/refmanual/beagle/html/df/d5a/group__Op.html
+
+	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
+
+	- Checkpointing, Save, Stop, Restart, Continue
+		=> eventuell mit Logger verknüppern
+
 
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
