@@ -27,8 +27,7 @@ require 'evosynth'
 
 module SPk
 
-	class SPkFitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class SPkFitnessEvaluator < EvoSynth::Core::Evaluator
 
 		def initialize(k)
 			@k = k
@@ -107,7 +106,7 @@ module SPk
 		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 		:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
-		:fitness_calculator => SPkFitnessCalculator.new(K)
+		:evaluator			=> SPkFitnessEvaluator.new(K)
 	)
 	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 

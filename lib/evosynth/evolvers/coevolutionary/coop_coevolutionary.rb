@@ -36,7 +36,7 @@ module EvoSynth
 
 			def initialize(profile)
 				init_profile :populations,
-				    :fitness_calculator,
+				    :evaluator,
 				    :mutation,
 				    :parent_selection => DEFAULT_SELECTION,
 					:enviromental_selection => DEFAULT_SELECTION,

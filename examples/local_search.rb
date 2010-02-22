@@ -35,8 +35,7 @@ module LocalSearch
 	UPPER_LIMIT = 5.12
 	LOWER_LIMIT = -5.12
 
-	class FitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class LocalSearchEvaluator < EvoSynth::Core::Evaluator
 
 		def decode(individual)
 			values = []
@@ -82,12 +81,12 @@ module LocalSearch
 		result = algorithm.run_until_generations_reached(GENERATIONS)
 		LocalSearch.print_acceptance_state(algorithm)
 
-		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.fitness_calculator.calculate_fitness(result)}\n\n"
+		puts "\n-> fitness after #{GENERATIONS} generations: #{profile.evaluator.calculate_fitness(result)}\n\n"
 	end
 
 	profile = EvoSynth::Core::Profile.new(
 		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-		:fitness_calculator => FitnessCalculator.new
+		:evaluator			=> LocalSearchEvaluator.new
 	)
 	individual = LocalSearch.create_individual
 

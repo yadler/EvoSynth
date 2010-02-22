@@ -37,8 +37,7 @@ module CCGAExample
 		EvoSynth::BenchmarkFuntions.rastgrin(xs)
 	end
 
-	class BenchmarkCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class StandardEvaluator < EvoSynth::Core::Evaluator
 
 		def decode(individual)
 			values = []
@@ -53,8 +52,7 @@ module CCGAExample
 	end
 
 
-	class CCGABenchmarkCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class CCGABenchmarkEvaluator < EvoSynth::Core::Evaluator
 
 		def initialize(populations)
 			super()
@@ -97,7 +95,7 @@ module CCGAExample
 
 	end
 
-	class CCGA2BenchmarkCalculator < CCGABenchmarkCalculator
+	class CCGA2BenchmarkEvaluator < CCGABenchmarkEvaluator
 
 		def calculate_fitness(individual)
 			best = CCGAExample.fitness_function(decode(individual))
@@ -132,16 +130,16 @@ module CCGAExample
 		:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
 		:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
 		:recombination_probability	=> 0.6,
-		:fitness_calculator			=> BenchmarkCalculator.new
+		:evaluator					=> StandardEvaluator.new
 	)
 
 	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 #	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 	puts
-#	puts "Elistism GA: best 'combined' individual: #{profile.fitness_calculator.decode(result.best).to_s}"
-#	puts "Elistism GA: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
+#	puts "Elistism GA: best 'combined' individual: #{profile.evaluator.decode(result.best).to_s}"
+#	puts "Elistism GA: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 	puts
 
 	puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
@@ -151,20 +149,20 @@ module CCGAExample
 		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 	end
 
-	profile.fitness_calculator = CCGABenchmarkCalculator.new(profile.populations)
+	profile.evaluator = CCGABenchmarkEvaluator.new(profile.populations)
 
 	DIMENSIONS.times do |dim|
-		profile.populations[dim].each { |individual| profile.fitness_calculator.calculate_intitial_fitness(individual) }
-#		profile.populations[dim].each { |individual| puts "#{dim} == #{profile.fitness_calculator.decode_rand(individual).to_s}" }
+		profile.populations[dim].each { |individual| profile.evaluator.calculate_intitial_fitness(individual) }
+#		profile.populations[dim].each { |individual| puts "#{dim} == #{profile.evaluator.decode_rand(individual).to_s}" }
 	end
 #	puts profile.populations
 
 	algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 #	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
-	profile.fitness_calculator.reset_counters
+	profile.evaluator.reset_counters
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 	puts
 
 	best = []
@@ -190,10 +188,10 @@ module CCGAExample
 		profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 	end
 
-	profile.fitness_calculator = CCGA2BenchmarkCalculator.new(profile.populations)
+	profile.evaluator = CCGA2BenchmarkEvaluator.new(profile.populations)
 
 	DIMENSIONS.times do |dim|
-		profile.populations[dim].each { |individual| profile.fitness_calculator.calculate_intitial_fitness(individual) }
+		profile.populations[dim].each { |individual| profile.evaluator.calculate_intitial_fitness(individual) }
 #		profile.populations[dim].each { |individual| puts "#{dim} == #{profile.fitness_calculator.decode_rand(individual).to_s}" }
 	end
 #	puts profile.populations
@@ -201,9 +199,9 @@ module CCGAExample
 	algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 #	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
-	profile.fitness_calculator.reset_counters
+	profile.evaluator.reset_counters
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 	puts
 
 	best = []

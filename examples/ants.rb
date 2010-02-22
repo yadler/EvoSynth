@@ -157,8 +157,7 @@ module Ants
 	end
 
 
-	class AntFitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class AntFitnessCalculator < EvoSynth::Core::Evaluator
 
 		def initialize(problem_matrix)
 			@problem_matrix = problem_matrix
@@ -236,7 +235,7 @@ module Ants
 			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:population			=> population,
 			:recombination		=> EvoSynth::Recombinations::PartiallyMappedCrossover.new,
-			:fitness_calculator => Ants::AntFitnessCalculator.new(matrix)
+			:evaluator			=> Ants::AntFitnessCalculator.new(matrix)
 		)
 	end
 
@@ -258,7 +257,7 @@ module Ants
 
 	opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 	optimal = EvoSynth::Core::MinimizingIndividual.new(EvoSynth::Core::ArrayGenome.new(opt_tour))
-	profile.fitness_calculator.calculate_and_set_fitness(optimal)
+	profile.evaluator.calculate_and_set_fitness(optimal)
 	puts "Optimal Individual for this problem: #{optimal}"
 
 	puts "Best Individual before evolution: #{profile.population.best}"

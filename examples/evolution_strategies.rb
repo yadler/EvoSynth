@@ -36,8 +36,9 @@ module EsExample
 		EvoSynth::BenchmarkFuntions.sphere(xs)
 	end
 
-	class BenchmarkCalculator
-		include EvoSynth::Core::FitnessCalculator
+	# FIXME: create tool class for that!
+
+	class BenchmarkEvaluator < EvoSynth::Core::Evaluator
 
 		def calculate_fitness(individual)
 			EsExample.fitness_function(individual.genome)
@@ -55,23 +56,23 @@ module EsExample
 	profile = EvoSynth::Core::Profile.new(
 		:population				=> EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
 		:modification_frequency => 100,
-		:fitness_calculator		=> BenchmarkCalculator.new
+		:evaluator				=> BenchmarkEvaluator.new
 	)
 
 	algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 	puts
-	puts "Adaptive ES: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
+	puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 	puts
 
 	algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 	puts
-	puts "Self-Adaptive ES: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
+	puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 	puts
 
 end

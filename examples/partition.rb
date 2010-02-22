@@ -29,8 +29,7 @@ require 'evosynth'
 module Partitionproblem
 
 
-	class PartitionFitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class PartitionEvaluator < EvoSynth::Core::Evaluator
 
 		def calculate_fitness(individual)
 			sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
@@ -153,7 +152,7 @@ module Partitionproblem
 		:mutation			=> PartitionMutation.new,
 		:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 		:recombination		=> EvoSynth::Recombinations::Identity.new,
-		:fitness_calculator => Partitionproblem::PartitionFitnessCalculator.new
+		:evaluator			=> Partitionproblem::PartitionEvaluator.new
 	)
 
 	puts "Starting with the following population:"

@@ -36,8 +36,7 @@ module DataViz
 	GENERATIONS = 250
 	GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
-	class FitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class DataVizEvaluator < EvoSynth::Core::Evaluator
 
 		def decode(individual)
 			values = []
@@ -114,10 +113,10 @@ module DataViz
 		:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
 		:population			=> EvoSynth::Core::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) },
-		:fitness_calculator => FitnessCalculator.new
+		:evaluator			=> DataVizEvaluator.new
 	)
 
-	profile.fitness_calculator.reset_counters
+	profile.evaluator.reset_counters
 	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 
 	data = []

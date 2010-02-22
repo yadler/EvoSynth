@@ -25,6 +25,6 @@
 require 'evosynth/core/binary_genome'
 require 'evosynth/core/array_genome'
 require 'evosynth/core/individuals'
-require 'evosynth/core/fitness_calculator'
+require 'evosynth/core/evaluator'
 require 'evosynth/core/population'
 require 'evosynth/core/profile'

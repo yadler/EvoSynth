@@ -75,8 +75,7 @@ module TSP
 	end
 
 
-	class TSPFitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class TSPFitnessEvaluator < EvoSynth::Core::Evaluator
 
 		def initialize(problem_matix)
 			super()
@@ -120,9 +119,9 @@ module TSP
 		:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 		:recombination		=> EvoSynth::Recombinations::EdgeRecombination.new,
 		:population			=> EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) },
-		:fitness_calculator => TSP::TSPFitnessCalculator.new(matrix)
+		:evaluator			=> TSP::TSPFitnessEvaluator.new(matrix)
 	)
-	profile.fitness_calculator.calculate_and_set_fitness(optimal_tour)
+	profile.evaluator.calculate_and_set_fitness(optimal_tour)
 
 	puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
 	puts "Optimal Individual for this problem: #{optimal_tour}"

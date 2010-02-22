@@ -40,7 +40,7 @@ module EvoSynth
 
 			def initialize(profile)
 				init_profile :population,
-				    :fitness_calculator,
+				    :evaluator,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :mutation => DEFAULT_MUTATION,
 				    :adjustment => DEFAULT_ADJUSTMENT,
@@ -49,7 +49,7 @@ module EvoSynth
 
 				use_profile profile
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
@@ -74,7 +74,7 @@ module EvoSynth
 				(@child_factor * @population.size).times do
 					parent = @parent_selection.select(@population, 1).first
 					child = @mutation.mutate(parent)
-					@fitness_calculator.calculate_and_set_fitness(child)
+					@evaluator.calculate_and_set_fitness(child)
 					child_population << child
 				end
 

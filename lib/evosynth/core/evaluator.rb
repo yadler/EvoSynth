@@ -25,8 +25,7 @@
 module EvoSynth
 	module Core
 
-		module FitnessCalculator
-
+		class Evaluator
 			attr_reader :called, :calculated
 
 			def initialize

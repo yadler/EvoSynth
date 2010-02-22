@@ -36,7 +36,7 @@ module EvoSynth
 
 			def initialize(profile)
 				init_profile :population, 
-				    :fitness_calculator,
+				    :evaluator,
 				    :mutation,
 				    :parent_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
@@ -44,7 +44,7 @@ module EvoSynth
 
 				use_profile profile
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
@@ -81,7 +81,7 @@ module EvoSynth
 					@population.add(@mutation.mutate(child_two))
 				end
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 			end
 
 		end

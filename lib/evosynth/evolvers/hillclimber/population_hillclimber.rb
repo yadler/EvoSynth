@@ -31,10 +31,10 @@ module EvoSynth
 			include EvoSynth::Evolvers::Evolver
 
 			def initialize(profile)
-				init_profile :mutation, :population, :fitness_calculator
+				init_profile :mutation, :population, :evaluator
 				use_profile profile
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
@@ -59,7 +59,7 @@ module EvoSynth
 
 			def mutate(individual)
 				child = @mutation.mutate(individual)
-				@fitness_calculator.calculate_and_set_fitness(child)
+				@evaluator.calculate_and_set_fitness(child)
 				child > individual ? child : individual
 			end
 

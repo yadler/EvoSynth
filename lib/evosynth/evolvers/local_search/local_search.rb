@@ -40,11 +40,11 @@ module EvoSynth
 			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
 
 			def initialize(profile)
-				init_profile :individual, :mutation, :fitness_calculator, :acceptance => DEFAULT_ACCEPTANCE
+				init_profile :individual, :mutation, :evaluator, :acceptance => DEFAULT_ACCEPTANCE
 
 				use_profile profile
 
-				@fitness_calculator.calculate_and_set_fitness(@individual)
+				@evaluator.calculate_and_set_fitness(@individual)
 			end
 
 			def to_s
@@ -65,7 +65,7 @@ module EvoSynth
 
 			def next_generation
 				child = @mutation.mutate(@individual)
-				@fitness_calculator.calculate_and_set_fitness(child)
+				@evaluator.calculate_and_set_fitness(child)
 				@individual = child if @acceptance.accepts(@individual, child, @generations_computed)
 			end
 		end

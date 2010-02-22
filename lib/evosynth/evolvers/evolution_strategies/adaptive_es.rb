@@ -46,7 +46,7 @@ module EvoSynth
 
 			def initialize(profile)
 				init_profile :population,
-				    :fitness_calculator,
+				    :evaluator,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :mutation => DEFAULT_MUTATION,
@@ -58,7 +58,7 @@ module EvoSynth
 				@sigma = DEFAULT_SIGMA
 				@success = 0
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
@@ -85,7 +85,7 @@ module EvoSynth
 					@mutation.sigma = @sigma # FIXME: remove this strong dependency on GaussMutation
 					child = @mutation.mutate(parent)
 
-					@fitness_calculator.calculate_and_set_fitness(child)
+					@evaluator.calculate_and_set_fitness(child)
 					@success += 1 if child > parent
 					child_population << child
 				end

@@ -26,6 +26,8 @@ require 'evosynth'
 require 'set'
 
 
+# FIXME: refactor me and extract tool classes !
+
 module GraphColouring
 
 	MUTATION_RATE = 5
@@ -69,8 +71,7 @@ module GraphColouring
 	end
 
 
-	class ColourFitnessCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class ColourEvaluator < EvoSynth::Core::Evaluator
 
 		def initialize(graph)
 			@graph = graph
@@ -114,9 +115,11 @@ module GraphColouring
 		:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
 		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
 		:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
-		:fitness_calculator => GraphColouring::ColourFitnessCalculator.new(graph)
+		:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
 	)
 	base_population = profile.population
+
+	# FIXME: use just one or two algorithms!
 
 	EvoSynth::Evolvers.constants.each do |algorithm|
 		algorithm_class = EvoSynth::Evolvers.const_get(algorithm)

@@ -36,7 +36,6 @@ Features:
 		=> Algorithm zu Evolver umbenennen? scheint gebräuchlich zu sein
 		=> Operationen je nach Repräsentation gruppieren
 		=> EvoSynth:Util überarbeiten
-		=> FitnessCalculator zu Evaluator umbenennen
 
 	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
 		=> einstellbarer seed, für reproduzierbare Evolutionsläufe

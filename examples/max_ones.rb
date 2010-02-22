@@ -32,8 +32,7 @@ module MaxOnes
 	POP_SIZE = 25
 	GENERATIONS = 1000
 
-	class OnesCalculator
-		include EvoSynth::Core::FitnessCalculator
+	class MaxOnesEvaluator < EvoSynth::Core::Evaluator
 
 		def calculate_fitness(individual)
 			individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
@@ -47,14 +46,14 @@ module MaxOnes
 	profile = EvoSynth::Core::Profile.new(
 		:individual			=> MaxOnes.create_individual,
 		:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
-		:fitness_calculator => MaxOnes::OnesCalculator.new,
+		:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
 		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	)
 
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.fitness_calculator, ""
+	puts profile.evaluator, ""
 
-	profile.fitness_calculator.reset_counters
+	profile.evaluator.reset_counters
 	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
+	puts profile.evaluator
 end
