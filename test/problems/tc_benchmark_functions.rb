@@ -38,7 +38,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near 48.452841639435974 at [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]" do
 			xs = [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]
-			assert_in_delta 48.452841639435974, EvoSynth::BenchmarkFuntions.sinus_sum(xs), 0.0001
+			assert_in_delta 48.452841639435974, EvoSynth::Problems::BenchmarkFuntions.sinus_sum(xs), 0.0001
 		end
 
 	end

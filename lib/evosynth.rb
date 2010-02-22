@@ -24,6 +24,7 @@
 
 require 'evosynth/core'
 require 'evosynth/util'
+require 'evosynth/decoder'
 require 'evosynth/problems'
 require 'evosynth/operators'
 require 'evosynth/evolvers'

@@ -22,5 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/tc_math'
+require 'evosynth/decoder/gray'
+require 'evosynth/decoder/binary_to_real'

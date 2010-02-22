@@ -22,5 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/util/tc_mdarray'
-require 'test/util/tc_math'
+require 'test/problems/tc_benchmark_functions'

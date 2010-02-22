@@ -61,7 +61,7 @@ Features:
 
 	- EvoSynth modul struktur überarbeiten!
 		=> Operationen je nach Repräsentation gruppieren
-		=> EvoSynth:Util überarbeiten
+		=> EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
 
 	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
 		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
