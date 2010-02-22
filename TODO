@@ -1,51 +1,8 @@
-Was sind zwingend umzusetzen, um mal ein 0.1 Release mit allem pipapo zu machen?!
-
-Features:
-	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
-
-	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
-
-	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
-	  die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
-
-	- BinaryGenome mittels inline C optimieren
-
-	- CombinedMutation zu ProportionalCombinedMutation umbenennen
-	- SequentiallyCombinedMutation erstellen (alle nacheinander)
-	- analog dazu combined rekombinationen erstellen
-	- ist sowas bei selektionen nützlich? eher nicht!
-		=> vielleicht CombinedOperator erstellen? (method_missing magie!)
-		=> was ist mit einem if-then-else CombinedOperator wie in OpenBEAGLE?
-		=> bei diesen generischen combined operatoren ist das problem der default
-		   rückgabewert! (was wenn keine operation genutzt wird)
-
-	- variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
-
-	- weak und strong elistism (elitären GA überarbeiten)
-		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
-
-	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
-		=> Breeder klingt am besten (siehe ECJ)
-
-	- EvoSynth modul struktur überarbeiten!
-		=> Operationen je nach Repräsentation gruppieren
-		=> EvoSynth:Util überarbeiten
-
-	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
-		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
-
-	- OpenBEAGLE hat ein relativ interessantes Operator Konzept:
-		=> siehe: http://beagle.gel.ulaval.ca/refmanual/beagle/html/df/d5a/group__Op.html
-
-	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
-
-	- Checkpointing für Evolver, Save, Stop, Restart, Continue
-		=> eventuell mit Logger verknüppern
-
+============================== EvoSynth 0.1 ====================================
 
 Fehler:
-	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281)
-		=> eigenen Randomizer schreiben?! eher nicht!
+	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281) 
+		=> eigenen Randomizer schreiben (standard rand und normalverteilt fürs erste)
 	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
 
@@ -56,24 +13,77 @@ Testfälle:
 	- EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
 	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
-Algorithmen:
-	- Mehrzieloptimierung
-	- Gentische Programmierung (Ruby programme wäre geil!)
-	- DERANDOMISIERTE-ES (Weicker page 139)
-	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-	- reichlich grob formuliert:  EA-SCHEMA (Weicker page 39)
-	- eher als beispiel geeignet: EA-HANDLUNGSREISENDENPROBLEM (Weicker page 31)
-	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite unterscheidung gemacht werden?
+Features:
 
-Benchmarkfunktionen:
-	- Einsenzählproblem (Weicker page 272)
-	- Royal-Road (Weicker page 272)
-	- C-Funktion (Weicker page 272)
-	- sämtliche mit Randbedingungen (Weicker page 274)
+	- Jeden morgen ein paar klassen Dokumentieren!
 
-Decoder/Encoder:
-	- RealToBinary
+	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
+	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
 
-EvoBench: Benchmark für Evolutionäre Algorithmen
-	- mutationen, selektionen und co
-	- diversität und co
+	- Algorithmen:
+		- DERANDOMISIERTE-ES (Weicker page 139)
+		- Mehrzieloptimierung?
+		- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+			-> Gentische Programmierung (Ruby programme wären schön)
+
+	- Benchmarkfunktionen:
+		-> Einsenzählproblem (Weicker page 272)
+		-> Royal-Road (Weicker page 272)
+		-> C-Funktion (Weicker page 272)
+		-> sämtliche mit Randbedingungen (Weicker page 274)
+
+	- Decoder/Encoder:
+		=> RealToBinary, IntegerToBinary, BinaryToInteger
+
+	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
+
+	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
+
+	- weak und strong elistism (elitären GA überarbeiten)
+		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
+
+	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
+		=> Breeder klingt am besten (siehe ECJ)
+		=> variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
+
+	- Kombinierte Operatoren:
+		=> OpenBEAGLE hat ein relativ interessantes Operator Konzept:
+		   (siehe: http://beagle.gel.ulaval.ca/refmanual/beagle/html/df/d5a/group__Op.html)
+
+		=> vielleicht CombinedOperator erstellen? (method_missing magie!)
+		=> was ist mit einem if-then-else CombinedOperator wie in OpenBEAGLE?
+		=> CombinedMutation zu ProportionalCombinedMutation umbenennen
+		=> SequentiallyCombinedMutation erstellen (alle nacheinander)
+		=> analog dazu combined rekombinationen erstellen? Oder generisch?
+			=> bei diesen generischen combined operatoren ist das problem der default
+		   rückgabewert! (was wenn keine operation genutzt wird)
+		=> ist sowas bei selektionen nützlich? eher nicht! oder doch?
+
+	- EvoSynth modul struktur überarbeiten!
+		=> Operationen je nach Repräsentation gruppieren
+		=> EvoSynth:Util überarbeiten
+
+	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
+		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
+
+============================== EvoSynth >0.1 ===================================
+
+Features:
+
+	- Algorithmen:
+		=> Schwärme
+
+	- BinaryGenome mittels inline C optimieren
+
+	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
+	  die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
+
+	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
+
+	- Checkpointing für Evolver, Save, Stop, Restart, Continue
+		=> eventuell mit Logger verknüppern
+
+	- EvoBench: Benchmark für Evolutionäre Algorithmen
+		=> mutationen, selektionen und co
+		=> diversität und co
+
