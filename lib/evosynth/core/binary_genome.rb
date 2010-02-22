@@ -25,6 +25,8 @@
 module EvoSynth
 	module Core
 
+		# FIXME: implment in C for better performance - right now its pretty useless
+
 		class BinaryGenome < Array
 
 			def initialize(intial_value = 0)
