@@ -1,17 +1,17 @@
 Was sind zwingend umzusetzen, um mal ein 0.1 Release mit allem pipapo zu machen?!
 
 Features:
-	- RunnableAlgortihm (run_until) geschickt mit FitnessCalculator koppeln,
-	um nur eine bestimmt "evaluierungsanzahl" zu rennen
+	- RunnableEvolver (run_until) geschickt mit Evaluator koppeln,
+	  um nur eine bestimmt "evaluierungsanzahl" zu rennen
 		=> lohnt sich dafür ein Termination Operator oder ist ein lambda ausdruck
 		   ausreichend
 
 	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
 
-	- CCGA example überarbeiten und eventuell toolklassen extrahieren
+	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
 
 	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
-	die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
+	  die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
 
 	- BinaryGenome mittels inline C optimieren
 
@@ -33,7 +33,6 @@ Features:
 		=> Breeder klingt am besten (siehe ECJ)
 
 	- EvoSynth modul struktur überarbeiten!
-		=> Algorithm zu Evolver umbenennen? scheint gebräuchlich zu sein
 		=> Operationen je nach Repräsentation gruppieren
 		=> EvoSynth:Util überarbeiten
 
@@ -45,7 +44,7 @@ Features:
 
 	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
 
-	- Checkpointing, Save, Stop, Restart, Continue
+	- Checkpointing für Evolver, Save, Stop, Restart, Continue
 		=> eventuell mit Logger verknüppern
 
 
@@ -56,11 +55,11 @@ Fehler:
 	- ES: mü+lambda und mu,lambda klären!
 
 Testfälle:
-	- EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
-	- EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance
-	- EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance
-	- EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance
-	- EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
+	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
+	- EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
+	- EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
+	- EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
+	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
 Algorithmen:
 	- Mehrzieloptimierung
