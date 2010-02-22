@@ -65,7 +65,7 @@ module EvoSynth
 
 			def run_until_fitness_reached(fitness)
 				goal = Goal.new(fitness)
-				run_until { |gen, best| best > goal }
+				run_until { |gen, best| best >= goal }
 			end
 
 			private
