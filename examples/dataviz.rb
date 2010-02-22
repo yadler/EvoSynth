@@ -45,7 +45,7 @@ module DataViz
 		end
 
 		def calculate_fitness(individual)
-			EvoSynth::BenchmarkFuntions.rastgrin(decode(individual))
+			EvoSynth::Problems::BenchmarkFuntions.rastgrin(decode(individual))
 		end
 
 	end

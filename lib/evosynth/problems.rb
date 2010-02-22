@@ -22,10 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/util'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-
-# anthing that is needed to setup EvoSynth should be here!
+require 'evosynth/problems/benchmark_functions'

@@ -23,7 +23,6 @@
 
 
 require 'evosynth/util/mdarray'
-require 'evosynth/util/benchmark_functions'
 require 'evosynth/util/math'
 require 'evosynth/util/decoder/gray'
 require 'evosynth/util/decoder/binary_to_real'

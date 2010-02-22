@@ -46,7 +46,7 @@ module LocalSearch
 		end
 
 		def calculate_fitness(individual)
-			EvoSynth::BenchmarkFuntions.sphere(decode(individual))
+			EvoSynth::Problems::BenchmarkFuntions.sphere(decode(individual))
 		end
 	end
 

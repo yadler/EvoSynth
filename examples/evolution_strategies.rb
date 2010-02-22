@@ -33,17 +33,13 @@ module EsExample
 	POPULATION_SIZE = 25
 
 	def EsExample.fitness_function(xs)
-		EvoSynth::BenchmarkFuntions.sphere(xs)
+		EvoSynth::Problems::BenchmarkFuntions.sphere(xs)
 	end
 
-	# FIXME: create tool class for that!
-
 	class BenchmarkEvaluator < EvoSynth::Core::Evaluator
-
 		def calculate_fitness(individual)
 			EsExample.fitness_function(individual.genome)
 		end
-
 	end
 
 	def EsExample.create_individual(genome_size, index)
