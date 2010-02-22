@@ -53,7 +53,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"fitness calculator <called: #{@called}, calculated: #{@calculated}>"
+				"Evaluator <called: #{@called}, calculated: #{@calculated}>"
 			end
 		end
 
