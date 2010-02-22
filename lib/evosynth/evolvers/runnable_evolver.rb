@@ -39,12 +39,14 @@ module EvoSynth
 				notify_observers @generations_computed, self
 
 				case condition.arity
+					when 0
+						loop_condition = condition
 					when 1
 						loop_condition = lambda { !yield @generations_computed }
 					when 2
 						loop_condition = lambda { !yield @generations_computed, best_solution }
 				else
-					loop_condition = nil
+					raise ArgumentError, "please provide a block with the arity of 0, 1 or 2"
 				end
 
 				while loop_condition.call

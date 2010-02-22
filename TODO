@@ -1,11 +1,6 @@
 Was sind zwingend umzusetzen, um mal ein 0.1 Release mit allem pipapo zu machen?!
 
 Features:
-	- RunnableEvolver (run_until) geschickt mit Evaluator koppeln,
-	  um nur eine bestimmt "evaluierungsanzahl" zu rennen
-		=> lohnt sich dafür ein Termination Operator oder ist ein lambda ausdruck
-		   ausreichend
-
 	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
 
 	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren

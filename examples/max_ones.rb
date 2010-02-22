@@ -50,10 +50,7 @@ module MaxOnes
 		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 	)
 
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.evaluator, ""
-
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < 25000 }
 	profile.evaluator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
-	puts profile.evaluator
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < 25000 }
 end
