@@ -12,28 +12,28 @@ License::   MIT (see LICENSE)
 === evolution algorithms
 
 basic hillclimber:
-* EvoSynth::Algorithms::Hillclimber
-* EvoSynth::Algorithms::PopulationHillclimber
+* EvoSynth::Evolvers::Hillclimber
+* EvoSynth::Evolvers::PopulationHillclimber
 
 local search:
-* EvoSynth::Algorithms::LocalSearch
-* EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance
-* EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance
-* EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance
-* EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance
-* EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance
+* EvoSynth::Evolvers::LocalSearch
+* EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
+* EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
+* EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
+* EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
+* EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
 genetic algorithms:
-* EvoSynth::Algorithms::GeneticAlgorithm
-* EvoSynth::Algorithms::ElitismGeneticAlgorithm
-* EvoSynth::Algorithms::SteadyStateGA
+* EvoSynth::Evolvers::GeneticAlgorithm
+* EvoSynth::Evolvers::ElitismGeneticAlgorithm
+* EvoSynth::Evolvers::SteadyStateGA
 
 coevolutionary algorithms:
-* EvoSynth::Algorithms::CoopCoevolutionary
+* EvoSynth::Evolvers::CoopCoevolutionary
 
 evolution strategies (TODO: need some refactoring):
-* EvoSynth::Algorithms::AdaptiveES
-* EvoSynth::Algortihms::SelfAdaptiveES
+* EvoSynth::Evolvers::AdaptiveES
+* EvoSynth::Evolvers::SelfAdaptiveES
 
 === selections
 

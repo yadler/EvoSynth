@@ -68,7 +68,7 @@ end
 
 begin
   %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
-  require 'sdoc_helpers'
+  require 'sdoc'
 rescue LoadError => ex
   puts "sdoc support not enabled:"
   puts ex.inspect
@@ -76,10 +76,9 @@ end
 
 Rake::RDocTask.new do |rdoc|
 	rdoc.main = "README"
-	rdoc.rdoc_dir = "rdoc"
+	rdoc.rdoc_dir = "docs/rdoc"
 	rdoc.title    = "EvoSynth Documentation"
-#	rdoc.options << '--line-numbers' << '--inline-source'
-#	rdoc.template = "kilmer"
+	rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
 	rdoc.rdoc_files.include("README", "LICENSE", "lib/**/*.rb")
 end
 
