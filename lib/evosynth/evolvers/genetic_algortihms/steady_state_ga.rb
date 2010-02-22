@@ -23,29 +23,24 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		# ES-SELBSTADAPTIV (Weicker Page 135)
+		# STEADY-STATE-GA (Weicker Page 129)
 
-		class SelfAdaptiveES
-			include EvoSynth::Algorithms::Algorithm
+		class SteadyStateGA
+			include EvoSynth::Evolvers::Evolver
 
-			attr_accessor :child_count
-
-			DEFAULT_CHILD_FACTOR = 5
-			DEFAULT_MUTATION = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
-			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
-			DEFAULT_SELECTION = EvoSynth::Selections::SelectBest.new
-			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
+			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
+			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
+			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
 			def initialize(profile)
 				init_profile :population,
 				    :fitness_calculator,
-				    :child_factor => DEFAULT_CHILD_FACTOR,
-				    :mutation => DEFAULT_MUTATION,
-				    :adjustment => DEFAULT_ADJUSTMENT,
-				    :enviromental_selection => DEFAULT_SELECTION,
-				    :parent_selection => DEFAULT_PARENT_SELECTION
+				    :mutation,
+				    :parent_selection => DEFAULT_SELECTION,
+				    :recombination => DEFAULT_RECOMBINATION,
+				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
 
 				use_profile profile
 
@@ -53,7 +48,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"selfadaptive ES <mutation: #{@mutation}, parent selection: #{@parent_selection}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
+				"steady-state genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
 			def best_solution
@@ -69,17 +64,21 @@ module EvoSynth
 			end
 
 			def next_generation
-				child_population = EvoSynth::Core::Population.new
+				parents = @parent_selection.select(@population, 2)
 
-				(@child_factor * @population.size).times do
-					parent = @parent_selection.select(@population, 1).first
-					child = @mutation.mutate(parent)
-					@fitness_calculator.calculate_and_set_fitness(child)
-					child_population << child
+				if rand < @recombination_probability
+					child = @recombination.recombine(parents[0], parents[1])[0]
+				else
+					child = parents[1]
 				end
 
-				@population = @enviromental_selection.select(child_population, @population.size)
+				child = @mutation.mutate(child)
+				@fitness_calculator.calculate_and_set_fitness(child)
+
+				@population.remove(@population.worst)
+				@population.add(child)
 			end
+
 		end
 
 	end

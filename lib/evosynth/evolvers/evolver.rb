@@ -22,25 +22,16 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/evolvers/runnable_evolver'
+require 'evosynth/evolvers/profile_using_evolver'
+
+
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		class LocalSearch
-
-			# AKZEPTANZ-HC (Weicker Page 156)
-
-			class HillclimberAcceptance
-
-				def accepts(parent, child, generation)
-					child > parent
-				end
-
-				def to_s
-					"Hillclimber Acceptance"
-				end
-
-			end
-
+		module Evolver
+			include RunnableEvolver
+			include ProfileUsingEvolver
 		end
 
 	end

@@ -23,33 +23,20 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
 		class LocalSearch
 
-			# AKZEPTANZ-TA (Weicker Page 157)
+			# AKZEPTANZ-HC (Weicker Page 156)
 
-			class ThresholdAcceptance
-				attr_accessor :temperature, :alpha
-
-				DEFAULT_START_TEMP = Float::MAX
-				DEFAULT_ALPHA = 0.9
-
-				def initialize(start_temp = DEFAULT_START_TEMP, alpha = DEFAULT_ALPHA)
-					@temperature = start_temp
-					@alpha = alpha
-				end
+			class HillclimberAcceptance
 
 				def accepts(parent, child, generation)
-					threshold = Math.sqrt( (child.fitness - parent.fitness)**2 )
-					accepted = child > parent || threshold <= @temperature
-					@temperature *= @alpha
-
-					accepted
+					child > parent
 				end
 
 				def to_s
-					"Threshold Acceptance"
+					"Hillclimber Acceptance"
 				end
 
 			end

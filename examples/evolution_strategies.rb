@@ -58,7 +58,7 @@ module EsExample
 		:fitness_calculator		=> BenchmarkCalculator.new
 	)
 
-	algorithm = EvoSynth::Algorithms::AdaptiveES.new(profile)
+	algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
@@ -66,7 +66,7 @@ module EsExample
 	puts "Adaptive ES: fitness = #{profile.fitness_calculator.calculate_fitness(result.best)}"
 	puts
 
-	algorithm = EvoSynth::Algorithms::SelfAdaptiveES.new(profile)
+	algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator

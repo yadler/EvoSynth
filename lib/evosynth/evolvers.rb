@@ -22,48 +22,18 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
-	module Algorithms
+require 'evosynth/evolvers/evolver'
 
-		class LocalSearch
+require 'evosynth/evolvers/hillclimber/hillclimber'
+require 'evosynth/evolvers/hillclimber/population_hillclimber'
 
-			# AKZEPTANZ-RR (Weicker Page 158)
+require 'evosynth/evolvers/genetic_algortihms/genetic_algorithm'
+require 'evosynth/evolvers/genetic_algortihms/elitism_genetic_algorithm'
+require 'evosynth/evolvers/genetic_algortihms/steady_state_ga'
 
-			class RecordToRecordTravelAcceptance
-				attr_accessor :delta, :alpha
+require 'evosynth/evolvers/evolution_strategies/adaptive_es'
+require 'evosynth/evolvers/evolution_strategies/selfadaptive_es'
 
-				DEFAULT_START_DELTA = Float::MAX
-				DEFAULT_ALPHA = 0.9
+require 'evosynth/evolvers/local_search/local_search'
 
-				def initialize(start_delta = DEFAULT_START_DELTA, alpha = DEFAULT_ALPHA)
-					@delta = start_delta
-					@alpha = alpha
-					@best = nil
-				end
-
-				def accepts(parent, child, generation)
-					@best = parent if @best.nil?
-					accepted = false
-
-					if child > @best
-						@best = child
-						accepted = true
-					else
-						threshold = Math.sqrt( (child.fitness - @best.fitness)**2 )
-						accepted = threshold < @delta
-					end
-
-					@delta *= @alpha
-					accepted
-				end
-
-				def to_s
-					"Record-to-Record-Travel Acceptance"
-				end
-
-			end
-
-		end
-
-	end
-end
+require 'evosynth/evolvers/coevolutionary/coop_coevolutionary'

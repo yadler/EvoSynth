@@ -23,12 +23,12 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
 		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
 		class PopulationHillclimber
-			include EvoSynth::Algorithms::Algorithm
+			include EvoSynth::Evolvers::Evolver
 
 			def initialize(profile)
 				init_profile :mutation, :population, :fitness_calculator

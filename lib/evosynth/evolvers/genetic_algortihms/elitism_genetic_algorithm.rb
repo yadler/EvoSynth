@@ -23,35 +23,22 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		class LocalSearch
+		class ElitismGeneticAlgorithm < EvoSynth::Evolvers::GeneticAlgorithm
+			alias :original_next_generation :next_generation
 
-			# AKZEPTANZ-GD (Weicker Page 158)
+			def next_generation
+				best_individual = @population.best
 
-			class GreatDelugeAcceptance
-				attr_accessor :water, :rain_speed
+				original_next_generation
 
-				DEFAULT_WATER_LEVEL = Float::MIN
-				DEFAULT_RAIN_SPEED = 1.0
+				@population.remove(@population.worst)
+				@population.add(best_individual)
+			end
 
-				def initialize(start_water_level = DEFAULT_WATER_LEVEL, rain_speed = DEFAULT_RAIN_SPEED)
-					@water = start_water_level
-					@rain_speed = rain_speed
-				end
-
-				def accepts(parent, child, generation)
-					if parent.maximizes?
-						child.fitness > @water + generation * @rain_speed
-					else
-						child.fitness < @water - generation * @rain_speed
-					end
-				end
-
-				def to_s
-					"Great Deluge Acceptance"
-				end
-
+			def to_s
+				"elitism genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
 			end
 
 		end

@@ -111,12 +111,12 @@ module SPk
 	)
 	base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Algorithms::Hillclimber.new(profile), INDIVIDUALS * GENERATIONS)
+	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), INDIVIDUALS * GENERATIONS)
 
-	EvoSynth::Algorithms.constants.each do |algorithm|
-		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+	EvoSynth::Evolvers.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
 		next unless defined? algorithm_class.new
-		next if algorithm_class == EvoSynth::Algorithms::Hillclimber
+		next if algorithm_class == EvoSynth::Evolvers::Hillclimber
 
 		profile.population = base_population.deep_clone
 		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next

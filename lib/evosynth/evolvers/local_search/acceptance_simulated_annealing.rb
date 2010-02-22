@@ -22,52 +22,37 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/algorithms/local_search/acceptance_hillclimber'
-require 'evosynth/algorithms/local_search/acceptance_simulated_annealing'
-require 'evosynth/algorithms/local_search/acceptance_threshold'
-require 'evosynth/algorithms/local_search/acceptance_great_deluge'
-require 'evosynth/algorithms/local_search/acceptance_record_to_record'
-
-
 module EvoSynth
-	module Algorithms
-
-		# LOKALE-SUCHE (Weicker Page 155)
+	module Evolvers
 
 		class LocalSearch
-			include EvoSynth::Algorithms::Algorithm
 
-			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
+			# AKZEPTANZ-SA (Weicker Page 156)
 
-			def initialize(profile)
-				init_profile :individual, :mutation, :fitness_calculator, :acceptance => DEFAULT_ACCEPTANCE
+			class SimulatedAnnealingAcceptance
+				attr_accessor :temperature, :alpha
 
-				use_profile profile
+				DEFAULT_START_TEMP = Float::MAX
+				DEFAULT_ALPHA = 0.9
 
-				@fitness_calculator.calculate_and_set_fitness(@individual)
+				def initialize(start_temp = DEFAULT_START_TEMP, alpha = DEFAULT_ALPHA)
+					@temperature = start_temp
+					@alpha = alpha
+				end
+
+				def accepts(parent, child, generation)
+					threshold = Math.exp( -1 * Math.sqrt( (child.fitness - parent.fitness)**2 ) / @temperature)
+					@temperature *= @alpha
+
+					child > parent || rand <= threshold
+				end
+
+				def to_s
+					"Simulated Annealing Acceptance"
+				end
+
 			end
 
-			def to_s
-				"local search <mutation: #{@mutation}, individual: #{@individual}>"
-			end
-
-			def best_solution
-				@individual
-			end
-
-			def worst_solution
-				@individual
-			end
-
-			def return_result
-				@individual
-			end
-
-			def next_generation
-				child = @mutation.mutate(@individual)
-				@fitness_calculator.calculate_and_set_fitness(child)
-				@individual = child if @acceptance.accepts(@individual, child, @generations_computed)
-			end
 		end
 
 	end

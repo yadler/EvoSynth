@@ -22,18 +22,39 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/algorithms/algorithm'
+module EvoSynth
+	module Evolvers
 
-require 'evosynth/algorithms/hillclimber/hillclimber'
-require 'evosynth/algorithms/hillclimber/population_hillclimber'
+		class LocalSearch
 
-require 'evosynth/algorithms/genetic_algortihms/genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/elitism_genetic_algorithm'
-require 'evosynth/algorithms/genetic_algortihms/steady_state_ga'
+			# AKZEPTANZ-GD (Weicker Page 158)
 
-require 'evosynth/algorithms/evolution_strategies/adaptive_es'
-require 'evosynth/algorithms/evolution_strategies/selfadaptive_es'
+			class GreatDelugeAcceptance
+				attr_accessor :water, :rain_speed
 
-require 'evosynth/algorithms/local_search/local_search'
+				DEFAULT_WATER_LEVEL = Float::MIN
+				DEFAULT_RAIN_SPEED = 1.0
 
-require 'evosynth/algorithms/coevolutionary/coop_coevolutionary'
+				def initialize(start_water_level = DEFAULT_WATER_LEVEL, rain_speed = DEFAULT_RAIN_SPEED)
+					@water = start_water_level
+					@rain_speed = rain_speed
+				end
+
+				def accepts(parent, child, generation)
+					if parent.maximizes?
+						child.fitness > @water + generation * @rain_speed
+					else
+						child.fitness < @water - generation * @rain_speed
+					end
+				end
+
+				def to_s
+					"Great Deluge Acceptance"
+				end
+
+			end
+
+		end
+
+	end
+end

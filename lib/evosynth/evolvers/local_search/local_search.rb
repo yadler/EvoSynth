@@ -22,25 +22,52 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/evolvers/local_search/acceptance_hillclimber'
+require 'evosynth/evolvers/local_search/acceptance_simulated_annealing'
+require 'evosynth/evolvers/local_search/acceptance_threshold'
+require 'evosynth/evolvers/local_search/acceptance_great_deluge'
+require 'evosynth/evolvers/local_search/acceptance_record_to_record'
+
+
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		class ElitismGeneticAlgorithm < EvoSynth::Algorithms::GeneticAlgorithm
-			alias :original_next_generation :next_generation
+		# LOKALE-SUCHE (Weicker Page 155)
 
-			def next_generation
-				best_individual = @population.best
+		class LocalSearch
+			include EvoSynth::Evolvers::Evolver
 
-				original_next_generation
+			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
 
-				@population.remove(@population.worst)
-				@population.add(best_individual)
+			def initialize(profile)
+				init_profile :individual, :mutation, :fitness_calculator, :acceptance => DEFAULT_ACCEPTANCE
+
+				use_profile profile
+
+				@fitness_calculator.calculate_and_set_fitness(@individual)
 			end
 
 			def to_s
-				"elitism genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
+				"local search <mutation: #{@mutation}, individual: #{@individual}>"
 			end
 
+			def best_solution
+				@individual
+			end
+
+			def worst_solution
+				@individual
+			end
+
+			def return_result
+				@individual
+			end
+
+			def next_generation
+				child = @mutation.mutate(@individual)
+				@fitness_calculator.calculate_and_set_fitness(child)
+				@individual = child if @acceptance.accepts(@individual, child, @generations_computed)
+			end
 		end
 
 	end

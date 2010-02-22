@@ -118,8 +118,8 @@ module GraphColouring
 	)
 	base_population = profile.population
 
-	EvoSynth::Algorithms.constants.each do |algorithm|
-		algorithm_class = EvoSynth::Algorithms.const_get(algorithm)
+	EvoSynth::Evolvers.constants.each do |algorithm|
+		algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
 		next unless defined? algorithm_class.new
 
 		profile.population = base_population.deep_clone

@@ -128,7 +128,7 @@ module TSP
 	puts "Optimal Individual for this problem: #{optimal_tour}"
 	puts "Best Individual before evolution: #{profile.population.best}"
 
-	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50, false))
 
 	puts "\nRunning #{algorithm}...\n"

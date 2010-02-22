@@ -68,7 +68,7 @@ module LocalSearch
 		puts "--- Local Search with #{profile.acceptance.to_s} ---\n"
 
 		profile.individual = individual.deep_clone
-		algorithm = EvoSynth::Algorithms::LocalSearch.new(profile)
+		algorithm = EvoSynth::Evolvers::LocalSearch.new(profile)
 		LocalSearch.print_acceptance_state(algorithm)
 
 		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500, false,
@@ -91,18 +91,18 @@ module LocalSearch
 	)
 	individual = LocalSearch.create_individual
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::HillclimberAcceptance.new
+	profile.acceptance = EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance.new
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::SimulatedAnnealingAcceptance.new(5000.0)
+	profile.acceptance = EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::ThresholdAcceptance.new(5000.0)
+	profile.acceptance = EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::GreatDelugeAcceptance.new(2500.0)
+	profile.acceptance = EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance.new(2500.0)
 	LocalSearch.run_with(profile, individual)
 
-	profile.acceptance = EvoSynth::Algorithms::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)
+	profile.acceptance = EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)
 	LocalSearch.run_with(profile, individual)
 end

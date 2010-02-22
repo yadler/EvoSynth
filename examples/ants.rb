@@ -245,7 +245,7 @@ module Ants
 
 	PHEROMON = Ants::Pheromon.new(matrix.size)
 
-	class EvoSynth::Algorithms::ElitismGeneticAlgorithm
+	class EvoSynth::Evolvers::ElitismGeneticAlgorithm
 		alias :ant_next_generation :next_generation
 
 		def next_generation
@@ -263,7 +263,7 @@ module Ants
 
 	puts "Best Individual before evolution: #{profile.population.best}"
 
-	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50))
 
 	result = algorithm.run_until_generations_reached(1000)

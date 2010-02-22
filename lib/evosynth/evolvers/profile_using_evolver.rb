@@ -22,66 +22,11 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		module RunnableAlgorithm
 
-			attr_reader :generations_computed
-
-			def run_until(&condition) # :yields: generations computed, best solution
-				@generations_computed = 0
-				changed
-				notify_observers @generations_computed, self
-
-				case condition.arity
-					when 1
-						loop_condition = lambda { !yield @generations_computed }
-					when 2
-						loop_condition = lambda { !yield @generations_computed, best_solution }
-				else
-					loop_condition = nil
-				end
-
-				while loop_condition.call
-					next_generation
-					@generations_computed += 1
-					changed
-					notify_observers @generations_computed, self
-				end
-
-				return_result
-			end
-
-			def run_until_generations_reached(max_generations)
-				run_until { |gen| gen == max_generations }
-			end
-
-			def run_until_fitness_reached(fitness)
-				goal = Goal.new(fitness)
-				run_until { |gen, best| best > goal }
-			end
-
-			private
-
-			class Goal
-				def initialize(goal)
-					@goal = goal
-				end
-
-				def fitness
-					@goal
-				end
-			end
-
-		end
-
-		module Algorithm
-			include Observable
-			include RunnableAlgorithm
+		module ProfileUsingEvolver
 
 			def init_profile(*properties)
 				@properties = properties
@@ -94,7 +39,7 @@ module EvoSynth
 						raise ArgumentError, "argument type not supported"
 					end
 				end
-			end			
+			end
 
 			def use_profile(profile)
 				@properties.each do |property|
@@ -125,7 +70,6 @@ module EvoSynth
 			end
 
 		end
-
 
 	end
 end

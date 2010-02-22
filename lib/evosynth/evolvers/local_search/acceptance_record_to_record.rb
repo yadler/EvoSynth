@@ -22,39 +22,48 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth'
-#require 'profile'
+module EvoSynth
+	module Evolvers
 
+		class LocalSearch
 
-module MaxOnes
+			# AKZEPTANZ-RR (Weicker Page 158)
 
-	GENOME_SIZE = 25
-	POP_SIZE = 25
-	GENERATIONS = 1000
+			class RecordToRecordTravelAcceptance
+				attr_accessor :delta, :alpha
 
-	class OnesCalculator
-		include EvoSynth::Core::FitnessCalculator
+				DEFAULT_START_DELTA = Float::MAX
+				DEFAULT_ALPHA = 0.9
 
-		def calculate_fitness(individual)
-			individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
+				def initialize(start_delta = DEFAULT_START_DELTA, alpha = DEFAULT_ALPHA)
+					@delta = start_delta
+					@alpha = alpha
+					@best = nil
+				end
+
+				def accepts(parent, child, generation)
+					@best = parent if @best.nil?
+					accepted = false
+
+					if child > @best
+						@best = child
+						accepted = true
+					else
+						threshold = Math.sqrt( (child.fitness - @best.fitness)**2 )
+						accepted = threshold < @delta
+					end
+
+					@delta *= @alpha
+					accepted
+				end
+
+				def to_s
+					"Record-to-Record-Travel Acceptance"
+				end
+
+			end
+
 		end
+
 	end
-
-	def MaxOnes.create_individual
-		EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
-	end
-
-	profile = EvoSynth::Core::Profile.new(
-		:individual			=> MaxOnes.create_individual,
-		:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
-		:fitness_calculator => MaxOnes::OnesCalculator.new,
-		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	)
-
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POP_SIZE * GENERATIONS)
-	puts profile.fitness_calculator, ""
-
-	profile.fitness_calculator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile), GENERATIONS)
-	puts profile.fitness_calculator
 end

@@ -135,7 +135,7 @@ module CCGAExample
 		:fitness_calculator			=> BenchmarkCalculator.new
 	)
 
-	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 #	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 	puts profile.fitness_calculator
@@ -159,7 +159,7 @@ module CCGAExample
 	end
 #	puts profile.populations
 
-	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
+	algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 #	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters
@@ -198,7 +198,7 @@ module CCGAExample
 	end
 #	puts profile.populations
 
-	algorithm = EvoSynth::Algorithms::CoopCoevolutionary.new(profile)
+	algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 #	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 	profile.fitness_calculator.reset_counters

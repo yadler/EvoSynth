@@ -23,41 +23,37 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		# BINÄRES-HILLCLIMBING (Weicker Page 49)
+		class LocalSearch
 
-		class Hillclimber
-			include EvoSynth::Algorithms::Algorithm
+			# AKZEPTANZ-TA (Weicker Page 157)
 
-			def initialize(profile)
-				init_profile :individual, :mutation, :fitness_calculator
-				use_profile profile
+			class ThresholdAcceptance
+				attr_accessor :temperature, :alpha
 
-				@fitness_calculator.calculate_and_set_fitness(@individual)
+				DEFAULT_START_TEMP = Float::MAX
+				DEFAULT_ALPHA = 0.9
+
+				def initialize(start_temp = DEFAULT_START_TEMP, alpha = DEFAULT_ALPHA)
+					@temperature = start_temp
+					@alpha = alpha
+				end
+
+				def accepts(parent, child, generation)
+					threshold = Math.sqrt( (child.fitness - parent.fitness)**2 )
+					accepted = child > parent || threshold <= @temperature
+					@temperature *= @alpha
+
+					accepted
+				end
+
+				def to_s
+					"Threshold Acceptance"
+				end
+
 			end
 
-			def to_s
-				"hillclimber <mutation: #{@mutation}, individual: #{@individual}>"
-			end
-
-			def best_solution
-				@individual
-			end
-
-			def worst_solution
-				@individual
-			end
-
-			def return_result
-				@individual
-			end
-
-			def next_generation
-				child = @mutation.mutate(@individual)
-				@fitness_calculator.calculate_and_set_fitness(child)
-				@individual = child if child > @individual
-			end
 		end
 
 	end

@@ -118,7 +118,7 @@ module DataViz
 	)
 
 	profile.fitness_calculator.reset_counters
-	algorithm = EvoSynth::Algorithms::ElitismGeneticAlgorithm.new(profile)
+	algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
 
 	data = []
 	algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(10, false,

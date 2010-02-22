@@ -26,12 +26,12 @@ require 'evosynth'
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
 		# ES-ADAPTIV (Weicker Page 135)
 
 		class AdaptiveES
-			include EvoSynth::Algorithms::Algorithm
+			include EvoSynth::Evolvers::Evolver
 
 			attr_accessor :child_count
 			attr_reader :sigma, :success

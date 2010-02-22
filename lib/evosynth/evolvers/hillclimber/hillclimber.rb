@@ -23,62 +23,41 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		# STEADY-STATE-GA (Weicker Page 129)
+		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
-		class SteadyStateGA
-			include EvoSynth::Algorithms::Algorithm
-
-			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
-			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
-			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
+		class Hillclimber
+			include EvoSynth::Evolvers::Evolver
 
 			def initialize(profile)
-				init_profile :population,
-				    :fitness_calculator,
-				    :mutation,
-				    :parent_selection => DEFAULT_SELECTION,
-				    :recombination => DEFAULT_RECOMBINATION,
-				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
-
+				init_profile :individual, :mutation, :fitness_calculator
 				use_profile profile
 
-				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
+				@fitness_calculator.calculate_and_set_fitness(@individual)
 			end
 
 			def to_s
-				"steady-state genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
+				"hillclimber <mutation: #{@mutation}, individual: #{@individual}>"
 			end
 
 			def best_solution
-				@population.best
+				@individual
 			end
 
 			def worst_solution
-				@population.worst
+				@individual
 			end
 
 			def return_result
-				@population
+				@individual
 			end
 
 			def next_generation
-				parents = @parent_selection.select(@population, 2)
-
-				if rand < @recombination_probability
-					child = @recombination.recombine(parents[0], parents[1])[0]
-				else
-					child = parents[1]
-				end
-
-				child = @mutation.mutate(child)
+				child = @mutation.mutate(@individual)
 				@fitness_calculator.calculate_and_set_fitness(child)
-
-				@population.remove(@population.worst)
-				@population.add(child)
+				@individual = child if child > @individual
 			end
-
 		end
 
 	end

@@ -22,35 +22,60 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		class LocalSearch
+		module RunnableEvolver
+			include Observable
 
-			# AKZEPTANZ-SA (Weicker Page 156)
+			attr_reader :generations_computed
 
-			class SimulatedAnnealingAcceptance
-				attr_accessor :temperature, :alpha
+			def run_until(&condition) # :yields: generations computed, best solution
+				@generations_computed = 0
+				changed
+				notify_observers @generations_computed, self
 
-				DEFAULT_START_TEMP = Float::MAX
-				DEFAULT_ALPHA = 0.9
-
-				def initialize(start_temp = DEFAULT_START_TEMP, alpha = DEFAULT_ALPHA)
-					@temperature = start_temp
-					@alpha = alpha
+				case condition.arity
+					when 1
+						loop_condition = lambda { !yield @generations_computed }
+					when 2
+						loop_condition = lambda { !yield @generations_computed, best_solution }
+				else
+					loop_condition = nil
 				end
 
-				def accepts(parent, child, generation)
-					threshold = Math.exp( -1 * Math.sqrt( (child.fitness - parent.fitness)**2 ) / @temperature)
-					@temperature *= @alpha
-
-					child > parent || rand <= threshold
+				while loop_condition.call
+					next_generation
+					@generations_computed += 1
+					changed
+					notify_observers @generations_computed, self
 				end
 
-				def to_s
-					"Simulated Annealing Acceptance"
+				return_result
+			end
+
+			def run_until_generations_reached(max_generations)
+				run_until { |gen| gen == max_generations }
+			end
+
+			def run_until_fitness_reached(fitness)
+				goal = Goal.new(fitness)
+				run_until { |gen, best| best > goal }
+			end
+
+			private
+
+			class Goal
+				def initialize(goal)
+					@goal = goal
 				end
 
+				def fitness
+					@goal
+				end
 			end
 
 		end

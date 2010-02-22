@@ -23,67 +23,65 @@
 
 
 module EvoSynth
-	module Algorithms
+	module Evolvers
 
-		# based on CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
+		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
 
-		class CoopCoevolutionary
-			include EvoSynth::Algorithms::Algorithm
+		class GeneticAlgorithm
+			include EvoSynth::Evolvers::Evolver
 
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
-			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
+			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
 			def initialize(profile)
-				init_profile :populations,
+				init_profile :population, 
 				    :fitness_calculator,
 				    :mutation,
 				    :parent_selection => DEFAULT_SELECTION,
-					:enviromental_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
-				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
-				    :sub_algorithm => EvoSynth::Algorithms::ElitismGeneticAlgorithm
+				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
 
 				use_profile profile
-				initialize_sub_algorithms(profile)
-				@next_index = 0
+
+				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
 			end
 
 			def to_s
-				"cooperative coevolutionary algorithm <mutation: #{@mutation}, recombination: #{@recombination}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
+				"basic genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
 			def best_solution
-				best = []
-				@populations.each { |pop| best << pop.best }
-				best.to_s
+				@population.best
 			end
 
 			def worst_solution
-				worst = []
-				@populations.each { |pop| worst << pop.worst }
-				worst.to_s
+				@population.worst
 			end
 
 			def return_result
-				@populations
+				@population
 			end
 
 			def next_generation
-				@algorithms[@next_index].next_generation
-				@next_index = (@next_index + 1) % @populations.size
-			end
+				selected_pop = @parent_selection.select(@population, @population.size/2)
+				@population.clear
 
-			private
+				selected_pop.each_index do |index_one|
+					index_two = (index_one + 1) % selected_pop.size
 
-			def initialize_sub_algorithms(profile)
-				sub_profile = profile.clone
+					if rand < @recombination_probability
+						child_one, child_two = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
+					else
+						child_one = selected_pop[index_one]
+						child_two = selected_pop[index_two]
+					end
 
-				@algorithms = []
-				@populations.each do |sub_population|
-					sub_profile.population = sub_population
-					@algorithms << @sub_algorithm.new(sub_profile)
+					@population.add(@mutation.mutate(child_one))
+					@population.add(@mutation.mutate(child_two))
 				end
+
+				@population.each { |individual| @fitness_calculator.calculate_and_set_fitness(individual) }
 			end
 
 		end
