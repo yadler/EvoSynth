@@ -79,7 +79,11 @@ module EvoSynth
 				genome = mutated.genome
 
 				genome.size.times do |index|
-					genome[index] = @flip_function.call(genome[index]) if rand <= @probability
+					if @flip_function.arity == 1
+						genome[index] = @flip_function.call(genome[index]) if rand <= @probability
+					else
+						genome[index] = @flip_function.call if rand <= @probability
+					end
 				end
 
 				mutated

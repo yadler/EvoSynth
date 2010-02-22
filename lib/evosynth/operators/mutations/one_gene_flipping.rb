@@ -53,7 +53,12 @@ module EvoSynth
 				genome = mutated.genome
 
 				rand_index = rand(genome.size)
-				genome[rand_index] = @flip_function.call(genome[rand_index])
+				if @flip_function.arity == 1
+					genome[rand_index] = @flip_function.call(genome[rand_index])
+				else
+					genome[rand_index] = @flip_function.call
+				end
+
 				mutated
 			end
 

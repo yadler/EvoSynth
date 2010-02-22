@@ -82,7 +82,12 @@ module EvoSynth
 				@next_index = rand(mutated.genome.size) unless defined? @next_index
 
 				while @next_index < mutated.genome.size
-					mutated.genome[@next_index] = @flip_function.call(mutated.genome[@next_index])
+					if @flip_function.arity == 1
+						mutated.genome[@next_index] = @flip_function.call(mutated.genome[@next_index])
+					else
+						mutated.genome[@next_index] = @flip_function.call
+					end
+					
 					@next_index += (Math.log(rand) / Math.log(1 - @probability)).ceil
 				end
 
