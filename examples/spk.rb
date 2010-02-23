@@ -25,6 +25,8 @@
 require 'evosynth'
 
 
+# TODO: this could be a benchmark problem
+
 module Examples
 	module SPk
 
@@ -50,7 +52,6 @@ module Examples
 
 				fitness
 			end
-
 
 			def is_valid(genome)
 				valid = false
@@ -86,42 +87,17 @@ module Examples
 			end
 
 		end
-
-		def SPk.create_individual(genome_size)
-			genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-			genome.map! { rand(2) > 0 ? true : false }
-			inidividual = EvoSynth::Core::MaximizingIndividual.new(genome)
-			inidividual
-		end
-
+ 
 		K = 2
 		GENOME_SIZE = 16
-		GOAL = 48
-		GENERATIONS = 1000
-		INDIVIDUALS = 25
-
-		#require 'profile'
+		GENERATIONS = 5000
 
 		profile = EvoSynth::Core::Profile.new(
-			:individual			=> SPk.create_individual(GENOME_SIZE),
+			:individual			=> EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } ),
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
-			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)
-		base_population = EvoSynth::Core::Population.new(INDIVIDUALS) { SPk.create_individual(GENOME_SIZE) }
 
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), INDIVIDUALS * GENERATIONS)
-
-		# TODO: dont use all algorithms!
-		EvoSynth::Evolvers.constants.each do |algorithm|
-			algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
-			next unless defined? algorithm_class.new
-			next if algorithm_class == EvoSynth::Evolvers::Hillclimber
-
-			profile.population = base_population.deep_clone
-			EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
-		end
-
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), GENERATIONS)
 	end
 end
