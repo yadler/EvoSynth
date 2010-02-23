@@ -66,20 +66,22 @@ task :default do
 	puts "rake --tasks"
 end
 
-begin
-  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
-  require 'sdoc'
-rescue LoadError => ex
-  puts "sdoc support not enabled:"
-  puts ex.inspect
-end
+#begin
+#  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
+#  require 'sdoc'
+#rescue LoadError => ex
+#  puts "sdoc support not enabled:"
+#  puts ex.inspect
+#end
 
 Rake::RDocTask.new do |rdoc|
 	rdoc.main = "README"
 	rdoc.rdoc_dir = "docs/rdoc"
 	rdoc.title    = "EvoSynth Documentation"
-	rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
-	rdoc.rdoc_files.include("README", "LICENSE", "lib/**/*.rb")
+#	rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
+	rdoc.rdoc_files.include("README", "LICENSE", "lib/**/*.rb", "examples/**/*.rb")
+#	rdoc.template = "kilmer"
+#	rdoc.template = 'direct'
 end
 
 # Test tasks and code quality stuff:
