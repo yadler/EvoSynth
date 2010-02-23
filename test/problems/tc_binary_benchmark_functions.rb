@@ -22,5 +22,39 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/problems/tc_float_benchmark_functions'
-require 'test/problems/tc_binary_benchmark_functions'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class BenchmarkFunctionsTest < Test::Unit::TestCase
+
+	context "the count ones function" do
+
+		should "be zero at [0,0,0,0,0,0,0]" do
+			bs = [0,0,0,0,0,0,0]
+			assert_equal 0, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
+		end
+
+		should "be zero at [false,false,false,false,false,false,false]" do
+			bs = [false,false,false,false,false,false,false]
+			assert_equal 0, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
+		end
+
+		should "be [1,1,1,1,1,1,1].size at [1,1,1,1,1,1,1]" do
+			bs = [1,1,1,1,1,1,1]
+			assert_equal bs.size, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
+		end
+
+		should "be [true,true,true,true,true,true,true].size at [true,true,true,true,true,true,true]" do
+			bs = [true,true,true,true,true,true,true]
+			assert_equal bs.size, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
+		end
+
+		should "be [1,1,1,5,1,0,1].size - 2 at [1,1,1,5,1,0,1]" do
+			bs = [1,1,1,5,1,0,1]
+			assert_equal bs.size - 2, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
+		end
+	end
+
+end

@@ -32,8 +32,10 @@ module Examples
 		POP_SIZE = 25
 		MAX_EVALUATIONS = 25000
 
-		class MaxOnesEvaluator < EvoSynth::Core::Evaluator
+		# this is just for the sake of demonstration stuff - you could also use
+		# EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones()
 
+		class MaxOnesEvaluator < EvoSynth::Core::Evaluator
 			def calculate_fitness(individual)
 				individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
 			end

@@ -22,5 +22,23 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/problems/tc_float_benchmark_functions'
-require 'test/problems/tc_binary_benchmark_functions'
+module EvoSynth
+	module Problems
+
+		# This module contains some multi-dimensional Benchmarkfunctions. You simply set the number of dimensions by
+		# the length of the given (boolean) array.
+
+		module BinaryBenchmarkFuntions
+
+			# count ones
+			#
+			# global maximum at f(x) = x at x(i) = 1 (or true), i = 1..n
+
+			def BinaryBenchmarkFuntions.count_ones(bs)
+				bs.inject(0) { |sum, b| sum += (b == true || b == 1 ? 1 : 0) }
+			end
+
+
+		end
+	end
+end

@@ -32,3 +32,4 @@ module EvoSynth
 end
 
 require 'evosynth/problems/float_benchmark_functions'
+require 'evosynth/problems/binary_benchmark_functions'
