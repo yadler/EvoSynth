@@ -26,15 +26,6 @@ Features:
 		- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 			-> Gentische Programmierung (Ruby programme wären schön)
 
-	- Benchmarkfunktionen:
-		-> C-Funktion (Weicker page 272)
-		-> sämtliche mit Randbedingungen (Weicker page 274)
-
-	- Decoder/Encoder:
-		=> RealToBinary, IntegerToBinary, BinaryToInteger
-
-	- EvoSynth in Vector, Permutation, ES und GP auftrennen, gibts da sinnvollere sachen?
-
 	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
 
 	- weak und strong elistism (elitären GA überarbeiten)
@@ -57,9 +48,7 @@ Features:
 		   rückgabewert! (was wenn keine operation genutzt wird)
 		=> ist sowas bei selektionen nützlich? eher nicht! oder doch?
 
-	- EvoSynth modul struktur überarbeiten!
-		=> Operationen je nach Repräsentation gruppieren
-		=> EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
+	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
 
 	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
 		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
@@ -67,6 +56,13 @@ Features:
 ============================== EvoSynth >0.1 ===================================
 
 Features:
+
+	- Benchmarkfunktionen:
+		-> C-Funktion (Weicker page 272)
+		-> sämtliche mit Randbedingungen (Weicker page 274)
+
+	- Decoder/Encoder:
+		=> RealToBinary, IntegerToBinary, BinaryToInteger
 
 	- Algorithmen:
 		=> Schwärme
