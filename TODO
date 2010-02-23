@@ -7,13 +7,6 @@ Fehler:
 	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
 
-Testfälle:
-	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
-	- EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
-	- EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
-	- EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
-	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
-
 Features:
 
 	- Jeden morgen ein paar klassen Dokumentieren!
@@ -52,6 +45,13 @@ Features:
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
 
 ============================== EvoSynth >0.1 ===================================
+
+Testfälle:
+	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
+	- EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
+	- EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
+	- EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
+	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
 Features:
 
