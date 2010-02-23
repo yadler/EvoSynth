@@ -34,7 +34,7 @@ module Examples
 		POPULATION_SIZE = 25
 
 		def EsExample.fitness_function(xs)
-			EvoSynth::Problems::BenchmarkFuntions.sphere(xs)
+			EvoSynth::Problems::FloatBenchmarkFuntions.sphere(xs)
 		end
 
 		class BenchmarkEvaluator < EvoSynth::Core::Evaluator

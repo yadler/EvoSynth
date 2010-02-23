@@ -22,4 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/problems/tc_benchmark_functions'
+require 'test/problems/tc_float_benchmark_functions'

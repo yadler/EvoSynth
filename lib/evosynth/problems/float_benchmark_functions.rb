@@ -28,13 +28,13 @@ module EvoSynth
 		# This module contains some multi-dimensional Benchmarkfunctions. You simply set the number of dimensions by
 		# the length of the given (Float) array.
 
-		module BenchmarkFuntions
+		module FloatBenchmarkFuntions
 
 			# Sinus Sum function (Schwefel 1995)
 			#
 			# global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
 
-			def BenchmarkFuntions.sinus_sum(xs)
+			def FloatBenchmarkFuntions.sinus_sum(xs)
 				418.98289 * xs.size + xs.inject(0.0) { |sum, x| sum += -x * Math.sin(Math.sqrt(x.abs)) }
 			end
 
@@ -42,7 +42,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-			def BenchmarkFuntions.double_sum(xs)
+			def FloatBenchmarkFuntions.double_sum(xs)
 				xs.inject(0.0) do |sum, i|
 					sum += xs[0..i].inject(0.0) { |sum, x| sum += x }
 				end
@@ -52,7 +52,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-			def BenchmarkFuntions.sphere(xs)
+			def FloatBenchmarkFuntions.sphere(xs)
 				xs.inject(0.0) { |sum, x| sum += x**2 }
 			end
 
@@ -60,7 +60,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-			def BenchmarkFuntions.rastgrin(xs)
+			def FloatBenchmarkFuntions.rastgrin(xs)
 				10 * xs.size + xs.inject(0.0) { |sum, x| sum += x**2 - 10 * Math.cos(2 * Math::PI * x) }
 			end
 
@@ -68,7 +68,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 1, i = 1..n
 
-			def BenchmarkFuntions.rosenbrock(xs)
+			def FloatBenchmarkFuntions.rosenbrock(xs)
 				(0..xs.size - 2).inject(0.0) do |sum, i|
 					sum += 100 * (xs[i]**2 - xs[i+1])**2 + (1 - xs[i])**2
 				end
@@ -78,7 +78,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-			def BenchmarkFuntions.ackley(xs)
+			def FloatBenchmarkFuntions.ackley(xs)
 				quad_sum = xs.inject(0.0) { |sum, x| sum += x**2 }
 				cos_sum = xs.inject(0.0) { |sum, x| sum += Math.cos(2 * Math::PI * x) }
 				20 + Math::E - 20 * Math.exp(-0.2 * Math.sqrt( (1.0 / xs.size) * quad_sum )) - Math.exp( (1.0 / xs.size) * cos_sum )
@@ -88,7 +88,7 @@ module EvoSynth
 			#
 			# global minimum: f(x) = 0 at x(i) = 0, i = 1..n
 
-			def BenchmarkFuntions.griewank(xs)
+			def FloatBenchmarkFuntions.griewank(xs)
 				product = 1.0
 				xs.each_with_index { |x, i| product *= Math.cos x / Math.sqrt(i+1) }
 				1 + xs.inject(0.0) { |sum, x| sum += x**2 / (400 * xs.size) } - product

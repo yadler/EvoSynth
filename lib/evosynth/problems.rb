@@ -22,4 +22,13 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/problems/benchmark_functions'
+module EvoSynth
+
+	# This module contains some predefined problems. Most of them are widely used to benchmark or demonstrate
+	# Evolutionary Computation.
+
+	module Problems
+	end
+end
+
+require 'evosynth/problems/float_benchmark_functions'

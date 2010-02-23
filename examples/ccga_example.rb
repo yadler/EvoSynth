@@ -35,7 +35,7 @@ module Examples
 		POPULATION_SIZE = 25
 
 		def CCGAExample.fitness_function(xs)
-			EvoSynth::Problems::BenchmarkFuntions.rastgrin(xs)
+			EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(xs)
 		end
 
 		class StandardEvaluator < EvoSynth::Core::Evaluator

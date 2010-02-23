@@ -47,7 +47,7 @@ module Examples
 			end
 
 			def calculate_fitness(individual)
-				EvoSynth::Problems::BenchmarkFuntions.sphere(decode(individual))
+				EvoSynth::Problems::FloatBenchmarkFuntions.sphere(decode(individual))
 			end
 		end
 

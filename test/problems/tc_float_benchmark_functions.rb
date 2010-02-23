@@ -33,12 +33,12 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [420.9687463, 420.9687463, 420.9687463]" do
 			xs = [420.9687463, 420.9687463, 420.9687463]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.sinus_sum(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.sinus_sum(xs), 0.0001
 		end
 
 		should "be near 48.452841639435974 at [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]" do
 			xs = [422.400, 418.840, 406.880, 421.700, 424.780, 412.740, 419.800, 416.000, 413.040, 417.620]
-			assert_in_delta 48.452841639435974, EvoSynth::Problems::BenchmarkFuntions.sinus_sum(xs), 0.0001
+			assert_in_delta 48.452841639435974, EvoSynth::Problems::FloatBenchmarkFuntions.sinus_sum(xs), 0.0001
 		end
 
 	end
@@ -47,7 +47,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [0,0,0,0,0,0,0]" do
 			xs = [0,0,0,0,0,0,0]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.double_sum(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.double_sum(xs), 0.0001
 		end
 
 	end
@@ -56,7 +56,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [0,0,0,0,0,0,0]" do
 			xs = [0,0,0,0,0,0,0]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.sphere(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.sphere(xs), 0.0001
 		end
 
 	end
@@ -65,7 +65,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [0,0,0,0,0,0,0]" do
 			xs = [0,0,0,0,0,0,0]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.rastgrin(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(xs), 0.0001
 		end
 
 	end
@@ -74,7 +74,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [1,1,1,1,1,1,1]" do
 			xs = [1,1,1,1,1,1,1]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.rosenbrock(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.rosenbrock(xs), 0.0001
 		end
 
 	end
@@ -83,7 +83,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [0,0,0,0,0,0,0]" do
 			xs = [0,0,0,0,0,0,0]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.ackley(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.ackley(xs), 0.0001
 		end
 
 	end
@@ -92,7 +92,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 		should "be near zero at [0,0,0,0,0,0,0]" do
 			xs = [0,0,0,0,0,0,0]
-			assert_in_delta 0, EvoSynth::Problems::BenchmarkFuntions.griewank(xs), 0.0001
+			assert_in_delta 0, EvoSynth::Problems::FloatBenchmarkFuntions.griewank(xs), 0.0001
 		end
 
 	end

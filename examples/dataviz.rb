@@ -46,7 +46,7 @@ module Examples
 			end
 
 			def calculate_fitness(individual)
-				EvoSynth::Problems::BenchmarkFuntions.rastgrin(decode(individual))
+				EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(decode(individual))
 			end
 
 		end
