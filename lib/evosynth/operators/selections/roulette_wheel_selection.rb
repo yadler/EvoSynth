@@ -31,7 +31,7 @@ module EvoSynth
 		class RouletteWheelSelection < EvoSynth::Selections::FitnessProportionalSelection
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 				fitness_hash = generate_fitness_hash(population)
 
 				limit = EvoSynth.rand(fitness_hash[population.size - 1] / select_count)

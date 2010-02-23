@@ -31,7 +31,7 @@ module EvoSynth
 		class Identity
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 				selected_population << population.first(select_count)
 				selected_population.flatten!
 				selected_population

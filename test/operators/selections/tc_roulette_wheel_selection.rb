@@ -38,8 +38,8 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 
 		should "select a super-individual" do
 			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
-			population = EvoSynth::Core::Population.new
-			expected = EvoSynth::Core::Population.new
+			population = EvoSynth::Population.new
+			expected = EvoSynth::Population.new
 
 			(INDIVIDUALS - 1).times { population.add(TestMinimizingIndividual.new(MAX_VALUE)) }
 			population.add(TestMinimizingIndividual.new(1))
@@ -58,8 +58,8 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 
 		should "select a super-individual" do
 			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
-			population = EvoSynth::Core::Population.new
-			expected = EvoSynth::Core::Population.new
+			population = EvoSynth::Population.new
+			expected = EvoSynth::Population.new
 
 			(INDIVIDUALS - 1).times { population.add(TestMaximizingIndividual.new(1)) }
 			population.add(TestMaximizingIndividual.new(MAX_VALUE))

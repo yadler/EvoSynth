@@ -23,39 +23,37 @@
 
 
 module EvoSynth
-	module Core
 
-		class Evaluator
-			attr_reader :called, :calculated
+	class Evaluator
+		attr_reader :called, :calculated
 
-			def initialize
-				reset_counters
-			end
-
-			def calculate_and_set_fitness(individual)
-				@called += 1
-
-				if individual.changed?
-					@calculated += 1
-					individual.fitness = calculate_fitness(individual)
-				end
-
-				individual.fitness
-			end
-
-			def calculate_fitness(individual)
-				raise NotImplementedError, "please implement calculate_fitness!"
-			end
-
-			def reset_counters
-				@called = 0
-				@calculated = 0
-			end
-
-			def to_s
-				"Evaluator <called: #{@called}, calculated: #{@calculated}>"
-			end
+		def initialize
+			reset_counters
 		end
 
+		def calculate_and_set_fitness(individual)
+			@called += 1
+
+			if individual.changed?
+				@calculated += 1
+				individual.fitness = calculate_fitness(individual)
+			end
+
+			individual.fitness
+		end
+
+		def calculate_fitness(individual)
+			raise NotImplementedError, "please implement calculate_fitness!"
+		end
+
+		def reset_counters
+			@called = 0
+			@calculated = 0
+		end
+
+		def to_s
+			"Evaluator <called: #{@called}, calculated: #{@calculated}>"
+		end
 	end
+
 end

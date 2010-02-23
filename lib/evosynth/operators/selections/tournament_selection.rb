@@ -39,7 +39,7 @@ module EvoSynth
 			end
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 
 				select_count.times do
 					individual = fight(population, population[EvoSynth.rand(population.size)])

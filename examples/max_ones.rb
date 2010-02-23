@@ -35,19 +35,19 @@ module Examples
 		# this is just for the sake of demonstration stuff - you could also use
 		# EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones()
 
-		class MaxOnesEvaluator < EvoSynth::Core::Evaluator
+		class MaxOnesEvaluator < EvoSynth::Evaluator
 			def calculate_fitness(individual)
 				individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
 			end
 		end
 
 		def MaxOnes.create_individual
-			EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
+			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
 		profile = EvoSynth::Core::Profile.new(
 			:individual			=> MaxOnes.create_individual,
-			:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
+			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
 			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		)

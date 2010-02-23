@@ -23,115 +23,113 @@
 
 
 module EvoSynth
-	module Core
 
-		# FIXME: implment in C for better performance - right now its pretty useless
+	# FIXME: implment in C for better performance - right now its pretty useless
 
-		class BinaryGenome < Array
+	class BinaryGenome < Array
 
-			def initialize(intial_value = 0)
-				@data = intial_value
-				@changed = true
-			end
+		def initialize(intial_value = 0)
+			@data = intial_value
+			@changed = true
+		end
 
-			def changed=(value)
-				@changed = value
-			end
+		def changed=(value)
+			@changed = value
+		end
 
-			# true if the genome has changed - has to be set to false manually
+		# true if the genome has changed - has to be set to false manually
 
-			def changed?
-				@changed
-			end
+		def changed?
+			@changed
+		end
 
-			def clone
-				my_clone = BinaryGenome.new(@data)
-				my_clone.changed = false
-				my_clone
-			end
+		def clone
+			my_clone = BinaryGenome.new(@data)
+			my_clone.changed = false
+			my_clone
+		end
 
 
-			# [index]
-			# [index, length]
-			# [range]
+		# [index]
+		# [index, length]
+		# [range]
 
-			def [](*args)
-				if args.size == 1
+		def [](*args)
+			if args.size == 1
 
-					case args[0]
-						when Numeric
-							@data[args[0]]
-						when Range
-							get_sub_range args[0]
-						else
-							raise ArgumentError, "argument should be either index or range"
-						end
+				case args[0]
+					when Numeric
+						@data[args[0]]
+					when Range
+						get_sub_range args[0]
+					else
+						raise ArgumentError, "argument should be either index or range"
+					end
 
-				elsif args.size == 2
-					get_sub_range Range.new(args[0], args[0] + args[1] - 1)
-				else
-					raise ArgumentError, "wrong number of arguments"
-				end
-			end
-
-			def []=(*args)
-				if args.size == 2
-
-					case args[0]
-						when Numeric
-							set_gene(args[0], args[1])
-						when Range
-							case args[1]
-								when Numeric
-									args[0].each { |index| set_gene(index, args[1]) }
-								when Array
-									offset = args[0].begin
-									args[0].each { |index| set_gene(index, args[1][index - offset]) }
-								else
-									raise ArgumentError, "argument (1) should be either index or range"
-							end
-
-						else
-							raise ArgumentError, "argument (0) should be either index or range"
-						end
-
-				elsif args.size == 3
-					args[1].times { |offset| set_gene(args[0] + offset, args[2]) }
-				else
-					raise ArgumentError, "wrong number of arguments"
-				end
-			end
-
-			def flip!(index)
-				@data = @data ^ (1 << index)
-			end
-
-			def size
-				@size = @data.to_s(2).size unless defined? @size
-				@size
-			end
-
-			# Create a printable version of the genome
-			def to_s
-				@data.to_s(2)
-			end
-
-			private
-
-			def get_sub_range(range)
-				subarray = []
-				range.each { |index| subarray << @data[index] }
-				subarray
-			end
-
-			def set_gene(index, gene)
-				if gene == 0
-					@data = @data ^ (1 << index) unless @data[index] == 0
-				else
-					@data = @data | (1 << index)
-				end
+			elsif args.size == 2
+				get_sub_range Range.new(args[0], args[0] + args[1] - 1)
+			else
+				raise ArgumentError, "wrong number of arguments"
 			end
 		end
 
+		def []=(*args)
+			if args.size == 2
+
+				case args[0]
+					when Numeric
+						set_gene(args[0], args[1])
+					when Range
+						case args[1]
+							when Numeric
+								args[0].each { |index| set_gene(index, args[1]) }
+							when Array
+								offset = args[0].begin
+								args[0].each { |index| set_gene(index, args[1][index - offset]) }
+							else
+								raise ArgumentError, "argument (1) should be either index or range"
+						end
+
+					else
+						raise ArgumentError, "argument (0) should be either index or range"
+					end
+
+			elsif args.size == 3
+				args[1].times { |offset| set_gene(args[0] + offset, args[2]) }
+			else
+				raise ArgumentError, "wrong number of arguments"
+			end
+		end
+
+		def flip!(index)
+			@data = @data ^ (1 << index)
+		end
+
+		def size
+			@size = @data.to_s(2).size unless defined? @size
+			@size
+		end
+
+		# Create a printable version of the genome
+		def to_s
+			@data.to_s(2)
+		end
+
+		private
+
+		def get_sub_range(range)
+			subarray = []
+			range.each { |index| subarray << @data[index] }
+			subarray
+		end
+
+		def set_gene(index, gene)
+			if gene == 0
+				@data = @data ^ (1 << index) unless @data[index] == 0
+			else
+				@data = @data | (1 << index)
+			end
+		end
 	end
+
 end

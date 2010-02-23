@@ -64,7 +64,7 @@ module Examples
 		end
 
 
-		class ColourEvaluator < EvoSynth::Core::Evaluator
+		class ColourEvaluator < EvoSynth::Evaluator
 
 			def initialize(graph)
 				@graph = graph
@@ -94,11 +94,11 @@ module Examples
 		FLIP_GRAPH_COLOUR = lambda { |gene| EvoSynth.rand(gene + 2) }
 
 		def GraphColouring.create_random_individual(graph)
-			genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
+			genome = EvoSynth::ArrayGenome.new(graph.node_count)
 			max_color = EvoSynth.rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
 			genome.map! { |gene| EvoSynth.rand(max_color)}
 			genome.map! { |gene| gene % genome.uniq.size }
-			inidividual = EvoSynth::Core::MinimizingIndividual.new(genome)
+			inidividual = EvoSynth::MinimizingIndividual.new(genome)
 			inidividual
 		end
 
@@ -108,7 +108,7 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
 			:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
-			:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
+			:population			=> EvoSynth::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
 			:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
 		)
 

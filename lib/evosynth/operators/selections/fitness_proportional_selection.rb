@@ -31,7 +31,7 @@ module EvoSynth
 		class FitnessProportionalSelection
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 				fitness_hash = generate_fitness_hash(population)
 
 				select_count.times do

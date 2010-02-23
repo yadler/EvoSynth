@@ -36,7 +36,7 @@ module Examples
 		UPPER_LIMIT = 5.12
 		LOWER_LIMIT = -5.12
 
-		class LocalSearchEvaluator < EvoSynth::Core::Evaluator
+		class LocalSearchEvaluator < EvoSynth::Evaluator
 
 			def decode(individual)
 				values = []
@@ -52,7 +52,7 @@ module Examples
 		end
 
 		def LocalSearch.create_individual
-			EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
+			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
 		def LocalSearch.print_acceptance_state(algorithm)

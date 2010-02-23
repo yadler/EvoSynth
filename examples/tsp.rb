@@ -76,7 +76,7 @@ module Examples
 		end
 
 
-		class TSPFitnessEvaluator < EvoSynth::Core::Evaluator
+		class TSPFitnessEvaluator < EvoSynth::Evaluator
 
 			def initialize(problem_matix)
 				super()
@@ -96,16 +96,16 @@ module Examples
 		end
 
 		def TSP.create_individual(problem_matrix)
-			individual = EvoSynth::Core::MinimizingIndividual.new
+			individual = EvoSynth::MinimizingIndividual.new
 			shuffeld = (0..problem_matrix.size - 1).to_a.sort_by { EvoSynth.rand(2) }
-			individual.genome = EvoSynth::Core::ArrayGenome.new(shuffeld)
+			individual.genome = EvoSynth::ArrayGenome.new(shuffeld)
 			individual
 		end
 
 		def TSP.optimal_tour(matrix)
 			optimal = TSP.create_individual(matrix)
 			opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-			optimal.genome = EvoSynth::Core::ArrayGenome.new(opt_tour)
+			optimal.genome = EvoSynth::ArrayGenome.new(opt_tour)
 			optimal
 		end
 
@@ -119,7 +119,7 @@ module Examples
 																			 EvoSynth::Mutations::MixingMutation.new),
 			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 			:recombination		=> EvoSynth::Recombinations::EdgeRecombination.new,
-			:population			=> EvoSynth::Core::Population.new(100) { TSP.create_individual(matrix) },
+			:population			=> EvoSynth::Population.new(100) { TSP.create_individual(matrix) },
 			:evaluator			=> TSP::TSPFitnessEvaluator.new(matrix)
 		)
 		profile.evaluator.calculate_and_set_fitness(optimal_tour)

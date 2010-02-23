@@ -29,7 +29,7 @@ require 'evosynth'
 module Examples
 	module Partitionproblem
 
-		class PartitionEvaluator < EvoSynth::Core::Evaluator
+		class PartitionEvaluator < EvoSynth::Evaluator
 			def calculate_fitness(individual)
 				sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
 				sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
@@ -39,7 +39,7 @@ module Examples
 
 		# We've to carefully overwrite functions here, because we actually have 2 genomes
 
-		class PartitionIndividual < EvoSynth::Core::MinimizingIndividual
+		class PartitionIndividual < EvoSynth::MinimizingIndividual
 
 			attr_accessor :partition_a, :partition_b
 
@@ -133,7 +133,7 @@ module Examples
 
 		def Partitionproblem.get_new_individual_from(problem)
 			border = EvoSynth.rand(problem.size)
-			part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
+			part_a, part_b = EvoSynth::ArrayGenome.new, EvoSynth::ArrayGenome.new
 
 			problem.size.times do
 				|index| index < border ? part_a << problem[index] : part_b << problem[index]
@@ -146,7 +146,7 @@ module Examples
 		GENERATIONS = 500
 
 		problem = Partitionproblem::Testdata.gen_layer_set
-		base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
+		base_population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
 		profile = EvoSynth::Core::Profile.new(
 			:mutation			=> PartitionMutation.new,

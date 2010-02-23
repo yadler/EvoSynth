@@ -36,7 +36,7 @@ class GlobalUniformCrossoverTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@population = EvoSynth::Core::Population.new
+			@population = EvoSynth::Population.new
 			individual_one = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			individual_one.genome.map! { |gene| true }
 			individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)

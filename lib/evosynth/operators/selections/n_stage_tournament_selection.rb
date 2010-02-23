@@ -39,7 +39,7 @@ module EvoSynth
 			end
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 
 				scores = calculate_scores(population)
 				scores = scores.sort { |first, second| first[0] <=> second[0] * -1 }

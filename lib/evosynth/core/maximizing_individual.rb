@@ -22,47 +22,26 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'shoulda'
+module EvoSynth
 
-require 'evosynth'
-require 'test/test_util/test_helper'
+	# Class for Individuals (for maximizing problems)
 
+	class MaximizingIndividual
+		include Individual
 
-class SelectBestTest < Test::Unit::TestCase
+		def initialize(genome = nil)
+			@genome = genome
+			@fitness = Float::MIN
+		end
 
-	TIMES = 1000
-	DELTA = 0.1
+		# compares two fitness values for maximizing problems
 
-	context "when run on a population of minimizing individuals " do
+		def compare_fitness_values(one, two)
+			one <=> two
+		end
 
-		should "should select every individual as often as the others" do
-			population = EvoSynth::Population.new
-			individual1 = TestMinimizingIndividual.new(1)
-			individual2 = TestMinimizingIndividual.new(2)
-			individual3 = TestMinimizingIndividual.new(3)
-			population.add(individual1)
-			population.add(individual2)
-			population.add(individual3)
-
-			count_one, count_two, count_three = 0, 0, 0
-
-			TIMES.times do
-				select_best = EvoSynth::Selections::RandomSelection.new
-				result = select_best.select(population, 1)
-				result.each do |individual|
-					if individual == individual1
-						count_one += 1
-					elsif individual == individual2
-						count_two += 1
-					elsif individual == individual3
-						count_three += 1
-					end
-				end
-			end
-
-			assert_in_delta TIMES/3.0, count_one, TIMES/3.0 * DELTA
-			assert_in_delta TIMES/3.0, count_two, TIMES/3.0 * DELTA
-			assert_in_delta TIMES/3.0, count_three, TIMES/3.0 * DELTA
+		def to_s
+			"maximizing individual <fitness = #{fitness}, genome = [#{genome}]>"
 		end
 
 	end

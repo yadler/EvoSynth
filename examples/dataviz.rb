@@ -37,7 +37,7 @@ module Examples
 		GENERATIONS = 250
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
-		class DataVizEvaluator < EvoSynth::Core::Evaluator
+		class DataVizEvaluator < EvoSynth::Evaluator
 
 			def decode(individual)
 				values = []
@@ -103,14 +103,14 @@ module Examples
 		end
 
 		def DataViz.create_individual(genome_size)
-			EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
+			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
 		end
 
 		profile = EvoSynth::Core::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
-			:population			=> EvoSynth::Core::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) },
+			:population			=> EvoSynth::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) },
 			:evaluator			=> DataVizEvaluator.new
 		)
 

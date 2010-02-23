@@ -69,7 +69,7 @@ module EvoSynth
 			end
 
 			def next_generation
-				child_population = EvoSynth::Core::Population.new
+				child_population = EvoSynth::Population.new
 
 				(@child_factor * @population.size).times do
 					parent = @parent_selection.select(@population, 1).first

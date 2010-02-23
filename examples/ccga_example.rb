@@ -38,7 +38,7 @@ module Examples
 			EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(xs)
 		end
 
-		class StandardEvaluator < EvoSynth::Core::Evaluator
+		class StandardEvaluator < EvoSynth::Evaluator
 
 			def decode(individual)
 				values = []
@@ -53,7 +53,7 @@ module Examples
 		end
 
 
-		class CCGABenchmarkEvaluator < EvoSynth::Core::Evaluator
+		class CCGABenchmarkEvaluator < EvoSynth::Evaluator
 
 			def initialize(populations)
 				super()
@@ -107,7 +107,7 @@ module Examples
 
 		end
 
-		class CCGAIndividual < EvoSynth::Core::MinimizingIndividual
+		class CCGAIndividual < EvoSynth::MinimizingIndividual
 			attr_accessor :population_index
 
 			def initialize(population_index)
@@ -118,7 +118,7 @@ module Examples
 
 		def CCGAExample.create_individual(genome_size, index)
 			individual = CCGAIndividual.new(index)
-			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
+			individual.genome = EvoSynth::ArrayGenome.new(genome_size)
 			individual.genome.map! { EvoSynth.rand_bool }
 			individual
 		end
@@ -126,7 +126,7 @@ module Examples
 		puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
 
 		profile = EvoSynth::Core::Profile.new(
-			:population					=> EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) },
+			:population					=> EvoSynth::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) },
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
@@ -147,7 +147,7 @@ module Examples
 
 		profile.populations = []
 		DIMENSIONS.times do |dim|
-			profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
+			profile.populations << EvoSynth::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 		end
 
 		profile.evaluator = CCGABenchmarkEvaluator.new(profile.populations)
@@ -186,7 +186,7 @@ module Examples
 
 		profile.populations = []
 		DIMENSIONS.times do |dim|
-			profile.populations << EvoSynth::Core::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
+			profile.populations << EvoSynth::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS, dim) }
 		end
 
 		profile.evaluator = CCGA2BenchmarkEvaluator.new(profile.populations)

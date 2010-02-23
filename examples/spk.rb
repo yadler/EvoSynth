@@ -30,7 +30,7 @@ require 'evosynth'
 module Examples
 	module SPk
 
-		class SPkFitnessEvaluator < EvoSynth::Core::Evaluator
+		class SPkFitnessEvaluator < EvoSynth::Evaluator
 
 			def initialize(k)
 				@k = k
@@ -93,7 +93,7 @@ module Examples
 		GENERATIONS = 5000
 
 		profile = EvoSynth::Core::Profile.new(
-			:individual			=> EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ),
+			:individual			=> EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ),
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)

@@ -36,7 +36,7 @@ class GlobalArithmeticCrossoverTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
-			@population = EvoSynth::Core::Population.new
+			@population = EvoSynth::Population.new
 			individual_one = TestArrayGenomeIndividual.new([1.0]*GENOME_SIZE)
 			individual_two = TestArrayGenomeIndividual.new([2.0]*GENOME_SIZE)
 

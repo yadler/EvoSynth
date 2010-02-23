@@ -22,52 +22,58 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth'
+module EvoSynth
 
+	# Base module for individuals
 
-class TestMinimizingIndividual < EvoSynth::MinimizingIndividual
+	module Individual
+		include Comparable
 
-	def initialize(fitness = 0.0)
-		@fitness = fitness
-		@genome = EvoSynth::ArrayGenome.new
-	end
+		# Genome of the Individual, it should provide a changed attribute
 
-end
+		attr_accessor :genome
 
+		def fitness
+			@fitness
+		end
 
-class TestMaximizingIndividual < EvoSynth::MaximizingIndividual
+		def fitness=(value)
+			@fitness = value
+			@genome.changed = false
+		end
 
-	def initialize(fitness = 0.0)
-		@fitness = fitness
-		@genome = EvoSynth::ArrayGenome.new
-	end
+		def changed?
+			@genome.changed?
+		end
 
-end
+		def deep_clone
+			my_clone = self.clone
+			my_clone.genome = self.genome.clone rescue self.genome
+			my_clone
+		end
 
+		# If you compare individuals the semantic of "<=>" is the following:
+		#
+		#	a > b  -> individual a is a better solution than individual b
+		#	a < b  -> individual b is a better solution than individual a
+		#	a == b -> a and b have a equal fitness value
 
-class TestBinaryGenomeIndividual < EvoSynth::MinimizingIndividual
+		def <=>(another)
+			compare_fitness_values(fitness, another.fitness)
+		end
 
-	def initialize(value)
-		@genome = EvoSynth::BinaryGenome.new(value)
-	end
+		def compare_fitness_values(one, two)
+			raise NotImplementedError, "please implement compare_fitness_values!"
+		end
 
-end
+		def minimizes?
+			compare_fitness_values(1,0) < 0
+		end
 
+		def maximizes?
+			compare_fitness_values(1,0) > 0
+		end
 
-class TestArrayBinaryIndividual < EvoSynth::MinimizingIndividual
-
-	def initialize(genome_size)
-		@genome = EvoSynth::ArrayGenome.new(genome_size)
-	end
-
-end
-
-
-class TestArrayGenomeIndividual < EvoSynth::MinimizingIndividual
-
-	def initialize(genes)
-		@fitness = 0.0
-		@genome = EvoSynth::ArrayGenome.new(genes)
 	end
 
 end

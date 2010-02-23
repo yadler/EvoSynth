@@ -28,7 +28,7 @@ module EvoSynth
 		class RandomSelection
 
 			def select(population, select_count = 1)
-				selected_population = EvoSynth::Core::Population.new
+				selected_population = EvoSynth::Population.new
 				select_count.times { selected_population << population[EvoSynth.rand(population.size)] }
 				selected_population
 			end

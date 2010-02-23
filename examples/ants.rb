@@ -158,7 +158,7 @@ module Examples
 		end
 
 
-		class AntFitnessCalculator < EvoSynth::Core::Evaluator
+		class AntFitnessCalculator < EvoSynth::Evaluator
 
 			def initialize(problem_matrix)
 				@problem_matrix = problem_matrix
@@ -202,7 +202,7 @@ module Examples
 			private
 
 			def rand_route
-				genome = EvoSynth::Core::ArrayGenome.new
+				genome = EvoSynth::ArrayGenome.new
 				genome << @start
 
 				(@problem_matrix.size - 1).times do
@@ -222,8 +222,8 @@ module Examples
 		def Ants.algorithm_profile(matrix, pheromon)
 			ant_mutation = Ants::SimpleAntMutation.new(matrix, pheromon, 1, 0.2)
 
-			population = EvoSynth::Core::Population.new(10) do
-				ant = EvoSynth::Core::MinimizingIndividual.new(EvoSynth::Core::ArrayGenome.new)
+			population = EvoSynth::Population.new(10) do
+				ant = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new)
 				ant_mutation.mutate(ant)
 			end
 
@@ -257,7 +257,7 @@ module Examples
 		profile = Ants.algorithm_profile(matrix, PHEROMON)
 
 		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
-		optimal = EvoSynth::Core::MinimizingIndividual.new(EvoSynth::Core::ArrayGenome.new(opt_tour))
+		optimal = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new(opt_tour))
 		profile.evaluator.calculate_and_set_fitness(optimal)
 		puts "Optimal Individual for this problem: #{optimal}"
 

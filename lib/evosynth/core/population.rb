@@ -23,68 +23,66 @@
 
 
 module EvoSynth
-	module Core
 
-		# This class is used to create and maintain a population
+	# This class is used to create and maintain a population
 
-		class Population <  EvoSynth::Core::ArrayGenome
+	class Population <  EvoSynth::ArrayGenome
 
-			# Setup a population of individuals with the given size
-			# and a block to initialize each individual
+		# Setup a population of individuals with the given size
+		# and a block to initialize each individual
 
-			def initialize(*args)
-				super(*args)
-				self.map! { |individual| yield } if block_given?
-			end
-
-
-			def deep_clone
-				my_clone = self.clone
-				self.each_index { |index| my_clone[index] = self[index].deep_clone }
-				my_clone
-			end
+		def initialize(*args)
+			super(*args)
+			self.map! { |individual| yield } if block_given?
+		end
 
 
-			def add(individual)
-				self << individual
-			end
+		def deep_clone
+			my_clone = self.clone
+			self.each_index { |index| my_clone[index] = self[index].deep_clone }
+			my_clone
+		end
 
 
-			def remove(individual)
-				# FIXME: this is a rather ugly hack
-				# -> should be replaced with a cool 1.9 function
+		def add(individual)
+			self << individual
+		end
 
-				found = nil
-				self.each_index do |index|
-					if self[index] == individual
-						found = index
-						break
-					end
+
+		def remove(individual)
+			# FIXME: this is a rather ugly hack
+			# -> should be replaced with a cool 1.9 function
+
+			found = nil
+			self.each_index do |index|
+				if self[index] == individual
+					found = index
+					break
 				end
-
-				self.delete_at(found) if found != nil
 			end
 
-
-			def best(count = 1)
-				self.sort! if self.changed?
-				self.changed = false
-				count == 1 ? self.last : self.last(count).reverse
-			end
+			self.delete_at(found) if found != nil
+		end
 
 
-			def worst(count = 1)
-				self.sort! if self.changed?
-				self.changed = false
-				count == 1 ? self.first : self.first(count).reverse
-			end
+		def best(count = 1)
+			self.sort! if self.changed?
+			self.changed = false
+			count == 1 ? self.last : self.last(count).reverse
+		end
 
 
-			def to_s
-				"Population (size=#{self.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
-			end
+		def worst(count = 1)
+			self.sort! if self.changed?
+			self.changed = false
+			count == 1 ? self.first : self.first(count).reverse
+		end
 
+
+		def to_s
+			"Population (size=#{self.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
 		end
 
 	end
+
 end

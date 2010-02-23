@@ -31,7 +31,7 @@ class BinaryGenomeTest < Test::Unit::TestCase
 
 	context "when created without intital value" do
 		setup do
-			@genome = EvoSynth::Core::BinaryGenome.new
+			@genome = EvoSynth::BinaryGenome.new
 		end
 
 		should "#changed be true" do
@@ -61,7 +61,7 @@ class BinaryGenomeTest < Test::Unit::TestCase
 
 	context "when created with 85" do
 		setup do
-			@genome = EvoSynth::Core::BinaryGenome.new(87)
+			@genome = EvoSynth::BinaryGenome.new(87)
 		end
 
 		should "#changed be true" do

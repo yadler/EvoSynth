@@ -23,49 +23,48 @@
 
 
 module EvoSynth
-	module Core
 
-		# Array based genome, which keeps track of changes (changed attribute)
-		# to reduce the need to recalculate the fitness function in the
-		# Individual module
+	# Array based genome, which keeps track of changes (changed attribute)
+	# to reduce the need to recalculate the fitness function in the
+	# Individual module
 
-		class ArrayGenome < Array
+	class ArrayGenome < Array
 
-			def changed=(value)
-				@changed = value
-			end
+		def changed=(value)
+			@changed = value
+		end
 
-			# true if the genome has changed - has to be set to false manually
+		# true if the genome has changed - has to be set to false manually
 
-			def changed?
-				@changed
-			end
+		def changed?
+			@changed
+		end
 
-			# Create a printable version of the genome
+		# Create a printable version of the genome
 
-			def to_s
-				self * ", "
-			end
+		def to_s
+			self * ", "
+		end
 
-			def clone
-				my_clone = super
-				my_clone.changed = false
-				my_clone
-			end
+		def clone
+			my_clone = super
+			my_clone.changed = false
+			my_clone
 		end
 
 		# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9
 		# see rb_ary_store and rb_ary_modify
 
 		METHODS_THAT_CHANGE_ARRAY = ['initialize', '[]=', 'delete', 'delete_at', 'collect!', 'map!', '<<', 'reject!', 'uniq!', 'unshift',
-		                             'shift', 'sort!', 'pop', 'push', 'flatten!', 'reverse!', 'slice!', 'clear']
+									 'shift', 'sort!', 'pop', 'push', 'flatten!', 'reverse!', 'slice!', 'clear']
 
 		METHODS_THAT_CHANGE_ARRAY.each do |method_name|
 			ArrayGenome.class_eval("def #{method_name}(*args)
 									  @changed = true
 									  super
-								    end")
+									end")
 		end
 
 	end
+
 end

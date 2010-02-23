@@ -37,21 +37,21 @@ module Examples
 			EvoSynth::Problems::FloatBenchmarkFuntions.sphere(xs)
 		end
 
-		class BenchmarkEvaluator < EvoSynth::Core::Evaluator
+		class BenchmarkEvaluator < EvoSynth::Evaluator
 			def calculate_fitness(individual)
 				EsExample.fitness_function(individual.genome)
 			end
 		end
 
 		def EsExample.create_individual(genome_size, index)
-			individual = EvoSynth::Core::MinimizingIndividual.new
-			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
+			individual = EvoSynth::MinimizingIndividual.new
+			individual.genome = EvoSynth::ArrayGenome.new(genome_size)
 			individual.genome.map! { EvoSynth.rand * 10.24 - 5.12 }
 			individual
 		end
 
 		profile = EvoSynth::Core::Profile.new(
-			:population				=> EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
+			:population				=> EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
 			:modification_frequency => 100,
 			:evaluator				=> BenchmarkEvaluator.new
 		)

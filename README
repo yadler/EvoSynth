@@ -9,6 +9,9 @@ License::   MIT (see LICENSE)
 
 == Features
 
+* EvoSynth::ArrayGenome
+* EvoSynth.rand / EvoSynth.srand / EvoSynth.rand_bool
+
 === evolution algorithms
 
 basic hillclimber:

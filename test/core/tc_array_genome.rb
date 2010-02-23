@@ -33,7 +33,7 @@ class ArrayGenomeTest < Test::Unit::TestCase
 
 	context "when created with size=#{GENOME_SIZE}" do
 		setup do
-			@genome = EvoSynth::Core::ArrayGenome.new(GENOME_SIZE)
+			@genome = EvoSynth::ArrayGenome.new(GENOME_SIZE)
 		end
 
 		should "#changed be true" do
@@ -44,7 +44,7 @@ class ArrayGenomeTest < Test::Unit::TestCase
 
 	context "after #changed is set to false" do
 		setup do
-			@genome = EvoSynth::Core::ArrayGenome.new(GENOME_SIZE)
+			@genome = EvoSynth::ArrayGenome.new(GENOME_SIZE)
 			@genome.map! { 1 }
 			@genome.changed = false
 		end

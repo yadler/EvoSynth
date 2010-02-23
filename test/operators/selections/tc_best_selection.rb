@@ -33,7 +33,7 @@ class SelectBestTest < Test::Unit::TestCase
 	context "when run on a population of minimizing individuals " do
 
 		should "select the two individuals with the lowest fitness values" do
-			population = EvoSynth::Core::Population.new
+			population = EvoSynth::Population.new
 			individual1 = TestMinimizingIndividual.new(1)
 			individual2 = TestMinimizingIndividual.new(2)
 			individual3 = TestMinimizingIndividual.new(3)
@@ -45,7 +45,7 @@ class SelectBestTest < Test::Unit::TestCase
 			population.add(individual4)
 			population.add(individual5)
 
-			expected = EvoSynth::Core::Population.new
+			expected = EvoSynth::Population.new
 			expected.add(individual1)
 			expected.add(individual2)
 
@@ -59,7 +59,7 @@ class SelectBestTest < Test::Unit::TestCase
 	context "when run on a population of maximizing individuals " do
 
 		should "select the two individuals with the highest fitness values" do
-			population = EvoSynth::Core::Population.new
+			population = EvoSynth::Population.new
 			individual1 = TestMaximizingIndividual.new(1)
 			individual2 = TestMaximizingIndividual.new(2)
 			individual3 = TestMaximizingIndividual.new(3)
@@ -71,7 +71,7 @@ class SelectBestTest < Test::Unit::TestCase
 			population.add(individual4)
 			population.add(individual5)
 
-			expected = EvoSynth::Core::Population.new
+			expected = EvoSynth::Population.new
 			expected.add(individual5)
 			expected.add(individual4)
 
