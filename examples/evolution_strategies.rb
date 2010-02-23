@@ -26,49 +26,51 @@ require 'evosynth'
 #require 'profile'
 
 
-module EsExample
+module Examples
+	module EsExample
 
-	DIMENSIONS = 10
-	GENERATIONS = 1000
-	POPULATION_SIZE = 25
+		DIMENSIONS = 10
+		GENERATIONS = 1000
+		POPULATION_SIZE = 25
 
-	def EsExample.fitness_function(xs)
-		EvoSynth::Problems::BenchmarkFuntions.sphere(xs)
-	end
-
-	class BenchmarkEvaluator < EvoSynth::Core::Evaluator
-		def calculate_fitness(individual)
-			EsExample.fitness_function(individual.genome)
+		def EsExample.fitness_function(xs)
+			EvoSynth::Problems::BenchmarkFuntions.sphere(xs)
 		end
+
+		class BenchmarkEvaluator < EvoSynth::Core::Evaluator
+			def calculate_fitness(individual)
+				EsExample.fitness_function(individual.genome)
+			end
+		end
+
+		def EsExample.create_individual(genome_size, index)
+			individual = EvoSynth::Core::MinimizingIndividual.new
+			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
+			individual.genome.map! { rand * 10.24 - 5.12 }
+			individual
+		end
+
+		profile = EvoSynth::Core::Profile.new(
+			:population				=> EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
+			:modification_frequency => 100,
+			:evaluator				=> BenchmarkEvaluator.new
+		)
+
+		algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
+		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+		puts profile.evaluator
+		puts
+		puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
+		puts
+
+		algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
+		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+		puts profile.evaluator
+		puts
+		puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
+		puts
+
 	end
-
-	def EsExample.create_individual(genome_size, index)
-		individual = EvoSynth::Core::MinimizingIndividual.new
-		individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-		individual.genome.map! { rand * 10.24 - 5.12 }
-		individual
-	end
-
-	profile = EvoSynth::Core::Profile.new(
-		:population				=> EvoSynth::Core::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
-		:modification_frequency => 100,
-		:evaluator				=> BenchmarkEvaluator.new
-	)
-
-	algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
-	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.evaluator
-	puts
-	puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
-	puts
-
-	algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
-	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
-	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-	puts profile.evaluator
-	puts
-	puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
-	puts
-
 end

@@ -26,37 +26,37 @@ require 'evosynth'
 #require 'profile'
 
 
-# lets find a solution for http://www.danielgrunwald.de/coding/hacking/2936.php
+module Examples
+	# lets find a solution for http://www.danielgrunwald.de/coding/hacking/2936.php
+	module Hacking
 
-module Hacking
+		GENOME_SIZE = 7
+		ALPHABET = "abcdefghijklmnopqrstuvwxyz"
 
-	GENOME_SIZE = 7
-	ALPHABET = "abcdefghijklmnopqrstuvwxyz"
+		class HackingEvaluator < EvoSynth::Core::Evaluator
 
-	class HackingEvaluator < EvoSynth::Core::Evaluator
+			def calculate_fitness(individual)
+				suma = 0.0
 
-		def calculate_fitness(individual)
-			suma = 0.0
+				individual.genome.each do |gene|
+					suma *= 26
+					suma += ALPHABET.index(gene) + 1
+				end
 
-			individual.genome.each do |gene|
-				suma *= 26
-				suma += ALPHABET.index(gene) + 1
+				(6030912063.0 - suma).abs
 			end
-
-			(6030912063.0 - suma).abs
 		end
+
+		FLIP_CHAR = lambda { ALPHABET[rand(ALPHABET.size)] }
+
+		profile = EvoSynth::Core::Profile.new(
+			:individual			=> EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { ALPHABET[rand(ALPHABET.size)] }),
+			:evaluator			=> Hacking::HackingEvaluator.new,
+			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
+		)
+
+		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		evolver.run_until_fitness_reached(0.0)
+		puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
 	end
-
-	FLIP_CHAR = lambda { ALPHABET[rand(ALPHABET.size)] }
-
-	profile = EvoSynth::Core::Profile.new(
-		:individual			=> EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { ALPHABET[rand(ALPHABET.size)] }),
-		:evaluator			=> Hacking::HackingEvaluator.new,
-		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
-	)
-
-	evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
-	evolver.run_until_fitness_reached(0.0)
-	puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
 end
-

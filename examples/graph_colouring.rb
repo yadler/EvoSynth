@@ -28,105 +28,107 @@ require 'set'
 
 # FIXME: refactor me and extract tool classes !
 
-module GraphColouring
+module Examples
+	module GraphColouring
 
-	MUTATION_RATE = 5
-	MAX_COLORS = 10
-	GENERATIONS = 1000
-	INDIVIDUALS = 10
-	GOAL = 5
-	FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
+		MUTATION_RATE = 5
+		MAX_COLORS = 10
+		GENERATIONS = 1000
+		INDIVIDUALS = 10
+		GOAL = 5
+		FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
 
 
-	class Graph
-		attr_reader :node_count
-		attr_reader :matrix
+		class Graph
+			attr_reader :node_count
+			attr_reader :matrix
 
-		def initialize(filename)
-			read_file(filename)
-		end
-		
-		private
-
-		# reads the node count from grapg-file
-		def get_node_count(file_name)
-			File.open(file_name).each_line do |line|
-				next if line !~ /^p\D*(\d+)/
-				return Integer($1)
+			def initialize(filename)
+				read_file(filename)
 			end
-		end
 
-		# reads a graph file
-		def read_file(file_name)
-			@node_count = get_node_count(file_name)
-			@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
+			private
 
-			File.open(file_name).each_line do |line|
-				next if line !~ /^e/
-				line =~ /(\d+)\s*(\d+)/
-				@matrix[Integer($1)-1, Integer($2)-1] = 1
-			end
-		end
-
-	end
-
-
-	class ColourEvaluator < EvoSynth::Core::Evaluator
-
-		def initialize(graph)
-			@graph = graph
-			super()
-		end
-
-		def verletzungen(genome)
-			verletzungen = 0
-			@graph.matrix.each_index do |row, col|
-				if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
-					verletzungen += 1
+			# reads the node count from grapg-file
+			def get_node_count(file_name)
+				File.open(file_name).each_line do |line|
+					next if line !~ /^p\D*(\d+)/
+					return Integer($1)
 				end
 			end
-			verletzungen
+
+			# reads a graph file
+			def read_file(file_name)
+				@node_count = get_node_count(file_name)
+				@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
+
+				File.open(file_name).each_line do |line|
+					next if line !~ /^e/
+					line =~ /(\d+)\s*(\d+)/
+					@matrix[Integer($1)-1, Integer($2)-1] = 1
+				end
+			end
+
 		end
 
-		def calculate_fitness(individual)
-			fitness = 0.0 + individual.genome.uniq.size * (verletzungen(individual.genome) + 1)
-			fitness
+
+		class ColourEvaluator < EvoSynth::Core::Evaluator
+
+			def initialize(graph)
+				@graph = graph
+				super()
+			end
+
+			def verletzungen(genome)
+				verletzungen = 0
+				@graph.matrix.each_index do |row, col|
+					if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
+						verletzungen += 1
+					end
+				end
+				verletzungen
+			end
+
+			def calculate_fitness(individual)
+				fitness = 0.0 + individual.genome.uniq.size * (verletzungen(individual.genome) + 1)
+				fitness
+			end
 		end
+
+
+		def GraphColouring.create_random_individual(graph)
+			genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
+			max_color = rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
+			genome.map! { |gene| rand(max_color)}
+			genome.map! { |gene| gene % genome.uniq.size }
+			inidividual = EvoSynth::Core::MinimizingIndividual.new(genome)
+			inidividual
+		end
+
+
+		require 'benchmark'
+		#require 'profile'
+
+		graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+
+		profile = EvoSynth::Core::Profile.new(
+			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
+			:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
+			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
+			:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
+			:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
+		)
+		base_population = profile.population
+
+		# FIXME: use just one or two algorithms!
+
+		EvoSynth::Evolvers.constants.each do |algorithm|
+			algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
+			next unless defined? algorithm_class.new
+
+			profile.population = base_population.deep_clone
+			EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS } rescue next
+		end
+
 	end
-
-
-	def GraphColouring.create_random_individual(graph)
-		genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
-		max_color = rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
-		genome.map! { |gene| rand(max_color)}
-		genome.map! { |gene| gene % genome.uniq.size }
-		inidividual = EvoSynth::Core::MinimizingIndividual.new(genome)
-		inidividual
-	end
-
-
-	require 'benchmark'
-	#require 'profile'
-
-	graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
-
-	profile = EvoSynth::Core::Profile.new(
-		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
-		:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
-		:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
-		:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
-		:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
-	)
-	base_population = profile.population
-
-	# FIXME: use just one or two algorithms!
-
-	EvoSynth::Evolvers.constants.each do |algorithm|
-		algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
-		next unless defined? algorithm_class.new
-
-		profile.population = base_population.deep_clone
-		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS } rescue next
-	end
-
 end

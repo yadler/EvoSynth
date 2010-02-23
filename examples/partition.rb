@@ -26,151 +26,152 @@ require 'set'
 require 'evosynth'
 
 
-module Partitionproblem
+module Examples
+	module Partitionproblem
 
+		class PartitionEvaluator < EvoSynth::Core::Evaluator
 
-	class PartitionEvaluator < EvoSynth::Core::Evaluator
-
-		def calculate_fitness(individual)
-			sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
-			sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
-			(sum_a - sum_b).abs
-		end
-
-	end
-
-
-	# We've to carefully overwrite functions here!
-
-	class PartitionIndividual < EvoSynth::Core::MinimizingIndividual
-
-		attr_accessor :partition_a, :partition_b
-
-		def initialize(partition_a, partition_b)
-			@partition_a = partition_a;
-			@partition_b = partition_b;
-			@fitness = Float::MAX
-		end
-
-		def fitness=(value)
-			@fitness = value
-			@partition_a.changed = false
-			@partition_b.changed = false
-		end
-
-		def changed?
-			@partition_a.changed? || @partition_b.changed?
-		end
-
-		def deep_clone
-			my_clone = self.clone
-			my_clone.partition_a = self.partition_a.clone
-			my_clone.partition_b = self.partition_b.clone
-			my_clone
-		end
-
-		def to_s
-			"partition individual <fitness = #{fitness}, partition_a.size = #{@partition_a.size}, partition_b.size = #{@partition_b.size}>"
-		end
-
-	end
-
-	class PartitionMutation
-
-		def mutate(individual)
-			mutated = individual.deep_clone
-			part_a, part_b = mutated.partition_a, mutated.partition_b
-
-			if rand(2) > 0
-				part_a << part_b.delete_at(rand(part_b.size)) unless mutated.partition_b.empty?
-			else
-				part_b << part_a.delete_at(rand(part_a.size)) unless mutated.partition_a.empty?
+			def calculate_fitness(individual)
+				sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
+				sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
+				(sum_a - sum_b).abs
 			end
 
-			mutated
 		end
 
-		def to_s
-			"custom made mutation for the partition problem"
+
+		# We've to carefully overwrite functions here!
+
+		class PartitionIndividual < EvoSynth::Core::MinimizingIndividual
+
+			attr_accessor :partition_a, :partition_b
+
+			def initialize(partition_a, partition_b)
+				@partition_a = partition_a;
+				@partition_b = partition_b;
+				@fitness = Float::MAX
+			end
+
+			def fitness=(value)
+				@fitness = value
+				@partition_a.changed = false
+				@partition_b.changed = false
+			end
+
+			def changed?
+				@partition_a.changed? || @partition_b.changed?
+			end
+
+			def deep_clone
+				my_clone = self.clone
+				my_clone.partition_a = self.partition_a.clone
+				my_clone.partition_b = self.partition_b.clone
+				my_clone
+			end
+
+			def to_s
+				"partition individual <fitness = #{fitness}, partition_a.size = #{@partition_a.size}, partition_b.size = #{@partition_b.size}>"
+			end
+
 		end
 
-	end
+		class PartitionMutation
 
+			def mutate(individual)
+				mutated = individual.deep_clone
+				part_a, part_b = mutated.partition_a, mutated.partition_b
 
-	module Testdata
+				if rand(2) > 0
+					part_a << part_b.delete_at(rand(part_b.size)) unless mutated.partition_b.empty?
+				else
+					part_b << part_a.delete_at(rand(part_a.size)) unless mutated.partition_a.empty?
+				end
 
-		def Testdata.gen_tiny_set
-			problem = Array.new(25)
-			problem.fill { |i| i }
+				mutated
+			end
+
+			def to_s
+				"custom made mutation for the partition problem"
+			end
+
 		end
 
-		def Testdata.gen_layer_set
-			problem = Set.new
-			problem.add(rand(1000) * rand(1000)) while problem.size < 200
-			problem.add(rand(1000)) while problem.size < 1000
-			problem.to_a
+
+		module Testdata
+
+			def Testdata.gen_tiny_set
+				problem = Array.new(25)
+				problem.fill { |i| i }
+			end
+
+			def Testdata.gen_layer_set
+				problem = Set.new
+				problem.add(rand(1000) * rand(1000)) while problem.size < 200
+				problem.add(rand(1000)) while problem.size < 1000
+				problem.to_a
+			end
+
+			def Testdata.gen_standard_set
+				problem = Array.new
+				1000.times { |i| problem.insert(-1, i)  }
+				problem
+			end
+
+			def Testdata.gen_random_set
+				problem = Set.new
+				problem.add(rand(1000000)) while problem.size < 1000
+				problem.to_a
+			end
+
+			def Testdata.gen_big_set
+				problem = Set.new
+				problem.add(rand(10000) * 100) while problem.size < 1000
+				problem.to_a
+			end
 		end
 
-		def Testdata.gen_standard_set
-			problem = Array.new
-			1000.times { |i| problem.insert(-1, i)  }
-			problem
+		def Partitionproblem.get_new_individual_from(problem)
+			border = rand(problem.size)
+			part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
+
+			problem.size.times do
+				|index| index < border ? part_a << problem[index] : part_b << problem[index]
+			end
+
+			Partitionproblem::PartitionIndividual.new(part_a, part_b)
 		end
 
-		def Testdata.gen_random_set
-			problem = Set.new
-			problem.add(rand(1000000)) while problem.size < 1000
-			problem.to_a
-		end
+		POPULATION_SIZE = 10
+		GENERATIONS = 1000
 
-		def Testdata.gen_big_set
-			problem = Set.new
-			problem.add(rand(10000) * 100) while problem.size < 1000
-			problem.to_a
-		end
-	end
+		problem = Partitionproblem::Testdata.gen_layer_set
+		base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-	def Partitionproblem.get_new_individual_from(problem)
-		border = rand(problem.size)
-		part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
+		profile = EvoSynth::Core::Profile.new(
+			:individual			=> Partitionproblem.get_new_individual_from(problem),
+			:mutation			=> PartitionMutation.new,
+			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
+			:recombination		=> EvoSynth::Recombinations::Identity.new,
+			:evaluator			=> Partitionproblem::PartitionEvaluator.new
+		)
 
-		problem.size.times do
-			|index| index < border ? part_a << problem[index] : part_b << problem[index]
-		end
-
-		Partitionproblem::PartitionIndividual.new(part_a, part_b)
-	end
-
-	POPULATION_SIZE = 10
-	GENERATIONS = 1000
-
-	problem = Partitionproblem::Testdata.gen_layer_set
-	base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
-
-	profile = EvoSynth::Core::Profile.new(
-		:individual			=> Partitionproblem.get_new_individual_from(problem),
-		:mutation			=> PartitionMutation.new,
-		:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
-		:recombination		=> EvoSynth::Recombinations::Identity.new,
-		:evaluator			=> Partitionproblem::PartitionEvaluator.new
-	)
-
-	puts "Starting with the following population:"
-	puts "\tbest individual: #{base_population.best.fitness}"
-	puts "\tworst individual: #{base_population.worst.fitness}"
-	puts
-
-	profile.population = base_population.deep_clone
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POPULATION_SIZE * GENERATIONS)
-
-	EvoSynth::Evolvers.constants.each do |algorithm|
-		algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
-		next unless defined? algorithm_class.new
-		next if algorithm_class == EvoSynth::Evolvers::Hillclimber
+		puts "Starting with the following population:"
+		puts "\tbest individual: #{base_population.best.fitness}"
+		puts "\tworst individual: #{base_population.worst.fitness}"
+		puts
 
 		profile.population = base_population.deep_clone
-		EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POPULATION_SIZE * GENERATIONS)
+
+		# TODO: dont use all algorithms!
+		EvoSynth::Evolvers.constants.each do |algorithm|
+			algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
+			next unless defined? algorithm_class.new
+			next if algorithm_class == EvoSynth::Evolvers::Hillclimber
+
+			profile.population = base_population.deep_clone
+			EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
+		end
+
 	end
-
 end
-

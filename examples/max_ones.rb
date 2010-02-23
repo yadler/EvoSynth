@@ -25,32 +25,33 @@
 require 'evosynth'
 #require 'profile'
 
+module Examples
+	module MaxOnes
 
-module MaxOnes
+		GENOME_SIZE = 25
+		POP_SIZE = 25
+		GENERATIONS = 1000
 
-	GENOME_SIZE = 25
-	POP_SIZE = 25
-	GENERATIONS = 1000
+		class MaxOnesEvaluator < EvoSynth::Core::Evaluator
 
-	class MaxOnesEvaluator < EvoSynth::Core::Evaluator
-
-		def calculate_fitness(individual)
-			individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
+			def calculate_fitness(individual)
+				individual.genome.inject(0.0) { |fitness, gene| fitness += gene ? 1 : 0 }
+			end
 		end
+
+		def MaxOnes.create_individual
+			EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
+		end
+
+		profile = EvoSynth::Core::Profile.new(
+			:individual			=> MaxOnes.create_individual,
+			:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
+			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
+			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		)
+
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < 25000 }
+		profile.evaluator.reset_counters
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < 25000 }
 	end
-
-	def MaxOnes.create_individual
-		EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
-	end
-
-	profile = EvoSynth::Core::Profile.new(
-		:individual			=> MaxOnes.create_individual,
-		:population			=> EvoSynth::Core::Population.new(POP_SIZE) { MaxOnes.create_individual },
-		:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
-		:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	)
-
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < 25000 }
-	profile.evaluator.reset_counters
-	EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < 25000 }
 end
