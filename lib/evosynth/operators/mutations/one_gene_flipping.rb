@@ -26,17 +26,9 @@ module EvoSynth
 
 	module Mutations
 
-		# EIN-BIT-BINAERE-MUTATION (Weicker page 48)
-		#
-		# FIXME: documentation is outdated!
-		# 
-		# This mutations flips (inverts) one gene in the genome of a given individual
-		# and returns this mutated individual. It does not change the given individual
-		# 
-		# To use this mutation each gene of the genome has to support the "flip"
-		# function as negation/inverse of its value
-		#
-		# The given individual has to provide a deep_clone method
+		# This mutations flips (inverts) one gene in the genome of a given individual using the given flip function
+		# (a lambda) and returns a mutated individual. To use this mutation the flip_function has to return the
+		# negation/inverse of a given gene. This mutations is based on EIN-BIT-BINAERE-MUTATION (Weicker 2007, page 48).
 
 		class OneGeneFlipping
 
@@ -44,9 +36,25 @@ module EvoSynth
 
 			attr_accessor :flip_function
 
+			#	:call-seq:
+			#		OneGeneFlipping.new(Lambda) -> OneGeneFlipping
+			#
+			# Returns a new OneGeneFlipping.
+			#
+			#     custom_flip_function = lambda { |gene| rand(42 * gene) }
+			#     OneGeneFlipping.new(custom_flip_function)
+
 			def initialize(flip_function)
 				@flip_function = flip_function
 			end
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns the mutation (one gene will be flipped with the given flip function) of a given individual.
+			#
+			#     m = OneGeneFlipping.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -61,6 +69,14 @@ module EvoSynth
 
 				mutated
 			end
+
+			#	:call-seq:
+			#		to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = OneGeneFlipping.new
+			#     m.to_s                   #=> "one-gene-flipping"
 
 			def to_s
 				"one-gene-flipping"

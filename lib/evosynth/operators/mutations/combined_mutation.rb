@@ -25,22 +25,60 @@
 module EvoSynth
 	module Mutations
 
+		# This mutations is a container for other mutations. Each mutation has a probability to get called when
+		# CombinedMutation.mutate gets called.
+
 		class CombinedMutation
+
+			#	:call-seq:
+			#		CombinedMutation.new -> CombinedMutation
+			#		CombinedMutation.new(array_of_mutations) -> CombinedMutation
+			#
+			# Returns a new CombinedMutation. In the first form, it contains no mutations. In the second it adds all
+			# mutations in a given array of mutations to itself, using the << funtion.
+			#
+			#     combinded_mutation = EvoSynth::Mutations::CombinedMutation.new
+			#     combinded_mutation << EvoSynth::Mutations::Identity.new
+			#     combinded_mutation << EvoSynth::Mutations::MixingMutation.new
+			#
+			#     CombinedMutation.new([EvoSynth::Mutations::Identity.new, EvoSynth::Mutations::MixingMutation.new])
 
 			def initialize(*args)
 				@mutations = []
 				args.each { |mutation| self << mutation }
 			end
 
+			#	:call-seq:
+			#		CombinedMutation << a_mutation -> CombinedMutation
+			#
+			#	Adds a mutation to this CombinedMutation, the probabilities will be normalized. Returns CombinedMutation itself.
+
 			def <<(mutation)
 				@mutations << [mutation, 1.0 / (@mutations.size > 0 ? @mutations.size : 1.0)]
-				normalize_possibilities
+				normalize_probabilities
+				self
 			end
 
-			def add_with_possibility(mutation, possibility)
-				@mutations << [mutation, possibility]
-				normalize_possibilities
+			#	:call-seq:
+			#		add_with_possibility(mutation, possibility) -> CombinedMutation
+			#
+			#	Adds a mutation with a given probability to this CombinedMutation. The probabilities will be normalized.
+			#	Returns CombinedMutation itself.
+
+			def add_with_possibility(mutation, probability)
+				@mutations << [mutation, probability]
+				normalize_probabilities
+				self
 			end
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns the mutation of a given individual using the added Mutations (one random member is choosen according
+			# to its possiblity). If empty, it will return the Individual.
+			#
+			#     m = CombinedMutation.new([EvoSynth::Mutations::ShiftingMutation.new, EvoSynth::Mutations::MixingMutation.new])
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual
@@ -62,6 +100,14 @@ module EvoSynth
 				mutated
 			end
 
+			#	:call-seq:
+			#		to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = CombinedMutation.new
+			#     m.to_s		              #=> "combinded mutation <mutations: >"
+
 			def to_s
 				mutations_to_s = []
 				@mutations.each { |mut| mutations_to_s << "#{mut[0].to_s} (probability: #{mut[1]})" }
@@ -70,7 +116,9 @@ module EvoSynth
 
 			private
 
-			def normalize_possibilities
+			# this function normalizes the given probabilities between 0.0 and 1.0
+
+			def normalize_probabilities
 				sum = @mutations.inject(0.0) { |sum, mutation| sum += mutation[1] }
 
 				if sum > 1.0

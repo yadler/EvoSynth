@@ -25,10 +25,21 @@
 module EvoSynth
 	module Mutations
 
-		# INVERTIERENDE-MUTATION (Page 29)
+		# The InversionMutation inverts the order of a random range of genes in the genome. It is based on
+		# INVERTIERENDE-MUTATION (Weicker 2007, page 28).
+		# 
 		# This mutations does not destroy permutations.
 
 		class InversionMutation
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns a clone of a given individual and inverts the order of a
+			# random range of genes in the genome of this clone.
+			#
+			#     m = InversionMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -43,6 +54,14 @@ module EvoSynth
 
 				mutated
 			end
+
+			#	:call-seq:
+			#		to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = Identity.new
+			#     m.to_s                   #=> "exchange mutation"
 
 			def to_s
 				"exchange mutation"

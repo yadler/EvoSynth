@@ -25,13 +25,7 @@
 module EvoSynth
 	module Mutations
 
-		# <b>Relies on:</b> deep_clone (see below)
-		#
-		# This mutations does not change the genome of the given individual,
-		# it will return a clone.
-		#
-		# The given individual has to provide a <i>deep_clone</i> method,
-		# which clones the individual and its genome.
+		# The Identity mutation does not change the genome of the given individual, it will return a clone.
 		#
 		# This mutations does not destroy permutations.
 
@@ -51,7 +45,7 @@ module EvoSynth
 			end
 
 			#	:call-seq:
-			#		mutation.to_s -> string
+			#		to_s -> string
 			#
 			# Returns description of this mutation
 			#

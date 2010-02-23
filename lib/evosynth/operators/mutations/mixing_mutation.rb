@@ -25,10 +25,21 @@
 module EvoSynth
 	module Mutations
 
-		# MISCHENDE-MUTATION (Page 132)
+		# The MixingMutation shuffles the order of a random range of genes in the genome. It is based on
+		# MISCHENDE-MUTATION (Weicker 2007, page 132).
+		#
 		# This mutations does not destroy permutations.
 
 		class MixingMutation
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns a clone of a given individual and shuffles the order of a
+			# random range of genes in the genome of this clone.
+			#
+			#     m = InversionMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -45,6 +56,14 @@ module EvoSynth
 
 				mutated
 			end
+
+			#	:call-seq:
+			#		to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = MixingMutation.new
+			#     m.to_s                   #=> "mixing muation"
 
 			def to_s
 				"mixing muation"

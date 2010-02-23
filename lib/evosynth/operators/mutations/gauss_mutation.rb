@@ -26,6 +26,8 @@ module EvoSynth
 	module Mutations
 
 		# GAUSS-MUTATION (Weicker page 60)
+		# FIXME: needs some investigation
+		# TODO: needs rdoc
 
 		class GaussMutation
 			attr_accessor :lower_bound, :upper_bound

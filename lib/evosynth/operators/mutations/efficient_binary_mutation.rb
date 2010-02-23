@@ -25,20 +25,11 @@
 module EvoSynth
 	module Mutations
 
-		# EFFIZIENTE-BINAERE-MUTATION (Weicker page 130)
-		# FIXME: documentation is outdated!
-		# 
-		# This mutation is basically a optimized version of the BinaryMutation and
-		# should have a better performance on long genomes.
+		# This mutation is basically a optimized version of the BinaryMutation and should have a better performance on long genomes.
 		#
-		# <b>Relies on:</b> flip and deep_clone (see below)
-		#
-		# This mutations flips (inverts) each gene in the genome of a given individual
-		# with a given probability and returns a mutated individual. It does not
-		# change the given individual. To use this mutation each gene of the genome
-		# must provide the <i>flip</i> function, which returns the negation/inverse of
-		# its value. The given individual has to provide a <i>deep_clone</i> method,
-		# which clones the individual and its genome.
+		# It flips each gene in the genome of a given individual using the given flip function (a lambda) with a given
+		# probability and returns a mutated individual. To use this mutation the flip_function has to return the negation/inverse
+		# of a given gene. This mutations is based on EFFIZIENTE-BINAERE-MUTATION (Weicker 2007, page 130).
 
 		class EfficientBinaryMutation
 
@@ -50,29 +41,30 @@ module EvoSynth
 
 			attr_accessor :flip_function
 
+			# the default mutation probability
+
 			DEFAULT_PROBABILITY = 0.1
 
-			# FIXME: documentation is outdated!
 			#	:call-seq:
-			#		EfficientBinaryMutation.new
-			#		EfficientBinaryMutation(Float) -> EfficientBinaryMutation (overrides default probability)
+			#		EfficientBinaryMutation.new(Lambda) -> EfficientBinaryMutation
+			#		EfficientBinaryMutation.new(Lambda, Float) -> EfficientBinaryMutation (overrides default probability)
 			#
-			# Returns a new EfficientBinaryMutation. In the first form, the default mutation
-			# probability (0.1) is used. In the second it creates a EfficientBinaryMutation with the given probability.
+			# Returns a new EfficientBinaryMutation. In the first form, the default mutation probability BinaryMutation::DEFAULT_PROBABILITY (0.1)
+			# is used. In the second it creates a BinaryMutation with the given probability.
 			#
-			#     EfficientBinaryMutation.new
-			#     EfficientBinaryMutation.new(0.01)
+			#     custom_flip_function = lambda { |gene| rand(42 * gene) }
+			#     EfficientBinaryMutation.new(custom_flip_function)
+			#     EfficientBinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN, 0.01)
 
 			def initialize(flip_function, probability = DEFAULT_PROBABILITY)
 				@flip_function = flip_function
 				@probability = probability
 			end
 
-			# FIXME: documentation is outdated!
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
 			#
-			# Returns the mutation of a given individual.
+			# Returns the mutation (with the given flip function) of a given individual.
 			#
 			#     m = EfficientBinaryMutation.new
 			#     m.mutate(a_individual)   #=> a_new_individual
@@ -95,13 +87,12 @@ module EvoSynth
 				mutated
 			end
 
-			# FIXME: documentation is outdated!
 			#	:call-seq:
-			#		mutation.to_s -> string
+			#		to_s -> string
 			#
 			# Returns description of this mutation
 			#
-			#     m = BinaryMutation.new(0.91)
+			#     m = EfficientBinaryMutation.new(0.91)
 			#     m.to_s                   #=> "efficient binary muation <probability: 0.01>"
 
 			def to_s

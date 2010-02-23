@@ -25,10 +25,21 @@
 module EvoSynth
 	module Mutations
 
-		# VERSCHIEBENDE-MUTATION (Page 132)
+		# The ShiftingMutation shifts a random range of genes by one index in the genome. It is based on
+		# VERSCHIEBENDE-MUTATION (Weicker 2007, page 132).
+		# 
 		# This mutations does not destroy permutations.
 
 		class ShiftingMutation
+
+			#	:call-seq:
+			#		mutate(Individual) -> Individual
+			#
+			# Returns a clone of a given individual and shifts a random range of
+			# genes by one index in the genome of this clone.
+			#
+			#     m = ShiftingMutation.new
+			#     m.mutate(a_individual)   #=> a_new_individual
 
 			def mutate(individual)
 				mutated = individual.deep_clone
@@ -42,11 +53,21 @@ module EvoSynth
 				mutated
 			end
 
+			#	:call-seq:
+			#		to_s -> string
+			#
+			# Returns description of this mutation
+			#
+			#     m = ShiftingMutation.new
+			#     m.to_s                   #=> "shifting muation"
+
 			def to_s
 				"shifting muation"
 			end
 
 			private
+
+			# this function does the actual shift (left and right)
 
 			def shift_genome(index_one, index_two, genome)
 				if index_one > index_two

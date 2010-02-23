@@ -25,15 +25,8 @@
 module EvoSynth
 	module Mutations
 
-		# VERTAUSCHENDE-MUTATION (Weicker, page 27)<br/>DREIERTAUSCH-MUTATION (Weicker, page 27 107)
-		#
-		# <b>Relies on:</b> deep_clone (see below)
-		#
-		# This mutations exchanges two genes in the genome of a given individual
-		# and returns a mutated individual. It does not change the given individual.
-		#
-		# The given individual has to provide a <i>deep_clone</i> method,
-		# which clones the individual and its genome.
+		# This mutations exchanges two genes in the genome of a given individual and returns a mutated individual.
+		# It is based on VERTAUSCHENDE-MUTATION (Weicker 2007, page 27) and DREIERTAUSCH-MUTATION (Weicker 2007, page 107)
 		#
 		# This mutations does not destroy permutations.
 		
@@ -53,8 +46,8 @@ module EvoSynth
 			# Returns a new ExchangeMutation. In the first form, the default swap count is used.
 			# In the second it creates a ExchangeMutation with the given swap count.
 			#
-			#     BinaryMutation.new
-			#     BinaryMutation.new(3)
+			#     ExchangeMutation.new
+			#     ExchangeMutation.new(3)
 
 			def initialize(swap_count = DEFAULT_SWAP_COUNT)
 				@swap_count = swap_count
@@ -86,7 +79,7 @@ module EvoSynth
 			end
 
 			#	:call-seq:
-			#		mutation.to_s -> string
+			#		to_s -> string
 			#
 			# Returns description of this mutation
 			#

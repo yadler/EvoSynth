@@ -25,10 +25,18 @@
 module EvoSynth
 	module Mutations
 
+		# Contains all predefined flip functions to be used with the BinaryMutation, EfficientBinaryMutation and
+		# OneGeneFlipping mutation.
+
 		module Functions
 
+			# inverts a boolean value
 			FLIP_BOOLEAN = lambda { |gene| !gene }
+
+			# inverts a integer in a boolean manner
 			FLIP_BINARY = lambda { |gene| gene == 0 ? 1 : 0 }
+
+			# negates a integer
 			FLIP_NEGATE_NUMBER = lambda { |gene| gene * -1 }
 
 		end

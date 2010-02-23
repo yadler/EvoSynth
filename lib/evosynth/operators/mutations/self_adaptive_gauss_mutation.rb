@@ -28,6 +28,7 @@ module EvoSynth
 		# SELBSTADAPTIVE-GAUSS-MUTATION (Weicker page 114)
 		#
 		# FIXME: the whole density function stuff is pretty unclear
+		# TODO: needs rdoc
 
 		class SelfAdaptiveGaussMutation
 			attr_accessor :sigma, :lower_bound, :upper_bound

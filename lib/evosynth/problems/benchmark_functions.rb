@@ -24,6 +24,10 @@
 
 module EvoSynth
 	module Problems
+
+		# This module contains some multi-dimensional Benchmarkfunctions. You simply set the number of dimensions by
+		# the length of the given (Float) array.
+
 		module BenchmarkFuntions
 
 			# Sinus Sum function (Schwefel 1995)

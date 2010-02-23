@@ -22,7 +22,18 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/operators/mutations/_functions'
+module EvoSynth
+
+	# All mutations of EvoSynth should be inside this Module. The given individual has to provide a <i>deep_clone</i> method,
+	# which clones the individual and its genome.
+	#
+	# No mutation should change the given individual.
+
+	module Mutations
+	end
+end
+
+require 'evosynth/operators/mutations/flip_functions'
 require 'evosynth/operators/mutations/one_gene_flipping'
 require 'evosynth/operators/mutations/binary_mutation'
 require 'evosynth/operators/mutations/efficient_binary_mutation'
