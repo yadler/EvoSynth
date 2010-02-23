@@ -30,7 +30,7 @@ module EvoSynth
 
 		module BinaryBenchmarkFuntions
 
-			# count ones
+			# count-ones function
 			#
 			# global maximum at f(x) = x at x(i) = 1 (or true), i = 1..n
 
@@ -38,6 +38,20 @@ module EvoSynth
 				bs.inject(0) { |sum, b| sum += (b == true || b == 1 ? 1 : 0) }
 			end
 
+			# Royal-Road function (Mitchell et al 1992)
+			#
+			# global minimum: f(x) = 0 at x(i) = 1, i = 1..n (bs.size % k == 0)
+
+			def BinaryBenchmarkFuntions.royal_road(k, bs)
+				m = bs.size / k
+				sum = 0
+
+				m.times do |i|
+					sum += bs[(i*k)..(i+1)*k-1].inject(1) { |res, b| res = (b != 1 ? 0 : res) }
+				end
+
+				sum
+			end
 
 		end
 	end

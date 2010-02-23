@@ -55,6 +55,44 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 			bs = [1,1,1,5,1,0,1]
 			assert_equal bs.size - 2, EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones(bs)
 		end
+
 	end
 
+	context "the royal round function" do
+
+		should "be zero at [0,1,0,2,0,3,0,4] with k = 2" do
+			bs = [0,1,0,2,0,3,0,4]
+			assert_equal 0, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(2, bs)
+		end
+
+		should "be 2 at [1,1,0,0,1,1,0,0] with k = 2" do
+			bs = [1,1,0,0,1,1,0,0]
+			assert_equal 2, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(2, bs)
+		end
+
+		should "be 1 at  [1,1,1,1,0,0,0,0,1] with k = 2" do
+			bs = [1,1,1,1,0,0,0,0,1]
+			assert_equal 1, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(4, bs)
+		end
+
+		should "be 1 at [1,1,1,1,1,1,1,1] with k = 8" do
+			bs = [1,1,1,1,1,1,1,1]
+			assert_equal 1, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(8, bs)
+		end
+
+		should "be 2 at [1,1,1,1,1,1,1,1] with k = 4" do
+			bs = [1,1,1,1,1,1,1,1]
+			assert_equal 2, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(4, bs)
+		end
+
+		should "be 4 at [1,1,1,1,1,1,1,1] with k = 2" do
+			bs = [1,1,1,1,1,1,1,1]
+			assert_equal 4, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(2, bs)
+		end
+
+		should "be 8 at [1,1,1,1,1,1,1,1] with k = 1" do
+			bs = [1,1,1,1,1,1,1,1]
+			assert_equal 8, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(1, bs)
+		end
+	end
 end
