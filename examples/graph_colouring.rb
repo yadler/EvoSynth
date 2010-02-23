@@ -31,14 +31,6 @@ require 'set'
 module Examples
 	module GraphColouring
 
-		MUTATION_RATE = 5
-		MAX_COLORS = 10
-		GENERATIONS = 1000
-		INDIVIDUALS = 10
-		GOAL = 5
-		FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
-
-
 		class Graph
 			attr_reader :node_count
 			attr_reader :matrix
@@ -95,6 +87,11 @@ module Examples
 			end
 		end
 
+		MAX_COLORS = 10
+		GENERATIONS = 10000
+		INDIVIDUALS = 10
+		GOAL = 5
+		FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
 
 		def GraphColouring.create_random_individual(graph)
 			genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
@@ -105,10 +102,6 @@ module Examples
 			inidividual
 		end
 
-
-		require 'benchmark'
-		#require 'profile'
-
 		graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
 
 		profile = EvoSynth::Core::Profile.new(
@@ -118,17 +111,10 @@ module Examples
 			:population			=> EvoSynth::Core::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
 			:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
 		)
-		base_population = profile.population
 
-		# FIXME: use just one or two algorithms!
-
-		EvoSynth::Evolvers.constants.each do |algorithm|
-			algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
-			next unless defined? algorithm_class.new
-
-			profile.population = base_population.deep_clone
-			EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) { |gen, best| best.fitness <= GOAL || gen > GENERATIONS } rescue next
-		end
-
+		algorithm = EvoSynth::Evolvers::SteadyStateGA.new(profile)
+		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(1000))
+		algorithm.run_until { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
+		puts "", profile.population.best
 	end
 end
