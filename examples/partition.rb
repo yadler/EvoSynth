@@ -30,17 +30,14 @@ module Examples
 	module Partitionproblem
 
 		class PartitionEvaluator < EvoSynth::Core::Evaluator
-
 			def calculate_fitness(individual)
 				sum_a = individual.partition_a.inject(0) { |sum, n| sum + n }
 				sum_b = individual.partition_b.inject(0) { |sum, n| sum + n }
 				(sum_a - sum_b).abs
 			end
-
 		end
 
-
-		# We've to carefully overwrite functions here!
+		# We've to carefully overwrite functions here, because we actually have 2 genomes
 
 		class PartitionIndividual < EvoSynth::Core::MinimizingIndividual
 
@@ -97,6 +94,8 @@ module Examples
 		end
 
 
+		# these are just Testdata generators
+
 		module Testdata
 
 			def Testdata.gen_tiny_set
@@ -130,6 +129,8 @@ module Examples
 			end
 		end
 
+		# creates a new (random) individual from a given problem
+
 		def Partitionproblem.get_new_individual_from(problem)
 			border = rand(problem.size)
 			part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
@@ -141,37 +142,27 @@ module Examples
 			Partitionproblem::PartitionIndividual.new(part_a, part_b)
 		end
 
-		POPULATION_SIZE = 10
-		GENERATIONS = 1000
+		POPULATION_SIZE = 20
+		GENERATIONS = 500
 
 		problem = Partitionproblem::Testdata.gen_layer_set
 		base_population = EvoSynth::Core::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
 		profile = EvoSynth::Core::Profile.new(
-			:individual			=> Partitionproblem.get_new_individual_from(problem),
 			:mutation			=> PartitionMutation.new,
 			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 			:recombination		=> EvoSynth::Recombinations::Identity.new,
 			:evaluator			=> Partitionproblem::PartitionEvaluator.new
 		)
 
-		puts "Starting with the following population:"
-		puts "\tbest individual: #{base_population.best.fitness}"
-		puts "\tworst individual: #{base_population.worst.fitness}"
-		puts
-
 		profile.population = base_population.deep_clone
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), POPULATION_SIZE * GENERATIONS)
-
-		# TODO: dont use all algorithms!
-		EvoSynth::Evolvers.constants.each do |algorithm|
-			algorithm_class = EvoSynth::Evolvers.const_get(algorithm)
-			next unless defined? algorithm_class.new
-			next if algorithm_class == EvoSynth::Evolvers::Hillclimber
-
-			profile.population = base_population.deep_clone
-			EvoSynth::Util.run_algorith_with_benchmark(algorithm_class.new(profile), GENERATIONS) rescue next
-		end
-
+		puts "running ElitismGeneticAlgorithm..."
+		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
+			"generations" => ->{ algorithm.generations_computed },
+			"fitness"     => ->{ algorithm.best_solution.fitness },
+			"best"		  => ->{ algorithm.best_solution.to_s }
+		))
+		algorithm.run_until_generations_reached(GENERATIONS)
 	end
 end

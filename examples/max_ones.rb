@@ -30,7 +30,7 @@ module Examples
 
 		GENOME_SIZE = 25
 		POP_SIZE = 25
-		GENERATIONS = 1000
+		MAX_EVALUATIONS = 25000
 
 		class MaxOnesEvaluator < EvoSynth::Core::Evaluator
 
@@ -50,8 +50,8 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		)
 
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < 25000 }
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < MAX_EVALUATIONS }
 		profile.evaluator.reset_counters
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < 25000 }
+		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < MAX_EVALUATIONS }
 	end
 end
