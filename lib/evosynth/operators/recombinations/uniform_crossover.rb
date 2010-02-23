@@ -35,7 +35,7 @@ module EvoSynth
 				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
 
 				shorter.genome.each_index do |index|
-					if (rand(2) > 0)
+					if EvoSynth.rand_bool
 						child_one.genome[index] = individual_two.genome[index]
 						child_two.genome[index] = individual_one.genome[index]
 					end

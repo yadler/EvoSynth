@@ -44,7 +44,7 @@ module EvoSynth
 					threshold = Math.exp( -1 * Math.sqrt( (child.fitness - parent.fitness)**2 ) / @temperature)
 					@temperature *= @alpha
 
-					child > parent || rand <= threshold
+					child > parent || EvoSynth.rand <= threshold
 				end
 
 				def to_s

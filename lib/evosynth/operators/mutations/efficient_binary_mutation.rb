@@ -52,7 +52,7 @@ module EvoSynth
 			# Returns a new EfficientBinaryMutation. In the first form, the default mutation probability BinaryMutation::DEFAULT_PROBABILITY (0.1)
 			# is used. In the second it creates a BinaryMutation with the given probability.
 			#
-			#     custom_flip_function = lambda { |gene| rand(42 * gene) }
+			#     custom_flip_function = lambda { |gene| EvoSynth.rand(42 * gene) }
 			#     EfficientBinaryMutation.new(custom_flip_function)
 			#     EfficientBinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN, 0.01)
 
@@ -71,7 +71,7 @@ module EvoSynth
 
 			def mutate(individual)
 				mutated = individual.deep_clone
-				@next_index = rand(mutated.genome.size) unless defined? @next_index
+				@next_index = EvoSynth.rand(mutated.genome.size) unless defined? @next_index
 
 				while @next_index < mutated.genome.size
 					if @flip_function.arity == 1
@@ -80,7 +80,7 @@ module EvoSynth
 						mutated.genome[@next_index] = @flip_function.call
 					end
 					
-					@next_index += (Math.log(rand) / Math.log(1 - @probability)).ceil
+					@next_index += (Math.log(EvoSynth.rand) / Math.log(1 - @probability)).ceil
 				end
 
 				@next_index -= mutated.genome.size

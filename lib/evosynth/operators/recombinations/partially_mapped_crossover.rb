@@ -84,8 +84,8 @@ module EvoSynth
 			end
 
 			def rand_indexes(shorter)
-				index_one = rand(shorter.genome.size)
-				index_two = rand(shorter.genome.size)
+				index_one = EvoSynth.rand(shorter.genome.size)
+				index_two = EvoSynth.rand(shorter.genome.size)
 				index_one, index_two = index_two, index_one if index_one > index_two
 				[index_one, index_two]
 			end

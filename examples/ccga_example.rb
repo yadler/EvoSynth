@@ -66,7 +66,7 @@ module Examples
 					if index == individual.population_index
 						values[index] = EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12)
 					else
-						values[index] = EvoSynth::Decoder.binary_to_real(@populations[index][rand(@populations[0].size)].genome, -5.12, 5.12)
+						values[index] = EvoSynth::Decoder.binary_to_real(@populations[index][EvoSynth.rand(@populations[0].size)].genome, -5.12, 5.12)
 					end
 				end
 
@@ -99,10 +99,10 @@ module Examples
 		class CCGA2BenchmarkEvaluator < CCGABenchmarkEvaluator
 
 			def calculate_fitness(individual)
-				best = CCGAExample.fitness_function(decode(individual))
-				rand = CCGAExample.fitness_function(decode_rand(individual))
+				best_individual = CCGAExample.fitness_function(decode(individual))
+				rand_individual = CCGAExample.fitness_function(decode_rand(individual))
 
-				individual.compare_fitness_values(best, rand) == 1 ? best : rand
+				individual.compare_fitness_values(best_individual, rand_individual) == 1 ? best_individual : rand_individual
 			end
 
 		end
@@ -119,7 +119,7 @@ module Examples
 		def CCGAExample.create_individual(genome_size, index)
 			individual = CCGAIndividual.new(index)
 			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-			individual.genome.map! { rand(2) > 0 ? true : false }
+			individual.genome.map! { EvoSynth.rand_bool }
 			individual
 		end
 

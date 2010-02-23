@@ -47,10 +47,10 @@ module Examples
 			end
 		end
 
-		FLIP_CHAR = lambda { ALPHABET[rand(ALPHABET.size)] }
+		FLIP_CHAR = lambda { ALPHABET[EvoSynth.rand(ALPHABET.size)] }
 
 		profile = EvoSynth::Core::Profile.new(
-			:individual			=> EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { ALPHABET[rand(ALPHABET.size)] }),
+			:individual			=> EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { ALPHABET[EvoSynth.rand(ALPHABET.size)] }),
 			:evaluator			=> Hacking::HackingEvaluator.new,
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
 		)

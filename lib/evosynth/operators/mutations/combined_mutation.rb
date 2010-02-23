@@ -85,7 +85,7 @@ module EvoSynth
 
 				unless @mutations.empty?
 					mutation = nil
-					rand_value = rand
+					rand_value = EvoSynth.rand
 
 					sum = 0.0
 					@mutations.each do |m|

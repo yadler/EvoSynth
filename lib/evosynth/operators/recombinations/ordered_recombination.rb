@@ -53,7 +53,7 @@ module EvoSynth
 			def recombine_to_one(parent_one, parent_two, shorter)
 				child = parent_one.deep_clone
 
-				rand_index = rand(shorter.genome.size)
+				rand_index = EvoSynth.rand(shorter.genome.size)
 				used_genes = child.genome[0..rand_index].to_set
 
 				insert_index = rand_index + 1

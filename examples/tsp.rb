@@ -97,7 +97,7 @@ module Examples
 
 		def TSP.create_individual(problem_matrix)
 			individual = EvoSynth::Core::MinimizingIndividual.new
-			shuffeld = (0..problem_matrix.size - 1).to_a.sort_by { rand(2) }
+			shuffeld = (0..problem_matrix.size - 1).to_a.sort_by { EvoSynth.rand(2) }
 			individual.genome = EvoSynth::Core::ArrayGenome.new(shuffeld)
 			individual
 		end

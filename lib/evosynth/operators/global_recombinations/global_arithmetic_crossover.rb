@@ -30,7 +30,7 @@ module EvoSynth
 		class GlobalArithmeticCrossover
 
 			def recombine(population)
-				child = population[rand(population.size)].deep_clone
+				child = population[EvoSynth.rand(population.size)].deep_clone
 
 				child.genome.each_index do |index|
 					sum = population.inject(0.0) { |sum, individual| sum += individual.genome[index] }

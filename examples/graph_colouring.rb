@@ -91,12 +91,12 @@ module Examples
 		GENERATIONS = 10000
 		INDIVIDUALS = 10
 		GOAL = 5
-		FLIP_GRAPH_COLOUR = lambda { |gene| rand(gene + 2) }
+		FLIP_GRAPH_COLOUR = lambda { |gene| EvoSynth.rand(gene + 2) }
 
 		def GraphColouring.create_random_individual(graph)
 			genome = EvoSynth::Core::ArrayGenome.new(graph.node_count)
-			max_color = rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
-			genome.map! { |gene| rand(max_color)}
+			max_color = EvoSynth.rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
+			genome.map! { |gene| EvoSynth.rand(max_color)}
 			genome.map! { |gene| gene % genome.uniq.size }
 			inidividual = EvoSynth::Core::MinimizingIndividual.new(genome)
 			inidividual

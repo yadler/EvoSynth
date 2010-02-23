@@ -46,11 +46,11 @@ module EvoSynth
 				add_sigma(individual) unless defined? individual.sigma
 
 				mutated = individual.deep_clone
-				uniform_rand = rand * @gauss_distributed_0
+				uniform_rand = EvoSynth.rand * @gauss_distributed_0
 				mutated.sigma = individual.sigma * Math.exp((1 / Math.sqrt(individual.genome.size)) * uniform_rand)
 
 				mutated.genome.map! do |gene|
-					gene += rand * density_function(gene, mutated.sigma)
+					gene += EvoSynth.rand * density_function(gene, mutated.sigma)
 					gene = @lower_bound if gene < @lower_bound
 					gene = @upper_bound if gene > @upper_bound
 					gene

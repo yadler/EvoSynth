@@ -54,7 +54,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 
 			x, y = [], []
 			runs.times do |i|
-				rnd = rand * range_size * sigma - range_size/2.0 * sigma
+				rnd = EvoSynth.rand * range_size * sigma - range_size/2.0 * sigma
 #				rnd = - 5.0 + 10.0 / runs * i
 				result = EvoSynth::Util::EvoMath.probability_density_function(rnd, sigma, mu)
 				x << rnd

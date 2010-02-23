@@ -75,7 +75,7 @@ module MutationBenchmark
 	puts "Running mutation benchmark (on BinaryGenome) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
 	MutationBenchmark.run_benchmark(individual, EvoSynth::Mutations::Functions::FLIP_BINARY)
 
-	individual = TestArrayGenomeIndividual.new([rand]*GENOME_SIZE)
+	individual = TestArrayGenomeIndividual.new([EvoSynth.rand]*GENOME_SIZE)
 	puts "Running mutation benchmark (on ArrayGenome filled with Float's) with #{MUTATE_TIMES} mutations (genome=#{GENOME_SIZE}):"
 	mutation = EvoSynth::Mutations::GaussMutation.new
 	MutationBenchmark.benchmark_mutation(mutation, individual)

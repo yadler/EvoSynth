@@ -49,7 +49,7 @@ module Examples
 						pr = pheromon.matrix[last_node, node_index]
 						pr *= (1.0 / distance) ** @distance_weight
 						pr /= get_sum(existing_route, pheromon, last_node)
-						pr *= rand
+						pr *= EvoSynth.rand
 					else
 						pr = 0.0
 					end
@@ -206,7 +206,7 @@ module Examples
 				genome << @start
 
 				(@problem_matrix.size - 1).times do
-					if rand < @exploration_weight
+					if EvoSynth.rand < @exploration_weight
 						genome << @problem_matrix.get_next_node(genome, @pheromon, genome.last)
 					else
 						genome << @problem_matrix.get_nearest_node(genome, genome.last)

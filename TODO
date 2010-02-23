@@ -2,7 +2,8 @@
 
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281) 
-		=> eigenen Randomizer schreiben (standard rand und normalverteilt fürs erste)
+		- Randomizer: gaussverteilt
+
 	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
 
@@ -49,9 +50,6 @@ Features:
 		=> ist sowas bei selektionen nützlich? eher nicht! oder doch?
 
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
-
-	- Randomizer (normal und gaussverteilt) - als Singleton oder nicht?
-		=> einstellbarer seed, für reproduzierbare Evolutionsläufe
 
 ============================== EvoSynth >0.1 ===================================
 

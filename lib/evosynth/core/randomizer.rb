@@ -23,59 +23,29 @@
 
 
 module EvoSynth
-	module Recombinations
 
-		# K-PUNKT-CROSSOVER (Weicker Page 130)
+	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
+	# the random number generator of EvoSynth
+	#
+	# TODO: add proper documentation
 
-		class KPointCrossover
-
-			attr_accessor :k
-
-			DEFAULT_K = 2
-
-			def initialize(k = DEFAULT_K)
-				@k = k
-			end
-
-			def recombine(individual_one, individual_two)
-				child_one = individual_one.deep_clone
-				child_two = individual_two.deep_clone
-
-				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(individual_one, individual_two)
-				crossover_points = random_crossover_points(shorter.genome.size)
-
-				@k.times do |m|
-					begin
-						range = (crossover_points[m] + 1)..crossover_points[m + 1]
-					rescue ArgumentError
-						next
-					end
-
-					if m % 2 == 1
-						child_one.genome[range] = individual_two.genome[range]
-						child_two.genome[range] = individual_one.genome[range]
-					end
-				end
-
-				[child_one, child_two]
-			end
-
-			def to_s
-				"k-point crossover (k=#{@k})"
-			end
-
-			private
-
-			def random_crossover_points(genome_length)
-				points = []
-				@k.times { points << EvoSynth.rand(genome_length) }
-				points.sort!
-				points[0] = 0
-				points[@k-1] = genome_length
-				points
-			end
-
-		end
-
+	def EvoSynth.rand(*args)
+		Kernel.rand(*args)
 	end
+
+	# TODO: add proper documentation
+
+	def EvoSynth.rand_bool
+		EvoSynth.rand(2) > 0
+	end
+
+	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
+	# the random number generator of EvoSynth
+	#
+	# TODO: add proper documentation
+
+	def EvoSynth.srand(*args)
+		Kernel.srand(*args)
+	end
+
 end

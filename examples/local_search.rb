@@ -52,7 +52,7 @@ module Examples
 		end
 
 		def LocalSearch.create_individual
-			EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
+			EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
 		def LocalSearch.print_acceptance_state(algorithm)

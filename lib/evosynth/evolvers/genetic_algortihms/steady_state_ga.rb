@@ -66,7 +66,7 @@ module EvoSynth
 			def next_generation
 				parents = @parent_selection.select(@population, 2)
 
-				if rand < @recombination_probability
+				if EvoSynth.rand < @recombination_probability
 					child = @recombination.recombine(parents[0], parents[1])[0]
 				else
 					child = parents[1]

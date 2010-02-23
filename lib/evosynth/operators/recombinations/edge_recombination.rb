@@ -52,7 +52,7 @@ module EvoSynth
 				child_genome = child.genome
 				adj_matrix = generate_adj_matrix(parent_one.genome)
 
-				start = rand(2) > 0 ? parent_one.genome[0] : parent_two.genome[0]
+				start = EvoSynth.rand_bool ? parent_one.genome[0] : parent_two.genome[0]
 				child_genome[0] = start
 
 				child_genome.each_index do |index|
@@ -78,14 +78,14 @@ module EvoSynth
 						min = adj_size
 						next_gene = gene
 					elsif adj_size <= min
-						next if adj_size == min && rand(2) > 0 # if equal let the fortune decide
+						next if adj_size == min && EvoSynth.rand_bool # if equal let the fortune decide
 
 						min = adj_size
 						next_gene = gene
 					end
 				end
 
-				next_gene = rand(adj_matrix.keys) if next_gene.nil?
+				next_gene = EvoSynth.rand(adj_matrix.keys) if next_gene.nil?
 
 				next_gene
 			end

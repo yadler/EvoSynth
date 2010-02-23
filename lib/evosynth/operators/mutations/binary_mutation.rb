@@ -50,7 +50,7 @@ module EvoSynth
 			# Returns a new BinaryMutation. In the first form, the default mutation probability BinaryMutation::DEFAULT_PROBABILITY (0.1)
 			# is used. In the second it creates a BinaryMutation with the given probability.
 			#
-			#     custom_flip_function = lambda { |gene| rand(42 * gene) }
+			#     custom_flip_function = lambda { |gene| EvoSynth.rand(42 * gene) }
 			#     BinaryMutation.new(custom_flip_function)
 			#     BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN, 0.01)
 
@@ -73,9 +73,9 @@ module EvoSynth
 
 				genome.size.times do |index|
 					if @flip_function.arity == 1
-						genome[index] = @flip_function.call(genome[index]) if rand <= @probability
+						genome[index] = @flip_function.call(genome[index]) if EvoSynth.rand <= @probability
 					else
-						genome[index] = @flip_function.call if rand <= @probability
+						genome[index] = @flip_function.call if EvoSynth.rand <= @probability
 					end
 				end
 

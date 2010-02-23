@@ -52,7 +52,7 @@ module RecombinationBenchmark
 		RecombinationBenchmark.benchmark_recombination(recombination, individual_one, individual_two)
 	end
 
-	interpolation = lambda { |gene_one, gene_two, factor| rand < factor ? gene_one : gene_two }
+	interpolation = lambda { |gene_one, gene_two, factor| EvoSynth.rand < factor ? gene_one : gene_two }
 	recombination = EvoSynth::Recombinations::ArithmeticCrossover.new(interpolation)
 	RecombinationBenchmark.benchmark_recombination(recombination, individual_one, individual_two)
 end

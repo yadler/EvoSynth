@@ -45,9 +45,9 @@ module EvoSynth
 				mutated = individual.deep_clone
 				genome = mutated.genome
 
-				index_one = rand(genome.size)
-				index_two = rand(genome.size)
-				index_two = rand(genome.size) while index_two == index_one
+				index_one = EvoSynth.rand(genome.size)
+				index_two = EvoSynth.rand(genome.size)
+				index_two = EvoSynth.rand(genome.size) while index_two == index_one
 				index_one, index_two = index_two, index_one if index_one > index_two
 
 				genome[index_one..index_two] = genome[index_one..index_two].reverse

@@ -70,7 +70,7 @@ module EvoSynth
 				selected_pop.each_index do |index_one|
 					index_two = (index_one + 1) % selected_pop.size
 
-					if rand < @recombination_probability
+					if EvoSynth.rand < @recombination_probability
 						child_one, child_two = @recombination.recombine(selected_pop[index_one], selected_pop[index_two])
 					else
 						child_one = selected_pop[index_one]

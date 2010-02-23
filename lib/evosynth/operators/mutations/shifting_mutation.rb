@@ -45,8 +45,8 @@ module EvoSynth
 				mutated = individual.deep_clone
 				genome = mutated.genome
 
-				index_one = rand(genome.size)
-				index_two = rand(genome.size)
+				index_one = EvoSynth.rand(genome.size)
+				index_two = EvoSynth.rand(genome.size)
 				return mutated if index_one == index_two
 
 				shift_genome(index_one, index_two, genome)

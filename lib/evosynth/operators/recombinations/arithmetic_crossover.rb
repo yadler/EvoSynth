@@ -35,7 +35,7 @@ module EvoSynth
 			# TODO: add extrapolation and other useful stuff here!
 
 			INTERPOLATE_NUMBERS = lambda { |gene_one, gene_two, factor| factor * gene_one + (1-factor) * gene_two }
-			INTERPOLATE_BOOLEANS = lambda { |gene_one, gene_two, factor| rand < factor ? gene_one : gene_two }
+			INTERPOLATE_BOOLEANS = lambda { |gene_one, gene_two, factor| EvoSynth.rand < factor ? gene_one : gene_two }
 
 			def initialize(interpolation_function)
 				@interpolation_function = interpolation_function
@@ -49,8 +49,8 @@ module EvoSynth
 				shorter.genome.each_with_index do |gene_one, index|
 					gene_two = individual_two.genome[index]
 
-					child_one.genome[index] = @interpolation_function.call(gene_one, gene_two, rand)
-					child_two.genome[index] = @interpolation_function.call(gene_two, gene_one, rand)
+					child_one.genome[index] = @interpolation_function.call(gene_one, gene_two, EvoSynth.rand)
+					child_two.genome[index] = @interpolation_function.call(gene_two, gene_one, EvoSynth.rand)
 				end
 
 				[child_one, child_two]

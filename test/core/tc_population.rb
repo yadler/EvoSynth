@@ -57,7 +57,7 @@ class PopulationTest < Test::Unit::TestCase
 			@population.add(@third)
 			@population.add(@second)
 
-			10.times { @population.add(TestMaximizingIndividual.new(rand(10) + 10)) }
+			10.times { @population.add(TestMaximizingIndividual.new(EvoSynth.rand(10) + 10)) }
 		end
 
 		should "#best(3) return 3 individuals ordered by fitness (DESC)" do
@@ -88,7 +88,7 @@ class PopulationTest < Test::Unit::TestCase
 			@population.add(@third)
 			@population.add(@max)
 
-			10.times { @population.add(TestMinimizingIndividual.new(rand(10) + 10)) }
+			10.times { @population.add(TestMinimizingIndividual.new(EvoSynth.rand(10) + 10)) }
 		end
 
 		should "#best(3) return 3 individuals ordered by fitness (ASC)" do

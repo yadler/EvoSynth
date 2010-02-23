@@ -33,7 +33,7 @@ module EvoSynth
 				child_two = parent_two.deep_clone
 
 				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(parent_one, parent_two)
-				crossover_point = rand(shorter.genome.size)
+				crossover_point = EvoSynth.rand(shorter.genome.size)
 
 				first_range = 0..crossover_point
 				child_one.genome[first_range] =  parent_one.genome[first_range]

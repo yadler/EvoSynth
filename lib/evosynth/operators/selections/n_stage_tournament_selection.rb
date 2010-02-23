@@ -69,7 +69,7 @@ module EvoSynth
 				victories = 0
 
 				@stages.times do
-					enemy = population[rand(population.size)]
+					enemy = population[EvoSynth.rand(population.size)]
 					victories += 1 if individual > enemy
 				end
 

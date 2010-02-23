@@ -95,8 +95,8 @@ module EvoSynth
 			def rand_indexes(genome_size)
 				indexes = Set.new
 				@swap_count.times do
-					new_index = rand(genome_size)
-					new_index = rand(genome_size) while indexes.include?(new_index)
+					new_index = EvoSynth.rand(genome_size)
+					new_index = EvoSynth.rand(genome_size) while indexes.include?(new_index)
 					indexes << new_index
 				end
 				indexes.to_a

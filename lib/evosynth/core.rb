@@ -22,6 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/core/randomizer'
 require 'evosynth/core/binary_genome'
 require 'evosynth/core/array_genome'
 require 'evosynth/core/individuals'

@@ -45,13 +45,13 @@ module EvoSynth
 				mutated = individual.deep_clone
 				genome = mutated.genome
 
-				index_one = rand(genome.size)
-				index_two = rand(genome.size)
+				index_one = EvoSynth.rand(genome.size)
+				index_two = EvoSynth.rand(genome.size)
 				index_one, index_two = index_two, index_one if index_one > index_two
 				return mutated if index_one == index_two
 
 				subsection = genome[index_one..index_two]
-				subsection.sort! { rand(2) }
+				subsection.sort! { EvoSynth.rand(2) }
 				genome[index_one..index_two] = subsection
 
 				mutated

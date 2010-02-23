@@ -41,7 +41,7 @@ module EvoSynth
 			#
 			# Returns a new OneGeneFlipping.
 			#
-			#     custom_flip_function = lambda { |gene| rand(42 * gene) }
+			#     custom_flip_function = lambda { |gene| EvoSynth.rand(42 * gene) }
 			#     OneGeneFlipping.new(custom_flip_function)
 
 			def initialize(flip_function)
@@ -60,7 +60,7 @@ module EvoSynth
 				mutated = individual.deep_clone
 				genome = mutated.genome
 
-				rand_index = rand(genome.size)
+				rand_index = EvoSynth.rand(genome.size)
 				if @flip_function.arity == 1
 					genome[rand_index] = @flip_function.call(genome[rand_index])
 				else

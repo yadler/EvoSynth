@@ -46,7 +46,7 @@ module Examples
 		def EsExample.create_individual(genome_size, index)
 			individual = EvoSynth::Core::MinimizingIndividual.new
 			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-			individual.genome.map! { rand * 10.24 - 5.12 }
+			individual.genome.map! { EvoSynth.rand * 10.24 - 5.12 }
 			individual
 		end
 

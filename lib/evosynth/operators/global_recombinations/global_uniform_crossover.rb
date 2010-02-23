@@ -30,10 +30,10 @@ module EvoSynth
 		class GlobalUniformCrossover
 
 			def recombine(population)
-				child = population[rand(population.size)].deep_clone
+				child = population[EvoSynth.rand(population.size)].deep_clone
 
 				child.genome.each_index do |index|
-					child.genome[index] = population[rand(population.size)].genome[index]
+					child.genome[index] = population[EvoSynth.rand(population.size)].genome[index]
 				end
 
 				child

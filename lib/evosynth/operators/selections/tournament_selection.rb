@@ -42,7 +42,7 @@ module EvoSynth
 				selected_population = EvoSynth::Core::Population.new
 
 				select_count.times do
-					individual = fight(population, population[rand(population.size)])
+					individual = fight(population, population[EvoSynth.rand(population.size)])
 					selected_population.add(individual)
 				end
 
@@ -57,7 +57,7 @@ module EvoSynth
 
 			def fight(population, individual)
 				@enemies.times do
-					enemy = population[rand(population.size)]
+					enemy = population[EvoSynth.rand(population.size)]
 					individual = enemy if enemy > individual
 				end
 

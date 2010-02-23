@@ -93,7 +93,7 @@ module Examples
 		GENERATIONS = 5000
 
 		profile = EvoSynth::Core::Profile.new(
-			:individual			=> EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } ),
+			:individual			=> EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ),
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)

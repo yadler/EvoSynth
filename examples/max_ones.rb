@@ -42,7 +42,7 @@ module Examples
 		end
 
 		def MaxOnes.create_individual
-			EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { rand(2) > 0 ? true : false } )
+			EvoSynth::Core::MaximizingIndividual.new( EvoSynth::Core::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
 		profile = EvoSynth::Core::Profile.new(

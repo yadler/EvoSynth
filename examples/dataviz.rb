@@ -103,10 +103,7 @@ module Examples
 		end
 
 		def DataViz.create_individual(genome_size)
-			individual = EvoSynth::Core::MinimizingIndividual.new
-			individual.genome = EvoSynth::Core::ArrayGenome.new(genome_size)
-			individual.genome.map! { rand(2) > 0 ? true : false }
-			individual
+			EvoSynth::Core::MinimizingIndividual.new( EvoSynth::Core::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
 		end
 
 		profile = EvoSynth::Core::Profile.new(

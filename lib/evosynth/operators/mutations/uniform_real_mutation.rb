@@ -43,7 +43,7 @@ module EvoSynth
 				genome = mutated.genome
 
 				genome.size.times do |index|
-					genome[index] += @step_size - 2 * rand * @step_size if rand <= @probability
+					genome[index] += @step_size - 2 * EvoSynth.rand * @step_size if EvoSynth.rand <= @probability
 				end
 
 				mutated

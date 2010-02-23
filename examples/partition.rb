@@ -78,10 +78,10 @@ module Examples
 				mutated = individual.deep_clone
 				part_a, part_b = mutated.partition_a, mutated.partition_b
 
-				if rand(2) > 0
-					part_a << part_b.delete_at(rand(part_b.size)) unless mutated.partition_b.empty?
+				if EvoSynth.rand_bool
+					part_a << part_b.delete_at(EvoSynth.rand(part_b.size)) unless mutated.partition_b.empty?
 				else
-					part_b << part_a.delete_at(rand(part_a.size)) unless mutated.partition_a.empty?
+					part_b << part_a.delete_at(EvoSynth.rand(part_a.size)) unless mutated.partition_a.empty?
 				end
 
 				mutated
@@ -105,8 +105,8 @@ module Examples
 
 			def Testdata.gen_layer_set
 				problem = Set.new
-				problem.add(rand(1000) * rand(1000)) while problem.size < 200
-				problem.add(rand(1000)) while problem.size < 1000
+				problem.add(EvoSynth.rand(1000) * EvoSynth.rand(1000)) while problem.size < 200
+				problem.add(EvoSynth.rand(1000)) while problem.size < 1000
 				problem.to_a
 			end
 
@@ -118,13 +118,13 @@ module Examples
 
 			def Testdata.gen_random_set
 				problem = Set.new
-				problem.add(rand(1000000)) while problem.size < 1000
+				problem.add(EvoSynth.rand(1000000)) while problem.size < 1000
 				problem.to_a
 			end
 
 			def Testdata.gen_big_set
 				problem = Set.new
-				problem.add(rand(10000) * 100) while problem.size < 1000
+				problem.add(EvoSynth.rand(10000) * 100) while problem.size < 1000
 				problem.to_a
 			end
 		end
@@ -132,7 +132,7 @@ module Examples
 		# creates a new (random) individual from a given problem
 
 		def Partitionproblem.get_new_individual_from(problem)
-			border = rand(problem.size)
+			border = EvoSynth.rand(problem.size)
 			part_a, part_b = EvoSynth::Core::ArrayGenome.new, EvoSynth::Core::ArrayGenome.new
 
 			problem.size.times do
