@@ -24,6 +24,61 @@
 
 require 'evosynth'
 
+class TestMutationA
+	attr_accessor :called
+	def initialize
+		@called = 0
+	end
+	def mutate(individual)
+		@called += 1
+		"A"
+	end
+end
+
+
+class TestMutationB
+	attr_accessor :called
+	def initialize
+		@called = 0
+	end
+	def mutate(individual)
+		@called += 1
+		"B"
+	end
+end
+
+class TestMutationC
+	attr_accessor :called
+	def initialize
+		@called = 0
+	end
+	def mutate(individual)
+		@called += 1
+		"C"
+	end
+end
+
+class TestRecombinationA
+	attr_accessor :called
+	def initialize
+		@called = 0
+	end
+	def recombine(parent_one, parent_two)
+		@called += 1
+		["RecA", "RecA"]
+	end
+end
+
+class TestRecombinationB
+	attr_accessor :called
+	def initialize
+		@called = 0
+	end
+	def recombine(parent_one, parent_two)
+		@called += 1
+		["RecB", "RecB"]
+	end
+end
 
 class TestMinimizingIndividual < EvoSynth::MinimizingIndividual
 

@@ -48,11 +48,16 @@ evolution strategies (TODO: need some refactoring):
 * EvoSynth::Selections::RouletteWheelSelection
 * EvoSynth::Selections::RandomSelection
 
+
+=== meta operators
+
+* EvoSynth::MetaOperators::ProportionalCombinedOperator
+* EvoSynth::MetaOperators::SequentialCombinedOperator
+
 === mutations
 
 work on every genome:
 * EvoSynth::Mutations::Identity
-* EvoSynth::Mutations::CombinedMutation
 
 work on arrays (need flip function):
 * EvoSynth::Mutations::BinaryMutation

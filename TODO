@@ -25,22 +25,9 @@ Features:
 	- weak und strong elistism (elitären GA überarbeiten)
 		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
 
-	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
-		=> Breeder klingt am besten (siehe ECJ)
-		=> variable anzahl an eltern, kindern für recombinationen (siehe EO paper)
-
 	- Kombinierte Operatoren:
-		=> OpenBEAGLE hat ein relativ interessantes Operator Konzept:
-		   (siehe: http://beagle.gel.ulaval.ca/refmanual/beagle/html/df/d5a/group__Op.html)
-
-		=> vielleicht CombinedOperator erstellen? (method_missing magie!)
 		=> was ist mit einem if-then-else CombinedOperator wie in OpenBEAGLE?
-		=> CombinedMutation zu ProportionalCombinedMutation umbenennen
-		=> SequentiallyCombinedMutation erstellen (alle nacheinander)
-		=> analog dazu combined rekombinationen erstellen? Oder generisch?
-			=> bei diesen generischen combined operatoren ist das problem der default
-		   rückgabewert! (was wenn keine operation genutzt wird)
-		=> ist sowas bei selektionen nützlich? eher nicht! oder doch?
+			-> condition operator
 
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
 
@@ -79,3 +66,7 @@ Features:
 		=> mutationen, selektionen und co
 		=> diversität und co
 
+	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
+		=> braucht man das wirklich?
+		=> Breeder klingt am besten (siehe ECJ)
+		=> variable anzahl an eltern, kindern für recombinationen (siehe EO paper)

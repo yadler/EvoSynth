@@ -28,37 +28,7 @@ require 'evosynth'
 require 'test/test_util/test_helper'
 
 
-class TestMutationA
-	def mutate(individual)
-		"A"
-	end
-	def to_s
-		"TestMutationA"
-	end
-end
-
-
-class TestMutationB
-	def mutate(individual)
-		"B"
-	end
-	def to_s
-		"TestMutationB"
-	end
-end
-
-
-class TestMutationC
-	def mutate(individual)
-		"C"
-	end
-	def to_s
-		"TestMutationC"
-	end
-end
-
-
-class CombinedMutationTest < Test::Unit::TestCase
+class ProportionalCombinedOperatorTest < Test::Unit::TestCase
 
 	GENOME_SIZE = 20
 	ITERATIONS = 1000
@@ -68,27 +38,72 @@ class CombinedMutationTest < Test::Unit::TestCase
 		setup do
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
-			@mutation = EvoSynth::Mutations::CombinedMutation.new
+			@operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
 		end
 
-		should "mutated individual equal its parent" do
-			mutated = @mutation.mutate(@individual)
-			assert_equal @individual, mutated
+		should "raise a exception" do
+			assert_raise(RuntimeError) { mutated = @operator.mutate(@individual) }
 		end
 	end
 
-	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations (constructor)" do
+	context "when run on binary genome (size=#{GENOME_SIZE}) with two recombinations" do
+		setup do
+			@individual_a= TestArrayBinaryIndividual.new(GENOME_SIZE)
+			@individual_a.genome.map! { |gene| true }
+			@individual_b = TestArrayBinaryIndividual.new(GENOME_SIZE)
+			@individual_b.genome.map! { |gene| true }
+			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new(TestRecombinationA.new, TestRecombinationB.new)
+		end
+
+		should "both recombinations should have been used (nearly) equally often" do
+			count_a, count_b = 0, 0
+
+			ITERATIONS.times do
+				recombined = @combinded_operator.recombine(@individual_a, @individual_b)
+				count_a += 1 if recombined == ["RecA", "RecA"]
+				count_b += 1 if recombined == ["RecB", "RecB"]
+			end
+
+			assert_equal ITERATIONS, count_a + count_b
+			assert_in_delta ITERATIONS/2, count_a, DELTA * ITERATIONS
+			assert_in_delta ITERATIONS/2, count_b, DELTA * ITERATIONS
+		end
+	end
+
+	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations (alternative constructor)" do
 		setup do
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
-			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new(TestMutationA.new, TestMutationB.new)
+			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new(TestMutationA.new, TestMutationB.new)
 		end
 
 		should "both mutations should have been used (nearly) equally often" do
 			count_a, count_b = 0, 0
 
 			ITERATIONS.times do
-				mutated = @combinded_mutation.mutate(@individual)
+				mutated = @combinded_operator.mutate(@individual)
+				count_a += 1 if mutated == "A"
+				count_b += 1 if mutated == "B"
+			end
+
+			assert_equal ITERATIONS, count_a + count_b
+			assert_in_delta ITERATIONS/2, count_a, DELTA * ITERATIONS
+			assert_in_delta ITERATIONS/2, count_b, DELTA * ITERATIONS
+		end
+	end
+
+	context "when run on binary genome (size=#{GENOME_SIZE}) with two mutations (alternative constructor)" do
+		setup do
+			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
+			@individual.genome.map! { |gene| true }
+			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new(TestMutationA.new, TestMutationB.new)
+		end
+
+		should "both mutations should have been used (nearly) equally often" do
+			count_a, count_b = 0, 0
+
+			ITERATIONS.times do
+				mutated = @combinded_operator.mutate(@individual)
 				count_a += 1 if mutated == "A"
 				count_b += 1 if mutated == "B"
 			end
@@ -103,16 +118,16 @@ class CombinedMutationTest < Test::Unit::TestCase
 		setup do
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
-			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new
-			@combinded_mutation << TestMutationA.new
-			@combinded_mutation << TestMutationB.new
+			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+			@combinded_operator << TestMutationA.new
+			@combinded_operator << TestMutationB.new
 		end
 
 		should "both mutations should have been used (nearly) equally often" do
 			count_a, count_b = 0, 0
 
 			ITERATIONS.times do
-				mutated = @combinded_mutation.mutate(@individual)
+				mutated = @combinded_operator.mutate(@individual)
 				count_a += 1 if mutated == "A"
 				count_b += 1 if mutated == "B"
 			end
@@ -127,17 +142,17 @@ class CombinedMutationTest < Test::Unit::TestCase
 		setup do
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
-			@combinded_mutation = EvoSynth::Mutations::CombinedMutation.new
-			@combinded_mutation.add_with_possibility(TestMutationA.new, 0.5)
-			@combinded_mutation.add_with_possibility(TestMutationB.new, 0.25)
-			@combinded_mutation.add_with_possibility(TestMutationC.new, 0.25)
+			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+			@combinded_operator.add_with_possibility(TestMutationA.new, 0.5)
+			@combinded_operator.add_with_possibility(TestMutationB.new, 0.25)
+			@combinded_operator.add_with_possibility(TestMutationC.new, 0.25)
 		end
 
 		should "the mutations should have been used according to their possibilities" do
 			count_a, count_b, count_c = 0, 0, 0
 
 			ITERATIONS.times do
-				mutated = @combinded_mutation.mutate(@individual)
+				mutated = @combinded_operator.mutate(@individual)
 				count_a += 1 if mutated == "A"
 				count_b += 1 if mutated == "B"
 				count_c += 1 if mutated == "C"

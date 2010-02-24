@@ -22,14 +22,14 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/mutations/tc_shifting_muation'
-require 'test/operators/mutations/tc_mixing_mutation'
-require 'test/operators/mutations/tc_binary_mutation'
-require 'test/operators/mutations/tc_one_gene_flipping'
-require 'test/operators/mutations/tc_exchange_mutation'
-require 'test/operators/mutations/tc_inversion_mutation'
-require 'test/operators/mutations/tc_identity_mutation'
-require 'test/operators/mutations/tc_efficient_binary_mutation'
-require 'test/operators/mutations/tc_gauss_mutation'
-require 'test/operators/mutations/tc_uniform_real_mutation'
-require 'test/operators/mutations/tc_self_adaptive_gauss_mutation'
+module EvoSynth
+
+	# All meta operators of EvoSynth should be inside this Module. A meta operator basically combines other operators
+	# in some way.
+
+	module MetaOperators
+	end
+end
+
+require 'evosynth/operators/meta_operators/proportional_combined_operator'
+require 'evosynth/operators/meta_operators/sequential_combined_operator'
