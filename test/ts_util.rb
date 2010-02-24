@@ -23,4 +23,3 @@
 
 
 require 'test/util/tc_mdarray'
-require 'test/util/tc_math'

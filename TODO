@@ -2,7 +2,6 @@
 
 Fehler:
 	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281) 
-		- Randomizer: gaussverteilt
 
 	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
@@ -14,19 +13,27 @@ Features:
 	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
 	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
 
-	- Algorithmen:
-		- DERANDOMISIERTE-ES (Weicker page 139)
-		- Mehrzieloptimierung?
-		- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-			-> Gentische Programmierung (Ruby programme wären schön)
+	- Algorithmen: DERANDOMISIERTE-ES (Weicker page 139)
+
+	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+		-> Gentische Programmierung (Ruby programme wären schön)
 
 	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
 
-	- weak und strong elistism (elitären GA überarbeiten)
-		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
+	- meta-evolver:
+		=> weak und strong elistism (elitären GA überarbeiten)
+		=> was ist mit hall-of-fame oder ähnlichem?
+
+	- Mehrzieloptimierung?
+
+	- Mehrpopulationsdings:
+		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
+		=> was ist da noch sinnvoll? inseln & migration?
 
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
-		=> logger und gnuplot schick machen
+		=> logger und gnuplot schick machen (output templates)
+
+	- Versuchspläne und Statistiken?!
 
 ============================== EvoSynth >0.1 ===================================
 
@@ -48,6 +55,7 @@ Features:
 
 	- Algorithmen:
 		=> Schwärme
+		=> neuronale Netze
 
 	- BinaryGenome mittels inline C optimieren
 

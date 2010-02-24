@@ -23,7 +23,6 @@
 
 
 require 'evosynth/util/mdarray'
-require 'evosynth/util/math'
 require 'evosynth/util/output/console_writer'
 require 'evosynth/util/output/universal_logger'
 require 'evosynth/util/runner/benchmark_runner'

@@ -25,7 +25,7 @@
 module EvoSynth
 
 	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
-	# the random number generator of EvoSynth
+	# the random number generator of EvoSynth (uniform distributed)
 	#
 	# TODO: add proper documentation
 
@@ -37,6 +37,22 @@ module EvoSynth
 
 	def EvoSynth.rand_bool
 		EvoSynth.rand(2) > 0
+	end
+
+	# polar form of the Box-Mueller (see: http://www.taygeta.com/random/gaussian.html)
+	# todo proper documentation
+	
+	def EvoSynth.normal_rand
+		x1, x2, w, = 0.0, 0.0, 0.0, 0.0
+
+		begin
+			x1 = 2.0 * EvoSynth.rand - 1.0
+			x2 = 2.0 * EvoSynth.rand - 1.0
+			w = x1 ** 2 + x2 ** 2;
+		end while ( w >= 1.0 )
+
+		w = Math.sqrt( (-2.0 * Math.log( w ) ) / w )
+		x2 * w
 	end
 
 	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
