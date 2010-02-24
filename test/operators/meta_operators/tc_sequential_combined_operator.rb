@@ -41,7 +41,7 @@ class SequentialCombinedOperatorTest < Test::Unit::TestCase
 		end
 
 		should "raise a exception" do
-			assert_raise(RuntimeError) { mutated = @operator.mutate(@individual) }
+			assert_raise(RuntimeError) { @operator.mutate(@individual) }
 		end
 	end
 
@@ -84,8 +84,8 @@ class SequentialCombinedOperatorTest < Test::Unit::TestCase
 			@mutation_a = TestMutationA.new
 			@mutation_b = TestMutationB.new
 			@combinded_operator = EvoSynth::MetaOperators::SequentialCombinedOperator.new
-			@combinded_operator.add_with_possibility(@mutation_a, 0.5)
-			@combinded_operator.add_with_possibility(@mutation_b, 0.25)
+			@combinded_operator.add(@mutation_a, 0.5)
+			@combinded_operator.add(@mutation_b, 0.25)
 		end
 
 		should "both mutations should have been used #{ITERATIONS} times" do

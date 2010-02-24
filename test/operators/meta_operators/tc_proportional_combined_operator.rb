@@ -42,7 +42,7 @@ class ProportionalCombinedOperatorTest < Test::Unit::TestCase
 		end
 
 		should "raise a exception" do
-			assert_raise(RuntimeError) { mutated = @operator.mutate(@individual) }
+			assert_raise(RuntimeError) { @operator.mutate(@individual) }
 		end
 	end
 
@@ -119,8 +119,8 @@ class ProportionalCombinedOperatorTest < Test::Unit::TestCase
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
-			@combinded_operator << TestMutationA.new
-			@combinded_operator << TestMutationB.new
+			@combinded_operator.add(TestMutationA.new)
+			@combinded_operator.add(TestMutationB.new)
 		end
 
 		should "both mutations should have been used (nearly) equally often" do
@@ -143,9 +143,9 @@ class ProportionalCombinedOperatorTest < Test::Unit::TestCase
 			@individual = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual.genome.map! { |gene| true }
 			@combinded_operator = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
-			@combinded_operator.add_with_possibility(TestMutationA.new, 0.5)
-			@combinded_operator.add_with_possibility(TestMutationB.new, 0.25)
-			@combinded_operator.add_with_possibility(TestMutationC.new, 0.25)
+			@combinded_operator.add(TestMutationA.new, 0.5)
+			@combinded_operator.add(TestMutationB.new, 0.25)
+			@combinded_operator.add(TestMutationC.new, 0.25)
 		end
 
 		should "the mutations should have been used according to their possibilities" do

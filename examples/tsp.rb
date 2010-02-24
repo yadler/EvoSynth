@@ -114,9 +114,9 @@ module Examples
 
 		profile = EvoSynth::Core::Profile.new(
 			:individual			=> TSP.create_individual(matrix),
-			:mutation			=> EvoSynth::Mutations::CombinedMutation.new(EvoSynth::Mutations::InversionMutation.new,
-																			 EvoSynth::Mutations::ShiftingMutation.new,
-																			 EvoSynth::Mutations::MixingMutation.new),
+			:mutation			=> EvoSynth::MetaOperators::ProportionalCombinedOperator.new(EvoSynth::Mutations::InversionMutation.new,
+																							 EvoSynth::Mutations::ShiftingMutation.new,
+																							 EvoSynth::Mutations::MixingMutation.new),
 			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 			:recombination		=> EvoSynth::Recombinations::EdgeRecombination.new,
 			:population			=> EvoSynth::Population.new(100) { TSP.create_individual(matrix) },

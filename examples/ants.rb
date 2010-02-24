@@ -227,9 +227,9 @@ module Examples
 				ant_mutation.mutate(ant)
 			end
 
-			combined_mutation = EvoSynth::Mutations::CombinedMutation.new
-			combined_mutation.add_with_possibility(EvoSynth::Mutations::InversionMutation.new, 0.25)
-			combined_mutation.add_with_possibility(ant_mutation, 0.75)
+			combined_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
+			combined_mutation.add(ant_mutation, 0.75)
 
 			EvoSynth::Core::Profile.new(
 				:mutation			=> combined_mutation,

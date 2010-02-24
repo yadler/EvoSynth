@@ -33,18 +33,11 @@ module EvoSynth
 
 			def initialize(*ops)
 				@operators = []
-				ops.each { |operator| self << operator }
+				ops.each { |operator| add(operator) }
 			end
 
 
-			def <<(operator)
-				@operators << [operator, 1.0 / (@operators.size > 0 ? @operators.size : 1.0)]
-				normalize_operator_probabilities
-				self
-			end
-
-
-			def add_with_possibility(operator, probability)
+			def add(operator, probability = 1.0 / (@operators.size > 0 ? @operators.size : 1.0))
 				@operators << [operator, probability]
 				normalize_operator_probabilities
 				self

@@ -27,7 +27,8 @@ module EvoSynth
 
 		# This operator is a container for other operators. When SequentialCombinedOperator gets called with a method,
 		# that it does not implement, each operator has a probability to get called with that method. But in contrast to
-		# the ProportionalCombinedOperator all operators will get called.
+		# the ProportionalCombinedOperator all operators will get called. All Operators should be of the same kind, otherwise
+		# you will most likely receive a exception.
 		# 
 		# Most likely you will combine mutations and recombinations and therefore mutate() or recombine() will get called.
 
@@ -35,18 +36,13 @@ module EvoSynth
 
 			def initialize(*ops)
 				@operators = []
-				ops.each { |operator| self << operator }
+				ops.each { |operator| add(operator) }
 			end
+
 
 			# default probability is 1.0
 
-			def <<(operator)
-				@operators << [operator, 1.0]
-				self
-			end
-
-
-			def add_with_possibility(operator, probability)
+			def add(operator, probability = 1.0)
 				probability = 1.0 if probability > 1.0
 				@operators << [operator, probability]
 				self
