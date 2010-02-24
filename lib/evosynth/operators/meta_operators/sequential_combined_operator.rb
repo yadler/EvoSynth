@@ -64,7 +64,7 @@ module EvoSynth
 			def to_s
 				operators_to_s = []
 				@operators.each { |op| operators_to_s << "#{op[0].to_s} (probability: #{op[1]})" }
-				"combinded operator <operators: #{operators_to_s.join(', ')}>"
+				"sequential combinded operator <operators: #{operators_to_s.join(', ')}>"
 			end
 
 		end
