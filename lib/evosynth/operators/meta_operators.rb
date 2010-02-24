@@ -33,3 +33,4 @@ end
 
 require 'evosynth/operators/meta_operators/proportional_combined_operator'
 require 'evosynth/operators/meta_operators/sequential_combined_operator'
+require 'evosynth/operators/meta_operators/conditional_combined_operator'

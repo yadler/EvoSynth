@@ -22,6 +22,44 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/meta_operators/tc_proportional_combined_operator'
-require 'test/operators/meta_operators/tc_sequential_combined_operator'
-require 'test/operators/meta_operators/tc_conditional_combined_operator'
+module EvoSynth
+	module MetaOperators
+
+		# TODO: document me, could be used to swap mutations after N generations
+
+		class ConditionalCombinedOperator
+
+			def initialize
+				@operators = []
+			end
+
+
+			# condition has to return boolean
+
+			def add(operator, &condition)
+				@operators << [operator, condition]
+				self
+			end
+
+			def method_missing(method_name, *args)
+				raise "no operator to call" if @operators.empty?
+
+				result = args
+				@operators.each do |operator|
+					result = operator[0].send(method_name, *result) if operator[1].call
+				end
+
+				result
+			end
+
+
+			def to_s
+				operators_to_s = []
+				@operators.each { |op| operators_to_s << "#{op[0].to_s} (probability: #{op[1]})" }
+				"conditional combinded operator <operators: #{operators_to_s.join(', ')}>"
+			end
+
+		end
+
+	end
+end

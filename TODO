@@ -25,11 +25,8 @@ Features:
 	- weak und strong elistism (elitären GA überarbeiten)
 		=> schönen elitären meta-algorithmus als überbau für alle algorithmen
 
-	- Kombinierte Operatoren:
-		=> was ist mit einem if-then-else CombinedOperator wie in OpenBEAGLE?
-			-> condition operator
-
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
+		=> logger und gnuplot schick machen
 
 ============================== EvoSynth >0.1 ===================================
 

@@ -53,6 +53,7 @@ evolution strategies (TODO: need some refactoring):
 
 * EvoSynth::MetaOperators::ProportionalCombinedOperator
 * EvoSynth::MetaOperators::SequentialCombinedOperator
+* EvoSynth::MetaOperators::ConditionalCombinedOperator
 
 === mutations
 
