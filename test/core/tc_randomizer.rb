@@ -23,7 +23,7 @@
 
 
 require 'shoulda'
-require 'gnuplot'
+#require 'gnuplot'
 
 require 'evosynth'
 
@@ -38,7 +38,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 		should "should be correct" do
 			xs = {}
 			RUNS.times do |i|
-				result = EvoSynth.normal_rand
+				result = EvoSynth.nrand
 				rounded = (result * 100).round.to_f/100
 				xs[rounded] = 0 unless xs.has_key?(rounded)
 				xs[rounded] += 1
@@ -51,16 +51,11 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 #			Gnuplot.open do |gp|
 #				Gnuplot::Plot.new( gp ) do |plot|
 #
-#					plot.title  "Rastgrin function with Elistism GA"
+#					plot.title  "normal distributed random numbers"
 #					plot.xrange "[-5:5]"
-#					plot.ylabel "fitness"
-#					plot.xlabel "generation"
-#
-#
 #
 #					plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
 #						ds.with = "lines"
-#						ds.title = "best individual"
 #					end
 #				end
 #			end

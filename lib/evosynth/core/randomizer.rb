@@ -39,10 +39,12 @@ module EvoSynth
 		EvoSynth.rand(2) > 0
 	end
 
+	# normal distributed random number
 	# polar form of the Box-Mueller (see: http://www.taygeta.com/random/gaussian.html)
-	# todo proper documentation
+	# 
+	# TODO: proper documentation
 	
-	def EvoSynth.normal_rand
+	def EvoSynth.nrand
 		x1, x2, w, = 0.0, 0.0, 0.0, 0.0
 
 		begin

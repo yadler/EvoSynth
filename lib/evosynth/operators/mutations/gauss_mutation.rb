@@ -26,27 +26,27 @@ module EvoSynth
 	module Mutations
 
 		# GAUSS-MUTATION (Weicker page 60)
-		# FIXME: needs some investigation
+		#
 		# TODO: needs rdoc
 
 		class GaussMutation
-			attr_accessor :lower_bound, :upper_bound
-			attr_reader :sigma
+			attr_accessor :sigma, :lower_bound, :upper_bound
 
 			DEFAULT_SIGMA = 1.0
+			DEFAULT_LOWER_BOUND = -1 * Float::MAX
+			DEFAULT_UPPER_BOUND = Float::MAX
 
-			def initialize(sigma = DEFAULT_SIGMA, lower_bound = Float::MIN, upper_bound = Float::MAX)
+			def initialize(sigma = DEFAULT_SIGMA, lower_bound = DEFAULT_LOWER_BOUND, upper_bound = DEFAULT_UPPER_BOUND)
 				@sigma = sigma
 				@lower_bound = lower_bound
 				@upper_bound = upper_bound
-				precalculate_parts
 			end
 
 			def mutate(individual)
 				mutated = individual.deep_clone
 
 				mutated.genome.map! do |gene|
-					gene += EvoSynth.rand * density_function(gene) - density_function(gene)/2
+					gene += EvoSynth.nrand
 					gene = @lower_bound if gene < @lower_bound
 					gene = @upper_bound if gene > @upper_bound
 					gene
@@ -55,24 +55,8 @@ module EvoSynth
 				mutated
 			end
 
-			def sigma=(sigma)
-				@sigma = sigma
-				precalculate_parts
-			end
-
 			def to_s
 				"gauss mutation <sigma: #{@sigma}, lower bound: #{@lower_bound}, upper_bound: #{@upper_bound}>"
-			end
-
-			private
-
-			def precalculate_parts
-				@precalculated_part_one = 1.0 / (Math.sqrt(2 * Math::PI) * @sigma)
-				@pre_calculated_part_two = -1.0 / (2 * @sigma**2)
-			end
-
-			def density_function(x)
-				@precalculated_part_one * Math.exp(@pre_calculated_part_two * x**2)
 			end
 
 		end
