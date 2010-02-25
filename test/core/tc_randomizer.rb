@@ -23,7 +23,7 @@
 
 
 require 'shoulda'
-#require 'gnuplot'
+require 'gnuplot'
 
 require 'evosynth'
 
@@ -33,9 +33,26 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 	RUNS = 50000
 	DELTA = 0.05
 
+	def assert_point(xs, value, expected, point, scale)
+		offset = point * scale
+		v1 = xs[value+(offset)].nil? ? 0 : xs[value+(offset)]
+		v2 = xs[value+(offset+0.01)].nil? ? 0 : xs[value+(offset+0.01)]
+		v3 = xs[value+(offset-0.01)].nil? ? 0 : xs[value+(offset-0.01)]
+		at_point = ((v1 * 100.0 / RUNS) + (v2 * 100.0 / RUNS) + (v3 * 100.0 / RUNS)) / 3
+		assert_in_delta(expected/scale, at_point, DELTA)
+	end
+
+	def assert_result(xs, value = 0.0, scale = 1.0)
+		assert_point(xs, value, 0.4, 0.0, scale)
+		assert_point(xs, value, 0.24, -1.0, scale)
+		assert_point(xs, value, 0.24, 1.0, scale)
+		assert_point(xs, value, 0.054, 2.0, scale)
+		assert_point(xs, value, 0.054, -2.0, scale)
+	end
+
 	context "the EvoSynth.normal_rand function" do
 
-		should "should be correct" do
+		should "should be correct with default values" do
 			xs = {}
 			RUNS.times do |i|
 				result = EvoSynth.nrand
@@ -43,6 +60,7 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 				xs[rounded] = 0 unless xs.has_key?(rounded)
 				xs[rounded] += 1
 			end
+			assert_result(xs, 0.0, 1.0)
 
 			xs_sorted = xs.sort
 			x, y = [],[]
@@ -59,20 +77,89 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 #					end
 #				end
 #			end
-
-			at_zero = ((xs[0.00] * 100.0 / RUNS) + (xs[0.01] * 100.0 / RUNS) + (xs[-0.01] * 100.0 / RUNS)) / 3
-			assert_in_delta(0.4, at_zero, DELTA)
-			at_minus_one = ((xs[-1.00] * 100.0 / RUNS) + (xs[-1.01] * 100.0 / RUNS) + (xs[-0.99] * 100.0 / RUNS)) / 3
-			assert_in_delta(0.24, at_minus_one, DELTA)
-			at_plus_one = ((xs[1.00] * 100.0 / RUNS) + (xs[1.01] * 100.0 / RUNS) + (xs[0.99] * 100.0 / RUNS)) / 3
-			assert_in_delta(0.24, at_plus_one, DELTA)
-			at_minus_two = ((xs[-2.00] * 100.0 / RUNS) + (xs[-2.01] * 100.0 / RUNS) + (xs[-1.99] * 100.0 / RUNS)) / 3
-			assert_in_delta(0.054, at_minus_two, DELTA)
-			at_plus_two = ((xs[2.00] * 100.0 / RUNS) + (xs[2.01] * 100.0 / RUNS) + (xs[1.99] * 100.0 / RUNS)) / 3
-			assert_in_delta(0.054, at_plus_two, DELTA)
 		end
 
-			
+
+		should "should be correct with mu = 2.0 values" do
+			xs = {}
+			RUNS.times do |i|
+				result = EvoSynth.nrand(2.0)
+				rounded = (result * 100).round.to_f/100
+				xs[rounded] = 0 unless xs.has_key?(rounded)
+				xs[rounded] += 1
+			end
+			assert_result(xs, 2.0, 1.0)
+
+			xs_sorted = xs.sort
+			x, y = [],[]
+			xs_sorted.each { |v| x << v[0]; y << v[1] * 100.0 / RUNS }
+
+#			Gnuplot.open do |gp|
+#				Gnuplot::Plot.new( gp ) do |plot|
+#
+#					plot.title  "normal distributed random numbers"
+#					plot.xrange "[-5:5]"
+#
+#					plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
+#						ds.with = "lines"
+#					end
+#				end
+#			end
+		end
+
+		should "should be correct with mu = -13.0 values" do
+			xs = {}
+			RUNS.times do |i|
+				result = EvoSynth.nrand(-13.0)
+				rounded = (result * 100).round.to_f/100
+				xs[rounded] = 0 unless xs.has_key?(rounded)
+				xs[rounded] += 1
+			end
+			assert_result(xs, -13.0, 1.0)
+
+			xs_sorted = xs.sort
+			x, y = [],[]
+			xs_sorted.each { |v| x << v[0]; y << v[1] * 100.0 / RUNS }
+
+#			Gnuplot.open do |gp|
+#				Gnuplot::Plot.new( gp ) do |plot|
+#
+#					plot.title  "normal distributed random numbers"
+#					plot.xrange "[-5:5]"
+#
+#					plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
+#						ds.with = "lines"
+#					end
+#				end
+#			end
+		end
+
+		should "should be correct with mu = -13.0 and sigma = 2.0values" do
+			xs = {}
+			RUNS.times do |i|
+				result = EvoSynth.nrand(0.0, 2.0)
+				rounded = (result * 100).round.to_f/100
+				xs[rounded] = 0 unless xs.has_key?(rounded)
+				xs[rounded] += 1
+			end
+#			assert_result(xs, -13.0, 2.0)
+
+			xs_sorted = xs.sort
+			x, y = [],[]
+			xs_sorted.each { |v| x << v[0]; y << v[1] * 100.0 / RUNS }
+
+#			Gnuplot.open do |gp|
+#				Gnuplot::Plot.new( gp ) do |plot|
+#
+#					plot.title  "normal distributed random numbers"
+#					plot.xrange "[-5:5]"
+#
+#					plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
+#						ds.with = "lines"
+#					end
+#				end
+#			end
+		end
 	end
 
 end

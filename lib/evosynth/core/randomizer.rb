@@ -44,7 +44,7 @@ module EvoSynth
 	# 
 	# TODO: proper documentation
 	
-	def EvoSynth.nrand
+	def EvoSynth.nrand(mu = 0.0, sigma = 1.0)
 		x1, x2, w, = 0.0, 0.0, 0.0, 0.0
 
 		begin
@@ -54,7 +54,7 @@ module EvoSynth
 		end while ( w >= 1.0 )
 
 		w = Math.sqrt( (-2.0 * Math.log( w ) ) / w )
-		x2 * w
+		mu + (x2 * w * sigma)
 	end
 
 	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
