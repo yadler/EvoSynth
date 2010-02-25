@@ -41,7 +41,7 @@ module EvoSynth
 			DEFAULT_MODIFICATION_FREQUENCY = 10
 			DEFAULT_MUTATION = EvoSynth::Mutations::GaussMutation.new(DEFAULT_SIGMA)
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
-			DEFAULT_SELECTION = EvoSynth::Selections::SelectBest.new
+			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
 			def initialize(profile)
@@ -51,7 +51,7 @@ module EvoSynth
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :mutation => DEFAULT_MUTATION,
 				    :adjustment => DEFAULT_ADJUSTMENT,
-				    :enviromental_selection => DEFAULT_SELECTION,
+				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
 				use_profile profile
@@ -84,7 +84,7 @@ module EvoSynth
 					parent = @parent_selection.select(@population, 1).first
 					@mutation.sigma = @sigma # FIXME: remove this strong dependency on GaussMutation
 					child = @mutation.mutate(parent)
-
+ 
 					@evaluator.calculate_and_set_fitness(child)
 					@success += 1 if child > parent
 					child_population << child

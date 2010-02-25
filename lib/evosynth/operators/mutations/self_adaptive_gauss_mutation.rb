@@ -34,12 +34,13 @@ module EvoSynth
 			attr_accessor :sigma, :lower_bound, :upper_bound
 
 			DEFAULT_SIGMA = 1.0
+			DEFAULT_LOWER_BOUND = -1 * Float::MAX
+			DEFAULT_UPPER_BOUND = Float::MAX
 
-			def initialize(sigma = DEFAULT_SIGMA, lower_bound = Float::MIN, upper_bound = Float::MAX)
+			def initialize(sigma = DEFAULT_SIGMA, lower_bound = DEFAULT_LOWER_BOUND, upper_bound = DEFAULT_UPPER_BOUND)
 				@sigma = sigma
 				@lower_bound = lower_bound
 				@upper_bound = upper_bound
-				@gauss_distributed_0 = density_function(0, 1.0)
 			end
 
 			def mutate(individual)

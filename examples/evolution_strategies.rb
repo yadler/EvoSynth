@@ -29,8 +29,8 @@ require 'evosynth'
 module Examples
 	module EsExample
 
-		DIMENSIONS = 10
-		GENERATIONS = 1000
+		DIMENSIONS = 5
+		GENERATIONS = 500
 		POPULATION_SIZE = 25
 
 		def EsExample.fitness_function(xs)
@@ -45,8 +45,7 @@ module Examples
 
 		def EsExample.create_individual(genome_size, index)
 			individual = EvoSynth::MinimizingIndividual.new
-			individual.genome = EvoSynth::ArrayGenome.new(genome_size)
-			individual.genome.map! { EvoSynth.rand * 10.24 - 5.12 }
+			individual.genome = EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand * 10.24 - 5.12 }
 			individual
 		end
 
@@ -57,7 +56,13 @@ module Examples
 		)
 
 		algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
-		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
+			"sigma"			=> ->{ algorithm.sigma },
+			"success"	    => ->{ algorithm.success }
+		))
 		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 		puts profile.evaluator
 		puts
@@ -65,7 +70,14 @@ module Examples
 		puts
 
 		algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
-		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
+			"sigma"			=> ->{ algorithm.sigma },
+			"success"	    => ->{ algorithm.success }
+		))
+
 		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 		puts profile.evaluator
 		puts
