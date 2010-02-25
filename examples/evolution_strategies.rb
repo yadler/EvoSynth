@@ -49,12 +49,13 @@ module Examples
 			individual
 		end
 
+		base_population = EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
 		profile = EvoSynth::Core::Profile.new(
-			:population				=> EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) },
-			:modification_frequency => 100,
+			:modification_frequency => 10,
 			:evaluator				=> BenchmarkEvaluator.new
 		)
 
+		profile.population = base_population.deep_clone
 		algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
 		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
 			"generations"	=> ->{ algorithm.generations_computed },
@@ -69,6 +70,7 @@ module Examples
 		puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
 
+		profile.population = base_population.deep_clone
 		algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
 		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
 			"generations"	=> ->{ algorithm.generations_computed },

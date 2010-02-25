@@ -31,27 +31,26 @@ module EvoSynth
 		# TODO: needs rdoc
 
 		class SelfAdaptiveGaussMutation
-			attr_accessor :sigma, :lower_bound, :upper_bound
+			attr_accessor :initial_sigma, :lower_bound, :upper_bound
 
-			DEFAULT_SIGMA = 1.0
+			DEFAULT_INITIAL_SIGMA = 1.0
 			DEFAULT_LOWER_BOUND = -1 * Float::MAX
 			DEFAULT_UPPER_BOUND = Float::MAX
 
-			def initialize(sigma = DEFAULT_SIGMA, lower_bound = DEFAULT_LOWER_BOUND, upper_bound = DEFAULT_UPPER_BOUND)
-				@sigma = sigma
+			def initialize(initial_sigma = DEFAULT_INITIAL_SIGMA, lower_bound = DEFAULT_LOWER_BOUND, upper_bound = DEFAULT_UPPER_BOUND)
+				@initial_sigma = initial_sigma
 				@lower_bound = lower_bound
 				@upper_bound = upper_bound
 			end
 
 			def mutate(individual)
 				add_sigma(individual) unless defined? individual.sigma
-
 				mutated = individual.deep_clone
-				uniform_rand = EvoSynth.rand * @gauss_distributed_0
-				mutated.sigma = individual.sigma * Math.exp((1 / Math.sqrt(individual.genome.size)) * uniform_rand)
+
+				mutated.sigma = individual.sigma * Math.exp((1 / Math.sqrt(individual.genome.size)) * EvoSynth.nrand)
 
 				mutated.genome.map! do |gene|
-					gene += EvoSynth.rand * density_function(gene, mutated.sigma)
+					gene += EvoSynth.nrand(0.0, mutated.sigma)
 					gene = @lower_bound if gene < @lower_bound
 					gene = @upper_bound if gene > @upper_bound
 					gene
@@ -61,17 +60,12 @@ module EvoSynth
 			end
 
 			def to_s
-				"gauss mutation <sigma: #{@sigma}, lower bound: #{@lower_bound}, upper_bound: #{@upper_bound}>"
+				"self adaptive gauss mutation <sigma: #{@sigma}, lower bound: #{@lower_bound}, upper_bound: #{@upper_bound}>"
 			end
 
 			def add_sigma(individual)
-#				individual.class.send(:attr_accessor, :sigma)
 				individual.instance_eval("def sigma; @sigma end; def sigma=(value); @sigma = value end")
-				individual.sigma = DEFAULT_SIGMA
-			end
-
-			def density_function(x, sigma)
-				1.0 / (Math.sqrt(2 * Math::PI) * sigma) * Math.exp(-1.0 / (2 * sigma**2) * x**2)
+				individual.sigma = @initial_sigma
 			end
 
 		end

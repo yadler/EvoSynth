@@ -1,8 +1,7 @@
 ============================== EvoSynth 0.1 ====================================
 
 Fehler:
-	- GaussMutation: die normalverteilung stimmt noch überhaupt nicht! (Seite 281) 
-
+	- Testcase für selbstadaptive gauss mutation
 	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
 
