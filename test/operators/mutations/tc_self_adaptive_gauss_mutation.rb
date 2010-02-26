@@ -63,14 +63,6 @@ class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 				assert_respond_to @individual, :sigma
 			end
 
-			should "sigma of the parent should be #{EvoSynth::Mutations::SelfAdaptiveGaussMutation::DEFAULT_INITIAL_SIGMA}" do
-				assert_equal EvoSynth::Mutations::SelfAdaptiveGaussMutation::DEFAULT_INITIAL_SIGMA, @individual.sigma
-			end
-
-			should "sigma of the child should be around #{EvoSynth::Mutations::SelfAdaptiveGaussMutation::DEFAULT_INITIAL_SIGMA} +/- 0.2" do
-				assert_in_delta EvoSynth::Mutations::SelfAdaptiveGaussMutation::DEFAULT_INITIAL_SIGMA, @mutated.sigma, 0.2
-			end
-
 		end
 
 	end
