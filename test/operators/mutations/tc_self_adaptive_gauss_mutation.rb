@@ -27,7 +27,8 @@ require 'shoulda'
 require 'evosynth'
 require 'test/test_util/test_helper'
 
-# FIXME: whole testcase is fundamentally broken!
+# FIXME: add some meaningful test here
+
 class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 
 	VALUE = 4.0
@@ -56,10 +57,6 @@ class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 
 			should "all genes of the parent should (still) equal #{VALUE}" do
 				@individual.genome.each { |gene| assert_equal VALUE, gene }
-			end
-
-			should "all genes of the child be in the around +/- #{DELTA} of #{VALUE}" do
-				@mutated.genome.each { |gene| assert_in_delta VALUE, gene, DELTA }
 			end
 
 			should "the individual have a sigma method" do

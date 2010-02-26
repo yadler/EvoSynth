@@ -1,8 +1,6 @@
 ============================== EvoSynth 0.1 ====================================
 
 Fehler:
-	- Testcase für selbstadaptive gauss mutation
-	- ES überarbeiten und glatt ziehen
 	- ES: mü+lambda und mu,lambda klären!
 
 Features:
@@ -15,6 +13,8 @@ Features:
 	- Algorithmen: DERANDOMISIERTE-ES (Weicker page 139)
 
 	- childfactor für alle algorithmen! (anzahl kinder blabla)
+
+	- Testcase für selbstadaptive gauss mutation überarbeiten
 
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		-> Gentische Programmierung (Ruby programme wären schön)
