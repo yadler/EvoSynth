@@ -36,7 +36,7 @@ module EvoSynth
 			include EvoSynth::Evolvers::Evolver
 
 			attr_accessor :child_count
-			attr_reader :sigma, :success
+			attr_reader :success
 
 			DEFAULT_SIGMA = 0.1
 			DEFAULT_CHILD_FACTOR = 5
@@ -49,13 +49,13 @@ module EvoSynth
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
+					:sigma => DEFAULT_SIGMA,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
 				use_profile profile
-				@sigma = DEFAULT_SIGMA
 				@adjustment = DEFAULT_ADJUSTMENT
 				@mutation = DEFAULT_MUTATION
 				@success = 0
