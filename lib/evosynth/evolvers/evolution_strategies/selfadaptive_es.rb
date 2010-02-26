@@ -36,14 +36,12 @@ module EvoSynth
 			DEFAULT_MUTATION = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
-			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :mutation => DEFAULT_MUTATION,
-				    :adjustment => DEFAULT_ADJUSTMENT,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
