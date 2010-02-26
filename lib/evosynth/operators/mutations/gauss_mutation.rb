@@ -46,7 +46,7 @@ module EvoSynth
 				mutated = individual.deep_clone
 
 				mutated.genome.map! do |gene|
-					gene += EvoSynth.nrand # TODO: was is mit N(0,sigma)
+					gene += EvoSynth.nrand(0.0, @sigma)
 					gene = @lower_bound if gene < @lower_bound
 					gene = @upper_bound if gene > @upper_bound
 					gene
