@@ -31,7 +31,7 @@ require 'test/test_util/test_helper'
 class GaussMutationTest < Test::Unit::TestCase
 
 	RUNS = 10000
-	DELTA = 0.18 # TODO: why the heck is 1.0, 0.0 and -1.0 not as correct as the other values? test with delta == 0.05!
+	DELTA = 0.2 # TODO: why the heck is 1.0, 0.0 and -1.0 not as correct as the other values? test with delta == 0.05!
 	VALUE = 4.0
 	MAX_DELTA = 2.5
 
