@@ -29,6 +29,8 @@ module EvoSynth
 	module Evolvers
 
 		# ES-ADAPTIV (Weicker Page 135)
+		# 
+		# TODO: rdoc (mutation and adjustment are fixed!)
 
 		class AdaptiveES
 			include EvoSynth::Evolvers::Evolver
@@ -49,13 +51,13 @@ module EvoSynth
 				    :evaluator,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
-				    :mutation => DEFAULT_MUTATION,
-				    :adjustment => DEFAULT_ADJUSTMENT,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection => DEFAULT_PARENT_SELECTION
 
 				use_profile profile
 				@sigma = DEFAULT_SIGMA
+				@adjustment = DEFAULT_ADJUSTMENT
+				@mutation = DEFAULT_MUTATION
 				@success = 0
 
 				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
@@ -82,7 +84,7 @@ module EvoSynth
 
 				(@child_factor * @population.size).times do
 					parent = @parent_selection.select(@population, 1).first
-					@mutation.sigma = @sigma # FIXME: remove this strong dependency on GaussMutation
+					@mutation.sigma = @sigma
 					child = @mutation.mutate(parent)
  
 					@evaluator.calculate_and_set_fitness(child)
@@ -93,7 +95,7 @@ module EvoSynth
 				@population = @enviromental_selection.select(child_population, @population.size)
 				if @generations_computed % @modification_frequency == 0
 					success_rate =  @success / (@modification_frequency - (@child_factor * @population.size))
-					@sigma = @adjustment.adjust(@sigma, success_rate) # FIXME: remove this strong dependency on AdaptiveAdjustment
+					@sigma = @adjustment.adjust(@sigma, success_rate)
 					@success = 0
 				end
 			end
