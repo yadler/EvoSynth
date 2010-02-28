@@ -52,8 +52,27 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		)
 
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile)) { profile.evaluator.called < MAX_EVALUATIONS }
+		algorithm = EvoSynth::Evolvers::Hillclimber.new(profile)
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(2500,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		))
+
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until { profile.evaluator.called < MAX_EVALUATIONS }
+		puts "\nIndividual after evolution:  #{profile.individual}"
+
 		profile.evaluator.reset_counters
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile))  { profile.evaluator.called < MAX_EVALUATIONS }
+		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(100,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		))
+
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until { profile.evaluator.called < MAX_EVALUATIONS }
+		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

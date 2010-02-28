@@ -123,8 +123,6 @@ module Examples
 			individual
 		end
 
-		puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
-
 		profile = EvoSynth::Core::Profile.new(
 			:population					=> EvoSynth::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) },
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
@@ -134,18 +132,13 @@ module Examples
 			:evaluator					=> StandardEvaluator.new
 		)
 
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(100,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
-		))
-	#	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-		puts profile.evaluator
-		puts
-	#	puts "Elistism GA: best 'combined' individual: #{profile.evaluator.decode(result.best).to_s}"
-	#	puts "Elistism GA: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
-		puts
+#		puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
+#		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
+#		puts "\nRunning #{algorithm}...\n"
+#		result = algorithm.run_until_generations_reached(GENERATIONS)
+#		puts "\nBest Individual after evolution:  #{result.best}"
+#		puts profile.evaluator
+#		puts
 
 		puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
 
@@ -163,9 +156,9 @@ module Examples
 	#	puts profile.populations
 
 		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
-
 		profile.evaluator.reset_counters
-		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
 		puts profile.evaluator
 		puts
 
@@ -203,7 +196,8 @@ module Examples
 		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 
 		profile.evaluator.reset_counters
-		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
 		puts profile.evaluator
 		puts
 

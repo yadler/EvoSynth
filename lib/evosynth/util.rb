@@ -23,4 +23,3 @@
 
 
 require 'evosynth/util/mdarray'
-require 'evosynth/util/runner/benchmark_runner'

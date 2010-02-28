@@ -98,6 +98,9 @@ module Examples
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)
 
-		EvoSynth::Util.run_algorith_with_benchmark(EvoSynth::Evolvers::Hillclimber.new(profile), GENERATIONS)
+		algorithm = EvoSynth::Evolvers::Hillclimber.new(profile)
+		puts "Running #{algorithm}...\n\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "result: #{result}"
 	end
 end

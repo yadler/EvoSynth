@@ -55,6 +55,7 @@ module Examples
 			:evaluator				=> BenchmarkEvaluator.new
 		)
 
+		profile.evaluator.reset_counters
 		profile.population = base_population.deep_clone
 		algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
 		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
@@ -64,8 +65,9 @@ module Examples
 			"sigma"			=> ->{ algorithm.sigma },
 			"success"	    => ->{ algorithm.success }
 		))
-		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-		puts profile.evaluator
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "", profile.evaluator
 		puts
 		puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
@@ -80,8 +82,10 @@ module Examples
 			"success"	    => ->{ algorithm.success }
 		))
 
-		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-		puts profile.evaluator
+		profile.evaluator.reset_counters
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "", profile.evaluator
 		puts
 		puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
@@ -97,8 +101,10 @@ module Examples
 			"s"				=> ->{ algorithm.s.inspect }
 		))
 
-		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
-		puts profile.evaluator
+		profile.evaluator.reset_counters
+		puts "\nRunning #{algorithm}...\n"
+		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "", profile.evaluator
 		puts
 		puts "Derandomized ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
