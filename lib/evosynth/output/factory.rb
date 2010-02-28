@@ -22,28 +22,16 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
-	module Util
+	module Output
 
-		class ConsoleWriter
-
-			def initialize(print_gen_step = 10, verbose = true)
-				@print_generation_step = print_gen_step
-				@verbose = verbose
-			end
-
-			def update(generations_computed, algorithm)
-				return unless generations_computed % @print_generation_step == 0
-
-				best = "no best individual could be retrieved"
-				worst = "no worst individual could be retrieved"
-
-				best = (@verbose || !defined? algorithm.best_solution.fitness) ? algorithm.best_solution : algorithm.best_solution.fitness
-				worst = (@verbose || !defined? algorithm.worst_solution.fitness) ? algorithm.worst_solution : algorithm.worst_solution.fitness
-
-				puts "#{generations_computed}\t#{best}\t#{worst}"
-			end
-
+		def Output.create_console_logger(log_step, things_to_log = {})
+			logger = EvoSynth::Output::Logger.new(log_step, false, things_to_log)
+			logger.add_observer(EvoSynth::Output::ConsoleWriter.new)
+			logger
 		end
 
 	end

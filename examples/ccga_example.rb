@@ -135,7 +135,11 @@ module Examples
 		)
 
 		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(100,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		))
 	#	result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
 		puts profile.evaluator
 		puts
@@ -159,7 +163,6 @@ module Examples
 	#	puts profile.populations
 
 		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
-	#	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 		profile.evaluator.reset_counters
 		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
@@ -198,7 +201,6 @@ module Examples
 	#	puts profile.populations
 
 		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
-	#	algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(100, false))
 
 		profile.evaluator.reset_counters
 		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)

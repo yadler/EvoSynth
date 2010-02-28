@@ -27,8 +27,12 @@ Features:
 		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
 		=> was ist da noch sinnvoll? inseln & migration?
 
+	- Logger:
+		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können
+		=> logger und gnuplot noch schicker machen (output templates)
+
 	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
-		=> logger und gnuplot schick machen (output templates)
+		=> MDArray durch matrix ersetzen!
 
 	- Versuchspläne und Statistiken?!
 

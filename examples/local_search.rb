@@ -71,7 +71,7 @@ module Examples
 			algorithm = EvoSynth::Evolvers::LocalSearch.new(profile)
 			LocalSearch.print_acceptance_state(algorithm)
 
-			algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500, false,
+			algorithm.add_observer(EvoSynth::Output.create_console_logger(500,
 				"generations" => ->{ algorithm.generations_computed },
 				"fitness"     => ->{ algorithm.best_solution.fitness },
 				"temperature" => ->{ algorithm.acceptance.temperature },

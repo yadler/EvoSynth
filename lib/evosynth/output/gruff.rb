@@ -22,12 +22,37 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/util'
-require 'evosynth/decoder'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-require 'evosynth/output'
+require 'observer'
 
-# anthing that is needed to setup EvoSynth should be here!
+
+module EvoSynth
+	module Output
+
+		def Output.draw_with_gruff(logger, title, filename)
+			require 'gruff'
+
+			x, ys = [], []
+			data_sets = 0
+			logger.data.each_pair do |key, value|
+				data_sets = value.size if value.size > data_sets
+				x << key
+				value.each_with_index do |y, index|
+					ys[index] = [] if ys[index].nil?
+					ys[index] << y
+				end
+			end
+
+			g = Gruff::Line.new
+			g.title = title
+
+			data_sets.times { |set|	g.data(logger.column_names[set], ys[set]) }
+
+			labels = {}
+			x.each_with_index { |gen, index| labels[index] = "#{gen}"}
+			g.labels = labels
+
+			g.write(filename)
+		end
+
+	end
+end

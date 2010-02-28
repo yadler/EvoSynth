@@ -23,8 +23,6 @@
 
 
 require 'evosynth'
-require 'gnuplot'
-require 'gruff'
 #require 'profile'
 
 
@@ -34,11 +32,10 @@ module Examples
 		VALUE_BITS = 16
 		DIMENSIONS = 6
 		POP_SIZE = 25
-		GENERATIONS = 250
+		GENERATIONS = 100
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
 		class DataVizEvaluator < EvoSynth::Evaluator
-
 			def decode(individual)
 				values = []
 				DIMENSIONS.times { |dim| values << EvoSynth::Decoder.binary_to_real(individual.genome[dim * VALUE_BITS, VALUE_BITS], -5.12, 5.12) }
@@ -48,58 +45,6 @@ module Examples
 			def calculate_fitness(individual)
 				EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(decode(individual))
 			end
-
-		end
-
-		def DataViz.paint_with_gnuplot(data)
-			# for details take a look at http://rgplot.rubyforge.org/
-
-			Gnuplot.open do |gp|
-				Gnuplot::Plot.new( gp ) do |plot|
-
-					plot.title  "Rastgrin function with Elistism GA"
-					plot.ylabel "fitness"
-					plot.xlabel "generation"
-
-					x, y1, y2 = [], [], []
-					data.each do |record|
-						x << record[0]
-						y1 << record[1]
-						y2 << record[2]
-					end
-
-					plot.data << Gnuplot::DataSet.new( [x, y1] ) do |ds|
-						ds.with = "lines"
-						ds.title = "best individual"
-					end
-
-					plot.data << Gnuplot::DataSet.new( [x, y2] ) do |ds|
-						ds.with = "lines"
-						ds.title = "worst individual"
-					end
-				end
-			end
-		end
-
-		def DataViz.paint_with_gruff(data)
-			x, y1, y2 = [], [], []
-			data.each do |record|
-				x << record[0]
-				y1 << record[1]
-				y2 << record[2]
-			end
-
-			g = Gruff::Line.new
-			g.title = "Rastgrin function with Elistism GA"
-
-			g.data("best individual", y1)
-			g.data("worst individual", y2)
-
-			labels = {}
-			x.each_with_index { |gen, index| labels[index] = "#{gen}"}
-			g.labels = labels
-
-			g.write('/home/yves/Desktop/evosynth_viz_gruff.png')
 		end
 
 		def DataViz.create_individual(genome_size)
@@ -116,17 +61,24 @@ module Examples
 
 		profile.evaluator.reset_counters
 		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-
-		data = []
-		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(10, false,
-			{"gen" => ->{ algorithm.generations_computed },
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(10,
+			"gen" => ->{ algorithm.generations_computed },
 			"best" => ->{ profile.population.best.fitness },
-			"worst" => ->{ profile.population.worst.fitness }},
-			->(line) { data << line }
+			"worst" => ->{ profile.population.worst.fitness }
 		))
 
+		plot_logger = EvoSynth::Output::Logger.new(10, true,
+			"best fitness" => ->{ profile.population.best.fitness },
+#			"foo" => ->{ algorithm.generations_computed },
+#			"bar" => ->{ 100 - algorithm.generations_computed },
+			"worst fitness" => ->{ profile.population.worst.fitness }
+		)
+		algorithm.add_observer(plot_logger)
+
 		algorithm.run_until_generations_reached(GENERATIONS)
-		DataViz.paint_with_gnuplot(data)
-		DataViz.paint_with_gruff(data)
+
+		EvoSynth::Output.draw_with_gnuplot(plot_logger, "Rastgrin function with Elistism GA")
+		EvoSynth::Output.draw_with_gruff(plot_logger, "Rastgrin function with Elistism GA", '/home/yves/Desktop/evosynth_viz_gruff.png')
+
 	end
 end

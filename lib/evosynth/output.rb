@@ -22,12 +22,8 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/util'
-require 'evosynth/decoder'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-require 'evosynth/output'
-
-# anthing that is needed to setup EvoSynth should be here!
+require 'evosynth/output/logger'
+require 'evosynth/output/console_writer'
+require 'evosynth/output/gnuplot'
+require 'evosynth/output/gruff'
+require 'evosynth/output/factory'

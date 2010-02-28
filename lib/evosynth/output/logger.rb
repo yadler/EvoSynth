@@ -22,62 +22,59 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
-	module Evolvers
+	module Output
 
-		module RunnableEvolver
+		# Customizable logger
+		#
+		#	logger = EvoSynth::Output::Logger.new(10, true,
+		#		"gen" => ->{ algorithm.generations_computed },
+		#		"best" => ->{ profile.population.best.fitness },
+		#		"worst" => ->{ profile.population.worst.fitness }
+		#	)
+		#	algorithm.add_observer(logger)
+
+		class Logger
 			include Observable
 
-			attr_reader :generations_computed
+			attr_accessor :show_errors, :things_to_log, :save_data
+			attr_reader :data
 
-			def run_until(&condition) # :yields: generations computed, best solution
-				@generations_computed = 0
+			def initialize(log_step, save_data, things_to_log = {})
+				@data = {}
+
+				@log_step = log_step
+				@save_data = save_data
+				@things_to_log = things_to_log
+				@show_errors = false
+			end
+
+			def clear_data
+				@data = {}
+			end
+
+			def column_names
+				line = []
+				@things_to_log.each_pair { |key, value|	line << key }
+				line
+			end
+
+			def update(observable, counter)
+				return unless counter % @log_step == 0
+
+				line = []
+				@things_to_log.each_pair do |key, value|
+					begin
+						line << value.call
+					rescue
+						@show_errors ? line << "ERROR while retrieving #{value.inspect}" : line << "\t"
+					end
+				end
+
+				@data[counter] = line if save_data
+
 				changed
-				notify_observers self, @generations_computed
-
-				case condition.arity
-					when 0
-						loop_condition = condition
-					when 1
-						loop_condition = lambda { !yield @generations_computed }
-					when 2
-						loop_condition = lambda { !yield @generations_computed, best_solution }
-				else
-					raise ArgumentError, "please provide a block with the arity of 0, 1 or 2"
-				end
-
-				while loop_condition.call
-					next_generation
-					@generations_computed += 1
-					changed
-					notify_observers self, @generations_computed
-				end
-
-				return_result
-			end
-
-			def run_until_generations_reached(max_generations)
-				run_until { |gen| gen == max_generations }
-			end
-
-			def run_until_fitness_reached(fitness)
-				goal = Goal.new(fitness)
-				run_until { |gen, best| best >= goal }
-			end
-
-			private
-
-			class Goal
-				def initialize(goal)
-					@goal = goal
-				end
-
-				def fitness
-					@goal
-				end
+				notify_observers self, counter, line
 			end
 
 		end

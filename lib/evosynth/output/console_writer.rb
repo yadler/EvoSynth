@@ -22,12 +22,24 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/util'
-require 'evosynth/decoder'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-require 'evosynth/output'
+require 'observer'
 
-# anthing that is needed to setup EvoSynth should be here!
+
+module EvoSynth
+	module Output
+
+		class ConsoleWriter
+
+			def initialize(step_size = 1)
+				@step_size = step_size
+			end
+
+			def update(logger, counter, line)
+				return unless counter % @step_size == 0
+				puts "#{line.join("\t")}"
+			end
+
+		end
+
+	end
+end

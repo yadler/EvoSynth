@@ -158,7 +158,7 @@ module Examples
 		profile.population = base_population.deep_clone
 		puts "running ElitismGeneticAlgorithm..."
 		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
 			"generations" => ->{ algorithm.generations_computed },
 			"fitness"     => ->{ algorithm.best_solution.fitness },
 			"best"		  => ->{ algorithm.best_solution.to_s }

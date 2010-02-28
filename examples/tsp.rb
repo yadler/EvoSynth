@@ -129,10 +129,14 @@ module Examples
 		puts "Best Individual before evolution: #{profile.population.best}"
 
 		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Util::ConsoleWriter.new(50, false))
+		algorithm.add_observer(EvoSynth::Output.create_console_logger(25,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		))
 
 		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(1000)
+		result = algorithm.run_until_generations_reached(200)
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

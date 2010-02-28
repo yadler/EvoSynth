@@ -22,51 +22,41 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
-	module Util
+	module Output
 
-		# Customizable logger
-		#
-		#	algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(500,
-		#		algorithm => :generations_computed,
-		#		profile.individual => :fitness,
-		#		profile.acceptance => [:temperature, :alpha, :delta]
-		#	))
+		def Output.draw_with_gnuplot(logger, title)
+			require 'gnuplot'
 
-		class UniversalLogger
-			attr_accessor :things_to_log
+			Gnuplot.open do |gp|
+				Gnuplot::Plot.new( gp ) do |plot|
 
-			LOG_TO_CONSOLE = lambda { |line| puts "#{line.join("\t")}"}
-			DEFAULT_LOG_TARGET = LOG_TO_CONSOLE
+					plot.title  title
+#					plot.ylabel "fitness"
+#					plot.xlabel "generation"
 
-			def initialize(print_generation_step, show_errors, things_to_log = {}, log_target = DEFAULT_LOG_TARGET)
-				@print_generation_step = print_generation_step
-				@things_to_log = things_to_log
-				@show_errors = show_errors
-				@log_target = log_target
-			end
+					x, ys = [], []
+					data_sets = 0
+					logger.data.each_pair do |key, value|
+						data_sets = value.size if value.size > data_sets
+						x << key						
+						value.each_with_index do |y, index|
+							ys[index] = [] if ys[index].nil?
+							ys[index] << y
+						end
+					end
 
-			def column_names
-				line = []
-				@things_to_log.each_pair { |key, value|	line << key }
-				line
-			end
-
-			def update(generations_computed, algorithm)
-				return unless generations_computed % @print_generation_step == 0
-
-				line = []
-				@things_to_log.each_pair do |key, value|
-					begin
-						line << value.call
-					rescue
-						@show_errors ? line << "ERROR while retrieving #{value.inspect}" : line << "\t"
+					data_sets.times do |set|
+						plot.data << Gnuplot::DataSet.new( [x, ys[set]] ) do |ds|
+							ds.with = "lines"
+							ds.title = logger.column_names[set]
+						end
 					end
 				end
-
-				@log_target.call(line)
 			end
-
 		end
 
 	end
