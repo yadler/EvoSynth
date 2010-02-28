@@ -7,9 +7,8 @@ Features:
 	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
 	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
 
-	- Algorithmen: DERANDOMISIERTE-ES (Weicker page 139)
-
-	- childfactor für alle algorithmen! (anzahl kinder blabla)
+	- childfactor durch genaue anzahl (lambda) ersetzen oder eher nicht?
+		=> childfactor für alle algorithmen! (anzahl kinder blabla)
 
 	- Testcase für selbstadaptive gauss mutation überarbeiten
 

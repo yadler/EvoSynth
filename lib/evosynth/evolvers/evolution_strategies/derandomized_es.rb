@@ -28,38 +28,42 @@ require 'evosynth'
 module EvoSynth
 	module Evolvers
 
-		# ES-ADAPTIV (Weicker Page 135)
-		# 
-		# TODO: rdoc (mutation and adjustment are fixed!)
+		# DERANDOMISIERTE-ES (Weicker Page 139)
+		#
+		# TODO: rdoc
 
-		class AdaptiveES
+		class DerandomizedES
 			include EvoSynth::Evolvers::Evolver
 
-			attr_reader :success
+			attr_reader :s
 
 			DEFAULT_SIGMA = 0.1
+			DEFAULT_ALPHA = 0.2
+			DEFAULT_TAU = 4		# Math.sqrt(genome.size) is a common value
 			DEFAULT_CHILD_FACTOR = 5
-			DEFAULT_MODIFICATION_FREQUENCY = 10
 			DEFAULT_MUTATION = EvoSynth::Mutations::GaussMutation.new(DEFAULT_SIGMA)
-			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
+			DEFAULT_RECOMBINATION = EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
-			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
 					:sigma => DEFAULT_SIGMA,
+					:alpha => DEFAULT_ALPHA,
+					:tau => DEFAULT_TAU,
 				    :child_factor => DEFAULT_CHILD_FACTOR,
-				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
-				    :enviromental_selection => DEFAULT_ENV_SELECTION,
-				    :parent_selection => DEFAULT_PARENT_SELECTION
+				    :enviromental_selection => DEFAULT_ENV_SELECTION
 
 				use_profile profile
-				@adjustment = DEFAULT_ADJUSTMENT
 				@mutation = DEFAULT_MUTATION
-				@success = 0
+				@recombination = DEFAULT_RECOMBINATION
 
-				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
+				genome_length = 0;
+				@population.each do |individual|
+					@evaluator.calculate_and_set_fitness(individual)
+					genome_length = individual.genome.size if individual.genome.size > genome_length
+				end
+				@s = [0.0] * genome_length
 			end
 
 			def to_s
@@ -79,25 +83,37 @@ module EvoSynth
 			end
 
 			def next_generation
+				z = []
 				child_population = EvoSynth::Population.new
+				child = @recombination.recombine(@population)
 
 				(@child_factor * @population.size).times do
-					parent = @parent_selection.select(@population, 1).first
-					@mutation.sigma = @sigma
-					child = @mutation.mutate(parent)
- 
-					@evaluator.calculate_and_set_fitness(child)
-					@success += 1 if child > parent
-					child_population << child
+					mutated_child = @mutation.mutate(child)
+					child_population << mutated_child
+
+					z = []
+					mutated_child.genome.each_with_index { |gene, index| z << gene - child.genome[index] }
 				end
 
+				child_population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
 				@population = @enviromental_selection.select(child_population, @population.size)
-				if @generations_computed % @modification_frequency == 0
-					success_rate =  @success / (@modification_frequency - (@child_factor * @population.size))
-					@sigma = @adjustment.adjust(@sigma, success_rate)
-					@success = 0
-				end
+
+				adjust_parameters(z)
 			end
+
+			private
+
+			def adjust_parameters(z)
+				# TODO: rename z and z_strich to something better
+				z_strich = 1.0 / @population.size * z.inject(0.0) { |sum, index| sum += index }
+
+				add_to_s = Math.sqrt(@alpha * (2 - @alpha) * @population.size) * z_strich
+				@s.each_index { |index|	@s[index] = (1 - @alpha) * @s[index] + add_to_s }
+
+				length_of_s = Math.sqrt( @s.inject(0.0) { |sum_of_pows, num| sum_of_pows += num**2 } )
+				@sigma = @sigma * Math.exp( (length_of_s**2 - @s.size) / (2 * @tau * @s.size))
+			end
+
 		end
 
 	end

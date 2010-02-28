@@ -34,9 +34,10 @@ genetic algorithms:
 coevolutionary algorithms:
 * EvoSynth::Evolvers::CoopCoevolutionary
 
-evolution strategies (TODO: need some refactoring):
+evolution strategies:
 * EvoSynth::Evolvers::AdaptiveES
 * EvoSynth::Evolvers::SelfAdaptiveES
+* EvoSynth::Evolvers::DerandomizedES
 
 === selections
 
@@ -72,9 +73,9 @@ work on permutations:
 * EvoSynth::Mutations::ShiftingMutation
 
 work on (arrays of) floats:
-* EvoSynth::Mutations::GaussMutation (TODO: check usage of density_function):
+* EvoSynth::Mutations::GaussMutation
 * EvoSynth::Mutations::UniformRealMutation
-* EvoSynth::Mutations::SelfAdaptiveGaussMutation (TODO: check usage of density_function):
+* EvoSynth::Mutations::SelfAdaptiveGaussMutation
 
 === recombinations
 
@@ -83,7 +84,7 @@ work on every genome:
 * EvoSynth::Recombinations::OnePointCrossover
 * EvoSynth::Recombinations::KPointCrossover
 * EvoSynth::Recombinations::UniformCrossover
-* EvoSynth::Recombinations::ArithmeticCrossover (needs interpolation function)
+* EvoSynth::Recombinations::ArithmeticCrossover (needs interpolation functions)
 
 work on permutations (no duplicates):
 * EvoSynth::Recombinations::PartiallyMappedCrossover

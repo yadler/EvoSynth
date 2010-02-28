@@ -86,5 +86,21 @@ module Examples
 		puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
 
+		profile.population = base_population.deep_clone
+		profile.tau = 1 / Math.sqrt(DIMENSIONS)
+		algorithm = EvoSynth::Evolvers::DerandomizedES.new(profile)
+		algorithm.add_observer(EvoSynth::Util::UniversalLogger.new(50, false,
+			"generations"	=> ->{ algorithm.generations_computed },
+			"bestfitness"   => ->{ algorithm.best_solution.fitness },
+			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
+			"sigma"			=> ->{ algorithm.sigma },
+			"s"				=> ->{ algorithm.s.inspect }
+		))
+
+		result = EvoSynth::Util.run_algorith_with_benchmark(algorithm, GENERATIONS)
+		puts profile.evaluator
+		puts
+		puts "Derandomized ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
+		puts
 	end
 end

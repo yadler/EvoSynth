@@ -30,8 +30,6 @@ module EvoSynth
 		class SelfAdaptiveES
 			include EvoSynth::Evolvers::Evolver
 
-			attr_accessor :child_count
-
 			DEFAULT_CHILD_FACTOR = 5
 			DEFAULT_MUTATION = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new

@@ -33,6 +33,7 @@ require 'evosynth/evolvers/genetic_algortihms/steady_state_ga'
 
 require 'evosynth/evolvers/evolution_strategies/adaptive_es'
 require 'evosynth/evolvers/evolution_strategies/selfadaptive_es'
+require 'evosynth/evolvers/evolution_strategies/derandomized_es'
 
 require 'evosynth/evolvers/local_search/local_search'
 
