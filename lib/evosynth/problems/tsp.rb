@@ -36,9 +36,8 @@ module EvoSynth
 			# 
 			# needs a .tsp file
 
-			def initialize(filename, distance_weight = 2)
+			def initialize(filename)
 				super()
-				@distance_weight = distance_weight
 				@matrix = read_matrix_from_file(filename)
 			end
 

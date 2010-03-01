@@ -17,7 +17,9 @@ Features:
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		-> Gentische Programmierung (Ruby programme wären schön)
 
-	- CCGA und Ant example überarbeiten und eventuell toolklassen extrahieren
+	- CCGA example überarbeiten
+
+	- Ant mutation fixen und Ant example überarbeiten
 
 	- meta-evolver:
 		=> weak und strong elistism (elitären GA überarbeiten)
@@ -45,6 +47,8 @@ Testfälle:
 	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
 Features:
+
+	- TSP Problem generischer machen und refactorisieren
 
 	- Benchmarkfunktionen:
 		-> C-Funktion (Weicker page 272)

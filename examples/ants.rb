@@ -24,169 +24,51 @@
 
 require 'evosynth'
 require 'set'
-require 'examples/util/mdarray'
+require 'matrix'
 
 
 module Examples
 	module Ants
-
-		class ProblemMatrix
-
-			def initialize(file_name, distance_weight = 2)
-				@distance_weight = distance_weight
-
-				nodes = read_nodes_from_file(file_name)
-				create_matrix(nodes)
-			end
-
-			def get_next_node(existing_route, pheromon, last_node)
-				best_pr = 0.0
-				best_node = nil
-				route = existing_route.to_set
-				distances = @matrix.row_to_a(last_node)
-
-				distances.each_with_index do |distance, node_index|
-					unless route.include?(node_index)
-						pr = pheromon.matrix[last_node, node_index]
-						pr *= (1.0 / distance) ** @distance_weight
-						pr /= get_sum(existing_route, pheromon, last_node)
-						pr *= EvoSynth.rand
-					else
-						pr = 0.0
-					end
-
-					if pr > best_pr
-						best_node = node_index
-						best_pr = pr
-					end
-				end
-
-				best_node
-			end
-
-			def get_sum(existing_route, pheromon, last_node)
-				sum = 0.0
-				route = existing_route.to_set
-				distances = @matrix.row_to_a(last_node)
-
-				distances.each_with_index do |distance, node_index|
-					next if route.include?(node_index)
-					sum += pheromon.matrix[last_node, node_index] * (distance ** @distance_weight)
-				end
-
-				sum
-			end
-
-			def get_nearest_node(existing_route, last_node)
-				best_distance = Float::MAX
-				best_node = nil
-				route = existing_route.to_set
-				distances = @matrix.row_to_a(last_node)
-
-				distances.each_with_index do |distance_to_node, node_index|
-					next if route.include?(node_index)
-
-					if best_distance > distance_to_node
-						best_distance = distance_to_node
-						best_node = node_index
-					end
-				end
-
-				best_node
-			end
-
-			def distance(from, to)
-				@matrix[from, to]
-			end
-
-			def size
-				@matrix.cols
-			end
-
-			def to_s
-				@matrix.each_row { |row| puts row.inspect }
-			end
-
-			private
-
-			def read_nodes_from_file(file_name)
-				nodes = []
-
-				File.open(file_name) do |file|
-					file.each_line do |line|
-						break if line =~ /DISPLAY_DATA_SECTION/
-						next if line !~ /^\s*\d+/
-
-						line =~ /(\d+)\s*(\d+.\d+)\s*(\d+.\d+)/
-						nodes << line.split
-					end
-				end
-
-				nodes
-			end
-
-			def create_matrix(nodes)
-				@matrix = Examples::Util::MDArray.new(nodes.size, nodes.size)
-				@matrix.each_index { |x,y| @matrix[x,y] = nodes[x][y].to_f }
-			end
-		end
 
 		class Pheromon
 			attr_accessor :matrix
 
 			def initialize(node_count, evaporation_weight = 0.7)
 				@evaporation_weight = evaporation_weight
-
-				@matrix = Examples::Util::MDArray.new(node_count, node_count)
-				@matrix.each_index { |x, y| @matrix[x, y] = 1.0 }
+				@matrix = Matrix.zero(node_count).collect { |i| i + 1.0 }
 			end
 
 			def update(ants)
-				@matrix.each_index { |x, y| @matrix[x,y] *= @evaporation_weight }
+				@matrix = @matrix.collect { |i| i * @evaporation_weight }
 
 				ants.each do |ant|
 					ant.genome.each_with_index do |node, index|
 						break if (index + 1) >= ant.genome.size
-						@matrix[node, ant.genome[index + 1]] += 100 / ant.fitness
+
+						# FIXME: this is pretty inefficient
+						columns = @matrix.column_vectors
+						columns[ant.genome[index + 1]] = columns[ant.genome[index + 1]].map { |i| i * 100 / ant.fitness }
+						@matrix = Matrix.columns(columns)
 					end
 				end
 			end
 
 			def to_s
-				@matrix.each_row { |row| puts row.inspect}
+				@matrix.to_s
 			end
 
 		end
 
-
-		class AntFitnessCalculator < EvoSynth::Evaluator
-
-			def initialize(problem_matrix)
-				@problem_matrix = problem_matrix
-				super()
-			end
-
-			def calculate_fitness(individual)
-				fitness = 0.0
-
-				individual.genome.each_with_index do |node, index|
-					index_two = (index + 1) % individual.genome.size
-					fitness += @problem_matrix.distance(node, individual.genome[index_two])
-				end
-
-				fitness
-			end
-
-		end
-
+		# FIXME: this mutation is seriously broken
 
 		class SimpleAntMutation
 
-			def initialize(problem_matrix, pheromon, start, exploration_weight = 0.5)
-				@problem_matrix = problem_matrix
+			def initialize(tsp, pheromon, start, exploration_weight = 0.5, distance_weight = 2.0)
+				@tsp = tsp
 				@pheromon = pheromon
 				@start = start
 				@exploration_weight = exploration_weight
+				@distance_weight = distance_weight
 			end
 
 			def mutate(ant)
@@ -200,17 +82,77 @@ module Examples
 				"simple ant mutation <start: #{@start}, exploration_weight: #{@exploration_weight}>"
 			end
 
+			def get_next_node(existing_route, pheromon, last_node)
+				best_pr = 0.0
+				best_node = nil
+				route = existing_route.to_set
+				raise "shit!" if last_node.nil?
+				distances = @tsp.matrix.row(last_node).to_a
+
+				distances.each_with_index do |distance, node_index|
+					unless route.include?(node_index)
+						pr = pheromon.matrix[last_node, node_index]
+						pr *= (1.0 / distance) ** @distance_weight
+						pr /= get_sum(existing_route, pheromon, last_node)
+						pr *= EvoSynth.rand
+					else
+						pr = 0.0
+					end
+
+					if pr >= best_pr
+						best_node = node_index
+						best_pr = pr
+					end
+				end
+
+				best_node
+			end
+
+			def get_sum(existing_route, pheromon, last_node)
+				sum = 0.0
+				route = existing_route.to_set
+				distances = @tsp.matrix.row(last_node).to_a
+
+				distances.each_with_index do |distance, node_index|
+					next if route.include?(node_index)
+					sum += pheromon.matrix[last_node, node_index] * (distance ** @distance_weight)
+				end
+
+				sum
+			end
+
+			def get_nearest_node(existing_route, last_node)
+				best_distance = Float::MAX
+				best_node = nil
+				route = existing_route.to_set
+				raise "shit-2!" if last_node.nil?
+				distances = @tsp.matrix.row(last_node).to_a
+
+				distances.each_with_index do |distance_to_node, node_index|
+					next if route.include?(node_index)
+
+					if best_distance > distance_to_node
+						best_distance = distance_to_node
+						best_node = node_index
+					end
+				end
+
+				best_node
+			end
+
 			private
 
 			def rand_route
 				genome = EvoSynth::ArrayGenome.new
 				genome << @start
 
-				(@problem_matrix.size - 1).times do
+				(@tsp.size - 1).times do
+					puts genome.inspect if genome.last.nil?
+
 					if EvoSynth.rand < @exploration_weight
-						genome << @problem_matrix.get_next_node(genome, @pheromon, genome.last)
+						genome << get_next_node(genome, @pheromon, genome.last)
 					else
-						genome << @problem_matrix.get_nearest_node(genome, genome.last)
+						genome << get_nearest_node(genome, genome.last)
 					end
 				end
 
@@ -220,31 +162,31 @@ module Examples
 		end
 
 
-		def Ants.algorithm_profile(matrix, pheromon)
-			ant_mutation = Ants::SimpleAntMutation.new(matrix, pheromon, 1, 0.2)
+		def Ants.algorithm_profile(tsp, pheromon)
+			ant_mutation = Ants::SimpleAntMutation.new(tsp, pheromon, 1, 0.2)
 
 			population = EvoSynth::Population.new(10) do
 				ant = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new)
 				ant_mutation.mutate(ant)
 			end
 
-			combined_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
-			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
-			combined_mutation.add(ant_mutation, 0.75)
+#			combined_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+#			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
+#			combined_mutation.add(ant_mutation, 0.75)
 
 			EvoSynth::Profile.new(
-				:mutation			=> combined_mutation,
+				:mutation			=> EvoSynth::Mutations::InversionMutation.new,
 				:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 				:population			=> population,
 				:recombination		=> EvoSynth::Recombinations::PartiallyMappedCrossover.new,
-				:evaluator			=> Ants::AntFitnessCalculator.new(matrix)
+				:evaluator			=> tsp
 			)
 		end
 
-		matrix = Ants::ProblemMatrix.new('testdata/tsp/bays29.tsp')
-		puts "read testdata/ant/bays29.tsp - matrix contains #{matrix.size} nodes..."
+		tsp = EvoSynth::Problems::TSP.new('testdata/tsp/bays29.tsp')
+		puts "read testdata/ant/bays29.tsp - matrix contains #{tsp.size} nodes..."
 
-		PHEROMON = Ants::Pheromon.new(matrix.size)
+		PHEROMON = Ants::Pheromon.new(tsp.size)
 
 		class EvoSynth::Evolvers::ElitismGeneticAlgorithm
 			alias :ant_next_generation :next_generation
@@ -255,7 +197,7 @@ module Examples
 			end
 		end
 
-		profile = Ants.algorithm_profile(matrix, PHEROMON)
+		profile = Ants.algorithm_profile(tsp, PHEROMON)
 
 		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 		optimal = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new(opt_tour))
