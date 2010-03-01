@@ -37,16 +37,13 @@ Features:
 		=> CCGA example überarbeiten
 		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
 
-	- Logger (output templates):
-		=> logger und gnuplot noch schicker machen
-		=> html, svg outputs?
-		=> CSV output!
-
 	- Versuchspläne und Statistiken?!
 
 ============================== EvoSynth >0.1 ===================================
 
 Features:
+
+	- add # encoding: utf-8 to all ruby files
 
 	- TSP Problem generischer machen und refactorisieren
 
@@ -84,8 +81,9 @@ Features:
 		=> was ist da noch sinnvoll? inseln & migration?
 
 	- Logger:
+		=> html output templates, svg outputs?
 		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
-		das geht aber vielleicht eher in richtung eventsystem
+		   das geht aber vielleicht eher in richtung eventsystem
 
 	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
 		=> braucht man das wirklich?

@@ -27,7 +27,7 @@ require 'evosynth'
 
 
 module Examples
-	module DataViz
+	module Exporter
 
 		VALUE_BITS = 16
 		DIMENSIONS = 6
@@ -35,7 +35,7 @@ module Examples
 		GENERATIONS = 100
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
-		class DataVizEvaluator < EvoSynth::Evaluator
+		class ExporterEvaluator < EvoSynth::Evaluator
 			def decode(individual)
 				values = []
 				DIMENSIONS.times { |dim| values << EvoSynth::Decoder.binary_to_real(individual.genome[dim * VALUE_BITS, VALUE_BITS], -5.12, 5.12) }
@@ -47,7 +47,7 @@ module Examples
 			end
 		end
 
-		def DataViz.create_individual(genome_size)
+		def Exporter.create_individual(genome_size)
 			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
 		end
 
@@ -55,8 +55,8 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
-			:population			=> EvoSynth::Population.new(POP_SIZE) { DataViz.create_individual(GENOME_SIZE) },
-			:evaluator			=> DataVizEvaluator.new
+			:population			=> EvoSynth::Population.new(POP_SIZE) { Exporter.create_individual(GENOME_SIZE) },
+			:evaluator			=> ExporterEvaluator.new
 		)
 
 		profile.evaluator.reset_counters
@@ -74,11 +74,15 @@ module Examples
 			"worst fitness" => ->{ profile.population.worst.fitness }
 		)
 		algorithm.add_observer(plot_logger)
-
 		algorithm.run_until_generations_reached(GENERATIONS)
 
-		EvoSynth::Output.draw_with_gnuplot(plot_logger, "Rastgrin function with Elistism GA")
-		EvoSynth::Output.draw_with_gruff(plot_logger, "Rastgrin function with Elistism GA", '/home/yves/Desktop/evosynth_viz_gruff.png')
+
+		puts "\nexport to gnuplot..."
+		EvoSynth::Output::GnuPlotExporter.new(plot_logger).export("Rastgrin function with Elistism GA")
+		puts "export with gruff..."
+		EvoSynth::Output::GruffExporter.new(plot_logger).export("Rastgrin function with Elistism GA", '/home/yves/Desktop/evosynth_viz_gruff.png')
+		puts "export to CSV..."
+		EvoSynth::Output::CSVExporter.new(plot_logger, true).export('/home/yves/Desktop/evosynth_export.csv')
 
 	end
 end

@@ -22,7 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/output/logger'
-require 'evosynth/output/console_writer'
-require 'evosynth/output/exporter'
-require 'evosynth/output/factory'
+require 'evosynth/output/exporter/gnuplot_exporter'
+require 'evosynth/output/exporter/gruff_exporter'
+require 'evosynth/output/exporter/csv_exporter'

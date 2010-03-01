@@ -28,30 +28,34 @@ require 'observer'
 module EvoSynth
 	module Output
 
-		def Output.draw_with_gruff(logger, title, filename)
-			require 'gruff'
+		class CSVExporter
 
-			x, ys = [], []
-			data_sets = 0
-			logger.data.each_pair do |key, value|
-				data_sets = value.size if value.size > data_sets
-				x << key
-				value.each_with_index do |y, index|
-					ys[index] = [] if ys[index].nil?
-					ys[index] << y
+			def initialize(logger, write_header = false, separator = ',')
+				@logger = logger
+				@write_header = write_header
+				@separator = separator
+			end
+
+			def export(filename)
+				# Note: I see no advantage in using the 'csv' library for this
+
+				File.open(filename,  "w+") do |file|
+					if @write_header
+						file.write("counter")
+						file.write(@separator) unless @logger.column_names.nil?
+						file.write(@logger.column_names.join(@separator))
+						file.write("\n")
+					end
+
+					@logger.data.each_key do |key|
+						file.write(key)
+						file.write(@separator) unless @logger.data[key].nil?
+						file.write(@logger.data[key].join(@separator))
+						file.write("\n")
+					end
 				end
 			end
 
-			g = Gruff::Line.new
-			g.title = title
-
-			data_sets.times { |set|	g.data(logger.column_names[set], ys[set]) }
-
-			labels = {}
-			x.each_with_index { |gen, index| labels[index] = "#{gen}"}
-			g.labels = labels
-
-			g.write(filename)
 		end
 
 	end

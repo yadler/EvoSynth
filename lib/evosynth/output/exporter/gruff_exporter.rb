@@ -28,35 +28,37 @@ require 'observer'
 module EvoSynth
 	module Output
 
-		def Output.draw_with_gnuplot(logger, title)
-			require 'gnuplot'
+		class GruffExporter
 
-			Gnuplot.open do |gp|
-				Gnuplot::Plot.new( gp ) do |plot|
+			def initialize(logger)
+				require 'gruff'
+				@logger = logger
+			end
 
-					plot.title  title
-#					plot.ylabel "fitness"
-#					plot.xlabel "generation"
-
-					x, ys = [], []
-					data_sets = 0
-					logger.data.each_pair do |key, value|
-						data_sets = value.size if value.size > data_sets
-						x << key						
-						value.each_with_index do |y, index|
-							ys[index] = [] if ys[index].nil?
-							ys[index] << y
-						end
-					end
-
-					data_sets.times do |set|
-						plot.data << Gnuplot::DataSet.new( [x, ys[set]] ) do |ds|
-							ds.with = "lines"
-							ds.title = logger.column_names[set]
-						end
+			def export(title, filename)
+				x, ys = [], []
+				data_sets = 0
+				@logger.data.each_pair do |key, value|
+					data_sets = value.size if value.size > data_sets
+					x << key
+					value.each_with_index do |y, index|
+						ys[index] = [] if ys[index].nil?
+						ys[index] << y
 					end
 				end
+
+				g = Gruff::Line.new
+				g.title = title
+
+				data_sets.times { |set|	g.data(@logger.column_names[set], ys[set]) }
+
+				labels = {}
+				x.each_with_index { |gen, index| labels[index] = "#{gen}"}
+				g.labels = labels
+
+				g.write(filename)
 			end
+
 		end
 
 	end
