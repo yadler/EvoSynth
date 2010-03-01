@@ -32,7 +32,7 @@ module Examples
 		VALUE_BITS = 16
 		DIMENSIONS = 6
 		POP_SIZE = 25
-		GENERATIONS = 100
+		GENERATIONS = 1000
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
 		class ExporterEvaluator < EvoSynth::Evaluator
@@ -59,22 +59,22 @@ module Examples
 			:evaluator			=> ExporterEvaluator.new
 		)
 
-		profile.evaluator.reset_counters
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(10,
-			"gen" => ->{ algorithm.generations_computed },
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		EvoSynth::Evolvers.add_elistism(evolver)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(10,
+			"gen" => ->{ evolver.generations_computed },
 			"best" => ->{ profile.population.best.fitness },
 			"worst" => ->{ profile.population.worst.fitness }
 		))
 
 		plot_logger = EvoSynth::Output::Logger.new(10, true,
 			"best fitness" => ->{ profile.population.best.fitness },
-#			"foo" => ->{ algorithm.generations_computed },
-#			"bar" => ->{ 100 - algorithm.generations_computed },
+#			"foo" => ->{ evolver.generations_computed },
+#			"bar" => ->{ 100 - evolver.generations_computed },
 			"worst fitness" => ->{ profile.population.worst.fitness }
 		)
-		algorithm.add_observer(plot_logger)
-		algorithm.run_until_generations_reached(GENERATIONS)
+		evolver.add_observer(plot_logger)
+		evolver.run_until_generations_reached(GENERATIONS)
 
 
 		puts "\nexport to gnuplot..."

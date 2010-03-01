@@ -162,7 +162,7 @@ module Examples
 		end
 
 
-		def Ants.algorithm_profile(tsp, pheromon)
+		def Ants.evolver_profile(tsp, pheromon)
 			ant_mutation = Ants::SimpleAntMutation.new(tsp, pheromon, 1, 0.2)
 
 			population = EvoSynth::Population.new(10) do
@@ -188,7 +188,7 @@ module Examples
 
 		PHEROMON = Ants::Pheromon.new(tsp.size)
 
-		class EvoSynth::Evolvers::ElitismGeneticAlgorithm
+		class EvoSynth::Evolvers::GeneticAlgorithm
 			alias :ant_next_generation :next_generation
 
 			def next_generation
@@ -197,7 +197,7 @@ module Examples
 			end
 		end
 
-		profile = Ants.algorithm_profile(tsp, PHEROMON)
+		profile = Ants.evolver_profile(tsp, PHEROMON)
 
 		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 		optimal = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new(opt_tour))
@@ -206,15 +206,16 @@ module Examples
 
 		puts "Best Individual before evolution: #{profile.population.best}"
 
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(25,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		EvoSynth::Evolvers.add_elistism(evolver)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		result = algorithm.run_until_generations_reached(1000)
-		puts algorithm
+		result = evolver.run_until_generations_reached(1000)
+		puts evolver
 
 		puts "Best Individual after evolution:  #{result.best}"
 		puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size

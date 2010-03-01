@@ -25,22 +25,26 @@
 module EvoSynth
 	module Evolvers
 
-		class ElitismGeneticAlgorithm < EvoSynth::Evolvers::GeneticAlgorithm
-			alias :original_next_generation :next_generation
+		# this function add elistism to a evolver using instance_eval
 
-			def next_generation
-				best_individual = @population.best
+		def Evolvers.add_elistism(evolver)
+			evolver.instance_eval(%q{
+				alias :original_next_generation :next_generation
+				alias :original_to_s :to_s
 
-				original_next_generation
+				def next_generation
+					best_individual = @population.best
 
-				@population.remove(@population.worst)
-				@population.add(best_individual)
-			end
+					original_next_generation
 
-			def to_s
-				"elitism genetic algoritm <mutation: #{@mutation}, selection: #{@selection}, recombination: #{@recombination}>"
-			end
+					@population.remove(@population.worst)
+					@population.add(best_individual)
+				end
 
+				def to_s
+					"<< elitism >> " + original_to_s
+				end
+			})
 		end
 
 	end

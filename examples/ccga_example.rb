@@ -38,21 +38,6 @@ module Examples
 			EvoSynth::Problems::FloatBenchmarkFuntions.rastgrin(xs)
 		end
 
-		class StandardEvaluator < EvoSynth::Evaluator
-
-			def decode(individual)
-				values = []
-				DIMENSIONS.times { |dim| values << EvoSynth::Decoder.binary_to_real(individual.genome[dim * VALUE_BITS, VALUE_BITS], -5.12, 5.12) }
-				values
-			end
-
-			def calculate_fitness(individual)
-				CCGAExample.fitness_function(decode(individual))
-			end
-
-		end
-
-
 		class CCGABenchmarkEvaluator < EvoSynth::Evaluator
 
 			def initialize(populations)
@@ -124,21 +109,11 @@ module Examples
 		end
 
 		profile = EvoSynth::Profile.new(
-			:population					=> EvoSynth::Population.new(POPULATION_SIZE) { CCGAExample.create_individual(VALUE_BITS*DIMENSIONS, 0) },
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
-			:recombination_probability	=> 0.6,
-			:evaluator					=> StandardEvaluator.new
+			:recombination_probability	=> 0.6
 		)
-
-#		puts "# --- Elistism GA ------------------------------------------------------------------------------ #"
-#		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-#		puts "\nRunning #{algorithm}...\n"
-#		result = algorithm.run_until_generations_reached(GENERATIONS)
-#		puts "\nBest Individual after evolution:  #{result.best}"
-#		puts profile.evaluator
-#		puts
 
 		puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
 
@@ -155,10 +130,10 @@ module Examples
 		end
 	#	puts profile.populations
 
-		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 		profile.evaluator.reset_counters
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts profile.evaluator
 		puts
 
@@ -193,11 +168,11 @@ module Examples
 		end
 	#	puts profile.populations
 
-		algorithm = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
 
 		profile.evaluator.reset_counters
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts profile.evaluator
 		puts
 

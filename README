@@ -14,6 +14,9 @@ License::   MIT (see LICENSE)
 
 === evolution algorithms
 
+meta features:
+* EvoSynth::Evolvers.add_elitism
+
 basic hillclimber:
 * EvoSynth::Evolvers::Hillclimber
 * EvoSynth::Evolvers::PopulationHillclimber
@@ -28,7 +31,6 @@ local search:
 
 genetic algorithms:
 * EvoSynth::Evolvers::GeneticAlgorithm
-* EvoSynth::Evolvers::ElitismGeneticAlgorithm
 * EvoSynth::Evolvers::SteadyStateGA
 
 coevolutionary algorithms:

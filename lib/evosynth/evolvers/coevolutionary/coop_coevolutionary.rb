@@ -33,6 +33,8 @@ module EvoSynth
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
+			DEFAULT_SUB_EVOLVERS_CREATOR = ->(profile) { evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile);
+			                                             EvoSynth::Evolvers.add_elistism(evolver); evolver }
 
 			def initialize(profile)
 				init_profile :populations,
@@ -42,10 +44,10 @@ module EvoSynth
 					:enviromental_selection => DEFAULT_SELECTION,
 				    :recombination => DEFAULT_RECOMBINATION,
 				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
-				    :sub_algorithm => EvoSynth::Evolvers::ElitismGeneticAlgorithm
+				    :sub_evolvers_creator => DEFAULT_SUB_EVOLVERS_CREATOR
 
 				use_profile profile
-				initialize_sub_algorithms(profile)
+				initialize_sub_evolvers(profile)
 				@next_index = 0
 			end
 
@@ -70,19 +72,19 @@ module EvoSynth
 			end
 
 			def next_generation
-				@algorithms[@next_index].next_generation
+				@subevolvers[@next_index].next_generation
 				@next_index = (@next_index + 1) % @populations.size
 			end
 
 			private
 
-			def initialize_sub_algorithms(profile)
+			def initialize_sub_evolvers(profile)
 				sub_profile = profile.clone
 
-				@algorithms = []
+				@subevolvers = []
 				@populations.each do |sub_population|
 					sub_profile.population = sub_population
-					@algorithms << @sub_algorithm.new(sub_profile)
+					@subevolvers << @sub_evolvers_creator.call(sub_profile)
 				end
 			end
 

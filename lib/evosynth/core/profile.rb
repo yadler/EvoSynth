@@ -24,7 +24,7 @@
 
 module EvoSynth
 
-	# This class is used to create and maintain a algorithm profile. (uses metaprogramming)
+	# This class is used to create and maintain a evolver profile. (uses metaprogramming)
 	# TODO: add proper rdoc
 	#
 	# usage:
@@ -63,7 +63,7 @@ module EvoSynth
 		end
 
 		def to_s
-			"algorithm profile <#{@properties.to_s}>"
+			"evolver profile <#{@properties.to_s}>"
 		end
 
 		private

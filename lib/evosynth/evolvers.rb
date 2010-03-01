@@ -23,12 +23,12 @@
 
 
 require 'evosynth/evolvers/evolver'
+require 'evosynth/evolvers/elitism'
 
 require 'evosynth/evolvers/hillclimber/hillclimber'
 require 'evosynth/evolvers/hillclimber/population_hillclimber'
 
 require 'evosynth/evolvers/genetic_algortihms/genetic_algorithm'
-require 'evosynth/evolvers/genetic_algortihms/elitism_genetic_algorithm'
 require 'evosynth/evolvers/genetic_algortihms/steady_state_ga'
 
 require 'evosynth/evolvers/evolution_strategies/adaptive_es'

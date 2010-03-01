@@ -56,7 +56,7 @@ module EvoSynth
 			def use_property(profile, property)
 				accessor_symbol = "#{property.id2name}=".to_sym
 				value = profile.send(property.to_sym) rescue value = nil
-				raise "algorithm profile is missing '#{property.id2name}' field" if value.nil?
+				raise "evolver profile is missing '#{property.id2name}' field" if value.nil?
 				self.send(accessor_symbol, value)
 			end
 

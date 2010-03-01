@@ -52,27 +52,28 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		)
 
-		algorithm = EvoSynth::Evolvers::Hillclimber.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(2500,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(2500,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until { profile.evaluator.called < MAX_EVALUATIONS }
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
 		puts "\nIndividual after evolution:  #{profile.individual}"
 
 		profile.evaluator.reset_counters
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(100,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		EvoSynth::Evolvers.add_elistism(evolver)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(100,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until { profile.evaluator.called < MAX_EVALUATIONS }
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

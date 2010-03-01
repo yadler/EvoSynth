@@ -28,11 +28,11 @@ module EvoSynth
 		# Customizable logger
 		#
 		#	logger = EvoSynth::Output::Logger.new(10, true,
-		#		"gen" => ->{ algorithm.generations_computed },
+		#		"gen" => ->{ evolver.generations_computed },
 		#		"best" => ->{ profile.population.best.fitness },
 		#		"worst" => ->{ profile.population.worst.fitness }
 		#	)
-		#	algorithm.add_observer(logger)
+		#	evolver.add_observer(logger)
 
 		class Logger
 			include Observable

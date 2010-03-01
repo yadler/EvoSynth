@@ -43,13 +43,13 @@ module Examples
 			end
 		end
 
-		def EsExample.create_individual(genome_size, index)
+		def EsExample.create_individual(genome_size)
 			individual = EvoSynth::MinimizingIndividual.new
 			individual.genome = EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand * 10.24 - 5.12 }
 			individual
 		end
 
-		base_population = EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
+		base_population = EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS) }
 		profile = EvoSynth::Profile.new(
 			:modification_frequency => 10,
 			:evaluator				=> BenchmarkEvaluator.new
@@ -57,34 +57,34 @@ module Examples
 
 		profile.evaluator.reset_counters
 		profile.population = base_population.deep_clone
-		algorithm = EvoSynth::Evolvers::AdaptiveES.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
-			"sigma"			=> ->{ algorithm.sigma },
-			"success"	    => ->{ algorithm.success }
+		evolver = EvoSynth::Evolvers::AdaptiveES.new(profile)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness },
+			"sigma"			=> ->{ evolver.sigma },
+			"success"	    => ->{ evolver.success }
 		))
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts "", profile.evaluator
 		puts
 		puts "Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
 		puts
 
 		profile.population = base_population.deep_clone
-		algorithm = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
-			"sigma"			=> ->{ algorithm.sigma },
-			"success"	    => ->{ algorithm.success }
+		evolver = EvoSynth::Evolvers::SelfAdaptiveES.new(profile)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness },
+			"sigma"			=> ->{ evolver.sigma },
+			"success"	    => ->{ evolver.success }
 		))
 
 		profile.evaluator.reset_counters
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts "", profile.evaluator
 		puts
 		puts "Self-Adaptive ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"
@@ -92,18 +92,18 @@ module Examples
 
 		profile.population = base_population.deep_clone
 		profile.tau = 1 / Math.sqrt(DIMENSIONS)
-		algorithm = EvoSynth::Evolvers::DerandomizedES.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness },
-			"sigma"			=> ->{ algorithm.sigma },
-			"s"				=> ->{ algorithm.s.inspect }
+		evolver = EvoSynth::Evolvers::DerandomizedES.new(profile)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness },
+			"sigma"			=> ->{ evolver.sigma },
+			"s"				=> ->{ evolver.s.inspect }
 		))
 
 		profile.evaluator.reset_counters
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts "", profile.evaluator
 		puts
 		puts "Derandomized ES: fitness = #{profile.evaluator.calculate_fitness(result.best)}"

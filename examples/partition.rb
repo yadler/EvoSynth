@@ -156,13 +156,14 @@ module Examples
 		)
 
 		profile.population = base_population.deep_clone
-		puts "running ElitismGeneticAlgorithm..."
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations" => ->{ algorithm.generations_computed },
-			"fitness"     => ->{ algorithm.best_solution.fitness },
-			"best"		  => ->{ algorithm.best_solution.to_s }
+		puts "running GeneticAlgorithm with elitism..."
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		EvoSynth::Evolvers.add_elistism(evolver)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
+			"generations" => ->{ evolver.generations_computed },
+			"fitness"     => ->{ evolver.best_solution.fitness },
+			"best"		  => ->{ evolver.best_solution.to_s }
 		))
-		algorithm.run_until_generations_reached(GENERATIONS)
+		evolver.run_until_generations_reached(GENERATIONS)
 	end
 end

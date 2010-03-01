@@ -98,9 +98,9 @@ module Examples
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)
 
-		algorithm = EvoSynth::Evolvers::Hillclimber.new(profile)
-		puts "Running #{algorithm}...\n\n"
-		result = algorithm.run_until_generations_reached(GENERATIONS)
+		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		puts "Running #{evolver}...\n\n"
+		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts "result: #{result}"
 	end
 end

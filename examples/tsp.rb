@@ -61,15 +61,16 @@ module Examples
 		puts "read testdata/ant/bays29.tsp - problem contains #{tsp.size} cities...\n"
 		puts "Optimal Individual for this problem: #{optimal_tour}"
 
-		algorithm = EvoSynth::Evolvers::ElitismGeneticAlgorithm.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(25,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		EvoSynth::Evolvers.add_elistism(evolver)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		puts "\nRunning #{algorithm}...\n"
-		result = algorithm.run_until_generations_reached(200)
+		puts "\nRunning #{evolver}...\n"
+		result = evolver.run_until_generations_reached(200)
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

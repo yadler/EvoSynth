@@ -55,11 +55,11 @@ module Examples
 			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		def LocalSearch.print_acceptance_state(algorithm)
-			puts "\nAcceptance:" unless algorithm.acceptance.instance_variables.empty?
-			algorithm.acceptance.instance_variables.each do |var|
+		def LocalSearch.print_acceptance_state(evolver)
+			puts "\nAcceptance:" unless evolver.acceptance.instance_variables.empty?
+			evolver.acceptance.instance_variables.each do |var|
 				is_accessor = (var.to_s.gsub("@", "") + "=").to_sym
-				puts "\t#{var} = #{algorithm.acceptance.instance_variable_get(var)}" if algorithm.acceptance.respond_to?(is_accessor)
+				puts "\t#{var} = #{evolver.acceptance.instance_variable_get(var)}" if evolver.acceptance.respond_to?(is_accessor)
 			end
 			puts
 		end
@@ -68,19 +68,19 @@ module Examples
 			puts "--- Local Search with #{profile.acceptance.to_s} ---\n"
 
 			profile.individual = individual.deep_clone
-			algorithm = EvoSynth::Evolvers::LocalSearch.new(profile)
-			LocalSearch.print_acceptance_state(algorithm)
+			evolver = EvoSynth::Evolvers::LocalSearch.new(profile)
+			LocalSearch.print_acceptance_state(evolver)
 
-			algorithm.add_observer(EvoSynth::Output.create_console_logger(500,
-				"generations" => ->{ algorithm.generations_computed },
-				"fitness"     => ->{ algorithm.best_solution.fitness },
-				"temperature" => ->{ algorithm.acceptance.temperature },
-				"alpha"       => ->{ algorithm.acceptance.alpha },
-				"delta"       => ->{ algorithm.acceptance.delta }
+			evolver.add_observer(EvoSynth::Output.create_console_logger(500,
+				"generations" => ->{ evolver.generations_computed },
+				"fitness"     => ->{ evolver.best_solution.fitness },
+				"temperature" => ->{ evolver.acceptance.temperature },
+				"alpha"       => ->{ evolver.acceptance.alpha },
+				"delta"       => ->{ evolver.acceptance.delta }
 			))
 
-			result = algorithm.run_until_generations_reached(GENERATIONS)
-			LocalSearch.print_acceptance_state(algorithm)
+			result = evolver.run_until_generations_reached(GENERATIONS)
+			LocalSearch.print_acceptance_state(evolver)
 
 			puts "\n-> fitness after #{GENERATIONS} generations: #{profile.evaluator.calculate_fitness(result)}\n\n"
 		end

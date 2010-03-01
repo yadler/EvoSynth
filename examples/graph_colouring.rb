@@ -112,14 +112,14 @@ module Examples
 			:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
 		)
 
-		algorithm = EvoSynth::Evolvers::SteadyStateGA.new(profile)
-		algorithm.add_observer(EvoSynth::Output.create_console_logger(500,
-			"generations"	=> ->{ algorithm.generations_computed },
-			"bestfitness"   => ->{ algorithm.best_solution.fitness },
-			"worstfitness"  => ->{ algorithm.worst_solution.fitness }
+		evolver = EvoSynth::Evolvers::SteadyStateGA.new(profile)
+		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
+			"generations"	=> ->{ evolver.generations_computed },
+			"bestfitness"   => ->{ evolver.best_solution.fitness },
+			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		algorithm.run_until { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
+		evolver.run_until { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 		puts "", profile.population.best
 	end
 end
