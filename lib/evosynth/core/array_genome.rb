@@ -30,6 +30,8 @@ module EvoSynth
 
 	class ArrayGenome < Array
 
+		# set the changed flag of the genome
+
 		def changed=(value)
 			@changed = value
 		end
@@ -45,6 +47,8 @@ module EvoSynth
 		def to_s
 			self * ", "
 		end
+
+		# returns a clone
 
 		def clone
 			my_clone = super

@@ -29,16 +29,38 @@ module EvoSynth
 	class MinimizingIndividual
 		include Individual
 
+		#	:call-seq:
+		#		MinimizingIndividual.new -> MinimizingIndividual
+		#		MinimizingIndividual.new(genome) -> MinimizingIndividual (with given genome)
+		#
+		# Returns a new MinimizingIndividual. In the first form, the genome is nil. In the second it
+		# creates a MinimizingIndividual with the given genome.
+		#
+		#     EvoSynth::MinimizingIndividual.new
+		#     EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(10) { EvoSynth.rand_bool } )
+
 		def initialize(genome = nil)
 			@genome = genome
 			@fitness = Float::MAX
 		end
 
-		# compares two fitness values for minimizing problems
+		#	:call-seq:
+		#		compare_fitness_values(one, two) -> Number
+		#
+		# Compares two fitness values for minimizing problems. It uses the <=> of the given
+		# fitness values and inverts the result.
 
 		def compare_fitness_values(one, two)
 			-1 * (one <=> two)
 		end
+
+		#	:call-seq:
+		#		to_s -> string
+		#
+		# Returns description of this individual
+		#
+		#     i = EvoSynth::MinimizingIndividual.new
+		#     i.to_s                                     #=> "minimizing individual <fitness = 1.79769313486232e+308, genome = [nil]>"
 
 		def to_s
 			"minimizing individual <fitness = #{fitness}, genome = [#{genome}]>"

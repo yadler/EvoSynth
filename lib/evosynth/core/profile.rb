@@ -25,7 +25,17 @@
 module EvoSynth
 	module Core
 
-		# This class is used to create and maintain a algorithm profile
+		# This class is used to create and maintain a algorithm profile. (uses metaprogramming)
+		# TODO: add proper rdoc
+		#
+		# usage:
+		#
+		#		profile = EvoSynth::Profile.new(
+		#			:individual			=> MaxOnes.create_individual,
+		#			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
+		#			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
+		#			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		#		)
 
 		class Profile
 

@@ -33,18 +33,25 @@ module EvoSynth
 
 		attr_accessor :genome
 
-		def fitness
-			@fitness
-		end
+		# Returns the fitness of this individual
+
+		attr_reader :fitness
+
+		# Sets the fitness value of this individual, also sets genome.changed to true.
 
 		def fitness=(value)
 			@fitness = value
 			@genome.changed = false
 		end
 
+		# returns true, if this individual (most of the time its genome) has changed. otherwise it
+		# will return false.
+
 		def changed?
 			@genome.changed?
 		end
+
+		# clones a individual and its genome (deep copy)
 
 		def deep_clone
 			my_clone = self.clone
@@ -62,13 +69,19 @@ module EvoSynth
 			compare_fitness_values(fitness, another.fitness)
 		end
 
+		# Should be implemented by Classes that mix-in the Individual module
+
 		def compare_fitness_values(one, two)
 			raise NotImplementedError, "please implement compare_fitness_values!"
 		end
 
+		# Returns wether this Individual needs to be minimized
+
 		def minimizes?
 			compare_fitness_values(1,0) < 0
 		end
+
+		# Returns wether this Individual needs to be maximized
 
 		def maximizes?
 			compare_fitness_values(1,0) > 0

@@ -24,12 +24,29 @@
 
 module EvoSynth
 
+	# Baseclass for all fitness evaluators. It also counts how often it was used to calculate
+	# the fitness of a given individual and how often it actually calculated the fitness.
+	#
+	# For simple problems you just need to overwrite calculate_fitness(individual)
+
 	class Evaluator
-		attr_reader :called, :calculated
+
+		# How often did the Evaluator return a fitness value
+
+		attr_reader :called
+
+		# How often did the Evaluator actually calculate a fitness value
+
+		attr_reader :calculated
+
+		# Returns a new Evaluator object
 
 		def initialize
 			reset_counters
 		end
+
+		# Calculated the fitness of the given individual if the individual has changed,
+		# otherwise it just returns the cached fitness of the individual
 
 		def calculate_and_set_fitness(individual)
 			@called += 1
@@ -42,14 +59,20 @@ module EvoSynth
 			individual.fitness
 		end
 
+		# This function is actually used to calculate the fitness of a individual. It's the "fitness function".
+
 		def calculate_fitness(individual)
 			raise NotImplementedError, "please implement calculate_fitness!"
 		end
+
+		# Reset the called/calculated counters of the Evaluator
 
 		def reset_counters
 			@called = 0
 			@calculated = 0
 		end
+
+		# Returns a human readable reprasentation of the Evaluator
 
 		def to_s
 			"Evaluator <called: #{@called}, calculated: #{@calculated}>"
