@@ -22,15 +22,68 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'matrix'
+
+
 module EvoSynth
-
-	# This module contains some predefined problems. Most of them are widely used to benchmark or demonstrate
-	# Evolutionary Computation.
-
 	module Problems
+
+		class TSP < EvoSynth::Evaluator
+			attr_reader :matrix
+
+			# TODO: refactor and generalize this class, externalize parsing of problem
+			# definition file
+			# 
+			# needs a .tsp file
+
+			def initialize(filename, distance_weight = 2)
+				super()
+				@distance_weight = distance_weight
+				@matrix = read_matrix_from_file(filename)
+			end
+
+			def calculate_fitness(individual)
+				fitness = 0.0
+
+				individual.genome.each_with_index do |node, index|
+					index_two = (index + 1) % individual.genome.size
+					fitness += distance(node, individual.genome[index_two])
+				end
+
+				fitness
+			end
+
+			def distance(from, to)
+				@matrix[from, to]
+			end
+
+			def size
+				@matrix.column_size
+			end
+
+			def to_s
+				@matrix.to_s
+			end
+
+			private
+
+			def read_matrix_from_file(filename)
+				nodes = []
+
+				File.open(filename) do |file|
+					file.each_line do |line|
+						break if line =~ /DISPLAY_DATA_SECTION/
+						next if line !~ /^\s*\d+/
+						line =~ /(\d+)\s*(\d+.\d+)\s*(\d+.\d+)/
+
+						nodes << line.split.map { |node| node.to_f }
+					end
+				end
+
+				Matrix.rows(nodes)
+			end
+
+		end
+
 	end
 end
-
-require 'evosynth/problems/float_benchmark_functions'
-require 'evosynth/problems/binary_benchmark_functions'
-require 'evosynth/problems/tsp'

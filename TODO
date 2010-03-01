@@ -17,7 +17,7 @@ Features:
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		-> Gentische Programmierung (Ruby programme wären schön)
 
-	- CCGA, TSP und Ant example überarbeiten und eventuell toolklassen extrahieren
+	- CCGA und Ant example überarbeiten und eventuell toolklassen extrahieren
 
 	- meta-evolver:
 		=> weak und strong elistism (elitären GA überarbeiten)
