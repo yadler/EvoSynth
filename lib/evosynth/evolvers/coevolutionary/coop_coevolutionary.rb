@@ -34,7 +34,7 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 			DEFAULT_SUB_EVOLVERS_CREATOR = ->(profile) { evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile);
-			                                             EvoSynth::Evolvers.add_elistism(evolver); evolver }
+			                                             EvoSynth::Evolvers.add_weak_elistism(evolver); evolver }
 
 			def initialize(profile)
 				init_profile :populations,

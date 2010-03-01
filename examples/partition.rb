@@ -158,7 +158,7 @@ module Examples
 		profile.population = base_population.deep_clone
 		puts "running GeneticAlgorithm with elitism..."
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
-		EvoSynth::Evolvers.add_elistism(evolver)
+		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 			"generations" => ->{ evolver.generations_computed },
 			"fitness"     => ->{ evolver.best_solution.fitness },

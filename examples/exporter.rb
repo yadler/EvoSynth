@@ -60,7 +60,7 @@ module Examples
 		)
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
-		EvoSynth::Evolvers.add_elistism(evolver)
+		EvoSynth::Evolvers.add_strong_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(10,
 			"gen" => ->{ evolver.generations_computed },
 			"best" => ->{ profile.population.best.fitness },

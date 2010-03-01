@@ -30,9 +30,6 @@ Features:
 		=> Ant mutation fixen und Ant example überarbeiten
 		=> wenigstens ein Beispiel zur Mehrzieloptimierung
 
-	- meta-evolver:
-		=> weak und strong elistism (elitären GA überarbeiten)
-
 	- Mehrpopulationsprobleme:
 		=> CCGA example überarbeiten
 		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden

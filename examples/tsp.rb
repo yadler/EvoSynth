@@ -62,7 +62,7 @@ module Examples
 		puts "Optimal Individual for this problem: #{optimal_tour}"
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
-		EvoSynth::Evolvers.add_elistism(evolver)
+		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"	=> ->{ evolver.generations_computed },
 			"bestfitness"   => ->{ evolver.best_solution.fitness },

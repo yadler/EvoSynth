@@ -15,7 +15,8 @@ License::   MIT (see LICENSE)
 === evolution algorithms
 
 meta features:
-* EvoSynth::Evolvers.add_elitism
+* EvoSynth::Evolvers.add_weak_elitism
+* EvoSynth::Evolvers.add_strong_elitism
 
 basic hillclimber:
 * EvoSynth::Evolvers::Hillclimber

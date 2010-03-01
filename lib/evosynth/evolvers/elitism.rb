@@ -25,9 +25,11 @@
 module EvoSynth
 	module Evolvers
 
-		# this function add elistism to a evolver using instance_eval
+		# this function adds weak elistism to a evolver using instance_eval
+		#
+		# weak elitism: if fitness of childrens decreased, replace worst individual with best parent
 
-		def Evolvers.add_elistism(evolver)
+		def Evolvers.add_weak_elistism(evolver)
 			evolver.instance_eval(%q{
 				alias :original_next_generation :next_generation
 				alias :original_to_s :to_s
@@ -37,15 +39,63 @@ module EvoSynth
 
 					original_next_generation
 
-					@population.remove(@population.worst)
-					@population.add(best_individual)
+					if @population.best < best_individual
+						@population.remove(@population.worst)
+						@population.add(best_individual)
+					end
 				end
 
 				def to_s
-					"<< elitism >> " + original_to_s
+					"<< weak elitism >> " + original_to_s
 				end
 			})
 		end
 
+		# this function adds weak elistism to a evolver using instance_eval
+		#
+		# strong elitism: copy best n parents into offspring population (replace worst n childrens)
+		# 
+		# TODO: add some elegance to this code ;-)
+
+		def Evolvers.add_strong_elistism(evolver, n = 1)
+			if (n == 1)
+				evolver.instance_eval("
+					alias :original_next_generation :next_generation
+					alias :original_to_s :to_s
+
+					def next_generation
+						best = @population.best
+
+						original_next_generation
+
+						@population.remove(@population.worst)
+						@population.add(best)
+					end
+
+					def to_s
+						'<< strong elitism >> ' + original_to_s
+					end
+				")
+			else
+				evolver.instance_eval("
+					alias :original_next_generation :next_generation
+					alias :original_to_s :to_s
+
+					def next_generation
+						best = @population.best(#{n})
+
+						original_next_generation
+
+						worst = @population.worst(#{n})
+						worst.each { |individual| @population.remove(individual) }
+						best.each { |individual| @population.add(individual) }
+					end
+
+					def to_s
+						'<< strong elitism >> ' + original_to_s
+					end
+				")
+			end
+		end
 	end
 end
