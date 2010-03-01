@@ -1,3 +1,8 @@
+============================== generelles ======================================
+
+			!!! Jeden morgen ein paar sachen Dokumentieren !!!
+
+
 mit Prof. Weicker klären:
 
 	- childfactor durch genaue anzahl (lambda) ersetzen oder eher nicht?
@@ -5,46 +10,41 @@ mit Prof. Weicker klären:
 	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
 	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
 
+fehlende oder fehlerhafte Testfälle:
 
-============================== EvoSynth 0.1 ====================================
-
-Features:
-
-	- Jeden morgen ein paar klassen Dokumentieren!
-
-	- Testcase für selbstadaptive gauss mutation überarbeiten
-
-	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-		-> Gentische Programmierung (Ruby programme wären schön)
-
-	- CCGA example überarbeiten
-
-	- Ant mutation fixen und Ant example überarbeiten
-
-	- meta-evolver:
-		=> weak und strong elistism (elitären GA überarbeiten)
-		=> was ist mit hall-of-fame oder ähnlichem?
-
-	- Mehrzieloptimierung?
-		=> wenigstens erstma eins als example
-
-	- Mehrpopulationsdings:
-		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
-		=> was ist da noch sinnvoll? inseln & migration?
-
-	- Logger:
-		=> logger und gnuplot noch schicker machen (output templates)
-
-	- Versuchspläne und Statistiken?!
-
-============================== EvoSynth >0.1 ===================================
-
-Testfälle:
 	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
 	- EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
 	- EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
 	- EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
 	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
+	- EvoSynth::Mutations::SelfAdaptiveGaussMutation
+
+============================== EvoSynth 0.1 ====================================
+
+Features:
+
+	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+		-> Gentische Programmierung (Ruby programme wären schön)
+
+	- Beispiele:
+		=> Ant mutation fixen und Ant example überarbeiten
+		=> wenigstens ein Beispiel zur Mehrzieloptimierung
+
+	- meta-evolver:
+		=> weak und strong elistism (elitären GA überarbeiten)
+
+	- Mehrpopulationsprobleme:
+		=> CCGA example überarbeiten
+		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
+
+	- Logger (output templates):
+		=> logger und gnuplot noch schicker machen
+		=> html, svg outputs?
+		=> CSV output!
+
+	- Versuchspläne und Statistiken?!
+
+============================== EvoSynth >0.1 ===================================
 
 Features:
 
@@ -61,6 +61,11 @@ Features:
 		=> Schwärme
 		=> neuronale Netze
 
+	- Mehrzieloptimierung?
+
+	- meta-evolver:
+		=> was ist mit hall-of-fame oder ähnlichem?
+
 	- BinaryGenome mittels inline C optimieren
 
 	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
@@ -74,6 +79,9 @@ Features:
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 		=> mutationen, selektionen und co
 		=> diversität und co
+
+	- Mehrpopulationsprobleme:
+		=> was ist da noch sinnvoll? inseln & migration?
 
 	- Logger:
 		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
