@@ -50,7 +50,7 @@ module Examples
 		end
 
 		base_population = EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS, 0) }
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:modification_frequency => 10,
 			:evaluator				=> BenchmarkEvaluator.new
 		)

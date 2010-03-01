@@ -23,61 +23,59 @@
 
 
 module EvoSynth
-	module Core
 
-		# This class is used to create and maintain a algorithm profile. (uses metaprogramming)
-		# TODO: add proper rdoc
-		#
-		# usage:
-		#
-		#		profile = EvoSynth::Profile.new(
-		#			:individual			=> MaxOnes.create_individual,
-		#			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
-		#			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
-		#			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-		#		)
+	# This class is used to create and maintain a algorithm profile. (uses metaprogramming)
+	# TODO: add proper rdoc
+	#
+	# usage:
+	#
+	#		profile = EvoSynth::Profile.new(
+	#			:individual			=> MaxOnes.create_individual,
+	#			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
+	#			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
+	#			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+	#		)
 
-		class Profile
+	class Profile
 
-			def initialize(*properties)
-				@properties = {}
+		def initialize(*properties)
+			@properties = {}
 
-				properties.each do |property|
-					if property.is_a?(Symbol)
-						add_symbol(property, nil)
-					elsif property.is_a?(Hash)
-						add_hash(property)
-					else
-						raise ArgumentError, "argument type not supported"
-					end
-				end
-			end
-
-			def method_missing(method_name, *args)
-				if method_name[-1] == "="
-					args = args[0] if args.size == 1
-					add_symbol(method_name[0..method_name.size-2].to_sym, args)
+			properties.each do |property|
+				if property.is_a?(Symbol)
+					add_symbol(property, nil)
+				elsif property.is_a?(Hash)
+					add_hash(property)
 				else
-					super(*args) unless @properties.has_key?(method_name)
-					@properties[method_name]
+					raise ArgumentError, "argument type not supported"
 				end
 			end
+		end
 
-			def to_s
-				"algorithm profile <#{@properties.to_s}>"
+		def method_missing(method_name, *args)
+			if method_name[-1] == "="
+				args = args[0] if args.size == 1
+				add_symbol(method_name[0..method_name.size-2].to_sym, args)
+			else
+				super(*args) unless @properties.has_key?(method_name)
+				@properties[method_name]
 			end
+		end
 
-			private
+		def to_s
+			"algorithm profile <#{@properties.to_s}>"
+		end
 
-			def add_symbol(symbol, value)
-				@properties[symbol] = value
-			end
+		private
 
-			def add_hash(hash)
-				hash.each_pair { |key, default_value| @properties[key] = default_value }
-			end
+		def add_symbol(symbol, value)
+			@properties[symbol] = value
+		end
 
+		def add_hash(hash)
+			hash.each_pair { |key, default_value| @properties[key] = default_value }
 		end
 
 	end
+
 end

@@ -104,7 +104,7 @@ module Examples
 
 		graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
 			:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,

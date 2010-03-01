@@ -51,7 +51,7 @@ module Examples
 			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
 		end
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),

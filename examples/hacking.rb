@@ -49,7 +49,7 @@ module Examples
 
 		FLIP_CHAR = lambda { ALPHABET[EvoSynth.rand(ALPHABET.size)] }
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:individual			=> EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { ALPHABET[EvoSynth.rand(ALPHABET.size)] }),
 			:evaluator			=> Hacking::HackingEvaluator.new,
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)

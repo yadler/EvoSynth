@@ -45,7 +45,7 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:individual			=> MaxOnes.create_individual,
 			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
 			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,

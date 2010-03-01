@@ -113,7 +113,7 @@ module Examples
 		matrix = TSP::ProblemMatrix.new('testdata/tsp/bays29.tsp')
 		optimal_tour = TSP.optimal_tour(matrix)
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:individual			=> TSP.create_individual(matrix),
 			:mutation			=> EvoSynth::MetaOperators::ProportionalCombinedOperator.new(EvoSynth::Mutations::InversionMutation.new,
 																							 EvoSynth::Mutations::ShiftingMutation.new,

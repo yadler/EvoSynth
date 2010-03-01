@@ -85,7 +85,7 @@ module Examples
 			puts "\n-> fitness after #{GENERATIONS} generations: #{profile.evaluator.calculate_fitness(result)}\n\n"
 		end
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:evaluator			=> LocalSearchEvaluator.new
 		)

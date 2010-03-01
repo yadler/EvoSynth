@@ -148,7 +148,7 @@ module Examples
 		problem = Partitionproblem::Testdata.gen_layer_set
 		base_population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-		profile = EvoSynth::Core::Profile.new(
+		profile = EvoSynth::Profile.new(
 			:mutation			=> PartitionMutation.new,
 			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 			:recombination		=> EvoSynth::Recombinations::Identity.new,

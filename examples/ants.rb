@@ -232,7 +232,7 @@ module Examples
 			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
 			combined_mutation.add(ant_mutation, 0.75)
 
-			EvoSynth::Core::Profile.new(
+			EvoSynth::Profile.new(
 				:mutation			=> combined_mutation,
 				:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 				:population			=> population,

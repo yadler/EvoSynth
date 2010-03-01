@@ -32,7 +32,7 @@ class ProfileTest < Test::Unit::TestCase
 	context "when initialized with a symbol" do
 
 		should "work as expected with simple stuff" do
-			profile = EvoSynth::Core::Profile.new
+			profile = EvoSynth::Profile.new
 			assert_raise(ArgumentError) { (profile.foo) }
 			assert_raise(ArgumentError) { (profile.bar) }
 			profile.foo= "foo"
@@ -42,7 +42,7 @@ class ProfileTest < Test::Unit::TestCase
 		end
 
 		should "work as expected with more complex stuff" do
-			profile = EvoSynth::Core::Profile.new
+			profile = EvoSynth::Profile.new
 			assert_raise(ArgumentError) { (profile.foo) }
 			assert_raise(ArgumentError) { (profile.bar) }
 			profile.foo= [1,2,3,4,5]
@@ -53,7 +53,7 @@ class ProfileTest < Test::Unit::TestCase
 		end
 
 		should "work with defaults" do
-			profile = EvoSynth::Core::Profile.new(:foo, :bar => "bar", :baz => "baz")
+			profile = EvoSynth::Profile.new(:foo, :bar => "bar", :baz => "baz")
 			assert_nil(profile.foo)
 			assert_equal("bar", profile.bar)
 			assert_equal("baz", profile.baz)
