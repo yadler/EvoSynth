@@ -1,14 +1,16 @@
+mit Prof. Weicker klären:
+
+	- childfactor durch genaue anzahl (lambda) ersetzen oder eher nicht?
+		=> childfactor für alle algorithmen! (anzahl kinder blabla)
+	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
+	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
+
+
 ============================== EvoSynth 0.1 ====================================
 
 Features:
 
 	- Jeden morgen ein paar klassen Dokumentieren!
-
-	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
-	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
-
-	- childfactor durch genaue anzahl (lambda) ersetzen oder eher nicht?
-		=> childfactor für alle algorithmen! (anzahl kinder blabla)
 
 	- Testcase für selbstadaptive gauss mutation überarbeiten
 
@@ -22,17 +24,14 @@ Features:
 		=> was ist mit hall-of-fame oder ähnlichem?
 
 	- Mehrzieloptimierung?
+		=> wenigstens erstma eins als example
 
 	- Mehrpopulationsdings:
 		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
 		=> was ist da noch sinnvoll? inseln & migration?
 
 	- Logger:
-		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können
 		=> logger und gnuplot noch schicker machen (output templates)
-
-	- EvoSynth:Util überarbeiten (vielleicht sollte das komplett eliminiert werden)
-		=> MDArray durch matrix ersetzen!
 
 	- Versuchspläne und Statistiken?!
 
@@ -71,6 +70,10 @@ Features:
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 		=> mutationen, selektionen und co
 		=> diversität und co
+
+	- Logger:
+		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
+		das geht aber vielleicht eher in richtung eventsystem
 
 	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
 		=> braucht man das wirklich?

@@ -24,6 +24,7 @@
 
 require 'evosynth'
 require 'set'
+require 'examples/util/mdarray'
 
 
 module Examples
@@ -125,7 +126,7 @@ module Examples
 			end
 
 			def create_matrix(nodes)
-				@matrix = EvoSynth::Util::MDArray.new(nodes.size, nodes.size)
+				@matrix = Examples::Util::MDArray.new(nodes.size, nodes.size)
 				@matrix.each_index { |x,y| @matrix[x,y] = nodes[x][y].to_f }
 			end
 		end
@@ -136,7 +137,7 @@ module Examples
 			def initialize(node_count, evaporation_weight = 0.7)
 				@evaporation_weight = evaporation_weight
 
-				@matrix = EvoSynth::Util::MDArray.new(node_count, node_count)
+				@matrix = Examples::Util::MDArray.new(node_count, node_count)
 				@matrix.each_index { |x, y| @matrix[x, y] = 1.0 }
 			end
 

@@ -24,7 +24,7 @@
 
 require 'evosynth'
 require 'set'
-
+require 'examples/util/mdarray'
 
 # FIXME: refactor me and extract tool classes !
 
@@ -52,7 +52,7 @@ module Examples
 			# reads a graph file
 			def read_file(file_name)
 				@node_count = get_node_count(file_name)
-				@matrix = EvoSynth::Util::MDArray.new(@node_count, @node_count, 0)
+				@matrix = Examples::Util::MDArray.new(@node_count, @node_count, 0)
 
 				File.open(file_name).each_line do |line|
 					next if line !~ /^e/

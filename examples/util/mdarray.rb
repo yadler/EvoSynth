@@ -22,7 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
+module Examples
 
 	module Util
 
