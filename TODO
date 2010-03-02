@@ -23,8 +23,10 @@ fehlende oder fehlerhafte Testfälle:
 
 Features:
 
-	- Mehrpopulationsprobleme:
-		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
+	- CMBCoevolutionary
+		=> braucht nen besseren namen (ProblemSolutionCoevo?)
+		=> ist es gut x-mal eine lösung zu selektieren? oder lieber select(x) ?
+		=> testen testen testen
 
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		-> Gentische Programmierung (Ruby programme wären schön)
@@ -34,6 +36,9 @@ Features:
 		=> wenigstens ein Beispiel zur Mehrzieloptimierung
 
 	- Versuchspläne und Statistiken?!
+
+	- Probleme:
+		=> Evaluator für benchmarkfunktionen schreiben
 
 ============================== EvoSynth >0.1 ===================================
 

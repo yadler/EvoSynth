@@ -38,3 +38,4 @@ require 'evosynth/evolvers/evolution_strategies/derandomized_es'
 require 'evosynth/evolvers/local_search/local_search'
 
 require 'evosynth/evolvers/coevolutionary/coop_coevolutionary'
+require 'evosynth/evolvers/coevolutionary/cmb_coevolutionary'
