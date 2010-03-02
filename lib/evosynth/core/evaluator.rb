@@ -22,14 +22,20 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
 
 	# Baseclass for all fitness evaluators. It also counts how often it was used to calculate
 	# the fitness of a given individual and how often it actually calculated the fitness.
 	#
 	# For simple problems you just need to overwrite calculate_fitness(individual)
+	#
+	# Obervers get notified each time calculate_and_set_fitness(individual) gets called, not on actual calculations
 
 	class Evaluator
+		include Observable
 
 		# How often did the Evaluator return a fitness value
 
@@ -56,6 +62,8 @@ module EvoSynth
 				individual.fitness = calculate_fitness(individual)
 			end
 
+			changed
+			notify_observers self, @called
 			individual.fitness
 		end
 

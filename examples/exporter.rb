@@ -51,12 +51,13 @@ module Examples
 			EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } )
 		end
 
+		evaluator = ExporterEvaluator.new
 		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
 			:population			=> EvoSynth::Population.new(POP_SIZE) { Exporter.create_individual(GENOME_SIZE) },
-			:evaluator			=> ExporterEvaluator.new
+			:evaluator			=> evaluator
 		)
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
@@ -67,15 +68,15 @@ module Examples
 			"worst" => ->{ profile.population.worst.fitness }
 		))
 
-		plot_logger = EvoSynth::Output::Logger.new(10, true,
+		plot_logger = EvoSynth::Output::Logger.new(5, true,
 			"best fitness" => ->{ profile.population.best.fitness },
 #			"foo" => ->{ evolver.generations_computed },
 #			"bar" => ->{ 100 - evolver.generations_computed },
 			"worst fitness" => ->{ profile.population.worst.fitness }
 		)
 		evolver.add_observer(plot_logger)
+#		evaluator.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
-
 		BASEPATH = File.expand_path("~/Desktop/")
 
 		puts "\nexport to gnuplot..."
