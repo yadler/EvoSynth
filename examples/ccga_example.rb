@@ -31,8 +31,8 @@ module Examples
 
 		VALUE_BITS = 16
 		DIMENSIONS = 5
-		MAX_EVALUATIONS = 20000
-		POPULATION_SIZE = 100
+		MAX_EVALUATIONS = 25000
+		POPULATION_SIZE = 25
 
 		def CCGAExample.fitness_function(xs)
 			EvoSynth::Problems::FloatBenchmarkFuntions.rosenbrock(xs)
@@ -104,9 +104,9 @@ module Examples
 		end
 
 		def CCGAExample.run(evolver, profile, evolver_name)
-			profile.evaluator.add_observer(EvoSynth::Output.create_console_logger(1000,
-				"evaluations" => ->{ profile.evaluator.called },
+			evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 				"generations" => ->{ evolver.generations_computed },
+				"evaluations" => ->{ profile.evaluator.called },
 				"fitness"     => ->{ best_genome = [];
 									 evolver.best_solution.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) };
 									 CCGAExample.fitness_function(best_genome)
