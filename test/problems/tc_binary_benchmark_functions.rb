@@ -95,4 +95,32 @@ class BenchmarkFunctionsTest < Test::Unit::TestCase
 			assert_equal 8, EvoSynth::Problems::BinaryBenchmarkFuntions.royal_road(1, bs)
 		end
 	end
+
+	context "the n-peaks function" do
+
+		should "be 1.0 in this case (integer)" do
+			peaks = [[0,0,0,0,0,0,0]]
+			xs = [0,0,0,0,0,0,0]
+			assert_equal 1.0, EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(peaks, xs)
+		end
+
+		should "be 1.0 in this case (boolean)" do
+			peaks = [[false,false,false,false,false,false,false]]
+			xs = [false,false,false,false,false,false,false]
+			assert_equal 1.0, EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(peaks, xs)
+		end
+
+		should "be 0.5 in this case (integer)" do
+			peaks = [[0,1,0,1,0,1,0,1],[1,1,1,1,1,1,0],[1,1,1,1,1,1,0]]
+			xs = [0,0,0,0,0,0,0,0]
+			assert_equal 0.5, EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(peaks, xs)
+		end
+
+		should "be 0.5 in this case (mixed)" do
+			peaks = [[false,1,false,1,false,1,false,1],[1,1,1,1,1,1,false],[1,1,1,1,1,1,false]]
+			xs = [false,false,false,false,false,false,false,false]
+			assert_equal 0.5, EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(peaks, xs)
+		end
+
+	end
 end

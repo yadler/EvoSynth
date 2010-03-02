@@ -53,6 +53,20 @@ module EvoSynth
 				sum
 			end
 
+			# N-Peak problem presented in "Using Problem Generators to Explore the Effects of Epistasis", De Jong et al 1997
+
+			def BinaryBenchmarkFuntions.n_peaks(peaks, xs)
+				max_hamming_dist = xs.size
+
+				peaks.each do |peak|
+					new_dist = 0.0
+					xs.each_with_index { |x, index| new_dist += 1 if x != peak[index] }
+					max_hamming_dist = new_dist if new_dist < max_hamming_dist
+				end
+
+				1.0 / xs.size * (xs.size - max_hamming_dist)
+			end
+
 		end
 	end
 end
