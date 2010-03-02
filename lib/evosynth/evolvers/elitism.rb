@@ -25,6 +25,9 @@
 module EvoSynth
 	module Evolvers
 
+		# FIXME: change these to use best solution or not?
+
+
 		# this function adds weak elistism to a evolver using instance_eval
 		#
 		# weak elitism: if fitness of childrens decreased, replace worst individual with best parent

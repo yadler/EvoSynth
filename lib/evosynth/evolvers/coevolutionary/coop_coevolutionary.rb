@@ -30,6 +30,8 @@ module EvoSynth
 		class CoopCoevolutionary
 			include EvoSynth::Evolvers::Evolver
 
+			attr_reader :subevolvers
+
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
@@ -58,13 +60,13 @@ module EvoSynth
 			def best_solution
 				best = []
 				@populations.each { |pop| best << pop.best }
-				best.to_s
+				best
 			end
 
 			def worst_solution
 				worst = []
 				@populations.each { |pop| worst << pop.worst }
-				worst.to_s
+				worst
 			end
 
 			def return_result
