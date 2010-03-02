@@ -27,6 +27,10 @@ require 'evosynth'
 
 
 module Examples
+
+	# This example is EvoSynth's interpretation of DeJong and Potter's CCGA presented in
+	# "A Cooperative Coevolutionary Approach to Function Optimization" (1994)
+
 	module CCGAExample
 
 		VALUE_BITS = 16
