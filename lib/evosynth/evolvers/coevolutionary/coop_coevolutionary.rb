@@ -32,20 +32,11 @@ module EvoSynth
 
 			attr_reader :subevolvers
 
-			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
-			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
-			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 			DEFAULT_SUB_EVOLVERS_CREATOR = ->(profile) { evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile);
 			                                             EvoSynth::Evolvers.add_weak_elistism(evolver); evolver }
 
 			def initialize(profile)
 				init_profile :populations,
-				    :evaluator,
-				    :mutation,
-				    :parent_selection => DEFAULT_SELECTION,
-					:enviromental_selection => DEFAULT_SELECTION,
-				    :recombination => DEFAULT_RECOMBINATION,
-				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY,
 				    :sub_evolvers_creator => DEFAULT_SUB_EVOLVERS_CREATOR
 
 				use_profile profile
@@ -54,7 +45,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"cooperative coevolutionary algorithm <mutation: #{@mutation}, recombination: #{@recombination}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
+				"cooperative coevolutionary algorithm >"
 			end
 
 			def best_solution
