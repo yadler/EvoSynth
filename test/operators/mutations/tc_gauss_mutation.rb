@@ -31,9 +31,9 @@ require 'test/test_util/test_helper'
 class GaussMutationTest < Test::Unit::TestCase
 
 	RUNS = 10000
-	DELTA = 0.2 # TODO: why the heck is 1.0, 0.0 and -1.0 not as correct as the other values? test with delta == 0.05!
-	VALUE = 4.0
-	MAX_DELTA = 2.5
+	DELTA = 0.2 # TODO: try to lower it to 0.08 => why the heck is 1.0 and -1.0 not as correct as the other values? test with delta == 0.05!
+	VALUE = 8.0
+	MAX_DELTA = 3.5
 
 	context "when run on a float genome = #{VALUE}" do
 		setup do
@@ -62,10 +62,11 @@ class GaussMutationTest < Test::Unit::TestCase
 
 		end
 
-		context "whene executed #{RUNS} times" do
-			should "should be normally distributed" do
-				8.times do |i|
-					value = VALUE - i.to_f
+		context "when executed #{RUNS} times" do
+			16.times do |i|
+				value = VALUE - i.to_f
+				
+				should "should be normally distributed around #{value}" do
 #					puts "testing with #{value}"
 
 					mutation = EvoSynth::Mutations::GaussMutation.new
@@ -92,7 +93,7 @@ class GaussMutationTest < Test::Unit::TestCase
 #							plot.xrange "[-10:10]"
 #
 #							plot.data << Gnuplot::DataSet.new( [x, y] ) do |ds|
-#								ds.with = "lines"
+#								ds.with = "dots"
 #							end
 #						end
 #					end

@@ -50,7 +50,7 @@ module EvoSynth
 		begin
 			x1 = 2.0 * EvoSynth.rand - 1.0
 			x2 = 2.0 * EvoSynth.rand - 1.0
-			w = x1 ** 2 + x2 ** 2;
+			w = x1 ** 2.0 + x2 ** 2.0;
 		end while ( w >= 1.0 )
 
 		w = Math.sqrt( (-2.0 * Math.log( w ) ) / w )
