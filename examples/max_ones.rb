@@ -28,9 +28,9 @@ require 'evosynth'
 module Examples
 	module MaxOnes
 
-		GENOME_SIZE = 25
+		GENOME_SIZE = 50
 		POP_SIZE = 25
-		MAX_EVALUATIONS = 25000
+		MAX_EVALUATIONS = 5000
 
 		# this is just for the sake of demonstration stuff - you could also use
 		# EvoSynth::Problems::BinaryBenchmarkFuntions.count_ones()
@@ -53,7 +53,7 @@ module Examples
 		)
 
 		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(2500,
+		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
 			"generations"	=> ->{ evolver.generations_computed },
 			"bestfitness"   => ->{ evolver.best_solution.fitness },
 			"worstfitness"  => ->{ evolver.worst_solution.fitness }
@@ -66,7 +66,7 @@ module Examples
 		profile.evaluator.reset_counters
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(100,
+		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 			"generations"	=> ->{ evolver.generations_computed },
 			"bestfitness"   => ->{ evolver.best_solution.fitness },
 			"worstfitness"  => ->{ evolver.worst_solution.fitness }

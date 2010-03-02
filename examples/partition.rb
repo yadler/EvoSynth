@@ -144,6 +144,7 @@ module Examples
 
 		POPULATION_SIZE = 20
 		GENERATIONS = 500
+		GOAL = 0.0
 
 		problem = Partitionproblem::Testdata.gen_layer_set
 		base_population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
@@ -159,11 +160,13 @@ module Examples
 		puts "running GeneticAlgorithm with elitism..."
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
+		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations" => ->{ evolver.generations_computed },
 			"fitness"     => ->{ evolver.best_solution.fitness },
 			"best"		  => ->{ evolver.best_solution.to_s }
 		))
-		evolver.run_until_generations_reached(GENERATIONS)
+
+		evolver.run_until { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
+		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution}"
 	end
 end

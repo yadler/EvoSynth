@@ -23,15 +23,15 @@ fehlende oder fehlerhafte Testfälle:
 
 Features:
 
+	- Mehrpopulationsprobleme:
+		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
+
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		-> Gentische Programmierung (Ruby programme wären schön)
 
 	- Beispiele:
 		=> Ant mutation fixen und Ant example überarbeiten
 		=> wenigstens ein Beispiel zur Mehrzieloptimierung
-
-	- Mehrpopulationsprobleme:
-		=> paper mit P-modell endlich mal umsetzen, das ist irgendwie vernachlässigt worden
 
 	- Versuchspläne und Statistiken?!
 

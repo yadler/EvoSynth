@@ -33,18 +33,20 @@ module EvoSynth
 		# weak elitism: if fitness of childrens decreased, replace worst individual with best parent
 
 		def Evolvers.add_weak_elistism(evolver)
+			evolver.population rescue raise "Evolver not supported!"
+
 			evolver.instance_eval(%q{
 				alias :original_next_generation :next_generation
 				alias :original_to_s :to_s
 
 				def next_generation
-					best_individual = @population.best
+					best_individual = population.best
 
 					original_next_generation
 
-					if @population.best < best_individual
-						@population.remove(@population.worst)
-						@population.add(best_individual)
+					if population.best < best_individual
+						population.remove(population.worst)
+						population.add(best_individual)
 					end
 				end
 
@@ -61,18 +63,20 @@ module EvoSynth
 		# TODO: add some elegance to this code ;-)
 
 		def Evolvers.add_strong_elistism(evolver, n = 1)
+			evolver.population rescue raise "Evolver not supported!"
+
 			if (n == 1)
 				evolver.instance_eval("
 					alias :original_next_generation :next_generation
 					alias :original_to_s :to_s
 
 					def next_generation
-						best = @population.best
+						best = population.best
 
 						original_next_generation
 
-						@population.remove(@population.worst)
-						@population.add(best)
+						population.remove(population.worst)
+						population.add(best)
 					end
 
 					def to_s
@@ -85,13 +89,13 @@ module EvoSynth
 					alias :original_to_s :to_s
 
 					def next_generation
-						best = @population.best(#{n})
+						best = population.best(#{n})
 
 						original_next_generation
 
-						worst = @population.worst(#{n})
-						worst.each { |individual| @population.remove(individual) }
-						best.each { |individual| @population.add(individual) }
+						worst = population.worst(#{n})
+						worst.each { |individual| population.remove(individual) }
+						best.each { |individual| population.add(individual) }
 					end
 
 					def to_s
