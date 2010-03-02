@@ -32,7 +32,7 @@ module Examples
 		VALUE_BITS = 16
 		DIMENSIONS = 6
 		POP_SIZE = 25
-		GENERATIONS = 1000
+		GENERATIONS = 100
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
 		class ExporterEvaluator < EvoSynth::Evaluator
@@ -76,13 +76,14 @@ module Examples
 		evolver.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
 
+		BASEPATH = File.expand_path("~/Desktop/")
 
 		puts "\nexport to gnuplot..."
 		EvoSynth::Output::GnuPlotExporter.new(plot_logger).export("Rastgrin function with Elistism GA")
 		puts "export with gruff..."
-		EvoSynth::Output::GruffExporter.new(plot_logger).export("Rastgrin function with Elistism GA", '/home/yves/Desktop/evosynth_viz_gruff.png')
+		EvoSynth::Output::GruffExporter.new(plot_logger).export("Rastgrin function with Elistism GA", BASEPATH + '/evosynth_viz_gruff.png')
 		puts "export to CSV..."
-		EvoSynth::Output::CSVExporter.new(plot_logger, true).export('/home/yves/Desktop/evosynth_export.csv')
+		EvoSynth::Output::CSVExporter.new(plot_logger, true).export(BASEPATH + '/evosynth_export.csv')
 
 	end
 end
