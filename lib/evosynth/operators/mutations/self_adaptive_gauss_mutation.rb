@@ -43,10 +43,10 @@ module EvoSynth
 			end
 
 			def mutate(individual)
-				add_sigma(individual) unless defined? individual.sigma
 				mutated = individual.deep_clone
+				add_sigma(mutated) unless defined? mutated.sigma
 
-				mutated.sigma = individual.sigma * Math.exp((1 / Math.sqrt(individual.genome.size)) * EvoSynth.nrand)
+				mutated.sigma = mutated.sigma * Math.exp((1 / Math.sqrt(mutated.genome.size)) * EvoSynth.nrand)
 
 				mutated.genome.map! do |gene|
 					gene += EvoSynth.nrand(0.0, mutated.sigma)

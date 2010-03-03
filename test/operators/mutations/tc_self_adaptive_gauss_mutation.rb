@@ -60,7 +60,7 @@ class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 			end
 
 			should "the individual have a sigma method" do
-				assert_respond_to @individual, :sigma
+				assert_respond_to @mutated, :sigma
 			end
 
 		end
