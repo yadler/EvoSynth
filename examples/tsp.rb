@@ -43,7 +43,14 @@ module Examples
 			optimal
 		end
 
-		tsp = EvoSynth::Problems::TSP.new('testdata/bays29.tsp')
+		tsp = nil
+		begin
+			tsp = EvoSynth::Problems::TSP.new('testdata/bays29.tsp')
+		rescue
+			puts "Could not load test data. Please see testdata/README for instructions..."
+			exit(0)
+		end
+
 		optimal_tour = TSP.optimal_tour(tsp)
 
 		profile = EvoSynth::Profile.new(

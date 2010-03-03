@@ -110,7 +110,13 @@ module Examples
 			inidividual
 		end
 
-		graph = GraphColouring::Graph.new("testdata/myciel4.col")
+		graph = nil
+		begin
+			graph = GraphColouring::Graph.new("testdata/myciel4.col")
+		rescue
+			puts "Could not load test data. Please see testdata/README for instructions..."
+			exit(0)
+		end
 
 		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),

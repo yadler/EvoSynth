@@ -6,5 +6,5 @@ docs
 docs/*
 coverage
 coverage/*
-testdata
-testdata/*
+testdata/*.col
+testdata/*.tsp
