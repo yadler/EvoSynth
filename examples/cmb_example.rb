@@ -32,8 +32,8 @@ module Examples
 	module CMBExample
 
 		GENOME_SIZE = 32
-		NUM_PEAKS = 3
-		MAX_GENERATIONS = 1000
+		NUM_PEAKS = 4
+		MAX_GENERATIONS = 2000
 		SOLUTIONS = 25
 		PROBLEMS = 25
 
@@ -67,9 +67,29 @@ module Examples
 			EvoSynth::ArrayGenome.new(peaks)
 		end
 
+		class ProblemMutation
+
+			def mutate(individual)
+				mutated = individual.deep_clone
+
+				peak_index = EvoSynth.rand(mutated.genome.size)
+				peak = mutated.genome[peak_index]
+
+				index_one = EvoSynth.rand(peak.size)
+				index_two = EvoSynth.rand(peak.size)
+				index_one, index_two = index_two, index_one if index_one > index_two
+				return mutated if index_one == index_two
+
+				peak[index_one..index_two] = peak[index_one..index_two].sort { EvoSynth.rand(2) }
+				mutated.genome[peak_index] = peak
+				mutated
+			end
+
+		end
+
 		profile = EvoSynth::Profile.new(
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-			:problem_mutation			=> EvoSynth::Mutations::MixingMutation.new,
+			:problem_mutation			=> ProblemMutation.new,
 			:problem_recombination		=> EvoSynth::Recombinations::Identity.new,
 			:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
@@ -80,8 +100,9 @@ module Examples
 
 		evolver = EvoSynth::Evolvers::CMBCoevolutionary.new(profile)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
-			"generations"	=> ->{ evolver.generations_computed },
-			"bestfitness"   => ->{ evolver.best_solution.fitness }
+			"generations"				=> ->{ evolver.generations_computed },
+			"best solution fitness"		=> ->{ evolver.population.best.fitness },
+			"best problem fitness"		=> ->{ evolver.problems.best.fitness }
 		))
 		evolver.run_until_generations_reached(MAX_GENERATIONS)
 	end

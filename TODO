@@ -2,14 +2,6 @@
 
 			!!! Jeden morgen ein paar sachen Dokumentieren !!!
 
-
-mit Prof. Weicker klären:
-
-	- childfactor durch genaue anzahl (lambda) ersetzen oder eher nicht?
-		=> childfactor für alle algorithmen! (anzahl kinder blabla)
-	- was ist mit pheno/genetyp? reichen decoder oder sollte explizite
-	  unterscheidung gemacht werden? Eventuell mit Prof. Weicker diskutieren
-
 fehlende oder fehlerhafte Testfälle:
 
 	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
@@ -24,6 +16,7 @@ fehlende oder fehlerhafte Testfälle:
 Features:
 
 	- CMBCoevolutionary
+		=> generell sehr unfertig, memory und balance features fehlen
 		=> braucht nen besseren namen (ProblemSolutionCoevo?)
 		=> ist es gut x-mal eine lösung zu selektieren? oder lieber select(x) ?
 		=> testen testen testen
