@@ -36,7 +36,7 @@ genetic algorithms:
 
 coevolutionary algorithms:
 * EvoSynth::Evolvers::CoopCoevolutionary
-* EvoSynth::Evolvers::CMBCoevolutionary
+* EvoSynth::Evolvers::CMBCoevolutionary (unfinished)
 
 evolution strategies:
 * EvoSynth::Evolvers::AdaptiveES
