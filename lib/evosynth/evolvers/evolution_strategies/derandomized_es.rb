@@ -67,7 +67,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"adaptive ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
+				"derandomized ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
 			def best_solution
