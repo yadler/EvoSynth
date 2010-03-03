@@ -183,8 +183,8 @@ module Examples
 			)
 		end
 
-		tsp = EvoSynth::Problems::TSP.new('testdata/tsp/bays29.tsp')
-		puts "read testdata/ant/bays29.tsp - matrix contains #{tsp.size} nodes..."
+		tsp = EvoSynth::Problems::TSP.new('testdata/bays29.tsp')
+		puts "read testdata/bays29.tsp - matrix contains #{tsp.size} nodes..."
 
 		PHEROMON = Ants::Pheromon.new(tsp.size)
 

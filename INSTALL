@@ -1,0 +1,36 @@
+Vorraussetzungen:
+
+- git (http://git-scm.com/)
+- ruby 1.9 (http://www.ruby-lang.org)
+
+auschecken:
+
+	git clone git://github.com/yadler/EvoSynth.git
+
+gems installieren (als root):
+
+	gem install shoulda rake
+
+optionale gems:
+
+	gruff gnuplot rmagick (grafiken)
+	flake flog roodi rcov (code quality tools)
+
+funktionstest:
+
+	rake test
+
+testdaten (in den testdata ordner kopieren):
+
+	http://mat.gsia.cmu.edu/COLOR/instances/myciel4.col
+	http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/bays29.tsp
+
+	mehr testdaten:
+		http://mat.gsia.cmu.edu/COLOR/instances.html
+		http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html
+
+beispiele:
+
+	ruby -Ilib examples/max_ones.rb
+	ruby -Ilib examples/partition.rb
+	...

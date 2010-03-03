@@ -43,7 +43,7 @@ module Examples
 			optimal
 		end
 
-		tsp = EvoSynth::Problems::TSP.new('testdata/tsp/bays29.tsp')
+		tsp = EvoSynth::Problems::TSP.new('testdata/bays29.tsp')
 		optimal_tour = TSP.optimal_tour(tsp)
 
 		profile = EvoSynth::Profile.new(
@@ -58,7 +58,7 @@ module Examples
 		)
 		profile.evaluator.calculate_and_set_fitness(optimal_tour)
 
-		puts "read testdata/ant/bays29.tsp - problem contains #{tsp.size} cities...\n"
+		puts "read testdata/bays29.tsp - problem contains #{tsp.size} cities...\n"
 		puts "Optimal Individual for this problem: #{optimal_tour}"
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)

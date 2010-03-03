@@ -24,7 +24,7 @@
 
 require 'evosynth'
 require 'set'
-require 'examples/util/mdarray'
+require 'matrix'
 
 # FIXME: refactor me and extract tool classes !
 
@@ -52,13 +52,19 @@ module Examples
 			# reads a graph file
 			def read_file(file_name)
 				@node_count = get_node_count(file_name)
-				@matrix = Examples::Util::MDArray.new(@node_count, @node_count, 0)
+				@matrix = Matrix.zero(@node_count)
+
+				columns = @matrix.column_vectors
+
 
 				File.open(file_name).each_line do |line|
 					next if line !~ /^e/
 					line =~ /(\d+)\s*(\d+)/
-					@matrix[Integer($1)-1, Integer($2)-1] = 1
+					arr = columns[Integer($1)-1].to_a
+					arr[Integer($2)-1] = 1
+					columns[Integer($1)-1] = Vector.elements(arr)
 				end
+				@matrix = Matrix.columns(columns)
 			end
 
 		end
@@ -73,11 +79,13 @@ module Examples
 
 			def verletzungen(genome)
 				verletzungen = 0
-				@graph.matrix.each_index do |row, col|
-					if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
-						verletzungen += 1
+
+				@graph.node_count.times do |row|
+					@graph.node_count.times do |col|
+						verletzungen += 1 if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
 					end
 				end
+
 				verletzungen
 			end
 
@@ -102,7 +110,7 @@ module Examples
 			inidividual
 		end
 
-		graph = GraphColouring::Graph.new("testdata/graph_colouring/myciel4.col")
+		graph = GraphColouring::Graph.new("testdata/myciel4.col")
 
 		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),

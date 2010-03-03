@@ -15,6 +15,8 @@ fehlende oder fehlerhafte Testfälle:
 
 Features:
 
+	- INSTALL ins englische übersetzen
+
 	- CMBCoevolutionary
 		=> generell sehr unfertig, memory und balance features fehlen
 		=> braucht nen besseren namen (ProblemSolutionCoevo?)
