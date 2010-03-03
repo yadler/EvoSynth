@@ -54,13 +54,9 @@ module EvoSynth
 		# clones a individual and its genome (deep copy)
 
 		def deep_clone
-			# my_clone = self.clone
-			# my_clone.genome = self.genome.clone rescue self.genome
-			# my_clone.genome.map! { |gene| gene.clone rescue gene }
-			# my_clone
-
-			# marshalling seems to be faster than the above code! (~23 vs ~108 seconds for 230 testcases)
-			Marshal.load( Marshal.dump( self ) ) rescue self
+			my_clone = self.clone
+			my_clone.genome = Marshal.load( Marshal.dump( self.genome ) )
+			my_clone
 		end
 
 		# If you compare individuals the semantic of "<=>" is the following:

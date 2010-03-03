@@ -63,6 +63,9 @@ class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 				assert_respond_to @mutated, :sigma
 			end
 
+			should "the individual have a sigma that around 1.0 += 2.5" do
+				assert_in_delta 1.0, @mutated.sigma, 2.5
+			end
 		end
 
 	end

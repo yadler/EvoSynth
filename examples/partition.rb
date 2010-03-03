@@ -55,15 +55,15 @@ module Examples
 				@partition_b.changed = false
 			end
 
-			def changed?
-				@partition_a.changed? || @partition_b.changed?
-			end
-
 			def deep_clone
 				my_clone = self.clone
-				my_clone.partition_a = self.partition_a.clone
-				my_clone.partition_b = self.partition_b.clone
+				my_clone.partition_a = Marshal.load( Marshal.dump( self.partition_a ) )
+				my_clone.partition_b = Marshal.load( Marshal.dump( self.partition_b ) )
 				my_clone
+			end
+
+			def changed?
+				@partition_a.changed? || @partition_b.changed?
 			end
 
 			def to_s
