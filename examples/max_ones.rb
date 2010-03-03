@@ -52,6 +52,8 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		)
 
+		# ---------------------------- Use simple Hillclimber ---------------------------- #
+
 		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
 			"generations"	=> ->{ evolver.generations_computed },
@@ -62,6 +64,8 @@ module Examples
 		puts "\nRunning #{evolver}...\n"
 		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
 		puts "\nIndividual after evolution:  #{profile.individual}"
+
+		# --------------------------- Use GA with weak elistism --------------------------- #
 
 		profile.evaluator.reset_counters
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
