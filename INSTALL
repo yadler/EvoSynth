@@ -1,11 +1,7 @@
 Vorraussetzungen:
 
-- git (http://git-scm.com/)
-- ruby 1.9 (http://www.ruby-lang.org)
-
-auschecken:
-
-	git clone git://github.com/yadler/EvoSynth.git
+	- ruby 1.9 (http://www.ruby-lang.org)
+	- optional: git (http://git-scm.com/)
 
 gems installieren (als root):
 
@@ -15,6 +11,11 @@ optionale gems:
 
 	gruff gnuplot rmagick (grafiken)
 	flake flog roodi rcov (code quality tools)
+
+EvoSynth downloaden:
+
+	download: http://github.com/yadler/EvoSynth/archives/master
+	oder auschecken: git clone git://github.com/yadler/EvoSynth.git
 
 funktionstest:
 
@@ -34,3 +35,19 @@ beispiele:
 	ruby -Ilib examples/max_ones.rb
 	ruby -Ilib examples/partition.rb
 	...
+
+einrichten von Netbeans (http://netbeans.org/) als IDE:
+
+	- Ruby plugin installieren (Tools -> Plugins -> Available Plugins ...)
+	- Neues Projekt anlegen:
+		- File -> New Project -> Ruby -> "Ruby Application with Existing Sources"
+		- beliebigen namen wählen (z.B. "nb_evosynth")
+		- Pfad des projektes sollte außerhalb des evosynth ordners liegen
+		- Ruby platform: Ruby 1.9.x wählen
+		- Source Folders -> Add folder -> evosynth verzeichnis auswählen
+
+	- Rechtsklick auf neu erstelltes Projekt -> Properties -> Run
+		- Ruby options um "-Ilib" ergänzen
+
+	- Testen: beliebiges Beispiel öffnen (examples ordner in "Source Files")
+	  und mit Shift+F6 ausführen (dialog bestätigen)

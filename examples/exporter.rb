@@ -77,13 +77,13 @@ module Examples
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
-		BASEPATH = File.expand_path("~/Desktop/")
+		BASEPATH = File.expand_path(".")
 
 		puts "\nexport to gnuplot..."
 		EvoSynth::Output::GnuPlotExporter.new(plot_logger).export("Rastgrin function with Elistism GA")
-		puts "export with gruff..."
+		puts "export with gruff to #{BASEPATH + '/evosynth_viz_gruff.png'}..."
 		EvoSynth::Output::GruffExporter.new(plot_logger).export("Rastgrin function with Elistism GA", BASEPATH + '/evosynth_viz_gruff.png')
-		puts "export to CSV..."
+		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
 		EvoSynth::Output::CSVExporter.new(plot_logger, true).export(BASEPATH + '/evosynth_export.csv')
 
 	end
