@@ -31,7 +31,12 @@ module EvoSynth
 		class GruffExporter
 
 			def initialize(logger)
-				require 'gruff'
+				begin
+					require 'gruff'
+				rescue
+					puts "Could not require 'gruff' gem, please install with gem install gruff"
+				end
+
 				@logger = logger
 			end
 

@@ -33,7 +33,12 @@ module EvoSynth
 		class GnuPlotExporter
 
 			def initialize(logger)
-				require 'gnuplot'
+				begin
+					require 'gnuplot'
+				rescue
+					puts "Could not require 'gnuplot' gem, please install with gem install gnuplot"
+				end
+
 				@logger = logger
 			end
 
