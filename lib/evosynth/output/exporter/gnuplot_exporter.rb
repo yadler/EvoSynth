@@ -38,31 +38,35 @@ module EvoSynth
 			end
 
 			def export(title)
-				Gnuplot.open do |gp|
-					Gnuplot::Plot.new( gp ) do |plot|
+				begin
+					Gnuplot.open do |gp|
+						Gnuplot::Plot.new( gp ) do |plot|
 
-						plot.title  title
-						# plot.ylabel "fitness"
-						# plot.xlabel "generation"
+							plot.title  title
+							# plot.ylabel "fitness"
+							# plot.xlabel "generation"
 
-						x, ys = [], []
-						data_sets = 0
-						@logger.data.each_pair do |key, value|
-							data_sets = value.size if value.size > data_sets
-							x << key
-							value.each_with_index do |y, index|
-								ys[index] = [] if ys[index].nil?
-								ys[index] << y
+							x, ys = [], []
+							data_sets = 0
+							@logger.data.each_pair do |key, value|
+								data_sets = value.size if value.size > data_sets
+								x << key
+								value.each_with_index do |y, index|
+									ys[index] = [] if ys[index].nil?
+									ys[index] << y
+								end
 							end
-						end
 
-						data_sets.times do |set|
-							plot.data << Gnuplot::DataSet.new( [x, ys[set]] ) do |ds|
-								ds.with = "lines"
-								ds.title = @logger.column_names[set]
+							data_sets.times do |set|
+								plot.data << Gnuplot::DataSet.new( [x, ys[set]] ) do |ds|
+									ds.with = "lines"
+									ds.title = @logger.column_names[set]
+								end
 							end
 						end
 					end
+				rescue
+					puts "Could not run gnuplot - have you gnuplot installed? It does not work on windows yet!"
 				end
 			end
 

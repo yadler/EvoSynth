@@ -1,6 +1,6 @@
 Vorraussetzungen:
 
-	- ruby 1.9 (http://www.ruby-lang.org)
+	- ruby 1.9 (http://www.ruby-lang.org bzw. http://rubyforge.org/frs/?group_id=167)
 	- optional: git (http://git-scm.com/)
 
 gems installieren (als root):
