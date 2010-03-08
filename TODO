@@ -22,17 +22,26 @@ Features:
 		=> braucht nen besseren namen (ProblemSolutionCoevo?)
 		=> ist es gut x-mal eine lösung zu selektieren? oder lieber select(x) ?
 		=> testen testen testen
+		=> Hall-of-Fame, LTFE + co als metaprogramming dingens umsetzen,
+		   macht sicher auch Sinn für den SteadyStateGA!
+
+	- Evaluator:
+		=> calculate_initial_fitness (sollte per default auf calculate_fitness delegieren)
 
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-		-> Gentische Programmierung (Ruby programme wären schön)
+		=> Gentische Programmierung (Ruby programme wären schön)
+		=> ein schönes Baum ruby gem wäre sinnvoll
 
 	- Beispiele:
 		=> Ant mutation fixen und Ant example überarbeiten
 		=> wenigstens ein Beispiel zur Mehrzieloptimierung
 
+	- Extrapolation für Arithmetischen Crossover
+
 	- Versuchspläne und Statistiken?!
 
 	- Probleme:
+		=> GraphColouring analog zu TSP ins problems module verschieben
 		=> Evaluator für benchmarkfunktionen schreiben
 
 ============================== EvoSynth >0.1 ===================================
@@ -44,19 +53,21 @@ Features:
 	- TSP Problem generischer machen und refactorisieren
 
 	- Benchmarkfunktionen:
-		-> C-Funktion (Weicker page 272)
-		-> sämtliche mit Randbedingungen (Weicker page 274)
+		=> Matrix Multiplikationsproblem aus Paredis Paper (epistasis gut steuerbar)
+		=> C-Funktion (Weicker page 272)
+		=> sämtliche mit Randbedingungen (Weicker page 274)
 
 	- Decoder/Encoder:
 		=> RealToBinary, IntegerToBinary, BinaryToInteger
 
 	- Algorithmen:
+		=> Tabu-Suche
 		=> Schwärme
-		=> neuronale Netze
+		=> neuronale Netze (gibts da ein gem für)
 
 	- Mehrzieloptimierung?
 
-	- meta-evolver:
+	- Meta-Evolver (oder metaprogramming alá Elistismus):
 		=> was ist mit hall-of-fame oder ähnlichem?
 
 	- BinaryGenome mittels inline C optimieren
@@ -70,13 +81,15 @@ Features:
 		=> eventuell mit Logger verknüppern
 
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
+		=> wie sollten diese Versuche ablaufen? Stichwort statistische Relevanz
 		=> mutationen, selektionen und co
-		=> diversität und co
+		=> diversität und co (binär, float, wie denn genau? mit lambda?)
 
 	- Mehrpopulationsprobleme:
 		=> was ist da noch sinnvoll? inseln & migration?
 
 	- Logger:
+		=> mehrere "Testläufe", Durchschnittswerte
 		=> html output templates, svg outputs?
 		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
 		   das geht aber vielleicht eher in richtung eventsystem
