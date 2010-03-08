@@ -32,17 +32,19 @@ module Examples
 	module CMBExample
 
 		GENOME_SIZE = 32
-		NUM_PEAKS = 4
+		NUM_PEAKS = 3
 		MAX_GENERATIONS = 2000
 		SOLUTIONS = 25
 		PROBLEMS = 25
 
 		class CMBEvaluator < EvoSynth::Evaluator
-			# TODO: move this into superclass (Evaluator) - maybe use a special evolver?
+			# TODO: move this into superclass (Evaluator) - maybe use a special evaluator?
 
 			def toggle(result)
 				1.0 - result
 			end
+
+			# sets fitnesses and returns winner
 
 			def encounter(problem, solution)
 				result = EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(problem.genome, solution.genome)
@@ -53,7 +55,8 @@ module Examples
 				# TODO: dirty hack - think about proper solution
 				@calculated += 1
 				@called += 1
-				solution.fitness
+
+				solution.fitness > 0.5 ? solution : problem
 			end
 		end
 
@@ -87,14 +90,37 @@ module Examples
 
 		end
 
+		class CMBIndividual < EvoSynth::MaximizingIndividual
+
+			def initialize(*args)
+				super(*args)
+				@memory = []
+				@memory_size = 1
+			end
+
+			def fitness=(value)
+				if @memory.empty?
+					@memory = [value] * @memory_size
+				else
+					@memory.pop
+					@memory << value
+				end
+			end
+
+			def fitness
+				sum = @memory.inject(0.0) { |sum, value| sum += value }
+				sum / @memory_size
+			end
+
+		end
+
 		profile = EvoSynth::Profile.new(
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:problem_mutation			=> ProblemMutation.new,
+#			:problem_mutation			=> EvoSynth::Mutations::Identity.new,
 			:problem_recombination		=> EvoSynth::Recombinations::Identity.new,
-			:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
-			:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
-			:population					=> EvoSynth::Population.new(SOLUTIONS) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
-			:problems					=> EvoSynth::Population.new(PROBLEMS) { EvoSynth::MaximizingIndividual.new(CMBExample.generate_problem(NUM_PEAKS)) },
+			:population					=> EvoSynth::Population.new(SOLUTIONS) { CMBIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
+			:problems					=> EvoSynth::Population.new(PROBLEMS) { CMBIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
 			:evaluator					=> CMBEvaluator.new
 		)
 

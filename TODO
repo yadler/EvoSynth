@@ -18,12 +18,12 @@ Features:
 	- INSTALL ins englische übersetzen
 
 	- CMBCoevolutionary
-		=> generell sehr unfertig, memory und balance features fehlen
-		=> braucht nen besseren namen (ProblemSolutionCoevo?)
-		=> ist es gut x-mal eine lösung zu selektieren? oder lieber select(x) ?
-		=> testen testen testen
-		=> Hall-of-Fame, LTFE + co als metaprogramming dingens umsetzen,
-		   macht sicher auch Sinn für den SteadyStateGA!
+		=> Balance fehlt
+		=> braucht ein refactoring
+		=> braucht nen besseren namen: Einfach BalancedCoevolutionary würde sinn machen, oder?
+
+	- Individuen:
+		=> mittels metaprogramming memory einbauen (siehe CMB)
 
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		=> Gentische Programmierung (Ruby programme wären schön)

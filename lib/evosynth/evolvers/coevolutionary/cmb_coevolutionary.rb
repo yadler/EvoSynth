@@ -84,7 +84,7 @@ module EvoSynth
 					@evaluator.encounter(problem, solution)
 				end
 
-				# select, recombine and mutate solution child
+				# select, recombine and mutate problem child
 				parents = @parent_selection.select(@problems, 2)
 				child = @problem_recombination.recombine(parents[0], parents[1])[0] # only one offspring each generation!
 				child = @problem_mutation.mutate(child)
@@ -92,7 +92,7 @@ module EvoSynth
 				@problems.add(child)
 				@problems.remove(@problems.worst)
 
-				# select, recombine and mutate problem child
+				# select, recombine and mutate solution child
 				parents = @parent_selection.select(@population, 2)
 				child = @recombination.recombine(parents[0], parents[1])[0] # only one offspring each generation!
 				child = @mutation.mutate(child)

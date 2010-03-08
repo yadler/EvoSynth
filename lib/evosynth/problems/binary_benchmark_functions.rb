@@ -54,6 +54,8 @@ module EvoSynth
 			end
 
 			# N-Peak problem presented in "Using Problem Generators to Explore the Effects of Epistasis", De Jong et al 1997
+			#
+			# global maximum: f(x) = 1.0 when peak == xs (hamming distance is 0)
 
 			def BinaryBenchmarkFuntions.n_peaks(peaks, xs)
 				max_hamming_dist = xs.size
