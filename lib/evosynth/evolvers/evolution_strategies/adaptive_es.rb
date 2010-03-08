@@ -59,7 +59,7 @@ module EvoSynth
 				@mutation = DEFAULT_MUTATION
 				@success = 0
 
-				@population.each { |individual| @evaluator.calculate_and_set_fitness(individual) }
+				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
 			def to_s

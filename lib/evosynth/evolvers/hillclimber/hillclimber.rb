@@ -34,7 +34,7 @@ module EvoSynth
 				init_profile :individual, :mutation, :evaluator
 				use_profile profile
 
-				@evaluator.calculate_and_set_fitness(@individual)
+				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end
 
 			def to_s

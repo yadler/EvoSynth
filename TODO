@@ -25,9 +25,6 @@ Features:
 		=> Hall-of-Fame, LTFE + co als metaprogramming dingens umsetzen,
 		   macht sicher auch Sinn für den SteadyStateGA!
 
-	- Evaluator:
-		=> calculate_initial_fitness (sollte per default auf calculate_fitness delegieren)
-
 	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
 		=> Gentische Programmierung (Ruby programme wären schön)
 		=> ein schönes Baum ruby gem wäre sinnvoll

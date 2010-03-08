@@ -60,7 +60,7 @@ module EvoSynth
 
 				genome_length = 0;
 				@population.each do |individual|
-					@evaluator.calculate_and_set_fitness(individual)
+					@evaluator.calculate_and_set_initial_fitness(individual)
 					genome_length = individual.genome.size if individual.genome.size > genome_length
 				end
 				@s = [0.0] * genome_length

@@ -51,7 +51,7 @@ module EvoSynth
 			reset_counters
 		end
 
-		# Calculated the fitness of the given individual if the individual has changed,
+		# Calculates and sets the fitness of the given individual if the individual has changed,
 		# otherwise it just returns the cached fitness of the individual
 
 		def calculate_and_set_fitness(individual)
@@ -67,10 +67,29 @@ module EvoSynth
 			individual.fitness
 		end
 
+		# Calculates and sets the initial fitness of the given individual.
+
+		def calculate_and_set_initial_fitness(individual)
+			@called += 1
+			@calculated += 1
+
+			individual.fitness = calculate_initial_fitness(individual)
+
+			changed
+			notify_observers self, @called
+			individual.fitness
+		end
+
 		# This function is actually used to calculate the fitness of a individual. It's the "fitness function".
 
 		def calculate_fitness(individual)
 			raise NotImplementedError, "please implement calculate_fitness!"
+		end
+
+		# This function is used to calculate an intitial fitness value for a individual. Calls calculate_fitness by default.
+
+		def calculate_initial_fitness(individual)
+			calculate_fitness(individual)
 		end
 
 		# Reset the called/calculated counters of the Evaluator
