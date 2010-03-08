@@ -17,21 +17,19 @@ Features:
 
 	- INSTALL ins englische übersetzen
 
-	- CMBCoevolutionary
-		=> Balance fehlt
-		=> braucht ein refactoring
-		=> braucht nen besseren namen: Einfach BalancedCoevolutionary würde sinn machen, oder?
+	- Algorithmen:
+		=> Tabu-Suche am beispiel graph colouring (164)
+		=> memetischer Algorithmus (165)
+		=> CMBCoevolutionary:
+			-> Balance fehlt
+			-> braucht ein refactoring
+			-> braucht nen besseren namen: Einfach BalancedCoevolutionary würde sinn machen, oder?
 
 	- Individuen:
 		=> mittels metaprogramming memory einbauen (siehe CMB)
 
-	- Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-		=> Gentische Programmierung (Ruby programme wären schön)
-		=> ein schönes Baum ruby gem wäre sinnvoll
-
 	- Beispiele:
 		=> Ant mutation fixen und Ant example überarbeiten
-		=> wenigstens ein Beispiel zur Mehrzieloptimierung
 
 	- Extrapolation für Arithmetischen Crossover
 
@@ -58,11 +56,16 @@ Features:
 		=> RealToBinary, IntegerToBinary, BinaryToInteger
 
 	- Algorithmen:
-		=> Tabu-Suche
+		=> Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+			-> Gentische Programmierung (Ruby programme wären schön)
+			-> rubytree gem nutzen: http://rubytree.rubyforge.org/rdoc/index.html
 		=> Schwärme
 		=> neuronale Netze (gibts da ein gem für)
 
-	- Mehrzieloptimierung?
+	- Mehrzieloptimierung:
+		=> NSGA selektion (204)
+		=> SPEA2, PAES (205,206)
+		=> wenigstens ein Beispiel zur Mehrzieloptimierung
 
 	- Meta-Evolver (oder metaprogramming alá Elistismus):
 		=> was ist mit hall-of-fame oder ähnlichem?
