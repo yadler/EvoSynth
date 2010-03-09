@@ -37,5 +37,5 @@ require 'evosynth/evolvers/evolution_strategies/derandomized_es'
 
 require 'evosynth/evolvers/local_search/local_search'
 
-require 'evosynth/evolvers/coevolutionary/coop_coevolutionary'
-require 'evosynth/evolvers/coevolutionary/cmb_coevolutionary'
+require 'evosynth/evolvers/coevolutionary/round_robin_coevolutionary'
+require 'evosynth/evolvers/coevolutionary/balanced_coevolutionary'

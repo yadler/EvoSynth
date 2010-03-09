@@ -138,13 +138,13 @@ module Examples
 		puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
 
 		profile = create_profile(CCGABenchmarkEvaluator)
-		evolver = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(profile)
 		run(evolver, profile, "CCGA-1")
 
 		puts "# --- CCGA-2 ----------------------------------------------------------------------------------- #"
 
 		profile = create_profile(CCGA2BenchmarkEvaluator)
-		evolver = EvoSynth::Evolvers::CoopCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(profile)
 		run(evolver, profile, "CCGA-2")
 	end
 end

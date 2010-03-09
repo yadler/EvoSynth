@@ -27,7 +27,7 @@ module EvoSynth
 
 		# based on CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
 
-		class CoopCoevolutionary
+		class RoundRobinCoevolutionary
 			include EvoSynth::Evolvers::Evolver
 
 			attr_reader :subevolvers

@@ -23,7 +23,6 @@ Features:
 		=> CMBCoevolutionary:
 			-> Balance fehlt
 			-> braucht ein refactoring
-			-> braucht nen besseren namen: Einfach BalancedCoevolutionary würde sinn machen, oder?
 
 	- Versuchspläne und Statistiken?!
 

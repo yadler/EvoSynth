@@ -27,7 +27,7 @@ module EvoSynth
 
 		# based on "Coevolution, Memory and Balance" from Paredis, 1999
 
-		class CMBCoevolutionary
+		class BalancedCoevolutionary
 			include EvoSynth::Evolvers::Evolver
 
 			DEFAULT_PAIRING_RUNS = 20

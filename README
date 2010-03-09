@@ -39,8 +39,8 @@ local search:
 * EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
 coevolutionary algorithms:
-* EvoSynth::Evolvers::CoopCoevolutionary
-* EvoSynth::Evolvers::CMBCoevolutionary (unfinished)
+* EvoSynth::Evolvers::RoundRobinCoevolutionary
+* EvoSynth::Evolvers::BalancedCoevolutionary (unfinished)
 
 === selections
 

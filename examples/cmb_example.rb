@@ -125,7 +125,7 @@ module Examples
 			:evaluator					=> CMBEvaluator.new
 		)
 
-		evolver = EvoSynth::Evolvers::CMBCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::BalancedCoevolutionary.new(profile)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"				=> ->{ evolver.generations_computed },
 			"best solution fitness"		=> ->{ evolver.population.best.fitness },
