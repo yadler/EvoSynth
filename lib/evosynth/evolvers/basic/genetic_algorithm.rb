@@ -33,6 +33,7 @@ module EvoSynth
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
+			DEFAULT_CHILD_FACTOR = 0.5
 
 			def initialize(profile)
 				init_profile :population, 
@@ -40,7 +41,8 @@ module EvoSynth
 				    :mutation,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
-				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY
+				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY,
+					:child_factor				=> DEFAULT_CHILD_FACTOR
 
 				use_profile profile
 
@@ -64,7 +66,7 @@ module EvoSynth
 			end
 
 			def next_generation
-				selected_pop = @parent_selection.select(@population, @population.size/2)
+				selected_pop = @parent_selection.select(@population, @population.size * @child_factor)
 				@population.clear
 
 				selected_pop.each_index do |index_one|
