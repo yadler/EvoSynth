@@ -24,9 +24,9 @@
 
 module EvoSynth
 
-	# Base module for individuals
+	# Base class for individuals
 
-	module Individual
+	class Individual
 		include Comparable
 
 		# Genome of the Individual, it should provide a changed attribute

@@ -26,8 +26,7 @@ module EvoSynth
 
 	# Class for Individuals (for maximizing problems)
 
-	class MaximizingIndividual
-		include Individual
+	class MaximizingIndividual < Individual
 
 		#	:call-seq:
 		#		MaximizingIndividual.new -> MaximizingIndividual
