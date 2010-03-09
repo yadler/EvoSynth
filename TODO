@@ -25,9 +25,6 @@ Features:
 			-> braucht ein refactoring
 			-> braucht nen besseren namen: Einfach BalancedCoevolutionary würde sinn machen, oder?
 
-	- Individuen:
-		=> mittels metaprogramming memory einbauen (siehe CMB)
-
 	- Versuchspläne und Statistiken?!
 
 ============================== EvoSynth >0.1 ===================================

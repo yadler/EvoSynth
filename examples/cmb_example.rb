@@ -90,10 +90,11 @@ module Examples
 
 		end
 
-		class CMBIndividual < EvoSynth::MaximizingIndividual
+		# TODO: put this in a good place :)
 
-			def initialize(*args)
-				super(*args)
+		class EvoSynth::Individual
+
+			def initialize
 				@memory = []
 				@memory_size = 1
 			end
@@ -119,8 +120,8 @@ module Examples
 			:problem_mutation			=> ProblemMutation.new,
 #			:problem_mutation			=> EvoSynth::Mutations::Identity.new,
 			:problem_recombination		=> EvoSynth::Recombinations::Identity.new,
-			:population					=> EvoSynth::Population.new(SOLUTIONS) { CMBIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
-			:problems					=> EvoSynth::Population.new(PROBLEMS) { CMBIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
+			:population					=> EvoSynth::Population.new(SOLUTIONS) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
+			:problems					=> EvoSynth::Population.new(PROBLEMS) { EvoSynth::MaximizingIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
 			:evaluator					=> CMBEvaluator.new
 		)
 
