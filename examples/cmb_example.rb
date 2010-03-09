@@ -32,7 +32,7 @@ module Examples
 	module CMBExample
 
 		GENOME_SIZE = 32
-		NUM_PEAKS = 3
+		NUM_PEAKS = 5
 		MAX_GENERATIONS = 2000
 		SOLUTIONS = 25
 		PROBLEMS = 25
@@ -60,35 +60,6 @@ module Examples
 			end
 		end
 
-		def CMBExample.generate_problem(peak_count)
-			peaks = []
-			peak_count.times do
-				peak = []
-				GENOME_SIZE.times { peak << EvoSynth.rand_bool }
-				peaks << peak
-			end
-			EvoSynth::ArrayGenome.new(peaks)
-		end
-
-		class ProblemMutation
-
-			def mutate(individual)
-				mutated = individual.deep_clone
-
-				peak_index = EvoSynth.rand(mutated.genome.size)
-				peak = mutated.genome[peak_index]
-
-				index_one = EvoSynth.rand(peak.size)
-				index_two = EvoSynth.rand(peak.size)
-				index_one, index_two = index_two, index_one if index_one > index_two
-				return mutated if index_one == index_two
-
-				peak[index_one..index_two] = peak[index_one..index_two].sort { EvoSynth.rand(2) }
-				mutated.genome[peak_index] = peak
-				mutated
-			end
-
-		end
 
 		# TODO: put this in a good place :)
 
@@ -115,11 +86,22 @@ module Examples
 
 		end
 
+
+		def CMBExample.generate_problem(peak_count)
+			peaks = []
+			peak_count.times do
+				peak = []
+				GENOME_SIZE.times { peak << EvoSynth.rand_bool }
+				peaks << peak
+			end
+			EvoSynth::ArrayGenome.new(peaks)
+		end
+
+
 		profile = EvoSynth::Profile.new(
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-			:problem_mutation			=> ProblemMutation.new,
-#			:problem_mutation			=> EvoSynth::Mutations::Identity.new,
-			:problem_recombination		=> EvoSynth::Recombinations::Identity.new,
+			:problem_mutation			=> EvoSynth::Mutations::MixingMutation.new,
+			:problem_recombination		=> EvoSynth::Recombinations::OnePointCrossover.new,
 			:population					=> EvoSynth::Population.new(SOLUTIONS) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
 			:problems					=> EvoSynth::Population.new(PROBLEMS) { EvoSynth::MaximizingIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
 			:evaluator					=> CMBEvaluator.new
