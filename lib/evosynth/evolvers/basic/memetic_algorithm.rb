@@ -34,7 +34,7 @@ module EvoSynth
 			DEFAULT_CHILD_FACTOR = 0.5
 			DEFAULT_RECOMBINATION_PROBABILITY = 1.0
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
-			DEFAULT_INDIVIDUAL_LEARNING_GENERATIONS = 10
+			DEFAULT_INDIVIDUAL_LEARNING_GOAL = ->(gen, best) { gen >= 10 }
 			DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY = 0.75
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_SUBEVOLVER_CREATOR = ->(profile) { EvoSynth::Evolvers::LocalSearch.new(profile) }
@@ -49,7 +49,7 @@ module EvoSynth
 					:child_factor						=> DEFAULT_CHILD_FACTOR,
 					:recombination_probability			=> DEFAULT_RECOMBINATION_PROBABILITY,
 				    :subevolver_creator					=> DEFAULT_SUBEVOLVER_CREATOR,
-					:individual_learning_generations	=> DEFAULT_INDIVIDUAL_LEARNING_GENERATIONS,
+					:individual_learning_goal			=> DEFAULT_INDIVIDUAL_LEARNING_GOAL,
 					:individual_learning_probability	=> DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY
 
 				use_profile profile
@@ -95,7 +95,7 @@ module EvoSynth
 					if EvoSynth.rand < @individual_learning_probability
 						@profile.individual = child
 						subevolver = @subevolver_creator.call(@profile)
-						subevolver.run_until_generations_reached(@individual_learning_generations)
+						subevolver.run_until &@individual_learning_goal
 					else
 						child
 					end
