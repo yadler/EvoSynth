@@ -40,17 +40,18 @@ module Examples
 
 			def update(ants)
 				@matrix = @matrix.collect { |i| i * @evaporation_weight }
+				columns = @matrix.column_vectors
+				columns.map! { |col| col.to_a }
 
 				ants.each do |ant|
 					ant.genome.each_with_index do |node, index|
 						break if (index + 1) >= ant.genome.size
-
-						# FIXME: this is pretty inefficient
-						columns = @matrix.column_vectors
-						columns[ant.genome[index + 1]] = columns[ant.genome[index + 1]].map { |i| i * 100 / ant.fitness }
-						@matrix = Matrix.columns(columns)
+						columns[node][ant.genome[index + 1]] += 100.0 / ant.fitness
 					end
 				end
+
+				columns.map! { |col| Vector.elements(col) }
+				@matrix = Matrix.columns(columns)
 			end
 
 			def to_s
@@ -59,9 +60,9 @@ module Examples
 
 		end
 
-		# FIXME: this mutation is seriously broken
+		# TODO: this mutation should be refactored
 
-		class SimpleAntMutation
+		class AntMutation
 
 			def initialize(tsp, pheromon, start, exploration_weight = 0.5, distance_weight = 2.0)
 				@tsp = tsp
@@ -163,25 +164,27 @@ module Examples
 
 
 		def Ants.evolver_profile(tsp, pheromon)
-			ant_mutation = Ants::SimpleAntMutation.new(tsp, pheromon, 1, 0.2)
+			ant_mutation = Ants::AntMutation.new(tsp, pheromon, 1, 0.2)
 
 			population = EvoSynth::Population.new(10) do
 				ant = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new)
 				ant_mutation.mutate(ant)
 			end
 
-#			combined_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
-#			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
-#			combined_mutation.add(ant_mutation, 0.75)
+			combined_mutation = EvoSynth::MetaOperators::ProportionalCombinedOperator.new
+			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
+			combined_mutation.add(ant_mutation, 0.75)
 
 			EvoSynth::Profile.new(
-				:mutation			=> EvoSynth::Mutations::InversionMutation.new,
+				:mutation			=> combined_mutation,
 				:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 				:population			=> population,
 				:recombination		=> EvoSynth::Recombinations::PartiallyMappedCrossover.new,
 				:evaluator			=> tsp
 			)
 		end
+
+		# try to load the testcase
 
 		tsp = nil
 		begin
@@ -191,6 +194,9 @@ module Examples
 			exit(0)
 		end
 		puts "read testdata/bays29.tsp - matrix contains #{tsp.size} nodes..."
+
+		# we need to "get into" the used evolver to update the pheromon
+		# each iteration of the
 
 		PHEROMON = Ants::Pheromon.new(tsp.size)
 
@@ -202,6 +208,8 @@ module Examples
 				PHEROMON.update(@population);
 			end
 		end
+
+		# setup the profile, optimal solution and run the evolver:
 
 		profile = Ants.evolver_profile(tsp, PHEROMON)
 
@@ -220,10 +228,10 @@ module Examples
 			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		result = evolver.run_until_generations_reached(1000)
+		result = evolver.run_until_generations_reached(500)
 		puts evolver
 
-		puts "Best Individual after evolution:  #{result.best}"
-		puts "SHIT!" if result.best.genome.size != result.best.genome.uniq.size
+		puts "\nBest Individual after evolution:  #{result.best}"
+		puts "oooops" if result.best.genome.size != result.best.genome.uniq.size
 	end
 end

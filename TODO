@@ -15,7 +15,7 @@ fehlende oder fehlerhafte Testfälle:
 
 Features:
 
-	- INSTALL ins englische übersetzen
+	- INSTALL ins englische übersetzen (rake ist optional)
 
 	- Algorithmen:
 		=> Tabu-Suche am beispiel graph colouring (164)
@@ -27,9 +27,6 @@ Features:
 
 	- Individuen:
 		=> mittels metaprogramming memory einbauen (siehe CMB)
-
-	- Beispiele:
-		=> Ant mutation fixen und Ant example überarbeiten
 
 	- Versuchspläne und Statistiken?!
 

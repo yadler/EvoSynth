@@ -3,14 +3,11 @@ Vorraussetzungen:
 	- ruby 1.9 (http://www.ruby-lang.org bzw. http://rubyforge.org/frs/?group_id=167)
 	- optional: git (http://git-scm.com/)
 
-gems installieren (als root):
+optionale gems installieren (gem install <gem-name> (als root)):
 
-	gem install shoulda rake
-
-optionale gems:
-
-	gruff gnuplot rmagick (grafiken)
-	flake flog roodi rcov (code quality tools)
+	shoulda rake			(Rakefile, Testsuite)
+	gruff gnuplot rmagick	(grafiken)
+	flake flog roodi rcov	(code quality tools)
 
 EvoSynth downloaden:
 
