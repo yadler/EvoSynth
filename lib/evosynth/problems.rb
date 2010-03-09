@@ -34,3 +34,4 @@ end
 require 'evosynth/problems/float_benchmark_functions'
 require 'evosynth/problems/binary_benchmark_functions'
 require 'evosynth/problems/tsp'
+require 'evosynth/problems/graph_colouring'

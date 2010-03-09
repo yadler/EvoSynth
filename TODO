@@ -30,17 +30,13 @@ Features:
 
 	- Versuchspläne und Statistiken?!
 
-	- Probleme:
-		=> GraphColouring analog zu TSP ins problems module verschieben
-		=> Evaluator für benchmarkfunktionen schreiben
-
 ============================== EvoSynth >0.1 ===================================
 
 Features:
 
 	- add # encoding: utf-8 to all ruby files
 
-	- TSP Problem generischer machen und refactorisieren
+	- TSP und GraphColouring Problem generischer machen und refactorisieren
 
 	- Benchmarkfunktionen:
 		=> Matrix Multiplikationsproblem aus Paredis Paper (epistasis gut steuerbar)

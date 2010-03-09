@@ -23,77 +23,10 @@
 
 
 require 'evosynth'
-require 'set'
-require 'matrix'
 
-# FIXME: refactor me and extract tool classes !
 
 module Examples
 	module GraphColouring
-
-		class Graph
-			attr_reader :node_count
-			attr_reader :matrix
-
-			def initialize(filename)
-				read_file(filename)
-			end
-
-			private
-
-			# reads the node count from grapg-file
-			def get_node_count(file_name)
-				File.open(file_name).each_line do |line|
-					next if line !~ /^p\D*(\d+)/
-					return Integer($1)
-				end
-			end
-
-			# reads a graph file
-			def read_file(file_name)
-				@node_count = get_node_count(file_name)
-				@matrix = Matrix.zero(@node_count)
-
-				columns = @matrix.column_vectors
-
-
-				File.open(file_name).each_line do |line|
-					next if line !~ /^e/
-					line =~ /(\d+)\s*(\d+)/
-					arr = columns[Integer($1)-1].to_a
-					arr[Integer($2)-1] = 1
-					columns[Integer($1)-1] = Vector.elements(arr)
-				end
-				@matrix = Matrix.columns(columns)
-			end
-
-		end
-
-
-		class ColourEvaluator < EvoSynth::Evaluator
-
-			def initialize(graph)
-				@graph = graph
-				super()
-			end
-
-			def verletzungen(genome)
-				verletzungen = 0
-
-				@graph.node_count.times do |row|
-					@graph.node_count.times do |col|
-						verletzungen += 1 if @graph.matrix[row, col] == 1 && genome[row] == genome[col]
-					end
-				end
-
-				verletzungen
-			end
-
-			def calculate_fitness(individual)
-				fitness = 0.0 + individual.genome.uniq.size * (verletzungen(individual.genome) + 1)
-				fitness
-			end
-		end
 
 		MAX_COLORS = 10
 		GENERATIONS = 10000
@@ -101,8 +34,8 @@ module Examples
 		GOAL = 5
 		FLIP_GRAPH_COLOUR = lambda { |gene| EvoSynth.rand(gene + 2) }
 
-		def GraphColouring.create_random_individual(graph)
-			genome = EvoSynth::ArrayGenome.new(graph.node_count)
+		def GraphColouring.create_random_individual(graph_evaluator)
+			genome = EvoSynth::ArrayGenome.new(graph_evaluator.node_count)
 			max_color = EvoSynth.rand(genome.size > MAX_COLORS ? MAX_COLORS : genome.size) + 1
 			genome.map! { |gene| EvoSynth.rand(max_color)}
 			genome.map! { |gene| gene % genome.uniq.size }
@@ -110,9 +43,9 @@ module Examples
 			inidividual
 		end
 
-		graph = nil
+		graph_evaluator = nil
 		begin
-			graph = GraphColouring::Graph.new("testdata/myciel4.col")
+			graph_evaluator = EvoSynth::Problems::GraphColouring.new("testdata/myciel4.col")
 		rescue
 			puts "Could not load test data. Please see testdata/README for instructions..."
 			exit(0)
@@ -122,8 +55,8 @@ module Examples
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
 			:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
-			:population			=> EvoSynth::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph) },
-			:evaluator			=> GraphColouring::ColourEvaluator.new(graph)
+			:population			=> EvoSynth::Population.new(INDIVIDUALS) { GraphColouring.create_random_individual(graph_evaluator) },
+			:evaluator			=> graph_evaluator
 		)
 
 		evolver = EvoSynth::Evolvers::SteadyStateGA.new(profile)
