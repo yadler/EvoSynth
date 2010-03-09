@@ -42,6 +42,7 @@ module EvoSynth
 			end
 
 			def use_profile(profile)
+				@profile = profile
 				@properties.each do |property|
 					if property.is_a? Symbol
 							use_property(profile, property)

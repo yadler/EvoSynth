@@ -20,7 +20,6 @@ Features:
 
 	- Algorithmen:
 		=> Tabu-Suche am beispiel graph colouring (164)
-		=> memetischer Algorithmus (165)
 		=> CMBCoevolutionary:
 			-> Balance fehlt
 			-> braucht ein refactoring

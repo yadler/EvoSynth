@@ -29,6 +29,7 @@ require 'evosynth/evolvers/basic/hillclimber'
 require 'evosynth/evolvers/basic/population_hillclimber'
 require 'evosynth/evolvers/basic/genetic_algorithm'
 require 'evosynth/evolvers/basic/steady_state_ga'
+require 'evosynth/evolvers/basic/memetic_algorithm'
 
 require 'evosynth/evolvers/evolution_strategies/adaptive_es'
 require 'evosynth/evolvers/evolution_strategies/selfadaptive_es'

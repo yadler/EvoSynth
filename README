@@ -18,9 +18,17 @@ meta features:
 * EvoSynth::Evolvers.add_weak_elitism
 * EvoSynth::Evolvers.add_strong_elitism
 
-basic hillclimber:
+basic evolvers:
 * EvoSynth::Evolvers::Hillclimber
 * EvoSynth::Evolvers::PopulationHillclimber
+* EvoSynth::Evolvers::GeneticAlgorithm
+* EvoSynth::Evolvers::SteadyStateGA
+* EvoSynth::Evolvers::MemeticAlgorithm
+
+evolution strategies:
+* EvoSynth::Evolvers::AdaptiveES
+* EvoSynth::Evolvers::SelfAdaptiveES
+* EvoSynth::Evolvers::DerandomizedES
 
 local search:
 * EvoSynth::Evolvers::LocalSearch
@@ -30,18 +38,9 @@ local search:
 * EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
 * EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 
-genetic algorithms:
-* EvoSynth::Evolvers::GeneticAlgorithm
-* EvoSynth::Evolvers::SteadyStateGA
-
 coevolutionary algorithms:
 * EvoSynth::Evolvers::CoopCoevolutionary
 * EvoSynth::Evolvers::CMBCoevolutionary (unfinished)
-
-evolution strategies:
-* EvoSynth::Evolvers::AdaptiveES
-* EvoSynth::Evolvers::SelfAdaptiveES
-* EvoSynth::Evolvers::DerandomizedES
 
 === selections
 
