@@ -32,7 +32,7 @@ module Examples
 	module CMBExample
 
 		GENOME_SIZE = 32
-		NUM_PEAKS = 5
+		NUM_PEAKS = 8
 		MAX_GENERATIONS = 2000
 		SOLUTIONS = 25
 		PROBLEMS = 25
@@ -46,11 +46,11 @@ module Examples
 
 			# sets fitnesses and returns winner
 
-			def encounter(problem, solution)
+			def encounter(problem, solution, set_problem_fitness = true, set_solution_fitness = true)
 				result = EvoSynth::Problems::BinaryBenchmarkFuntions.n_peaks(problem.genome, solution.genome)
-				solution.fitness = result
-				problem.fitness = toggle(result)
-				# TODO: what about memory? metaprogramming like in self adaptive gauss mutation? or explicit as memory = [] in invididual?
+
+				solution.fitness = result if set_problem_fitness
+				problem.fitness = toggle(result) if set_solution_fitness
 
 				# TODO: dirty hack - think about proper solution
 				@calculated += 1
@@ -111,7 +111,8 @@ module Examples
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"				=> ->{ evolver.generations_computed },
 			"best solution fitness"		=> ->{ evolver.population.best.fitness },
-			"best problem fitness"		=> ->{ evolver.problems.best.fitness }
+			"best problem fitness"		=> ->{ evolver.problems.best.fitness },
+			"solution_success"			=> ->{ evolver.solution_success }
 		))
 		evolver.run_until_generations_reached(MAX_GENERATIONS)
 	end

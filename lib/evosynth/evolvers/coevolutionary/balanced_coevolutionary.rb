@@ -26,9 +26,13 @@ module EvoSynth
 	module Evolvers
 
 		# based on "Coevolution, Memory and Balance" from Paredis, 1999
+		#
+		# evolves two populations (problems, solutions / predator, prey) in a balanced manner
 
 		class BalancedCoevolutionary
 			include EvoSynth::Evolvers::Evolver
+
+			attr_reader :solution_success
 
 			DEFAULT_PAIRING_RUNS = 20
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
@@ -78,29 +82,43 @@ module EvoSynth
 			end
 
 			def next_generation
+				problem_wins, solution_wins = 0, 0
+
 				@pairing_runs.times do
 					problem = @parent_selection.select(@problems, 1).first
 					solution = @parent_selection.select(@population, 1).first
-					@evaluator.encounter(problem, solution)
+					winner = @evaluator.encounter(problem, solution)
+					winner == problem ? problem_wins += 1 : solution_wins += 1
 				end
 
-				# select, recombine and mutate problem child
-				parents = @parent_selection.select(@problems, 2)
-				child = @problem_recombination.recombine(parents[0], parents[1])[0] # only one offspring each generation!
-				child = @problem_mutation.mutate(child)
+				@solution_success = solution_wins / @pairing_runs.to_f
 
-				@problems.add(child)
-				@problems.remove(@problems.worst)
-
-				# select, recombine and mutate solution child
-				parents = @parent_selection.select(@population, 2)
-				child = @recombination.recombine(parents[0], parents[1])[0] # only one offspring each generation!
-				child = @mutation.mutate(child)
-
-				@population.add(child)
-				@population.remove(@population.worst)
+				if EvoSynth.rand < @solution_success
+					# select, recombine and mutate solution child
+					evolve_offspring(@population, @problems, @recombination,
+						@mutation) { |child, enemy| @evaluator.encounter(enemy, child, false, true) }
+				else
+					# select, recombine and mutate problem child
+					evolve_offspring(@problems, @population, @problem_recombination,
+						@problem_mutation) { |child, enemy| @evaluator.encounter(child, enemy, true, false) }
+				end				
 			end
 
+			private
+
+			def evolve_offspring(population, enemies, recombination, mutation)
+				parents = @parent_selection.select(population, 2)
+				child = recombination.recombine(parents[0], parents[1])[0] # only one offspring each generation!
+				child = mutation.mutate(child)
+
+				@pairing_runs.times do
+					enemy = @parent_selection.select(enemies, 1).first
+					yield child, enemy
+				end
+
+				population.add(child)
+				population.remove(population.worst)
+			end
 		end
 
 	end

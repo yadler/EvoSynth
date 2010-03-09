@@ -20,9 +20,7 @@ Features:
 
 	- Algorithmen:
 		=> Tabu-Suche am beispiel graph colouring (164)
-		=> CMBCoevolutionary:
-			-> Balance fehlt
-			-> braucht ein refactoring
+		=> CMBCoevolutionary braucht ein refactoring
 
 	- Versuchspläne und Statistiken?!
 
