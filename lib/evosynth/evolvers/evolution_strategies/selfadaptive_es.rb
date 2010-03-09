@@ -38,10 +38,10 @@ module EvoSynth
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
-				    :child_factor => DEFAULT_CHILD_FACTOR,
-				    :mutation => DEFAULT_MUTATION,
+				    :child_factor			=> DEFAULT_CHILD_FACTOR,
+				    :mutation				=> DEFAULT_MUTATION,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
-				    :parent_selection => DEFAULT_PARENT_SELECTION
+				    :parent_selection		=> DEFAULT_PARENT_SELECTION
 
 				use_profile profile
 

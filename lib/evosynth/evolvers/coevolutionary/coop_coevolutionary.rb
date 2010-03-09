@@ -45,7 +45,7 @@ module EvoSynth
 			end
 
 			def to_s
-				"cooperative coevolutionary algorithm >"
+				"cooperative coevolutionary algorithm"
 			end
 
 			def best_solution

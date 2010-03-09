@@ -61,7 +61,7 @@ module Examples
 			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		puts "\nRunning #{evolver}...\n"
+		puts "\nRunning Hillclimber...\n"
 		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
 		puts "\nIndividual after evolution:  #{profile.individual}"
 
@@ -76,7 +76,7 @@ module Examples
 			"worstfitness"  => ->{ evolver.worst_solution.fitness }
 		))
 
-		puts "\nRunning #{evolver}...\n"
+		puts "\nRunning Genetic Algorithm with elitism...\n"
 		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end

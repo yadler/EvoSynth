@@ -38,9 +38,9 @@ module EvoSynth
 				init_profile :population,
 				    :evaluator,
 				    :mutation,
-				    :parent_selection => DEFAULT_SELECTION,
-				    :recombination => DEFAULT_RECOMBINATION,
-				    :recombination_probability => DEFAULT_RECOMBINATION_PROBABILITY
+				    :parent_selection			=> DEFAULT_SELECTION,
+				    :recombination				=> DEFAULT_RECOMBINATION,
+				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY
 
 				use_profile profile
 

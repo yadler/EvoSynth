@@ -48,11 +48,11 @@ module EvoSynth
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
-					:sigma => DEFAULT_SIGMA,
-				    :child_factor => DEFAULT_CHILD_FACTOR,
+					:sigma					=> DEFAULT_SIGMA,
+				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
-				    :parent_selection => DEFAULT_PARENT_SELECTION
+				    :parent_selection		=> DEFAULT_PARENT_SELECTION
 
 				use_profile profile
 				@adjustment = DEFAULT_ADJUSTMENT

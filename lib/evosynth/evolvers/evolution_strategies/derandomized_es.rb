@@ -48,10 +48,10 @@ module EvoSynth
 			def initialize(profile)
 				init_profile :population,
 				    :evaluator,
-					:sigma => DEFAULT_SIGMA,
-					:alpha => DEFAULT_ALPHA,
-					:tau => DEFAULT_TAU,
-				    :child_factor => DEFAULT_CHILD_FACTOR,
+					:sigma					=> DEFAULT_SIGMA,
+					:alpha					=> DEFAULT_ALPHA,
+					:tau					=> DEFAULT_TAU,
+				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION
 
 				use_profile profile
