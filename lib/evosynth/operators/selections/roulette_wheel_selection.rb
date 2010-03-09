@@ -36,7 +36,7 @@ module EvoSynth
 
 				limit = EvoSynth.rand(fitness_hash[population.size - 1] / select_count)
 
-				select_count.times do
+				select_count.to_i.times do
 					next_individual = select_next_individual(population, limit, fitness_hash)
 					selected_population.add(next_individual)
 					limit += fitness_hash[population.size - 1] / select_count

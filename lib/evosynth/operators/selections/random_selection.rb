@@ -29,7 +29,7 @@ module EvoSynth
 
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Population.new
-				select_count.times { selected_population << population[EvoSynth.rand(population.size)] }
+				select_count.to_i.times { selected_population << population[EvoSynth.rand(population.size)] }
 				selected_population
 			end
 

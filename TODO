@@ -4,6 +4,7 @@
 
 fehlende oder fehlerhafte Testfälle:
 
+	- Selektionen: Float select_count (to_i testcase)
 	- EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
 	- EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
 	- EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
