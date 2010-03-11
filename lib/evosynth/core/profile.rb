@@ -24,19 +24,21 @@
 
 module EvoSynth
 
-	# This class is used to create and maintain a evolver profile. (uses metaprogramming)
-	# TODO: add proper rdoc
-	#
-	# usage:
-	#
-	#		profile = EvoSynth::Profile.new(
-	#			:individual			=> MaxOnes.create_individual,
-	#			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
-	#			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
-	#			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-	#		)
+	# This class is used to create and maintain a evolver profile. Basically a Profile can be seen
+	# as a dynamic Hash, where values can be added and removed at will.
 
 	class Profile
+
+		# Creates a new Profile using a given hash of symbols and values.
+		# 
+		# usage:
+		#
+		#    profile = EvoSynth::Profile.new(
+		#        :individual      => MaxOnes.create_individual,
+		#        :population      => EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
+		#        :evaluator       => MaxOnes::MaxOnesEvaluator.new,
+		#        :mutation        => EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		#    )
 
 		def initialize(*properties)
 			@properties = {}
@@ -52,15 +54,38 @@ module EvoSynth
 			end
 		end
 
+		# Used to dynamically add key/value pairs.
+		#
+		#    p = EvoSynth::Profile.new
+		#    p.foo                        #=> raises ArgumentError
+		#    p.foo = "bar"                #=> adds key 'foo' to p and sets its value to 'bar'
+		#    p.foo                        #=> 'bar'
+
 		def method_missing(method_name, *args)
 			if method_name[-1] == "="
 				args = args[0] if args.size == 1
 				add_symbol(method_name[0..method_name.size-2].to_sym, args)
 			else
-				super(*args) unless @properties.has_key?(method_name)
+				raise ArgumentError.new("Profile does not contain a value for '#{method_name}'.") unless @properties.has_key?(method_name)
 				@properties[method_name]
 			end
 		end
+
+		# Removes a given key from the profile. Returns the key if it was member of the profile, nil otherwise.
+		#
+		#	:call-seq:
+		#		delete(key) -> nil or key
+		#
+		#    p = EvoSynth::Profile.new
+		#    p.foo = "bar"                    #=> adds key 'foo' to p and sets its value to 'bar'
+		#    p.delete(:foo)                   #=> 'bar'
+		#    p.foo                            #=> raises ArgumentError
+
+		def delete(key)
+			@properties.delete(key)
+		end
+
+		# Return a printable version of the profile.
 
 		def to_s
 			"evolver profile <#{@properties.to_s}>"
@@ -68,9 +93,13 @@ module EvoSynth
 
 		private
 
+		# Adds a given symbol as key to the internal Hash and sets the value to the given value.
+
 		def add_symbol(symbol, value)
 			@properties[symbol] = value
 		end
+
+		# Add a given hash to the internal hash.
 
 		def add_hash(hash)
 			hash.each_pair { |key, default_value| @properties[key] = default_value }

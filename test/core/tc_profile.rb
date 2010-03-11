@@ -59,6 +59,17 @@ class ProfileTest < Test::Unit::TestCase
 			assert_equal("baz", profile.baz)
 		end
 
+		should "be able to delete keys" do
+			profile = EvoSynth::Profile.new(:foo, :bar => "bar", :baz => "baz")
+			assert_nil(profile.foo)
+			assert_equal("bar", profile.bar)
+			assert_equal("baz", profile.baz)
+			profile.delete(:foo)
+			assert_raise(ArgumentError) { (profile.foo) }
+			profile.delete(:bar)
+			assert_raise(ArgumentError) { (profile.bar) }
+		end
+
 	end
 
 end
