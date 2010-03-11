@@ -25,6 +25,8 @@
 module EvoSynth
 	module Decoder
 
+		# Converts a binary gray code bitstring (either 1/0 or true/false) into a standard binary bitstring.
+
 		def Decoder.gray_to_binary(gray)
 			rev_stdbin = Array.new(gray.size)
 			gray.reverse!
@@ -34,6 +36,8 @@ module EvoSynth
 
 			rev_stdbin.reverse
 		end
+
+		# Converts a standard binary bitstring (either 1/0 or true/false) into a gray code bitstring.
 
 		def Decoder.binary_to_gray(binary)
 			gray = Array.new(binary)

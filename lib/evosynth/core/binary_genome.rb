@@ -24,24 +24,37 @@
 
 module EvoSynth
 
+	# Binary genome which keeps track of changes (changed attribute)
+	# to reduce the need to recalculate the fitness function (see Evaluator)
+	#
+	# This genome is a simple bitstring and each gene is a boolean.
+	#
 	# FIXME: implment in C for better performance - right now its pretty useless
+	# TODO: complete documentation
 
 	class BinaryGenome < Array
+
+		# Creates a BinaryGenome with a given initial (Integer) value. Default constructs a new
+		# BinaryGenome with the initial value of 0.
 
 		def initialize(intial_value = 0)
 			@data = intial_value
 			@changed = true
 		end
 
+		# Set the changed flag (boolean) of the genome
+
 		def changed=(value)
 			@changed = value
 		end
 
-		# true if the genome has changed - has to be set to false manually
+		# True if the genome has changed, false otherwise. Has to be set to false manually.
 
 		def changed?
 			@changed
 		end
+
+		# Returns a clone of this genome
 
 		def clone
 			my_clone = BinaryGenome.new(@data)
@@ -49,7 +62,8 @@ module EvoSynth
 			my_clone
 		end
 
-
+		# Array like index accessor
+		#
 		# [index]
 		# [index, length]
 		# [range]
@@ -72,6 +86,8 @@ module EvoSynth
 				raise ArgumentError, "wrong number of arguments"
 			end
 		end
+
+		# Array like index accessor
 
 		def []=(*args)
 			if args.size == 2
@@ -101,16 +117,21 @@ module EvoSynth
 			end
 		end
 
+		# Flips (inverts) the gene at the given index
+
 		def flip!(index)
 			@data = @data ^ (1 << index)
 		end
+
+		# Returns the size (in bits) of this genome.
 
 		def size
 			@size = @data.to_s(2).size unless defined? @size
 			@size
 		end
 
-		# Create a printable version of the genome
+		# Return a printable version of the genome
+
 		def to_s
 			@data.to_s(2)
 		end

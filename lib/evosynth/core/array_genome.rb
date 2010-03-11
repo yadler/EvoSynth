@@ -24,31 +24,34 @@
 
 module EvoSynth
 
-	# Array based genome, which keeps track of changes (changed attribute)
-	# to reduce the need to recalculate the fitness function in the
-	# Individual module
+	# Array based genome which keeps track of changes (changed attribute)
+	# to reduce the need to recalculate the fitness function (see Evaluator)
+	#
+	# This genome can contain any type of genes.
+	#
+	# TODO: complete documentation
 
 	class ArrayGenome < Array
 
-		# set the changed flag of the genome
+		# Set the changed flag (boolean) of the genome
 
 		def changed=(value)
 			@changed = value
 		end
 
-		# true if the genome has changed - has to be set to false manually
+		# True if the genome has changed, false otherwise. Has to be set to false manually.
 
 		def changed?
 			@changed
 		end
 
-		# Create a printable version of the genome
+		# Return a printable version of this genome.
 
 		def to_s
 			self * ", "
 		end
 
-		# returns a clone
+		# Returns a clone of this genome
 
 		def clone
 			my_clone = super

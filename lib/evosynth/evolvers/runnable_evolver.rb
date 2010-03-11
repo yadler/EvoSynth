@@ -28,6 +28,9 @@ require 'observer'
 module EvoSynth
 	module Evolvers
 
+		# This module provides different termination strategies for evolvers as well
+		# as the observable property (observers will get notified each generation)
+
 		module RunnableEvolver
 			include Observable
 

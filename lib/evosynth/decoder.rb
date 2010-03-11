@@ -22,5 +22,12 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+module EvoSynth
+
+	# This module contains all genome decoders (genotype <-> phenotype conversion).
+	module Decoder
+	end
+end
+
 require 'evosynth/decoder/gray'
 require 'evosynth/decoder/binary_to_real'

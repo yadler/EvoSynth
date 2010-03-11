@@ -25,6 +25,14 @@
 module EvoSynth
 	module Decoder
 
+		#	:call-seq:
+		#		Decoder.binary_to_real([1,1,0,1]) -> Float (between -1.0 and 1.0)
+		#		Decoder.binary_to_real([1,1,0,1], 0.0) -> Float (between 0.0 and 1.0)
+		#		Decoder.binary_to_real([1,1,0,1], -5.12, 5.12) -> Float (between -5.12 and 5.12)
+		#
+		# This converts a given array of binary values (either 1/0 or true/false) into
+		# a Float in a given range.
+
 		def Decoder.binary_to_real(binary, min_bound = -1.0, max_bound = 1.0)
 			binary = binary.map do |bin|
 				case bin

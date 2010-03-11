@@ -25,6 +25,7 @@
 module EvoSynth
 	module Evolvers
 
+		# This module provides the ability to use the Profile class in a evolver.
 
 		module ProfileUsingEvolver
 

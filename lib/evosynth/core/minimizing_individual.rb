@@ -24,7 +24,7 @@
 
 module EvoSynth
 
-	# Class for Individuals (for minimizing problems)
+	# Basic individual for for minimizing problems
 
 	class MinimizingIndividual < Individual
 

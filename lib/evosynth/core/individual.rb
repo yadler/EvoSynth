@@ -44,14 +44,14 @@ module EvoSynth
 			@genome.changed = false
 		end
 
-		# returns true, if this individual (most of the time its genome) has changed. otherwise it
+		# Returns true, if this individual (most of the time its genome) has changed. Otherwise it
 		# will return false.
 
 		def changed?
 			@genome.changed?
 		end
 
-		# clones a individual and its genome (deep copy)
+		# Clones and returns a individual and its genome (deep copy).
 
 		def deep_clone
 			my_clone = self.clone
@@ -69,19 +69,19 @@ module EvoSynth
 			compare_fitness_values(fitness, another.fitness)
 		end
 
-		# Should be implemented by Classes that mix-in the Individual module
+		# Should be implemented by subclasses
 
 		def compare_fitness_values(one, two)
 			raise NotImplementedError, "please implement compare_fitness_values!"
 		end
 
-		# Returns wether this Individual needs to be minimized
+		# Returns wether this Individual needs to be minimized.
 
 		def minimizes?
 			compare_fitness_values(1,0) < 0
 		end
 
-		# Returns wether this Individual needs to be maximized
+		# Returns wether this Individual needs to be maximized.
 
 		def maximizes?
 			compare_fitness_values(1,0) > 0

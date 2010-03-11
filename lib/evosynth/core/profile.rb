@@ -71,10 +71,10 @@ module EvoSynth
 			end
 		end
 
-		# Removes a given key from the profile. Returns the key if it was member of the profile, nil otherwise.
-		#
 		#	:call-seq:
 		#		delete(key) -> nil or key
+		#
+		# Removes a given key from the profile. Returns the key if it was member of the profile, nil otherwise.
 		#
 		#    p = EvoSynth::Profile.new
 		#    p.foo = "bar"                    #=> adds key 'foo' to p and sets its value to 'bar'

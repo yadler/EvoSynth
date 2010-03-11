@@ -29,6 +29,11 @@ require 'evosynth/evolvers/profile_using_evolver'
 module EvoSynth
 	module Evolvers
 
+		# This Module provides some basic functionality for evolvers, its simply a union
+		# of RunnableEvolver and ProfileUsingEvolver. Every evolver should mix-in this
+		# module of provide similiar functionality to be compatible with the other classes
+		# and modules in EvoSynth.
+
 		module Evolver
 			include RunnableEvolver
 			include ProfileUsingEvolver

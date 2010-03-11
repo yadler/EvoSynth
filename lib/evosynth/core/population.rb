@@ -24,18 +24,24 @@
 
 module EvoSynth
 
-	# This class is used to create and maintain a population
+	# This class is used to create and maintain a population. In this case a population
+	# is simply a Array of individuals that keeps track of changes.
 
 	class Population <  EvoSynth::ArrayGenome
 
-		# Setup a population of individuals with the given size
-		# and a block to initialize each individual
+		#	:call-seq:
+		#		Population.new -> Population
+		#		Population.new(size) -> Population (with given size)
+		#		Population.new(size) { block } -> Population (with given size and block to intialize each individual)
+		#
+		# Creates a population
 
 		def initialize(*args)
 			super(*args)
 			self.map! { |individual| yield } if block_given?
 		end
 
+		# Returns a clone of the population (deep_clone)
 
 		def deep_clone
 			my_clone = self.clone
@@ -43,11 +49,13 @@ module EvoSynth
 			my_clone
 		end
 
+		# Adds a individual to the population.
 
 		def add(individual)
 			self << individual
 		end
 
+		# Removes a give individual (first occurence) from the population.
 
 		def remove(individual)
 			# FIXME: this is a rather ugly hack
@@ -65,12 +73,25 @@ module EvoSynth
 		end
 
 
+		#	:call-seq:
+		#		p = Population.new
+		#		p.best					#=> Returns the best individual
+		#		p.best(3)				#=> Returns the 3 best individuals
+		#
+		# Returns the best N individuals (by comparing with <=>) of the population.
+
 		def best(count = 1)
 			self.sort! if self.changed?
 			self.changed = false
 			count == 1 ? self.last : self.last(count).reverse
 		end
 
+		#	:call-seq:
+		#		p = Population.new
+		#		p.worst					#=> Returns the worst individual
+		#		p.worst(3)				#=> Returns the 3 worst individuals
+		#
+		# Returns the worst N individuals (by comparing with <=>) of the population.
 
 		def worst(count = 1)
 			self.sort! if self.changed?
@@ -78,9 +99,20 @@ module EvoSynth
 			count == 1 ? self.first : self.first(count).reverse
 		end
 
+		#	:call-seq:
+		#		to_s -> string
+		#
+		# Returns description of this individual
+		#
+		#		p = Population.new
+		#		p.to_s					#=> "Population <size=0>"
 
 		def to_s
-			"Population (size=#{self.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness})"
+			begin
+				"Population <size=#{self.size}, best.fitness=#{best.fitness}, worst.fitness=#{worst.fitness}>"
+			rescue
+				"Population <size=#{self.size}>"
+			end
 		end
 
 	end

@@ -24,26 +24,31 @@
 
 module EvoSynth
 
-	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
-	# the random number generator of EvoSynth (uniform distributed)
-	#
-	# TODO: add proper documentation
+	# Uniform distributed (between 0.0 and 1.0) pseudo-random number generator of EvoSynth,
+	# overwrite this function if you want to change the uniform distributed random number
+	# generator of EvoSynth.
+	# 
+	# This a fascade to Kernel.rand. For a complete documentation see the Ruby documentation of rand().
 
 	def EvoSynth.rand(*args)
 		Kernel.rand(*args)
 	end
 
-	# TODO: add proper documentation
+	# Returns a pseudo-random boolean value (true or false).
 
 	def EvoSynth.rand_bool
 		EvoSynth.rand(2) > 0
 	end
 
-	# normal distributed random number
-	# polar form of the Box-Mueller (see: http://www.taygeta.com/random/gaussian.html)
-	# 
-	# TODO: proper documentation
-	
+	#	:call-seq:
+	#		EvoSynth.nrand				#=> pseudo-random normal distributed random number
+	#		EvoSynth.nrand(3.2)			#=> pseudo-random normal distributed random number around 3.2
+	#		EvoSynth.nrand(2.4, 1.5)	#=> pseudo-random normal distributed random number around 2.4 with sigma = 1.5
+	#
+	# Normal distributed pseudo-random number generator of EvoSynth. Uses the polar form of
+	# the Box-Mueller transformation to transform two Uniform distributed random numbers into
+	# one normal distributed random number (see: http://www.taygeta.com/random/gaussian.html=).
+
 	def EvoSynth.nrand(mu = 0.0, sigma = 1.0)
 		x1, x2, w, = 0.0, 0.0, 0.0, 0.0
 
@@ -57,10 +62,9 @@ module EvoSynth
 		mu + (x2 * w * sigma)
 	end
 
-	# Right now this is just a fascade to Kernel.rand - overwrite if you want to change
-	# the random number generator of EvoSynth
+	# Set the seed of the uniform distributed random number generator of EvoSynth.
 	#
-	# TODO: add proper documentation
+	# This a fascade to Kernel.srand, for a complete documentation see the Ruby documentation of srand().
 
 	def EvoSynth.srand(*args)
 		Kernel.srand(*args)
