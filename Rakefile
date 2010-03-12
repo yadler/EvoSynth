@@ -124,9 +124,9 @@ end
 desc "Run all benchmarks"
 task :run_benchmarks do
 	$:.unshift File.expand_path("../lib", __FILE__)
-	load 'test/benchmark/decoder_benchmark.rb'
-	load 'test/benchmark/mutation_benchmark.rb'
-	load 'test/benchmark/recombination_benchmark.rb'
-	load 'test/benchmark/selection_benchmark.rb'
+	load 'benchmarks/decoder_benchmark.rb'
+	load 'benchmarks/mutation_benchmark.rb'
+	load 'benchmarks/recombination_benchmark.rb'
+	load 'benchmarks/selection_benchmark.rb'
 end
 
