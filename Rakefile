@@ -35,19 +35,19 @@ package_specification = Gem::Specification.new do |spec|
 	spec.name		= PKG_NAME
 	spec.version	= PKG_VERSION
 
-	spec.summary	= "EvoSynth is a framework for rapid prototyping of evolutionary and genetic algorithms"
+	spec.summary	= "EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary algorithms."
 	spec.author		= "Yves Adler"
 	spec.email		= "yves.adler@googlemail.com"
 
 	files = FileList["**/*"]
 	files.exclude ".git*"
 	files.exclude "pkg/*"
-	spec.files			= files.to_a
+	spec.files		= files.to_a
 
-	spec.require_paths	<< "lib"
+	spec.require_paths << "lib"
 
 	spec.has_rdoc			= true
-	spec.extra_rdoc_files	= ["LICENSE"]
+	spec.extra_rdoc_files	= ["README", "LICENSE", "INSTALL"]
 end
 
 Rake::GemPackageTask.new(package_specification) do |pkg|
@@ -79,7 +79,7 @@ Rake::RDocTask.new do |rdoc|
 	rdoc.rdoc_dir = "docs/rdoc"
 	rdoc.title    = "EvoSynth Documentation"
 #	rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
-	rdoc.rdoc_files.include("README", "LICENSE", "lib/**/*.rb", "examples/**/*.rb")
+	rdoc.rdoc_files.include("README", "LICENSE", "INSTALL", "lib/**/*.rb", "examples/**/*.rb")
 #	rdoc.template = "kilmer"
 #	rdoc.template = 'direct'
 end
@@ -96,6 +96,16 @@ Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
 	test.test_files = FileList["test/ts_*.rb"]
 	test.verbose = true
+end
+
+desc "Run all examples"
+task :examples do
+	example_files = FileList["examples/*.rb"]
+	$:.unshift File.expand_path("../lib", __FILE__)
+	example_files.each do |example_file|
+		puts "\nRunning example : #{example_file}\n\n"
+		load example_file
+	end
 end
 
 desc "Analyze the code with roodi (Ruby Object Oriented Design Inferometer)"
