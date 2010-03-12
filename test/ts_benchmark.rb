@@ -22,10 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/benchmark'
-require 'evosynth/decoder'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-require 'evosynth/output'
+require 'test/benchmark/tc_t-test'

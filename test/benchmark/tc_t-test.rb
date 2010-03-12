@@ -22,10 +22,32 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core'
-require 'evosynth/benchmark'
-require 'evosynth/decoder'
-require 'evosynth/problems'
-require 'evosynth/operators'
-require 'evosynth/evolvers'
-require 'evosynth/output'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class ProfileTest < Test::Unit::TestCase
+
+	context "when test with example in Weicker 2007, page 230" do
+
+		setup do
+			@alg1 = [3.7, 1.4, 5.2, 3.8, 4.4, 3.5, 2.9, 4.2, 6.5, 3.0]
+			@alg2 = [4.2, 3.9, 4.7, 5.1, 4.1, 4.8, 3.8, 4.9, 4.0, 5.3]
+		end
+
+		should "t == -1.3258..." do
+			assert_in_delta(-1.3258, EvoSynth::Benchmark.t_test(@alg1, @alg2), 0.00009)
+		end
+
+		should "Benchmark.expected_value(data) be private" do
+			assert_raise(NameError) { Benchmark.expected_value(@alg1) }
+		end
+
+		should "Benchmark.variance(data, expected_value) be private" do
+			assert_raise(NameError) { Benchmark.variance(@data, 0.0) }
+		end
+
+	end
+
+end

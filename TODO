@@ -29,7 +29,6 @@ Features:
 		=> mutationen, selektionen und co
 		=> diversität und co (binär, float, wie denn genau? mit lambda?)
 		=> Versuchspläne und Statistiken?!
-		=> t-test (hypothesentest)
 
 	- Logger:
 		=> mehrere "Testläufe", Durchschnittswerte
