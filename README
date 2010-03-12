@@ -16,7 +16,9 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
 
 * classes for individuals, populations, algorithm profiles, genomes
 * support for custom randomizer
-
+* meta operators: proportional, sequentional and conditional combined operators
+* logging support with exporter to gnuplot, gruff and csv
+* many predefined fitness functions
 
 * most common evolutionary algorithms:
   * hillclimber (single individual and population based)
@@ -47,8 +49,6 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
   * arithmetic crossover
   * ordered recombination, partially mapped crossover, edge recombination
   * global uniform crossover, global arithmetic crossover
-
-* meta operators: proportional, sequentional and conditional combined operators
 
 
 == Installation
