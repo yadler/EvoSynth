@@ -1,0 +1,111 @@
+== Core features
+
+* EvoSynth::Evaluator
+* EvoSynth::Profile
+* EvoSynth::Population
+
+* EvoSynth::Individual
+  * EvoSynth::MaximizingIndividual
+  * EvoSynth::MinimizingIndividual
+
+* EvoSynth::Randomizer
+  * EvoSynth.rand / EvoSynth.srand
+  * EvoSynth.nrand
+  * EvoSynth.rand_bool
+
+* Include "Genotypes":
+  * EvoSynth::ArrayGenome (can contain any datatype as items)
+  * EvoSynth::BinaryGenome (not optimized yet)
+
+
+== Evolution algorithms
+
+* meta features:
+  * EvoSynth::Evolvers.add_weak_elitism
+  * EvoSynth::Evolvers.add_strong_elitism
+
+* basic evolvers:
+  * EvoSynth::Evolvers::Hillclimber
+  * EvoSynth::Evolvers::PopulationHillclimber
+  * EvoSynth::Evolvers::GeneticAlgorithm
+  * EvoSynth::Evolvers::SteadyStateGA
+  * EvoSynth::Evolvers::MemeticAlgorithm
+
+* evolution strategies:
+  * EvoSynth::Evolvers::AdaptiveES
+  * EvoSynth::Evolvers::SelfAdaptiveES
+  * EvoSynth::Evolvers::DerandomizedES
+
+* local search:
+  * EvoSynth::Evolvers::LocalSearch
+  * EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
+  * EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
+  * EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
+  * EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
+  * EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
+
+* coevolutionary algorithms:
+  * EvoSynth::Evolvers::RoundRobinCoevolutionary
+  * EvoSynth::Evolvers::BalancedCoevolutionary (unfinished)
+
+== Selections
+
+* EvoSynth::Selections::Identity
+* EvoSynth::Selections::SelectBest
+* EvoSynth::Selections::NStageTournamentSelection
+* EvoSynth::Selections::TournamentSelection
+* EvoSynth::Selections::FitnessProportionalSelection
+* EvoSynth::Selections::RouletteWheelSelection
+* EvoSynth::Selections::RandomSelection
+
+
+== Meta operators
+
+* EvoSynth::MetaOperators::ProportionalCombinedOperator
+* EvoSynth::MetaOperators::SequentialCombinedOperator
+* EvoSynth::MetaOperators::ConditionalCombinedOperator
+
+== Mutations
+
+* work on every genome:
+  * EvoSynth::Mutations::Identity
+
+* work on arrays (need flip function):
+  * EvoSynth::Mutations::BinaryMutation
+  * EvoSynth::Mutations::EfficientBinaryMutation
+  * EvoSynth::Mutations::OneGeneFlipping
+
+* work on permutations:
+  * EvoSynth::Mutations::ExchangeMutation
+  * EvoSynth::Mutations::InversionMutation
+  * EvoSynth::Mutations::MixingMutation
+  * EvoSynth::Mutations::ShiftingMutation
+
+* work on (arrays of) floats:
+  * EvoSynth::Mutations::GaussMutation
+  * EvoSynth::Mutations::UniformRealMutation
+  * EvoSynth::Mutations::SelfAdaptiveGaussMutation
+
+== Recombinations
+
+* work on every genome:
+  * EvoSynth::Recombinations::Identity
+  * EvoSynth::Recombinations::OnePointCrossover
+  * EvoSynth::Recombinations::KPointCrossover
+  * EvoSynth::Recombinations::UniformCrossover
+  * EvoSynth::Recombinations::ArithmeticCrossover (needs interpolation functions)
+
+* work on permutations (no duplicates):
+  * EvoSynth::Recombinations::PartiallyMappedCrossover
+  * EvoSynth::Recombinations::OrderedRecombination
+  * EvoSynth::Recombinations::EdgeRecombination
+
+== Global recombinations
+
+* EvoSynth::GlobalRecombinations::GlobalUniformCrossover
+* EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover
+
+== Adjustment strategies
+
+* EvoSynth::Adjustments::PredifinedAdjustment
+* EvoSynth::Adjustments::AdaptiveAdjustment

@@ -1,105 +1,57 @@
-== About EvoSynth
+== EvoSynth 0.1
 
-EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary and genetic algorithms.
 
+Website:: http://evosynth.rubyforge.org/
+Project:: http://rubyforge.org/projects/evosynth/
 Sourcecode:: http://gitorious.org/evosynth and http://github.com/yadler/EvoSynth
 Author::    Yves Adler (http://yadler.wordpress.com/, mailto:yves.adler@googlemail.com)
 Copyright:: Copyright (c) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
 License::   MIT (see LICENSE)
 
-== Features
+== Description
 
-* EvoSynth::ArrayGenome
-* EvoSynth.rand / EvoSynth.srand / EvoSynth.rand_bool
+EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary algorithms.
 
-=== evolution algorithms
+== Features (for details see docs/FEATURES)
 
-meta features:
-* EvoSynth::Evolvers.add_weak_elitism
-* EvoSynth::Evolvers.add_strong_elitism
-
-basic evolvers:
-* EvoSynth::Evolvers::Hillclimber
-* EvoSynth::Evolvers::PopulationHillclimber
-* EvoSynth::Evolvers::GeneticAlgorithm
-* EvoSynth::Evolvers::SteadyStateGA
-* EvoSynth::Evolvers::MemeticAlgorithm
-
-evolution strategies:
-* EvoSynth::Evolvers::AdaptiveES
-* EvoSynth::Evolvers::SelfAdaptiveES
-* EvoSynth::Evolvers::DerandomizedES
-
-local search:
-* EvoSynth::Evolvers::LocalSearch
-* EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance
-* EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance
-* EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance
-* EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance
-* EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
-
-coevolutionary algorithms:
-* EvoSynth::Evolvers::RoundRobinCoevolutionary
-* EvoSynth::Evolvers::BalancedCoevolutionary (unfinished)
-
-=== selections
-
-* EvoSynth::Selections::Identity
-* EvoSynth::Selections::SelectBest
-* EvoSynth::Selections::NStageTournamentSelection
-* EvoSynth::Selections::TournamentSelection
-* EvoSynth::Selections::FitnessProportionalSelection
-* EvoSynth::Selections::RouletteWheelSelection
-* EvoSynth::Selections::RandomSelection
+* classes for individuals, populations, algorithm profiles, genomes
+* support for custom randomizer
 
 
-=== meta operators
+* most common evolutionary algorithms:
+  * hillclimber (single individual and population based)
+  * standard genetic algorithm, steady state GA
+  * memetic algorithm
+  * evolution strategies (adaptive, selfadaptive and derandomized)
+  * local search (hillclimber, threshold acceptance, simulated annealing, great deluge, record-to-record travel)
+  * coevolutionary algorithms (round robin and balanced)
 
-* EvoSynth::MetaOperators::ProportionalCombinedOperator
-* EvoSynth::MetaOperators::SequentialCombinedOperator
-* EvoSynth::MetaOperators::ConditionalCombinedOperator
+* selection strategies:
+  * identity
+  * random selection
+  * best selection
+  * n-stage tournament selection
+  * tournament selection
+  * fitness proportional selection
+  * roulette wheel selection
 
-=== mutations
+* mutations:
+  * identity
+  * one gene flipping, binary mutation, efficient binary mutation
+  * exchange mutation, inversion mutation, mixing mutation, shifting mutation
+  * uniform real mutation, gauss mutation, self-adaptive gaus mutation
 
-work on every genome:
-* EvoSynth::Mutations::Identity
+* recombinations:
+  * identity
+  * one-point-crossover, k-point-crossover, uniform crossover
+  * arithmetic crossover
+  * ordered recombination, partially mapped crossover, edge recombination
+  * global uniform crossover, global arithmetic crossover
 
-work on arrays (need flip function):
-* EvoSynth::Mutations::BinaryMutation
-* EvoSynth::Mutations::EfficientBinaryMutation
-* EvoSynth::Mutations::OneGeneFlipping
+* meta operators: proportional, sequentional and conditional combined operators
 
-work on permutations:
-* EvoSynth::Mutations::ExchangeMutation
-* EvoSynth::Mutations::InversionMutation
-* EvoSynth::Mutations::MixingMutation
-* EvoSynth::Mutations::ShiftingMutation
 
-work on (arrays of) floats:
-* EvoSynth::Mutations::GaussMutation
-* EvoSynth::Mutations::UniformRealMutation
-* EvoSynth::Mutations::SelfAdaptiveGaussMutation
+== Installation
 
-=== recombinations
-
-work on every genome:
-* EvoSynth::Recombinations::Identity
-* EvoSynth::Recombinations::OnePointCrossover
-* EvoSynth::Recombinations::KPointCrossover
-* EvoSynth::Recombinations::UniformCrossover
-* EvoSynth::Recombinations::ArithmeticCrossover (needs interpolation functions)
-
-work on permutations (no duplicates):
-* EvoSynth::Recombinations::PartiallyMappedCrossover
-* EvoSynth::Recombinations::OrderedRecombination
-* EvoSynth::Recombinations::EdgeRecombination
-
-=== global recombinations
-
-* EvoSynth::GlobalRecombinations::GlobalUniformCrossover
-* EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover
-
-=== adjustment strategies
-
-* EvoSynth::Adjustments::PredifinedAdjustment
-* EvoSynth::Adjustments::AdaptiveAdjustment
+* gem install evosynth (as root)
+* for detailed instructions (build from source, etc.) see INSTALL

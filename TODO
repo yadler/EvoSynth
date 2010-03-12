@@ -13,23 +13,37 @@ fehlende oder fehlerhafte Testfälle:
 	- EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance
 	- EvoSynth::Mutations::SelfAdaptiveGaussMutation
 
-============================== EvoSynth 0.1 ====================================
+
+============================== EvoSynth 0.2 ====================================
 
 Features:
 
-	- INSTALL ins englische übersetzen (rake ist optional)
-
 	- Algorithmen:
-		=> Tabu-Suche am beispiel graph colouring (164)
 		=> CMBCoevolutionary braucht ein refactoring
 
-	- Versuchspläne und Statistiken?!
+	- Checkpointing für Evolver, Save, Stop, Restart, Continue
+		=> eventuell mit Logger verknüppern
 
-============================== EvoSynth >0.1 ===================================
+	- EvoBench: Benchmark für Evolutionäre Algorithmen
+		=> wie sollten diese Versuche ablaufen? Stichwort statistische Relevanz
+		=> mutationen, selektionen und co
+		=> diversität und co (binär, float, wie denn genau? mit lambda?)
+		=> Versuchspläne und Statistiken?!
+		=> t-test (hypothesentest)
+
+	- Logger:
+		=> mehrere "Testläufe", Durchschnittswerte
+		=> html output templates, svg outputs?
+			-> http://www.germane-software.com/software/SVG/SVG::Graph/
+		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
+		   das geht aber vielleicht eher in richtung eventsystem
+
+============================== EvoSynth >0.2 ===================================
 
 Features:
 
 	- add # encoding: utf-8 to all ruby files
+	- was ist mit http://rubygems.rubyforge.org/rdoc/Gem/Security.html ?
 
 	- TSP und GraphColouring Problem generischer machen und refactorisieren
 
@@ -42,19 +56,24 @@ Features:
 		=> RealToBinary, IntegerToBinary, BinaryToInteger
 
 	- Algorithmen:
-		=> Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
-			-> Gentische Programmierung (Ruby programme wären schön)
-			-> rubytree gem nutzen: http://rubytree.rubyforge.org/rdoc/index.html
+		=> Tabu-Suche am beispiel graph colouring (Weicker page 164)
 		=> Schwärme
 		=> neuronale Netze (gibts da ein gem für)
 
-	- Mehrzieloptimierung:
-		=> NSGA selektion (204)
-		=> SPEA2, PAES (205,206)
-		=> wenigstens ein Beispiel zur Mehrzieloptimierung
+		=> Evolutionäres Programmieren & Genetisches Programmieren (Weicker page 139--154)
+			-> Gentische Programmierung (Ruby programme wären schön)
+			-> rubytree gem nutzen: http://rubytree.rubyforge.org/rdoc/index.html
 
-	- Meta-Evolver (oder metaprogramming alá Elistismus):
-		=> was ist mit hall-of-fame oder ähnlichem?
+		=> Mehrzieloptimierung:
+			-> NSGA selektion (204)
+			-> SPEA2, PAES (205,206)
+			-> wenigstens ein Beispiel zur Mehrzieloptimierung
+
+		=> Meta-Evolver (eventuell mittels metaprogramming alá Elistismus):
+			=> was ist mit hall-of-fame oder ähnlichem?
+
+		=> Mehrpopulationsprobleme & Koevolutionäres:
+			=> was ist da noch sinnvoll? inseln & migration?
 
 	- BinaryGenome mittels inline C optimieren
 
@@ -62,23 +81,6 @@ Features:
 	  die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
 
 	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
-
-	- Checkpointing für Evolver, Save, Stop, Restart, Continue
-		=> eventuell mit Logger verknüppern
-
-	- EvoBench: Benchmark für Evolutionäre Algorithmen
-		=> wie sollten diese Versuche ablaufen? Stichwort statistische Relevanz
-		=> mutationen, selektionen und co
-		=> diversität und co (binär, float, wie denn genau? mit lambda?)
-
-	- Mehrpopulationsprobleme:
-		=> was ist da noch sinnvoll? inseln & migration?
-
-	- Logger:
-		=> mehrere "Testläufe", Durchschnittswerte
-		=> html output templates, svg outputs?
-		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
-		   das geht aber vielleicht eher in richtung eventsystem
 
 	- Bootstrap zeugs, inspiriert von OpenBEAGLE (initializer)
 		=> braucht man das wirklich?

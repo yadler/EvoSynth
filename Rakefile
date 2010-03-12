@@ -27,27 +27,37 @@ require 'rake/testtask'
 require 'rake/rdoctask'
 
 
-PKG_NAME = "evosynth"
-PKG_VERSION = "0.1.0"
+desc "print message"
+task :default do
+	puts "You have run rake without a task - please choose one of the following:\n\n"
+	puts `rake --tasks`
+end
 
 package_specification = Gem::Specification.new do |spec|
-	spec.platform	= Gem::Platform::RUBY
-	spec.name		= PKG_NAME
-	spec.version	= PKG_VERSION
+	spec.required_ruby_version	= '>= 1.9'
+	spec.platform				= Gem::Platform::RUBY
+	spec.name					= 'evosynth'
+	spec.version				= '0.1.0'
 
-	spec.summary	= "EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary algorithms."
-	spec.author		= "Yves Adler"
-	spec.email		= "yves.adler@googlemail.com"
+	spec.rubyforge_project		= 'evosynth'
+	spec.homepage				= 'http://evosynth.rubyforge.org'
+	spec.summary				= 'EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary algorithms.'
+	spec.author					= 'Yves Adler'
+	spec.email					= 'yves.adler@googlemail.com'
 
-	files = FileList["**/*"]
-	files.exclude ".git*"
-	files.exclude "pkg/*"
-	spec.files		= files.to_a
+	spec.has_rdoc				= true
+	spec.rdoc_options			= ["--charset", "UTF-8", "--title", "EvoSynth Documentation", "--main", "README", "--line-numbers"]
+	spec.extra_rdoc_files		= ["README", "LICENSE", "INSTALL", "docs/FEATURES"]
 
-	spec.require_paths << "lib"
+	# files and dependencies:
 
-	spec.has_rdoc			= true
-	spec.extra_rdoc_files	= ["README", "LICENSE", "INSTALL"]
+	files = FileList['**/*']; files.exclude('.git*'); files.exclude('pkg/*')
+	spec.files			= files.to_a
+	spec.test_files		= FileList['test/ts_*.rb']
+	spec.require_paths	<< 'lib'
+
+	# what about gruff, gnuplot & co ? where should I mention them?
+	spec.add_development_dependency(['shoulda', 'rake'])
 end
 
 Rake::GemPackageTask.new(package_specification) do |pkg|
@@ -55,34 +65,14 @@ Rake::GemPackageTask.new(package_specification) do |pkg|
 	pkg.need_tar = true
 end
 
-desc "build latest gem package"
-task :package do
-	Rake::Task["pkg/#{PKG_NAME}-#{PKG_VERSION}.gem"].invoke
-end
-
-desc "print message"
-task :default do
-	puts "You have run rake without a task - please run"
-	puts "rake --tasks"
-end
-
-#begin
-#  %w{sdoc sdoc-helpers rdiscount}.each { |name| gem name }
-#  require 'sdoc'
-#rescue LoadError => ex
-#  puts "sdoc support not enabled:"
-#  puts ex.inspect
-#end
-
 Rake::RDocTask.new do |rdoc|
 	rdoc.main = "README"
-	rdoc.rdoc_dir = "docs/rdoc"
-	rdoc.title    = "EvoSynth Documentation"
-#	rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
-	rdoc.rdoc_files.include("README", "LICENSE", "INSTALL", "lib/**/*.rb", "examples/**/*.rb")
-#	rdoc.template = "kilmer"
-#	rdoc.template = 'direct'
+	rdoc.rdoc_dir	= "docs/rdoc"
+	rdoc.title		= "EvoSynth Documentation"
+	rdoc.options	= ["--charset", "UTF-8", "--line-numbers"]
+	rdoc.rdoc_files.include("README", "LICENSE", "INSTALL", "docs/FEATURES", "lib/**/*.rb", "examples/**/*.rb")
 end
+
 
 # Test tasks and code quality stuff:
 
@@ -96,16 +86,6 @@ Rake::TestTask.new do |test|
 	test.libs = [lib_dir, test_dir]
 	test.test_files = FileList["test/ts_*.rb"]
 	test.verbose = true
-end
-
-desc "Run all examples"
-task :examples do
-	example_files = FileList["examples/*.rb"]
-	$:.unshift File.expand_path("../lib", __FILE__)
-	example_files.each do |example_file|
-		puts "\nRunning example : #{example_file}\n\n"
-		load example_file
-	end
 end
 
 desc "Analyze the code with roodi (Ruby Object Oriented Design Inferometer)"
@@ -129,11 +109,24 @@ task :flog do
 	puts flog_output
 end
 
-desc "Benchmark operators"
-task :benchmark do
+# Shortcuts for examples and benchmark
+
+desc "Run all examples"
+task :run_examples do
+	example_files = FileList["examples/*.rb"]
+	$:.unshift File.expand_path("../lib", __FILE__)
+	example_files.each do |example_file|
+		puts "\nRunning example : #{example_file}\n\n"
+		load example_file
+	end
+end
+
+desc "Run all benchmarks"
+task :run_benchmarks do
 	$:.unshift File.expand_path("../lib", __FILE__)
 	load 'test/benchmark/decoder_benchmark.rb'
 	load 'test/benchmark/mutation_benchmark.rb'
 	load 'test/benchmark/recombination_benchmark.rb'
 	load 'test/benchmark/selection_benchmark.rb'
 end
+

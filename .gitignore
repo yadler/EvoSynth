@@ -2,8 +2,8 @@ pkg
 pkg/*.gem
 rdoc
 rdoc/*
-docs
-docs/*
+docs/rdoc
+docs/rdoc/*
 coverage
 coverage/*
 testdata/*.col

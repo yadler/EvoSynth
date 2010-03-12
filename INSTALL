@@ -1,50 +1,74 @@
-Vorraussetzungen:
+== Installation HOWTO
 
-	- ruby 1.9 (http://www.ruby-lang.org bzw. http://rubyforge.org/frs/?group_id=167)
-	- optional: git (http://git-scm.com/)
+=== Prerequisites:
 
-optionale gems installieren (gem install <gem-name> (als root)):
+- <b>Ruby 1.9.x</b>	from http://www.ruby-lang.org or http://rubyforge.org/frs/?group_id=167
+- <i>(optional)</i> <b>git</b> from http://git-scm.com (to build latest version from git repository)
 
-	shoulda rake			(Rakefile, Testsuite)
-	gruff gnuplot rmagick	(grafiken)
-	flake flog roodi rcov	(code quality tools)
+- optional gems (install with "gem install <gem-name>" (as root)):
+  - shoulda and rake (Rakefile, Testsuite)
+  - gruff, gnuplot and rmagick (graphs)
+  - flake, flog, roodi and rcov (code quality tools)
 
-EvoSynth downloaden:
+=== Download EvoSynth:
 
-	download: http://github.com/yadler/EvoSynth/archives/master
-	oder auschecken: git clone git://github.com/yadler/EvoSynth.git
+- download source package from http://github.com/yadler/EvoSynth/archives/master
+- or checkout with:
 
-funktionstest:
+	git clone git://github.com/yadler/EvoSynth.git
+
+=== Run Testcases
+
+To make sure everything is running, run the following command inside the evosynth directory:
 
 	rake test
 
-testdaten (in den testdata ordner kopieren):
+=== Get the required testdata to run the examples (copy into the "testdata" directory):
 
-	http://mat.gsia.cmu.edu/COLOR/instances/myciel4.col
-	http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/bays29.tsp
+- http://mat.gsia.cmu.edu/COLOR/instances/myciel4.col (graph colouring)
+- http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/bays29.tsp (TSP)
 
-	mehr testdaten:
-		http://mat.gsia.cmu.edu/COLOR/instances.html
-		http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html
+- more testdata:
 
-beispiele:
+  - http://mat.gsia.cmu.edu/COLOR/instances.html
+  - http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html
+
+=== Run examples and benchmarks
+
+- run all examples with
+	rake run_examples
+
+  or run single examples with:
 
 	ruby -Ilib examples/max_ones.rb
 	ruby -Ilib examples/partition.rb
 	...
 
-einrichten von Netbeans (http://netbeans.org/) als IDE:
+- <b>Attention:</b> the exporter.rb example will only work if you've installed the gruff, gnuplot and rmagick gems!
 
-	- Ruby plugin installieren (Tools -> Plugins -> Available Plugins ...)
-	- Neues Projekt anlegen:
-		- File -> New Project -> Ruby -> "Ruby Application with Existing Sources"
-		- beliebigen namen wählen (z.B. "nb_evosynth")
-		- Pfad des projektes sollte außerhalb des evosynth ordners liegen
-		- Ruby platform: Ruby 1.9.x wählen
-		- Source Folders -> Add folder -> evosynth verzeichnis auswählen
+- if you are interessted in the performance of the individual components of EvoSynth, run the benchmark task:
 
-	- Rechtsklick auf neu erstelltes Projekt -> Properties -> Run
-		- Ruby options um "-Ilib" ergänzen
+	rake run_benchmarks
 
-	- Testen: beliebiges Beispiel öffnen (examples ordner in "Source Files")
-	  und mit Shift+F6 ausführen (dialog bestätigen)
+  or run individual benchmarks with:
+
+	ruby -Ilib test/benchmark/decoder_benchmark.rb
+	ruby -Ilib test/benchmark/mutation_benchmark.rb
+	...
+
+=== Setup Netbeans as IDE (http://netbeans.org)
+
+- download and install netbeans
+- install Ruby plugin (Tools -> Plugins -> Available Plugins ...)
+- create new project:
+  1. File -> New Project -> Ruby -> "Ruby Application with Existing Sources"
+  2. choose a name (for example "nb_evosynth")
+  3. choose a directory, this should be outside of the evosynth directory to keep the git repository clean
+  4. choose Ruby platform: Ruby 1.9.x
+  5. set source folder with "Source Folders -> Add folder" -> choose evosynth directory
+
+- right click on new created project "Properties -> Run" -> add "-Ilib" to Ruby options
+
+- test if everything is working:
+  1. open a example (examples folder in "Source Files")
+  2. run it with Shift + F6 (you might have to confirm a dialog)

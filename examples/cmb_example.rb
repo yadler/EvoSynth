@@ -60,10 +60,8 @@ module Examples
 			end
 		end
 
-
-		# TODO: put this in a good place :)
-
 		class EvoSynth::Individual
+			# TODO: put this in a good place :)
 
 			def initialize
 				@memory = []
