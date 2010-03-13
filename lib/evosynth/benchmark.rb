@@ -23,4 +23,4 @@
 
 
 require 'evosynth/benchmark/t-test'
-require 'evosynth/benchmark/diversity'
+require 'evosynth/benchmark/diversity_distance'

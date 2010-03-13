@@ -23,4 +23,4 @@
 
 
 require 'test/benchmark/tc_t-test'
-require 'test/benchmark/tc_diversity'
+require 'test/benchmark/tc_diversity_distance'
