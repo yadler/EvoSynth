@@ -39,18 +39,26 @@ module EvoSynth
 			1.0 / (population.size * (population.size - 1)) * (distances * 2.0)
 		end
 
-		# calls the diversity_distance function with hamming distance block
+		# calls the diversity_distance function with hamming distance block (for binary genomes)
 
-		def Benchmark.diversity_hamming_distance(population)
+		def Benchmark.diversity_distance_hamming(population)
 			Benchmark.diversity_distance(population) do |individual_one, individual_two|
 				Benchmark.hamming_distance(individual_one.genome, individual_two.genome)
+			end
+		end
+
+		# calls the diversity_distance function with hamming distance block (for float genomes)
+
+		def Benchmark.diversity_distance_float(population)
+			Benchmark.diversity_distance(population) do |individual_one, individual_two|
+				Benchmark.float_distance(individual_one.genome, individual_two.genome)
 			end
 		end
 
 		# calculates the "hamming distance" (does a bit more) of two given individuals
 
 		def Benchmark.hamming_distance(genome_one, genome_two)
-			distance = 0.0
+			distance = 0
 
 			genome_one.each_with_index do |gene, index|
 				distance += 1 if gene != genome_two[index]
@@ -58,5 +66,18 @@ module EvoSynth
 
 			distance
 		end
+
+		# calculates the distance of two given "float individuals"
+
+		def Benchmark.float_distance(genome_one, genome_two)
+			distance = 0.0
+
+			genome_one.each_with_index do |gene, index|
+				distance += (gene - genome_two[index]).abs
+			end
+
+			distance
+		end
+
 	end
 end

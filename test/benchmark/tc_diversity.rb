@@ -29,7 +29,7 @@ require 'evosynth'
 
 class DiversityTest < Test::Unit::TestCase
 
-	context "when test with example in Weicker 2007, page 230" do
+	context "the hamming distance diversity run on a simple example" do
 
 		setup do
 			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0,1]) )
@@ -49,9 +49,44 @@ class DiversityTest < Test::Unit::TestCase
 			assert_equal(4, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [1,0,1,0]))
 		end
 
-		should "the hamming distance diversity for the population be 86/30" do
-			assert_equal(86.0/30.0, EvoSynth::Benchmark.diversity_hamming_distance(@pop))
+		should "th diversity for the population be 86/30" do
+			assert_equal(86.0/30.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop))
 		end
 	end
 
+	context "when the hamming distance diversity is run on random binary individuals with 32 bits" do
+
+		setup do
+			pop_size = 100
+			genome_size = 32
+			@pop =  EvoSynth::Population.new(pop_size) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(genome_size) { EvoSynth.rand_bool } ) }
+		end
+
+		should "the diversity be around 16" do
+			assert_in_delta(16.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.1)
+		end
+	end
+
+	context "the hamming distance diversity run on a simple float example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1.0, 1.0, 0.0, 0.0]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0.0, 1.0, 0.0, 1.0]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1.0, 1.0, 0.0, 0.0]) )
+			@i4 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0.0, 1.0, 1.0, 0.0]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3, @i4])
+		end
+
+		should "Benchmark.float_distance(genome_one, genome_two) be correct" do
+			assert_equal(0, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,0,1]))
+			assert_equal(1, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,1,1]))
+			assert_equal(2, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,1,0]))
+			assert_equal(3, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,0,1,0]))
+			assert_equal(4, EvoSynth::Benchmark.float_distance([0,1,0,1], [1,0,1,0]))
+		end
+
+		should "th diversity for the population be 86/30" do
+			assert_in_delta(5.0/3.0, EvoSynth::Benchmark.diversity_distance_float(@pop), 0.0001)
+		end
+	end
 end

@@ -54,7 +54,8 @@ module Examples
 		evaluator = ExporterEvaluator.new
 		profile = EvoSynth::Profile.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
-			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
+#			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
+			:parent_selection	=> EvoSynth::Selections::SelectBest.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new(2),
 			:population			=> EvoSynth::Population.new(POP_SIZE) { Exporter.create_individual(GENOME_SIZE) },
 			:evaluator			=> evaluator
@@ -65,14 +66,16 @@ module Examples
 		evolver.add_observer(EvoSynth::Output.create_console_logger(10,
 			"gen" => ->{ evolver.generations_computed },
 			"best" => ->{ profile.population.best.fitness },
-			"worst" => ->{ profile.population.worst.fitness }
+			"worst" => ->{ profile.population.worst.fitness },
+			"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) }
 		))
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
 			"best fitness" => ->{ profile.population.best.fitness },
 #			"foo" => ->{ evolver.generations_computed },
 #			"bar" => ->{ 100 - evolver.generations_computed },
-			"worst fitness" => ->{ profile.population.worst.fitness }
+			"worst fitness" => ->{ profile.population.worst.fitness },
+			"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) }
 		)
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)
