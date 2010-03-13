@@ -71,10 +71,11 @@ module Examples
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations"	=> ->{ evolver.generations_computed },
-			"bestfitness"   => ->{ evolver.best_solution.fitness },
-			"worstfitness"  => ->{ evolver.worst_solution.fitness },
-			"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) }
+			"generations"		=> ->{ evolver.generations_computed },
+			"bestfitness"		=> ->{ evolver.best_solution.fitness },
+			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
+			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
+			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
 		))
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"

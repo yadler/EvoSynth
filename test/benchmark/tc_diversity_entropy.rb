@@ -22,6 +22,29 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/benchmark/t-test'
-require 'evosynth/benchmark/diversity_distance'
-require 'evosynth/benchmark/diversity_entropy'
+require 'shoulda'
+
+require 'evosynth'
+
+
+class EntropyDiversityTest < Test::Unit::TestCase
+
+	context "the hamming distance diversity run on a simple example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,0,0]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1,1]) )
+			@i4 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,0,1,0,1]) )
+			@i5 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,1,1]) )
+			@i6 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,0,0,0]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3, @i4, @i5, @i6])
+		end
+
+		should "th diversity for the population be 86/30" do
+			assert_in_delta(0.6705, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+		end
+
+	end
+
+end

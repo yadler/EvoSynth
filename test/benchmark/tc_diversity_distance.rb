@@ -27,7 +27,7 @@ require 'shoulda'
 require 'evosynth'
 
 
-class DiversityTest < Test::Unit::TestCase
+class DistanceDiversityTest < Test::Unit::TestCase
 
 	context "the hamming distance diversity run on a simple example" do
 

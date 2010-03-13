@@ -64,18 +64,18 @@ module Examples
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
 		EvoSynth::Evolvers.add_strong_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(10,
-			"gen" => ->{ evolver.generations_computed },
-			"best" => ->{ profile.population.best.fitness },
-			"worst" => ->{ profile.population.worst.fitness },
-			"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) }
+			"gen"				=> ->{ evolver.generations_computed },
+			"best"				=> ->{ profile.population.best.fitness },
+			"worst"				=> ->{ profile.population.worst.fitness },
+			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
+			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
 		))
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
-			"best fitness" => ->{ profile.population.best.fitness },
-#			"foo" => ->{ evolver.generations_computed },
-#			"bar" => ->{ 100 - evolver.generations_computed },
-			"worst fitness" => ->{ profile.population.worst.fitness },
-			"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) }
+			"best fitness"		=> ->{ profile.population.best.fitness },
+			"worst fitness"		=> ->{ profile.population.worst.fitness },
+			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
+			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
 		)
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)

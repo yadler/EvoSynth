@@ -22,6 +22,32 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/benchmark/t-test'
-require 'evosynth/benchmark/diversity_distance'
-require 'evosynth/benchmark/diversity_entropy'
+module EvoSynth
+	module Benchmark
+
+		# see Weicker, page 62 - used to calculated diversity of binary genomes!
+		# use only with binary genomes (1/0 or true/false)W
+
+		def Benchmark.diversity_entropy(population)
+			length = population.first.genome.size
+			ones_cnt, zero_cnt = [0] * length, [0] * length
+
+			population.each do |individual|
+				individual.genome.each_with_index do |gene, index|
+					gene == true || gene == 1 ? ones_cnt[index] += 1 : zero_cnt[index] += 1
+				end
+			end
+
+			# TODO: is this a mistake in the book? it tries to calculate log(0)! (all ones or zeros)
+
+			ones_cnt.map! { |one| val = one / population.size.to_f; val == 0 ? 1 : val }
+			zero_cnt.map! { |zero| val = zero / population.size.to_f; val == 0 ? 1 : val }
+
+			sum = 0.0
+			length.times { |i| sum += -zero_cnt[i] * Math.log(zero_cnt[i]) - ones_cnt[i] * Math.log(ones_cnt[i]) }
+
+			(1.0 / length) * sum
+		end
+
+	end
+end

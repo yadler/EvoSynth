@@ -27,8 +27,9 @@ Features:
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 		=> wie sollten diese Versuche ablaufen? Stichwort statistische Relevanz
 		=> mutationen, selektionen und co
-		=> diversität und co (binär, float, wie denn genau? mit lambda?)
 		=> Versuchspläne und Statistiken?!
+
+	- benchmark alá mutation + rekombinationen für EvoSynth::Benchmark funktionen
 
 	- Logger:
 		=> mehrere "Testläufe", Durchschnittswerte
