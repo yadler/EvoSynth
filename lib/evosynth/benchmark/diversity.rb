@@ -22,5 +22,41 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/benchmark/tc_t-test'
-require 'test/benchmark/tc_diversity'
+module EvoSynth
+	module Benchmark
+
+		# diversity calculation of a given population, with a given distance function. (see Weicker, page 62)
+
+		def Benchmark.diversity_distance(population, &distance_function)
+			distances = 0.0
+
+			population.each_with_index do |individual, index|
+				population[index + 1..population.size].each do |other|
+					distances += yield(individual, other)
+				end
+			end
+
+			1.0 / (population.size * (population.size - 1)) * (distances * 2.0)
+		end
+
+		# calls the diversity_distance function with hamming distance block
+
+		def Benchmark.diversity_hamming_distance(population)
+			Benchmark.diversity_distance(population) do |individual_one, individual_two|
+				Benchmark.hamming_distance(individual_one.genome, individual_two.genome)
+			end
+		end
+
+		# calculates the "hamming distance" (does a bit more) of two given individuals
+
+		def Benchmark.hamming_distance(genome_one, genome_two)
+			distance = 0.0
+
+			genome_one.each_with_index do |gene, index|
+				distance += 1 if gene != genome_two[index]
+			end
+
+			distance
+		end
+	end
+end

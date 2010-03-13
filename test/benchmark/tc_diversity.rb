@@ -27,29 +27,31 @@ require 'shoulda'
 require 'evosynth'
 
 
-class T_Test_Test < Test::Unit::TestCase
+class DiversityTest < Test::Unit::TestCase
 
 	context "when test with example in Weicker 2007, page 230" do
 
 		setup do
-			@alg1 = [3.7, 1.4, 5.2, 3.8, 4.4, 3.5, 2.9, 4.2, 6.5, 3.0]
-			@alg2 = [4.2, 3.9, 4.7, 5.1, 4.1, 4.8, 3.8, 4.9, 4.0, 5.3]
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,0,0]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1,1]) )
+			@i4 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,0,1,0,1]) )
+			@i5 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,1,1]) )
+			@i6 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,0,0,0]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3, @i4, @i5, @i6])
 		end
 
-		should "t == -1.3258..." do
-			assert_in_delta(-1.3258, EvoSynth::Benchmark.t_test(@alg1, @alg2), 0.00009)
+		should "Benchmark.hamming_distance(genome_one, genome_two) be correct" do
+			assert_equal(0, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,0,1]))
+			assert_equal(1, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,1,1]))
+			assert_equal(2, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,1,0]))
+			assert_equal(3, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,0,1,0]))
+			assert_equal(4, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [1,0,1,0]))
 		end
 
-		should "Benchmark.expected_value(data) be correct" do
-			assert_in_delta(3.86, EvoSynth::Benchmark.expected_value(@alg1), 0.001)
-			assert_in_delta(4.48, EvoSynth::Benchmark.expected_value(@alg2), 0.001)
+		should "the hamming distance diversity for the population be 86/30" do
+			assert_equal(86.0/30.0, EvoSynth::Benchmark.diversity_hamming_distance(@pop))
 		end
-
-		should "Benchmark.variance(data, expected_value) be correct" do
-			assert_in_delta(1.8938, EvoSynth::Benchmark.variance(@alg1, EvoSynth::Benchmark.expected_value(@alg1)), 0.0009)
-			assert_in_delta(0.2929, EvoSynth::Benchmark.variance(@alg2, EvoSynth::Benchmark.expected_value(@alg2)), 0.0009)
-		end
-
 	end
 
 end

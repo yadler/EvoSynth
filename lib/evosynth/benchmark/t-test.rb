@@ -37,8 +37,6 @@ module EvoSynth
 			(exp_data1 - exp_data2) / Math.sqrt((var_data1 + var_data2) / data1.size)
 		end
 
-		private
-
 		def Benchmark.expected_value(data)
 			1.0 / data.size * data.inject(0.0) { |sum, x| sum += x }
 		end
