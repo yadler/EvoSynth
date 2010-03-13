@@ -24,3 +24,5 @@
 
 require 'test/benchmark/tc_t-test'
 require 'test/benchmark/tc_diversity_distance'
+require 'test/benchmark/tc_diversity_entropy'
+require 'test/benchmark/tc_diversity_subseq'

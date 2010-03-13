@@ -29,7 +29,7 @@ require 'evosynth'
 
 class EntropyDiversityTest < Test::Unit::TestCase
 
-	context "the hamming distance diversity run on a simple example" do
+	context "the entropy diversity run on a simple example" do
 
 		setup do
 			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0,1]) )
@@ -41,10 +41,38 @@ class EntropyDiversityTest < Test::Unit::TestCase
 			@pop = EvoSynth::Population.new([@i1, @i2, @i3, @i4, @i5, @i6])
 		end
 
-		should "th diversity for the population be 86/30" do
+		should "th diversity for the population be 0.6705" do
 			assert_in_delta(0.6705, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
 		end
 
+	end
+
+	context "the entropy diversity run on another simple example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,0,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,1,1]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3])
+		end
+
+		should "th diversity for the population be 0.4774" do
+			assert_in_delta(0.4774, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+		end
+	end
+
+	context "the subsequence diversity run on yet another simple example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,0]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3])
+		end
+
+		should "th diversity for the population be 0.6365" do
+			assert_in_delta(0.6365, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+		end
 	end
 
 end

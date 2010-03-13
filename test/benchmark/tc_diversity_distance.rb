@@ -89,4 +89,32 @@ class DistanceDiversityTest < Test::Unit::TestCase
 			assert_in_delta(5.0/3.0, EvoSynth::Benchmark.diversity_distance_float(@pop), 0.0001)
 		end
 	end
+
+	context "the hamming distance diversity run on another simple example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,0,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,1,1]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3])
+		end
+
+		should "th diversity for the population be 2.0" do
+			assert_in_delta(2.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.0009)
+		end
+	end
+
+	context "the subsequence diversity run on yet another simple example" do
+
+		setup do
+			@i1 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,0,1,1]) )
+			@i2 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([0,1,1,0]) )
+			@i3 = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new([1,1,0,0]) )
+			@pop = EvoSynth::Population.new([@i1, @i2, @i3])
+		end
+
+		should "th diversity for the population be 2.667" do
+			assert_in_delta(2.667, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.0009)
+		end
+	end
 end

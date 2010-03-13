@@ -22,7 +22,36 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/benchmark/t-test'
-require 'evosynth/benchmark/diversity_distance'
-require 'evosynth/benchmark/diversity_entropy'
-require 'evosynth/benchmark/diversity_subseq'
+require 'set'
+
+
+module EvoSynth
+	module Benchmark
+
+		# Subsequence diversity - see Weicker, page 62
+
+		def Benchmark.diversity_subseq(population)
+			all_sequences = Set.new
+			sequences_len_sum = 0;
+
+			population.each do |individual|
+				sequences = Set.new
+
+				individual.genome.size.times do |seqlen|
+					seqlen += 1
+					individual.genome.size.times do |start|
+						break if start + seqlen > individual.genome.size
+
+						sequences << individual.genome[start, seqlen]
+						all_sequences << individual.genome[start, seqlen]
+					end
+				end
+
+				sequences_len_sum += sequences.size
+			end
+
+			population.size.to_f * all_sequences.size / sequences_len_sum
+		end
+
+	end
+end
