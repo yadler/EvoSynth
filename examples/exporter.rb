@@ -32,7 +32,7 @@ module Examples
 		VALUE_BITS = 16
 		DIMENSIONS = 6
 		POP_SIZE = 25
-		GENERATIONS = 100
+		GENERATIONS = 250
 		GENOME_SIZE = VALUE_BITS * DIMENSIONS
 
 		class ExporterEvaluator < EvoSynth::Evaluator
@@ -68,14 +68,17 @@ module Examples
 			"best"				=> ->{ profile.population.best.fitness },
 			"worst"				=> ->{ profile.population.worst.fitness },
 			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
+			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) },
+			"mean fitness"		=> ->{ EvoSynth::Benchmark.population_fitness_mean(evolver.population) },
+			"median fitness"	=> ->{ EvoSynth::Benchmark.population_fitness_median(evolver.population) }
 		))
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
 			"best fitness"		=> ->{ profile.population.best.fitness },
 			"worst fitness"		=> ->{ profile.population.worst.fitness },
 			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
+			"mean fitness"		=> ->{ EvoSynth::Benchmark.population_fitness_mean(evolver.population) },
+			"median fitness"	=> ->{ EvoSynth::Benchmark.population_fitness_median(evolver.population) }
 		)
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)

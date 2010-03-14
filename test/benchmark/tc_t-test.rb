@@ -40,16 +40,6 @@ class T_Test_Test < Test::Unit::TestCase
 			assert_in_delta(-1.3258, EvoSynth::Benchmark.t_test(@alg1, @alg2), 0.00009)
 		end
 
-		should "Benchmark.expected_value(data) be correct" do
-			assert_in_delta(3.86, EvoSynth::Benchmark.expected_value(@alg1), 0.001)
-			assert_in_delta(4.48, EvoSynth::Benchmark.expected_value(@alg2), 0.001)
-		end
-
-		should "Benchmark.variance(data, expected_value) be correct" do
-			assert_in_delta(1.8938, EvoSynth::Benchmark.variance(@alg1, EvoSynth::Benchmark.expected_value(@alg1)), 0.0009)
-			assert_in_delta(0.2929, EvoSynth::Benchmark.variance(@alg2, EvoSynth::Benchmark.expected_value(@alg2)), 0.0009)
-		end
-
 	end
 
 end

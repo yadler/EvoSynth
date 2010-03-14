@@ -22,6 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/benchmark/statistics_math'
 require 'evosynth/benchmark/t-test'
 require 'evosynth/benchmark/diversity_distance'
 require 'evosynth/benchmark/diversity_entropy'

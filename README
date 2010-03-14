@@ -19,13 +19,16 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
 
 == Features (for details see docs/FEATURES)
 
-* NEW: t-test, diversity calculations
-
 * classes for individuals, populations, algorithm profiles, genomes
 * support for custom randomizer
 * meta operators: proportional, sequentional and conditional combined operators
 * logging support with exporter to gnuplot, gruff and csv
 * many predefined fitness functions
+
+* benchmarking features:
+  * diversity calculations (distance, entropy and subsequence)
+  * mean, median, variance calculations for array/population
+  * t-test to determine statistical significance
 
 * most common evolutionary algorithms:
   * hillclimber (single individual and population based)
