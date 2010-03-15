@@ -5,6 +5,8 @@
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
 
+* rakefile: dependency cleanup
+
 === 0.1.0
 
 - Initial Release -

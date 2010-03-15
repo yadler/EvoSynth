@@ -56,8 +56,12 @@ package_specification = Gem::Specification.new do |spec|
 	spec.test_files		= FileList['test/ts_*.rb']
 	spec.require_paths	<< 'lib'
 
-	# what about gruff, gnuplot & co ? where should I mention them?
-	spec.add_development_dependency(['shoulda', 'rake'])
+	# should these "requirements" become dependencies?
+	spec.requirements << 'gnuplot (>=2.2) and/or gruff (>= 0.3.6) for visualization'
+	spec.requirements << 'flay, flog, roodi and rcov for code quality analysis'
+
+	spec.add_development_dependency('shoulda', '>=2.10.3')
+	spec.add_development_dependency('rake', '>=0.8.7')
 end
 
 Rake::GemPackageTask.new(package_specification) do |pkg|
