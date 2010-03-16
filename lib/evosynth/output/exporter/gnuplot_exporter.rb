@@ -22,9 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
 	module Output
 
@@ -36,7 +33,7 @@ module EvoSynth
 				begin
 					require 'gnuplot'
 				rescue
-					puts "Could not require 'gnuplot' gem, please install with gem install gnuplot"
+					puts "Could not require 'gnuplot' gem, please install with 'gem install gnuplot'"
 				end
 
 				@logger = logger

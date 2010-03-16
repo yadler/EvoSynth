@@ -22,9 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
 	module Output
 
@@ -34,7 +31,7 @@ module EvoSynth
 				begin
 					require 'gruff'
 				rescue
-					puts "Could not require 'gruff' gem, please install with gem install gruff"
+					puts "Could not require 'gruff' gem, please install with 'gem install gruff'"
 				end
 
 				@logger = logger

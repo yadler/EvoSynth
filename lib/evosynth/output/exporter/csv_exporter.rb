@@ -22,9 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'observer'
-
-
 module EvoSynth
 	module Output
 
