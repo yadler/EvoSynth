@@ -72,3 +72,14 @@ To make sure everything is running, run the following command inside the evosynt
 - test if everything is working:
   1. open a example (examples folder in "Source Files")
   2. run it with Shift + F6 (you might have to confirm a dialog)
+
+
+=== Debian 5.0 (lenny)
+
+Because Debian is a bit special about ruby and rubygems here is what I did to get
+it running on lenny:
+
+- git is "git-core" ;-)
+
+- install ruby1.9 ruby1.9dev and rubygems1.9 (with all their dependencies)
+- gem install rake shoulda

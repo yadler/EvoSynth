@@ -23,7 +23,7 @@
 
 
 require 'shoulda'
-require 'gnuplot'
+#require 'gnuplot'
 
 require 'evosynth'
 
