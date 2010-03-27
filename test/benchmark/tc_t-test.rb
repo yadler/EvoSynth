@@ -37,7 +37,7 @@ class T_Test_Test < Test::Unit::TestCase
 		end
 
 		should "t == -1.3258..." do
-			assert_in_delta(-1.3258, EvoSynth::Benchmark.t_test(@alg1, @alg2), 0.00009)
+			assert_in_delta(-1.3258, EvoSynth::EvoBench.t_test(@alg1, @alg2), 0.00009)
 		end
 
 	end

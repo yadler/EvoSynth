@@ -42,15 +42,15 @@ class DistanceDiversityTest < Test::Unit::TestCase
 		end
 
 		should "Benchmark.hamming_distance(genome_one, genome_two) be correct" do
-			assert_equal(0, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,0,1]))
-			assert_equal(1, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,1,1]))
-			assert_equal(2, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,1,1,0]))
-			assert_equal(3, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [0,0,1,0]))
-			assert_equal(4, EvoSynth::Benchmark.hamming_distance([0,1,0,1], [1,0,1,0]))
+			assert_equal(0, EvoSynth::EvoBench.hamming_distance([0,1,0,1], [0,1,0,1]))
+			assert_equal(1, EvoSynth::EvoBench.hamming_distance([0,1,0,1], [0,1,1,1]))
+			assert_equal(2, EvoSynth::EvoBench.hamming_distance([0,1,0,1], [0,1,1,0]))
+			assert_equal(3, EvoSynth::EvoBench.hamming_distance([0,1,0,1], [0,0,1,0]))
+			assert_equal(4, EvoSynth::EvoBench.hamming_distance([0,1,0,1], [1,0,1,0]))
 		end
 
 		should "th diversity for the population be 86/30" do
-			assert_equal(86.0/30.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop))
+			assert_equal(86.0/30.0, EvoSynth::EvoBench.diversity_distance_hamming(@pop))
 		end
 	end
 
@@ -63,7 +63,7 @@ class DistanceDiversityTest < Test::Unit::TestCase
 		end
 
 		should "the diversity be around 16" do
-			assert_in_delta(16.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.1)
+			assert_in_delta(16.0, EvoSynth::EvoBench.diversity_distance_hamming(@pop), 0.1)
 		end
 	end
 
@@ -78,15 +78,15 @@ class DistanceDiversityTest < Test::Unit::TestCase
 		end
 
 		should "Benchmark.float_distance(genome_one, genome_two) be correct" do
-			assert_equal(0, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,0,1]))
-			assert_equal(1, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,1,1]))
-			assert_equal(2, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,1,1,0]))
-			assert_equal(3, EvoSynth::Benchmark.float_distance([0,1,0,1], [0,0,1,0]))
-			assert_equal(4, EvoSynth::Benchmark.float_distance([0,1,0,1], [1,0,1,0]))
+			assert_equal(0, EvoSynth::EvoBench.float_distance([0,1,0,1], [0,1,0,1]))
+			assert_equal(1, EvoSynth::EvoBench.float_distance([0,1,0,1], [0,1,1,1]))
+			assert_equal(2, EvoSynth::EvoBench.float_distance([0,1,0,1], [0,1,1,0]))
+			assert_equal(3, EvoSynth::EvoBench.float_distance([0,1,0,1], [0,0,1,0]))
+			assert_equal(4, EvoSynth::EvoBench.float_distance([0,1,0,1], [1,0,1,0]))
 		end
 
 		should "th diversity for the population be 86/30" do
-			assert_in_delta(5.0/3.0, EvoSynth::Benchmark.diversity_distance_float(@pop), 0.0001)
+			assert_in_delta(5.0/3.0, EvoSynth::EvoBench.diversity_distance_float(@pop), 0.0001)
 		end
 	end
 
@@ -100,7 +100,7 @@ class DistanceDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 2.0" do
-			assert_in_delta(2.0, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.0009)
+			assert_in_delta(2.0, EvoSynth::EvoBench.diversity_distance_hamming(@pop), 0.0009)
 		end
 	end
 
@@ -114,7 +114,7 @@ class DistanceDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 2.667" do
-			assert_in_delta(2.667, EvoSynth::Benchmark.diversity_distance_hamming(@pop), 0.0009)
+			assert_in_delta(2.667, EvoSynth::EvoBench.diversity_distance_hamming(@pop), 0.0009)
 		end
 	end
 end

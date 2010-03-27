@@ -39,7 +39,7 @@ class SubseqDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 1.625" do
-			assert_in_delta(1.625, EvoSynth::Benchmark.diversity_subseq(@pop), 0.0009)
+			assert_in_delta(1.625, EvoSynth::EvoBench.diversity_subseq(@pop), 0.0009)
 		end
 	end
 
@@ -53,7 +53,7 @@ class SubseqDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 1.895" do
-			assert_in_delta(1.895, EvoSynth::Benchmark.diversity_subseq(@pop), 0.0009)
+			assert_in_delta(1.895, EvoSynth::EvoBench.diversity_subseq(@pop), 0.0009)
 		end
 	end
 end

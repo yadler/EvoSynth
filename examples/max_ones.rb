@@ -74,8 +74,8 @@ module Examples
 			"generations"		=> ->{ evolver.generations_computed },
 			"bestfitness"		=> ->{ evolver.best_solution.fitness },
 			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) }
+			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
+			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) }
 		))
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"

@@ -23,11 +23,11 @@
 
 
 module EvoSynth
-	module Benchmark
+	module EvoBench
 
 		# diversity calculation of a given population, with a given distance function. (see Weicker, page 62)
 
-		def Benchmark.diversity_distance(population, &distance_function)
+		def EvoBench.diversity_distance(population, &distance_function)
 			distances = 0.0
 
 			population.each_with_index do |individual, index|
@@ -41,23 +41,23 @@ module EvoSynth
 
 		# calls the diversity_distance function with hamming distance block (for binary genomes)
 
-		def Benchmark.diversity_distance_hamming(population)
-			Benchmark.diversity_distance(population) do |individual_one, individual_two|
-				Benchmark.hamming_distance(individual_one.genome, individual_two.genome)
+		def EvoBench.diversity_distance_hamming(population)
+			EvoBench.diversity_distance(population) do |individual_one, individual_two|
+				EvoBench.hamming_distance(individual_one.genome, individual_two.genome)
 			end
 		end
 
 		# calls the diversity_distance function with hamming distance block (for float genomes)
 
-		def Benchmark.diversity_distance_float(population)
-			Benchmark.diversity_distance(population) do |individual_one, individual_two|
-				Benchmark.float_distance(individual_one.genome, individual_two.genome)
+		def EvoBench.diversity_distance_float(population)
+			EvoBench.diversity_distance(population) do |individual_one, individual_two|
+				EvoBench.float_distance(individual_one.genome, individual_two.genome)
 			end
 		end
 
 		# calculates the "hamming distance" (does a bit more) of two given individuals
 
-		def Benchmark.hamming_distance(genome_one, genome_two)
+		def EvoBench.hamming_distance(genome_one, genome_two)
 			distance = 0
 
 			genome_one.each_with_index do |gene, index|
@@ -69,7 +69,7 @@ module EvoSynth
 
 		# calculates the distance of two given "float individuals"
 
-		def Benchmark.float_distance(genome_one, genome_two)
+		def EvoBench.float_distance(genome_one, genome_two)
 			distance = 0.0
 
 			genome_one.each_with_index do |gene, index|

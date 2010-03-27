@@ -67,18 +67,18 @@ module Examples
 			"gen"				=> ->{ evolver.generations_computed },
 			"best"				=> ->{ profile.population.best.fitness },
 			"worst"				=> ->{ profile.population.worst.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::Benchmark.diversity_entropy(evolver.population) },
-			"mean fitness"		=> ->{ EvoSynth::Benchmark.population_fitness_mean(evolver.population) },
-			"median fitness"	=> ->{ EvoSynth::Benchmark.population_fitness_median(evolver.population) }
+			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
+			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) },
+			"mean fitness"		=> ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
+			"median fitness"	=> ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) }
 		))
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
 			"best fitness"		=> ->{ profile.population.best.fitness },
 			"worst fitness"		=> ->{ profile.population.worst.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::Benchmark.diversity_distance_hamming(evolver.population) },
-			"mean fitness"		=> ->{ EvoSynth::Benchmark.population_fitness_mean(evolver.population) },
-			"median fitness"	=> ->{ EvoSynth::Benchmark.population_fitness_median(evolver.population) }
+			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
+			"mean fitness"		=> ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
+			"median fitness"	=> ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) }
 		)
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)

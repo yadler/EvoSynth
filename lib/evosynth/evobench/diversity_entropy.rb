@@ -23,12 +23,12 @@
 
 
 module EvoSynth
-	module Benchmark
+	module EvoBench
 
 		# see Weicker, page 62 - used to calculated diversity of binary genomes!
 		# use only with binary genomes (1/0 or true/false)W
 
-		def Benchmark.diversity_entropy(population)
+		def EvoBench.diversity_entropy(population)
 			length = population.first.genome.size
 			ones_cnt, zero_cnt = [0] * length, [0] * length
 

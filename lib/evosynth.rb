@@ -23,7 +23,7 @@
 
 
 require 'evosynth/core'
-require 'evosynth/benchmark'
+require 'evosynth/evobench'
 require 'evosynth/decoder'
 require 'evosynth/problems'
 require 'evosynth/operators'

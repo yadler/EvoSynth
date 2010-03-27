@@ -36,7 +36,7 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 0.5" do
-			assert_equal(0.5, EvoSynth::Benchmark.mean(@array))
+			assert_equal(0.5, EvoSynth::EvoBench.mean(@array))
 		end
 	end
 
@@ -52,8 +52,8 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 0.5" do
-			assert_equal(0.5, EvoSynth::Benchmark.mean(@population) { |individual| individual.fitness } )
-			assert_equal(0.5, EvoSynth::Benchmark.population_fitness_mean(@population))
+			assert_equal(0.5, EvoSynth::EvoBench.mean(@population) { |individual| individual.fitness } )
+			assert_equal(0.5, EvoSynth::EvoBench.population_fitness_mean(@population))
 		end
 	end
 
@@ -63,7 +63,7 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 3.5" do
-			assert_equal(3.5, EvoSynth::Benchmark.median(@array))
+			assert_equal(3.5, EvoSynth::EvoBench.median(@array))
 		end
 	end
 
@@ -73,7 +73,7 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 4" do
-			assert_equal(4, EvoSynth::Benchmark.median(@array))
+			assert_equal(4, EvoSynth::EvoBench.median(@array))
 		end
 	end
 
@@ -89,8 +89,8 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 3.5" do
-			assert_equal(3.5, EvoSynth::Benchmark.median(@population) { |individual| individual.fitness })
-			assert_equal(3.5, EvoSynth::Benchmark.population_fitness_median(@population))
+			assert_equal(3.5, EvoSynth::EvoBench.median(@population) { |individual| individual.fitness })
+			assert_equal(3.5, EvoSynth::EvoBench.population_fitness_median(@population))
 		end
 	end
 
@@ -107,8 +107,8 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 4" do
-			assert_equal(4, EvoSynth::Benchmark.median(@population) { |individual| individual.fitness })
-			assert_equal(4, EvoSynth::Benchmark.population_fitness_median(@population))
+			assert_equal(4, EvoSynth::EvoBench.median(@population) { |individual| individual.fitness })
+			assert_equal(4, EvoSynth::EvoBench.population_fitness_median(@population))
 		end
 	end
 
@@ -119,8 +119,8 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 1.8938 and 0.2929" do
-			assert_in_delta(1.8938, EvoSynth::Benchmark.variance(@alg1, EvoSynth::Benchmark.mean(@alg1)), 0.0009)
-			assert_in_delta(0.2929, EvoSynth::Benchmark.variance(@alg2, EvoSynth::Benchmark.mean(@alg2)), 0.0009)
+			assert_in_delta(1.8938, EvoSynth::EvoBench.variance(@alg1, EvoSynth::EvoBench.mean(@alg1)), 0.0009)
+			assert_in_delta(0.2929, EvoSynth::EvoBench.variance(@alg2, EvoSynth::EvoBench.mean(@alg2)), 0.0009)
 		end
 	end
 
@@ -141,8 +141,8 @@ class StatisticsMathTest < Test::Unit::TestCase
 		end
 
 		should "be 1.8938 and 0.2929" do
-			mean = EvoSynth::Benchmark.population_fitness_mean(@population)
-			assert_in_delta(1.8938, EvoSynth::Benchmark.variance(@population, mean) { |individual| individual.fitness }, 0.0009)
+			mean = EvoSynth::EvoBench.population_fitness_mean(@population)
+			assert_in_delta(1.8938, EvoSynth::EvoBench.variance(@population, mean) { |individual| individual.fitness }, 0.0009)
 		end
 	end
 

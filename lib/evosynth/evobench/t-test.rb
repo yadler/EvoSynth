@@ -23,17 +23,17 @@
 
 
 module EvoSynth
-	module Benchmark
+	module EvoBench
 
 		# hypothesis t-test, like in Weicker, page 230 or http://de.wikipedia.org/wiki/T-Test
 
-		def Benchmark.t_test(data1, data2)
+		def EvoBench.t_test(data1, data2)
 			raise ArgumentError.new("the two samples should have the same size for t-test!") if data1.size != data2.size
 
-			exp_data1 = Benchmark.mean(data1)
-			var_data1 = Benchmark.variance(data1, exp_data1)
-			exp_data2 = Benchmark.mean(data2)
-			var_data2 = Benchmark.variance(data2, exp_data2)
+			exp_data1 = EvoBench.mean(data1)
+			var_data1 = EvoBench.variance(data1, exp_data1)
+			exp_data2 = EvoBench.mean(data2)
+			var_data2 = EvoBench.variance(data2, exp_data2)
 			(exp_data1 - exp_data2) / Math.sqrt((var_data1 + var_data2) / data1.size)
 		end
 

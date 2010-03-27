@@ -42,7 +42,7 @@ class EntropyDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 0.6705" do
-			assert_in_delta(0.6705, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+			assert_in_delta(0.6705, EvoSynth::EvoBench.diversity_entropy(@pop), 0.0009)
 		end
 
 	end
@@ -57,7 +57,7 @@ class EntropyDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 0.4774" do
-			assert_in_delta(0.4774, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+			assert_in_delta(0.4774, EvoSynth::EvoBench.diversity_entropy(@pop), 0.0009)
 		end
 	end
 
@@ -71,7 +71,7 @@ class EntropyDiversityTest < Test::Unit::TestCase
 		end
 
 		should "th diversity for the population be 0.6365" do
-			assert_in_delta(0.6365, EvoSynth::Benchmark.diversity_entropy(@pop), 0.0009)
+			assert_in_delta(0.6365, EvoSynth::EvoBench.diversity_entropy(@pop), 0.0009)
 		end
 	end
 

@@ -1,6 +1,6 @@
 === 0.1.1
 
-* benchmarking features:
+* added EvoBench module with following benchmarking features:
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance

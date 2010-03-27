@@ -23,14 +23,14 @@
 
 
 module EvoSynth
-	module Benchmark
+	module EvoBench
 
 		# calculates the mean of an array. if a block is given it will yield each item
 		# and add the result of the block instead of the item itself
 		#
 		# EvoSynth::Benchmark::Benchmark.mean(@population) { |individual| individual.fitness }
 
-		def Benchmark.mean(array)
+		def EvoBench.mean(array)
 			1.0/array.size * array.inject(0.0) do |sum, item|
 				if block_given?
 					value = yield item
@@ -44,8 +44,8 @@ module EvoSynth
 
 		# shortcut for: EvoSynth::Benchmark::Benchmark.mean(@population) { |individual| individual.fitness }
 
-		def Benchmark.population_fitness_mean(population)
-			Benchmark.mean(population) { |individual| individual.fitness }
+		def EvoBench.population_fitness_mean(population)
+			EvoBench.mean(population) { |individual| individual.fitness }
 		end
 
 		# calculates the median of an array. if a block is given it will yield each item
@@ -53,7 +53,7 @@ module EvoSynth
 		#
 		# EvoSynth::Benchmark::Benchmark.median(@population) { |individual| individual.fitness }
 
-		def Benchmark.median(array)
+		def EvoBench.median(array)
 			array.sort!
 			if array.size % 2 == 0
 				if block_given?
@@ -72,8 +72,8 @@ module EvoSynth
 
 		# shortcut for: EvoSynth::Benchmark::Benchmark.median(@population) { |individual| individual.fitness }
 
-		def Benchmark.population_fitness_median(population)
-			Benchmark.median(population) { |individual| individual.fitness }
+		def EvoBench.population_fitness_median(population)
+			EvoBench.median(population) { |individual| individual.fitness }
 		end
 
 		# calculates the variance of an array. if a block is given it will yield each item
@@ -81,7 +81,7 @@ module EvoSynth
 		#
 		# EvoSynth::Benchmark::Benchmark.variance(@population, mean) { |individual| individual.fitness }
 
-		def Benchmark.variance(array, mean)
+		def EvoBench.variance(array, mean)
 			if block_given?
 				1.0 / (array.size - 1.0) * array.inject(0.0) { |sum, x| sum += ((yield x) - mean) ** 2.0 }
 			else
@@ -93,14 +93,14 @@ module EvoSynth
 		#			mean = Benchmark.population_fitness_mean(population)
 		#			Benchmark.variance(population, mean) { |individual| individual.fitness }
 
-		def Benchmark.population_fitness_variance(population)
-			mean = Benchmark.population_fitness_mean(population)
-			Benchmark.variance(population, mean) { |individual| individual.fitness }
+		def EvoBench.population_fitness_variance(population)
+			mean = EvoBench.population_fitness_mean(population)
+			EvoBench.variance(population, mean) { |individual| individual.fitness }
 		end
 
 		# TODO: improve me, make me more useful for populations :)
 
-		def Benchmark.standard_deviation(variance)
+		def EvoBench.standard_deviation(variance)
 			Math.sqrt(variance)
 		end
 

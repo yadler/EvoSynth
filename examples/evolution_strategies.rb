@@ -61,7 +61,7 @@ module Examples
 				"sigma"			=> ->{ evolver.sigma },
 				"success"	    => ->{ evolver.success },
 				"s"				=> ->{ evolver.s.inspect },
-				"diversity"		=> ->{ EvoSynth::Benchmark.diversity_distance_float(evolver.population) }
+				"diversity"		=> ->{ EvoSynth::EvoBench.diversity_distance_float(evolver.population) }
 			))
 
 			puts "\nRunning #{evolver}...\n"

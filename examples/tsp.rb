@@ -74,7 +74,7 @@ module Examples
 			"generations"		=> ->{ evolver.generations_computed },
 			"bestfitness"		=> ->{ evolver.best_solution.fitness },
 			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
-			"subseq diversity"	=> ->{ EvoSynth::Benchmark.diversity_subseq(evolver.population) }
+			"subseq diversity"	=> ->{ EvoSynth::EvoBench.diversity_subseq(evolver.population) }
 		))
 
 		puts "\nRunning #{evolver}...\n"
