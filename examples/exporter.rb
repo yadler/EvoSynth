@@ -87,11 +87,7 @@ module Examples
 
 		puts "\nexport to gnuplot..."
 		EvoSynth::Output::GnuPlotExporter.new(plot_logger).export("Rastgrin function with Elistism GA")
-		puts "export a PNG-File with gruff to #{BASEPATH + '/evosynth_export.png'}..."
-		EvoSynth::Output::GruffExporter.new(plot_logger).export("Rastgrin function with Elistism GA", BASEPATH + '/evosynth_viz_gruff.png')
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
 		EvoSynth::Output::CSVExporter.new(plot_logger, true).export(BASEPATH + '/evosynth_export.csv')
-#		puts "export a SVG-File wuith SVG::Graph to #{BASEPATH + '/evosynth_export.svg'}..."
-#		EvoSynth::Output::SVGExporter.new(plot_logger).export("Rastgrin function with Elistism GA", BASEPATH + '/evosynth_export.svg')
 	end
 end

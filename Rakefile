@@ -42,6 +42,7 @@ package_specification = Gem::Specification.new do |spec|
 	spec.rubyforge_project		= 'evosynth'
 	spec.homepage				= 'http://evosynth.rubyforge.org'
 	spec.summary				= 'EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid development and prototyping of evolutionary algorithms.'
+	spec.description			= spec.summary
 	spec.author					= 'Yves Adler'
 	spec.email					= 'yves.adler@googlemail.com'
 
@@ -57,8 +58,8 @@ package_specification = Gem::Specification.new do |spec|
 	spec.require_paths	<< 'lib'
 
 	# should these "requirements" become dependencies?
-	spec.requirements << 'gnuplot (>=2.2) and/or gruff (>= 0.3.6) for visualization'
-	spec.requirements << 'flay, flog, roodi and rcov for code quality analysis'
+	spec.requirements << 'gnuplot for visualization'
+	spec.requirements << 'flay, flog, roodi and rcov gems for code quality analysis'
 
 	spec.add_development_dependency('shoulda', '>=2.10.3')
 	spec.add_development_dependency('rake', '>=0.8.7')

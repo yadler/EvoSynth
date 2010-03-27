@@ -23,5 +23,4 @@
 
 
 require 'evosynth/output/exporter/gnuplot_exporter'
-require 'evosynth/output/exporter/gruff_exporter'
 require 'evosynth/output/exporter/csv_exporter'
