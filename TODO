@@ -18,36 +18,97 @@ fehlende oder fehlerhafte Testfälle:
 
 Features:
 
-	- Algorithmen:
-		=> CMBCoevolutionary braucht ein refactoring
-
-	- Checkpointing für Evolver, Save, Stop, Restart, Continue
-		=> eventuell mit Logger verknüppern
+	- README:
+		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
+		=> Auf Diplomarbeitshintergrund verweisen
 
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
-		=> wie sollten diese Versuche ablaufen? Stichwort statistische Relevanz
-		=> mutationen, selektionen und co
+
+		=> mehrere Testläufe:
+			-> Durchschnittswerte
+			-> laufzeit messung der einzelnen Varianten (güte pro minute?)
+			-> ergebnisse sollten ein serialisierbares objekt sein
+
+		=> versuchsreihen mit:
+			-> array von mutationen, selektionen, rekombination, evolvern, ...
+			-> range mit schrittweite für parameter (Integer und Float)
+			-> array mit werten für alles andere?
+
 		=> Versuchspläne und Statistiken?!
+			-> was ist mit schematheorem und co?
+			-> häufigkeiten bestimmter werte an allen positionen eines genomes
+			   innerhalb einer population
 
-	- benchmark alá mutation + rekombinationen für EvoSynth::Benchmark funktionen
+	- Logger und Exporter:
+		=> gnuplot durch eigenes system ersetzen
+		=> HTML exporter
+		=> gruff exporter entfernen
 
-	- Logger:
-		=> mehrere "Testläufe", Durchschnittswerte
-		=> html output templates, svg outputs?
-			-> http://www.germane-software.com/software/SVG/SVG::Graph/
-		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
-		   das geht aber vielleicht eher in richtung eventsystem
+		=> exporter:
+			-> balken für min/max, stddev und fehler
+			-> heatmap und 3d topografie plots
 
-============================== EvoSynth >0.2 ===================================
+============================== EvoSynth 0.3 ====================================
+
+Features:
+
+	- ist anstatt OrderedRecombination OrderRecombination korrekt?
+
+	- child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
+
+	- Evolver sollte Observer vom Profile sein, um auf dessen Änderungen reagieren zu können
+
+	- Species-Konzept sinnvoll? (siehe ECJ)
+
+	- metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
+
+	- nicht reelwertige Fitnesswerte:
+		=> Fitness als Objekt mit Vergleichsoperatoren (siehe OpenBEAGLE, ECJ)
+		=> Insgesamt fehlt da nicht viel, aber zum Beispiel braucht die
+		   Fitnessproportionale Selektion floats (einfach nach ".fitness" suchen)
+
+	- externe (nicht-Ruby) fitness-funktionen aufrufen
+
+	- Selektionen:
+		=> Fitnessproportionale & Roulette-Wheel-Selektion nach dem Vorbild von EO
+		   Refaktorisieren (siehe eoRanking
+
+	- Algorithmen:
+		=> CMBCoevolutionary braucht ein Refactoring
+		=> die koevolutionären könnten sich etwas von ECJ (CompetitiveEvaluator) abgucken
+
+	- Checkpointing für Evolver:
+		=> Save, Stop, Restart, Continue
+		=> eventuell mit Logger verknüppern
+		=> verschiedene Bedingungen, alá EO:
+			-> generationen, steady state, ...
+			-> verschiende bedingungen nacheinander ODER parallel!
+
+	- Standardinitialisierer:
+		=> Factory für häufig verwendete Individuen (siehe examples -> immer dasselbe)
+
+============================== EvoSynth >=0.3 ===================================
 
 Features:
 
 	- add # encoding: utf-8 to all ruby files
 	- was ist mit http://rubygems.rubyforge.org/rdoc/Gem/Security.html ?
 
+	- Super-Gene und Allele -> eventuell auch für statistiken erfassen
+
 	- TSP und GraphColouring Problem generischer machen und refactorisieren
 
+	- Logger:
+		=> DatabaseLogger wäre fein! könnte dann für Datamining genutzt werden ;-)
+		=> logger sollte auch bei fitnessänderungen (der population?) getriggert werden können,
+		   das geht aber vielleicht eher in richtung eventsystem
+
+	- Exporter:
+		=> SVG output
+		=> database exporter (mysql fürs erste?) ( != databaselogger )
+
 	- Benchmarkfunktionen:
+		=> real benchmark functions - siehe neu gefundenes paper
 		=> Matrix Multiplikationsproblem aus Paredis Paper (epistasis gut steuerbar)
 		=> C-Funktion (Weicker page 272)
 		=> sämtliche mit Randbedingungen (Weicker page 274)
@@ -71,14 +132,12 @@ Features:
 
 		=> Meta-Evolver (eventuell mittels metaprogramming alá Elistismus):
 			=> was ist mit hall-of-fame oder ähnlichem?
+			=> was ist mit alternden Individuuen? Vielleicht ein AgeMixin?
 
 		=> Mehrpopulationsprobleme & Koevolutionäres:
 			=> was ist da noch sinnvoll? inseln & migration?
 
 	- BinaryGenome mittels inline C optimieren
-
-	- nicht reelwertige Fitnesswerte?! Da fehlt nicht viel, aber zum Beispiel
-	  die Fitnessproportionale Selektion braucht die (einfach nach ".fitness" suchen)
 
 	- Codegenerator System (z.b. für OpenBEALE und EO) -> siehe fehler!
 
