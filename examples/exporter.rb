@@ -85,8 +85,10 @@ module Examples
 		evolver.run_until_generations_reached(GENERATIONS)
 		BASEPATH = File.expand_path(".")
 
-		puts "\nexport to gnuplot..."
-		EvoSynth::Output::GnuPlotExporter.new(plot_logger).export("Rastgrin function with Elistism GA")
+		puts "\nexport a Gnuplot script and datafile to #{BASEPATH + '/evosynth_gnuplot.gp'} and #{BASEPATH + '/evosynth_export.dat'}..."
+		gnuplotter = EvoSynth::Output::GnuplotExporter.new(plot_logger, "Rastgrin function with Elistism GA")
+		gnuplotter.export(BASEPATH + '/evosynth_gnuplot.gp', BASEPATH + '/evosynth_export.dat', BASEPATH + '/evosynth_export.png')
+
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
 		EvoSynth::Output::CSVExporter.new(plot_logger, true).export(BASEPATH + '/evosynth_export.csv')
 	end

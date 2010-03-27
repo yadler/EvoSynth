@@ -5,7 +5,8 @@
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
 
-* rakefile: dependency cleanup
+* evosynth now creates data- and scriptfile for gnuplot without a external gem
+  (removed dependency on gnuplot, gruff and rmagick gems)
 
 === 0.1.0
 

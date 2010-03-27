@@ -3,11 +3,11 @@
 === Prerequisites:
 
 - <b>Ruby 1.9.x</b>	from http://www.ruby-lang.org or http://rubyforge.org/frs/?group_id=167
-- <i>(optional)</i> <b>git</b> from http://git-scm.com (to build latest version from git repository)
+- <i>optional:</i> <b>Gnuplot</b> (for Gnuplot-exporter) from http://www.gnuplot.info/
+- <i>optional:</i> <b>git</b> from http://git-scm.com (to build latest version from git repository)
 
-- optional gems (install with "gem install <gem-name>" (as root)):
+- <i>optional:</i> gems for development (install with "gem install <gem-name>" (as root)):
   - shoulda and rake (Rakefile, Testsuite)
-  - gruff, gnuplot and rmagick (graphs)
   - flake, flog, roodi and rcov (code quality tools)
 
 === Download EvoSynth:
@@ -83,3 +83,8 @@ it running on lenny:
 
 - install ruby1.9 ruby1.9dev and rubygems1.9 (with all their dependencies)
 - gem install rake shoulda
+
+=== Windows
+
+In order to get Gnuplot working on windows, the "gnuplot" executeable should be
+inside your PATH system-variable.

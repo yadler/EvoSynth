@@ -41,6 +41,9 @@ Features:
 
 	- Logger und Exporter:
 		=> gnuplot durch eigenes system ersetzen
+			-> bessere optionen, templates
+			-> was ist mit errorbars?
+
 		=> HTML exporter
 		=> gruff exporter entfernen
 
