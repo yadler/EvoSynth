@@ -86,10 +86,10 @@ module Examples
 		BASEPATH = File.expand_path(".")
 
 		puts "\nexport a Gnuplot script and datafile to #{BASEPATH + '/evosynth_gnuplot.gp'} and #{BASEPATH + '/evosynth_export.dat'}..."
-		gnuplotter = EvoSynth::Output::GnuplotExporter.new(plot_logger, "Rastgrin function with Elistism GA")
-		gnuplotter.export(BASEPATH + '/evosynth_gnuplot.gp', BASEPATH + '/evosynth_export.dat', BASEPATH + '/evosynth_export.png')
+		EvoSynth::Output::GnuplotExporter.export(plot_logger, BASEPATH + '/evosynth_gnuplot.gp',
+			BASEPATH + '/evosynth_export.dat', BASEPATH + '/evosynth_export.png', "Rastgrin function with Elistism GA")
 
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
-		EvoSynth::Output::CSVExporter.new(plot_logger, true).export(BASEPATH + '/evosynth_export.csv')
+		EvoSynth::Output::CSVExporter.export(plot_logger, BASEPATH + '/evosynth_export.csv', true)
 	end
 end

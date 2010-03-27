@@ -27,27 +27,21 @@ module EvoSynth
 
 		class CSVExporter
 
-			def initialize(logger, write_header = false, separator = ',')
-				@logger = logger
-				@write_header = write_header
-				@separator = separator
-			end
-
-			def export(filename)
+			def CSVExporter.export(logger, filename, write_header = false, separator = ',')
 				# Note: I see no advantage in using the 'csv' library for this
 
 				File.open(filename,  "w+") do |file|
-					if @write_header
+					if write_header
 						file.write("counter")
-						file.write(@separator) unless @logger.column_names.nil?
-						file.write(@logger.column_names.join(@separator))
+						file.write(separator) unless logger.column_names.nil?
+						file.write(logger.column_names.join(separator))
 						file.write("\n")
 					end
 
-					@logger.data.each_key do |key|
+					logger.data.each_key do |key|
 						file.write(key)
-						file.write(@separator) unless @logger.data[key].nil?
-						file.write(@logger.data[key].join(@separator))
+						file.write(separator) unless logger.data[key].nil?
+						file.write(logger.data[key].join(separator))
 						file.write("\n")
 					end
 				end
