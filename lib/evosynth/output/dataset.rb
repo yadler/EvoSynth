@@ -33,6 +33,10 @@ module EvoSynth
 				@column_names = column_names
 			end
 
+			def [](row_number)
+				@data[row_number]
+			end
+
 			def []=(row_number, row)
 				@data[row_number] = row
 			end
