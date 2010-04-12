@@ -63,15 +63,6 @@ module Examples
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
 		EvoSynth::Evolvers.add_strong_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(10,
-			"gen"				=> ->{ evolver.generations_computed },
-			"best"				=> ->{ profile.population.best.fitness },
-			"worst"				=> ->{ profile.population.worst.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) },
-			"mean fitness"		=> ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
-			"median fitness"	=> ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) }
-		))
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
 			"best fitness"		=> ->{ profile.population.best.fitness },
@@ -80,12 +71,13 @@ module Examples
 			"mean fitness"		=> ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
 			"median fitness"	=> ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) }
 		)
+		plot_logger.add_observer(EvoSynth::Output::ConsoleWriter.new(10))
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
 		BASEPATH = File.expand_path(".")
 
-		puts "\nexport a Gnuplot script and datafile to #{BASEPATH + '/evosynth_gnuplot.gp'} and #{BASEPATH + '/evosynth_export.dat'}..."
+		puts "\nexport a PNG, Gnuplot script and datafile to #{BASEPATH + '/evosynth_export.png'}, #{BASEPATH + '/evosynth_gnuplot.gp'} and #{BASEPATH + '/evosynth_export.dat'}..."
 		EvoSynth::Output::GnuplotExporter.export(plot_logger, BASEPATH + '/evosynth_gnuplot.gp',
 			BASEPATH + '/evosynth_export.dat', BASEPATH + '/evosynth_export.png', "Rastgrin function with Elistism GA")
 

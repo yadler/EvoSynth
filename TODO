@@ -28,9 +28,11 @@ Features:
 			-> Durchschnittswerte
 			-> laufzeit messung der einzelnen Varianten (güte pro minute?)
 			-> ergebnisse sollten ein serialisierbares objekt sein
+			-> populationsstatistiken (verteilung von genen im genom)
 
 		=> versuchsreihen mit:
 			-> array von mutationen, selektionen, rekombination, evolvern, ...
+			-> verschiedene randomgeneratoren testen
 			-> range mit schrittweite für parameter (Integer und Float)
 			-> array mit werten für alles andere?
 
@@ -54,15 +56,18 @@ Features:
 
 Features:
 
-	- ist anstatt OrderedRecombination OrderRecombination korrekt?
-
-	- child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
-
-	- Evolver sollte Observer vom Profile sein, um auf dessen Änderungen reagieren zu können
+	- Verbesserungen:
+		=> mutationen nach dem vorbild von charlie's listen mutationen refaktorisieren?
+		=> DSL für profile und run_until sachen
+		=> ist anstatt OrderedRecombination OrderRecombination korrekt?
+		=> child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
+		=> Evolver sollte Observer vom Profile sein, um auf dessen Änderungen reagieren zu können
+		=> metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
+		=> runnable_evolver sollte überarbeitet werden
+			-> eventuell population oder profile anstatt beste solution yielden
+			-> ziel: mehr flexibilität
 
 	- Species-Konzept sinnvoll? (siehe ECJ)
-
-	- metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
 
 	- nicht reelwertige Fitnesswerte:
 		=> Fitness als Objekt mit Vergleichsoperatoren (siehe OpenBEAGLE, ECJ)
@@ -79,6 +84,8 @@ Features:
 		=> CMBCoevolutionary braucht ein Refactoring
 		=> die koevolutionären könnten sich etwas von ECJ (CompetitiveEvaluator) abgucken
 
+	- Abbruchbedingungen für evolver: keine fitnessänderung in x generationen
+
 	- Checkpointing für Evolver:
 		=> Save, Stop, Restart, Continue
 		=> eventuell mit Logger verknüppern
@@ -88,6 +95,7 @@ Features:
 
 	- Standardinitialisierer:
 		=> Factory für häufig verwendete Individuen (siehe examples -> immer dasselbe)
+		=> Zufallsinitialisierung aus "Genepool" (array von genen, welche gecloned werden)
 
 ============================== EvoSynth >=0.3 ===================================
 
@@ -96,9 +104,15 @@ Features:
 	- add # encoding: utf-8 to all ruby files
 	- was ist mit http://rubygems.rubyforge.org/rdoc/Gem/Security.html ?
 
+	- multithreading
+
+	- Grafische Echtzeitaugabe mit GTK oder Qt?!
+
 	- Super-Gene und Allele -> eventuell auch für statistiken erfassen
 
 	- TSP und GraphColouring Problem generischer machen und refactorisieren
+
+	- Beispiele von charlie abschauen (sind ein paar interessante dabei
 
 	- Logger:
 		=> DatabaseLogger wäre fein! könnte dann für Datamining genutzt werden ;-)

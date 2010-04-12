@@ -49,7 +49,7 @@ module EvoSynth
 					#set xlabel "Generation"
 					#set ylabel "Farben"
 
-					logger.column_names.each_with_index do |column, index|
+					logger.data.column_names.each_with_index do |column, index|
 						if index == 0
 							file.write("\nplot \"#{datafile}\"")
 						else
@@ -63,11 +63,11 @@ module EvoSynth
 
 				File.open(datafile,  "w+") do |file|
 					file.write("# counter")
-					logger.column_names.each { |column| file.write("\t#{column}") }
+					logger.data.column_names.each { |column| file.write("\t#{column}") }
 
-					logger.data.each_pair do |key, value|
-						file.write("\n#{key}")
-						value.each { |column| file.write("\t#{column}")}
+					logger.data.each_row do |row_number, row|
+						file.write("\n#{row_number}")
+						row.each { |column| file.write("\t#{column}")}
 					end
 				end
 

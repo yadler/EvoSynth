@@ -25,6 +25,49 @@
 module EvoSynth
 	module Output
 
+		class DataFetcher
+			attr_accessor :show_fetch_errors
+			attr_reader :columns
+
+			def initialize(show_fetch_errors = false)
+				@columns, @data = {}, {}
+				@show_fetch_errors = show_fetch_errors
+			end
+
+			def add_column(name, column_lambda)
+				@columns[name] = column_lambda
+			end
+
+			def fetch_next_row(row_number = 0)
+				row = []
+
+				@columns.each_pair do |column_name, column_lambda|
+					row << column_lambda.call rescue @show_fetch_errors ? row << "Error while fetching '#{column_name}'" : row << nil
+				end
+
+				row
+			end
+
+		end
+
+		class DataSet
+			attr_accessor :column_names
+
+			def initialize(column_names = [])
+				@data = {}
+				@column_names = column_names
+			end
+
+			def []=(row_number, row)
+				@data[row_number] = row
+			end
+
+			def each_row
+				@data.each { |row_num, row| yield row_num, row }
+			end
+
+		end
+
 		# Customizable logger
 		#
 		#	logger = EvoSynth::Output::Logger.new(10, true,
@@ -37,44 +80,30 @@ module EvoSynth
 		class Logger
 			include Observable
 
-			attr_accessor :show_errors, :things_to_log, :save_data
-			attr_reader :data
+			attr_accessor :save_data
+			attr_reader :data, :data_fetcher
 
 			def initialize(log_step, save_data, things_to_log = {})
-				@data = {}
-
 				@log_step = log_step
 				@save_data = save_data
-				@things_to_log = things_to_log
-				@show_errors = false
-			end
 
-			def clear_data
-				@data = {}
-			end
+				@data_fetcher = DataFetcher.new
+				@data = DataSet.new
 
-			def column_names
-				line = []
-				@things_to_log.each_pair { |key, value|	line << key }
-				line
+				things_to_log.each_pair do |column_name, column_lambda|
+					@data_fetcher.add_column(column_name, column_lambda)
+					@data.column_names << column_name
+				end
 			end
 
 			def update(observable, counter)
 				return unless counter % @log_step == 0
 
-				line = []
-				@things_to_log.each_pair do |key, value|
-					begin
-						line << value.call
-					rescue
-						@show_errors ? line << "ERROR while retrieving #{value.inspect}" : line << "\t"
-					end
-				end
-
-				@data[counter] = line if save_data
+				new_row = @data_fetcher.fetch_next_row(counter)
+				@data[counter] = new_row if @save_data
 
 				changed
-				notify_observers self, counter, line
+				notify_observers self, counter, new_row
 			end
 
 		end

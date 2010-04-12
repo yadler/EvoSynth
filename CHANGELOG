@@ -8,6 +8,9 @@
 * evosynth now creates data- and scriptfile for gnuplot without a external gem
   (removed dependency on gnuplot, gruff and rmagick gems)
 
+* refactored logging features
+  * added DataFetcher and DataSet classes
+
 === 0.1.0
 
 - Initial Release -

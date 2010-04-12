@@ -33,15 +33,15 @@ module EvoSynth
 				File.open(filename,  "w+") do |file|
 					if write_header
 						file.write("counter")
-						file.write(separator) unless logger.column_names.nil?
-						file.write(logger.column_names.join(separator))
+						file.write(separator) unless logger.data.column_names.nil?
+						file.write(logger.data.column_names.join(separator))
 						file.write("\n")
 					end
 
-					logger.data.each_key do |key|
-						file.write(key)
-						file.write(separator) unless logger.data[key].nil?
-						file.write(logger.data[key].join(separator))
+					logger.data.each_row do |row_number, row|
+						file.write(row_number)
+						file.write(separator) unless row.nil?
+						file.write(row.join(separator))
 						file.write("\n")
 					end
 				end
