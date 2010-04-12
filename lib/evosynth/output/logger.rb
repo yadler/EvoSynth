@@ -53,6 +53,10 @@ module EvoSynth
 				end
 			end
 
+			def clear_data
+				@data = DataSet.new(@data.column_names)
+			end
+
 			def update(observable, counter)
 				return unless counter % @log_step == 0
 
