@@ -22,6 +22,8 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'evosynth/output/dataset'
+require 'evosynth/output/datafetcher'
 require 'evosynth/output/logger'
 require 'evosynth/output/console_writer'
 require 'evosynth/output/exporter'

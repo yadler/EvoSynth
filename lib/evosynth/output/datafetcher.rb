@@ -25,42 +25,27 @@
 module EvoSynth
 	module Output
 
-		# Customizable logger
-		#
-		#	logger = EvoSynth::Output::Logger.new(10, true,
-		#		"gen" => ->{ evolver.generations_computed },
-		#		"best" => ->{ profile.population.best.fitness },
-		#		"worst" => ->{ profile.population.worst.fitness }
-		#	)
-		#	evolver.add_observer(logger)
+		class DataFetcher
+			attr_accessor :show_fetch_errors
+			attr_reader :columns
 
-		class Logger
-			include Observable
-
-			attr_accessor :save_data
-			attr_reader :data, :data_fetcher
-
-			def initialize(log_step, save_data, things_to_log = {})
-				@log_step = log_step
-				@save_data = save_data
-
-				@data_fetcher = DataFetcher.new
-				@data = DataSet.new
-
-				things_to_log.each_pair do |column_name, column_lambda|
-					@data_fetcher.add_column(column_name, column_lambda)
-					@data.column_names << column_name
-				end
+			def initialize(show_fetch_errors = false)
+				@columns, @data = {}, {}
+				@show_fetch_errors = show_fetch_errors
 			end
 
-			def update(observable, counter)
-				return unless counter % @log_step == 0
+			def add_column(name, column_lambda)
+				@columns[name] = column_lambda
+			end
 
-				new_row = @data_fetcher.fetch_next_row(counter)
-				@data[counter] = new_row if @save_data
+			def fetch_next_row(row_number = 0)
+				row = []
 
-				changed
-				notify_observers self, counter, new_row
+				@columns.each_pair do |column_name, column_lambda|
+					row << column_lambda.call rescue @show_fetch_errors ? row << "Error while fetching '#{column_name}'" : row << nil
+				end
+
+				row
 			end
 
 		end
