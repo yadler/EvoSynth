@@ -38,7 +38,7 @@ module EvoSynth
 						file.write("\n")
 					end
 
-					logger.data.each_row do |row_number, row|
+					logger.data.each_row_with_index do |row, row_number|
 						file.write(row_number)
 						file.write(separator) unless row.nil?
 						file.write(row.join(separator))

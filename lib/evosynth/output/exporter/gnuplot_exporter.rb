@@ -65,7 +65,7 @@ module EvoSynth
 					file.write("# counter")
 					logger.data.column_names.each { |column| file.write("\t#{column}") }
 
-					logger.data.each_row do |row_number, row|
+					logger.data.each_row_with_index do |row, row_number|
 						file.write("\n#{row_number}")
 						row.each { |column| file.write("\t#{column}")}
 					end

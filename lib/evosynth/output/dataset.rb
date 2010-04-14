@@ -42,7 +42,11 @@ module EvoSynth
 			end
 
 			def each_row
-				@data.each { |row_num, row| yield row_num, row }
+				@data.each { |row_num, row| yield row }
+			end
+
+			def each_row_with_index
+				@data.each { |row_num, row| yield row, row_num }
 			end
 
 		end
