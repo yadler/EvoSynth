@@ -2,7 +2,7 @@
 
 === Prerequisites:
 
-- <b>Ruby 1.9.x</b>	from http://www.ruby-lang.org or http://rubyforge.org/frs/?group_id=167
+- <b>Ruby 1.9.x</b>	from http://www.ruby-lang.org/ or http://rubyinstaller.org/
 - <i>optional:</i> <b>Gnuplot</b> (for Gnuplot-exporter) from http://www.gnuplot.info/
 - <i>optional:</i> <b>git</b> from http://git-scm.com (to build latest version from git repository)
 
