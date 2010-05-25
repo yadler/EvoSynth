@@ -135,8 +135,9 @@ module Examples
 		with.each_pair do |index, row|
 			t_value = EvoSynth::EvoBench.t_test(row, without[index])
 			error_prob = EvoSynth::EvoBench.t_probability(t_value, RUNS)
+			error_prob2 = EvoSynth::EvoBench.t_probability2(t_value, RUNS)
 
-			puts "#{index}\t#{t_value}\t#{error_prob}"
+			puts "#{index}\t#{t_value}\t#{error_prob}\t#{error_prob2}"
 		end
 	end
 end

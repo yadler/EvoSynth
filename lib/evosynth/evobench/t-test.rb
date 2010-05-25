@@ -33,6 +33,10 @@ module EvoSynth
 			1.0 / Math.sqrt(df * Math::PI) * Math.gamma((df + 1.0) / 2.0) / Math.gamma(df / 2.0) * 1.0 / (1.0 + (t.abs ** 2.0) / df) ** ((df + 1.0) / 2.0)
 		end
 
+		def EvoBench.t_probability2(t, df)
+			1.0 / Math.sqrt(df * Math::PI) * Math.gamma((df + 1.0) / 2.0) / Math.gamma(df / 2.0) * 1.0 / (1.0 + (t.abs ** 2.0) / df) ** (((-df + 1.0) / 2.0))
+		end
+
 		# hypothesis t-test, like in Weicker, page 230 or http://de.wikipedia.org/wiki/T-Test
 
 		def EvoBench.t_test(data1, data2)
