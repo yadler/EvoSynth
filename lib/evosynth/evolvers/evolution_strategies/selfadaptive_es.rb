@@ -35,15 +35,15 @@ module EvoSynth
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 				    :evaluator,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :mutation				=> DEFAULT_MUTATION,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection		=> DEFAULT_PARENT_SELECTION
 
-				use_profile profile
+				use_configuration configuration
 
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end

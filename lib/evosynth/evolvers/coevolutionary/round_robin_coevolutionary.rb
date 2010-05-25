@@ -32,15 +32,16 @@ module EvoSynth
 
 			attr_reader :subevolvers
 
-			DEFAULT_SUBEVOLVERS_CREATOR = ->(profile) { evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile);
-			                                             EvoSynth::Evolvers.add_weak_elistism(evolver); evolver }
+			DEFAULT_SUBEVOLVERS_CREATOR = ->(configuration) { evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration);
+			                                                  EvoSynth::Evolvers.add_weak_elistism(evolver);
+			                                                  evolver }
 
-			def initialize(profile)
-				init_profile :populations,
+			def initialize(configuration)
+				init_configuration :populations,
 				    :subevolvers_creator => DEFAULT_SUBEVOLVERS_CREATOR
 
-				use_profile profile
-				initialize_sub_evolvers(profile)
+				use_configuration configuration
+				initialize_sub_evolvers(configuration)
 				@next_index = 0
 			end
 
@@ -71,13 +72,13 @@ module EvoSynth
 
 			private
 
-			def initialize_sub_evolvers(profile)
-				sub_profile = profile.clone
+			def initialize_sub_evolvers(configuration)
+				sub_configuration = configuration.clone
 
 				@subevolvers = []
 				@populations.each do |sub_population|
-					sub_profile.population = sub_population
-					@subevolvers << @subevolvers_creator.call(sub_profile)
+					sub_configuration.population = sub_population
+					@subevolvers << @subevolvers_creator.call(sub_configuration)
 				end
 			end
 

@@ -53,7 +53,7 @@ module Examples
 
 		optimal_tour = TSP.optimal_tour(tsp)
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:individual			=> TSP.create_individual(tsp),
 			:mutation			=> EvoSynth::MetaOperators::ProportionalCombinedOperator.new(EvoSynth::Mutations::InversionMutation.new,
 																							 EvoSynth::Mutations::ShiftingMutation.new,
@@ -63,12 +63,12 @@ module Examples
 			:population			=> EvoSynth::Population.new(100) { TSP.create_individual(tsp) },
 			:evaluator			=> tsp
 		)
-		profile.evaluator.calculate_and_set_fitness(optimal_tour)
+		configuration.evaluator.calculate_and_set_fitness(optimal_tour)
 
 		puts "read testdata/bays29.tsp - problem contains #{tsp.size} cities...\n"
 		puts "Optimal Individual for this problem: #{optimal_tour}"
 
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"		=> ->{ evolver.generations_computed },

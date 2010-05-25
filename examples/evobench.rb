@@ -44,7 +44,7 @@ module Examples
 		end
 
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:population			=> EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual },
 			:evaluator			=> EvoBench::Evaluator.new,
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
@@ -52,8 +52,8 @@ module Examples
 
 		# --------------------------- Use GA with weak elistism --------------------------- #
 
-		profile.evaluator.reset_counters
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		configuration.evaluator.reset_counters
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 
 		logger = EvoSynth::Output::Logger.new(1, true,
@@ -79,14 +79,14 @@ module Examples
 			evolver.run_until_generations_reached(MAX_GENERATIONS)
 			datasets1 << logger.data
 
-			profile.evaluator.reset_counters
+			configuration.evaluator.reset_counters
 			logger.clear_data
 		end
 
 		# --------------------------- Use GA WITHOUT weak elistism --------------------------- #
 
-		profile.evaluator.reset_counters
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		configuration.evaluator.reset_counters
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
 		logger = EvoSynth::Output::Logger.new(1, true,
 			"generations"		=> ->{ evolver.generations_computed },
@@ -108,7 +108,7 @@ module Examples
 			evolver.run_until_generations_reached(MAX_GENERATIONS)
 			datasets2 << logger.data
 
-			profile.evaluator.reset_counters
+			configuration.evaluator.reset_counters
 			logger.clear_data
 		end
 

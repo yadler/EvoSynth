@@ -45,8 +45,8 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 				    :evaluator,
 					:sigma					=> DEFAULT_SIGMA,
 					:alpha					=> DEFAULT_ALPHA,
@@ -54,7 +54,7 @@ module EvoSynth
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION
 
-				use_profile profile
+				use_configuration configuration
 				@mutation = DEFAULT_MUTATION
 				@recombination = DEFAULT_RECOMBINATION
 

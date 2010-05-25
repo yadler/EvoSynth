@@ -39,10 +39,10 @@ module EvoSynth
 
 			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
 
-			def initialize(profile)
-				init_profile :individual, :mutation, :evaluator, :acceptance => DEFAULT_ACCEPTANCE
+			def initialize(configuration)
+				init_configuration :individual, :mutation, :evaluator, :acceptance => DEFAULT_ACCEPTANCE
 
-				use_profile profile
+				use_configuration configuration
 
 				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end

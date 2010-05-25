@@ -24,16 +24,16 @@
 
 module EvoSynth
 
-	# This class is used to create and maintain a evolver profile. Basically a Profile can be seen
+	# This class is used to create and maintain a evolver configuration. Basically a Configuration can be seen
 	# as a dynamic Hash, where values can be added and removed at will.
 
-	class Profile
+	class Configuration
 
-		# Creates a new Profile using a given hash of symbols and values.
+		# Creates a new Configuration using a given hash of symbols and values.
 		# 
 		# usage:
 		#
-		#    profile = EvoSynth::Profile.new(
+		#    configuration = EvoSynth::Configuration.new(
 		#        :individual      => MaxOnes.create_individual,
 		#        :population      => EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
 		#        :evaluator       => MaxOnes::MaxOnesEvaluator.new,
@@ -56,7 +56,7 @@ module EvoSynth
 
 		# Used to dynamically add key/value pairs.
 		#
-		#    p = EvoSynth::Profile.new
+		#    p = EvoSynth::Configuration.new
 		#    p.foo                        #=> raises ArgumentError
 		#    p.foo = "bar"                #=> adds key 'foo' to p and sets its value to 'bar'
 		#    p.foo                        #=> 'bar'
@@ -66,7 +66,7 @@ module EvoSynth
 				args = args[0] if args.size == 1
 				add_symbol(method_name[0..method_name.size-2].to_sym, args)
 			else
-				raise ArgumentError.new("Profile does not contain a value for '#{method_name}'.") unless @properties.has_key?(method_name)
+				raise ArgumentError.new("Configuration does not contain a value for '#{method_name}'.") unless @properties.has_key?(method_name)
 				@properties[method_name]
 			end
 		end
@@ -74,9 +74,9 @@ module EvoSynth
 		#	:call-seq:
 		#		delete(key) -> nil or key
 		#
-		# Removes a given key from the profile. Returns the key if it was member of the profile, nil otherwise.
+		# Removes a given key from the configuration. Returns the key if it was member of the configuration, nil otherwise.
 		#
-		#    p = EvoSynth::Profile.new
+		#    p = EvoSynth::Configuration.new
 		#    p.foo = "bar"                    #=> adds key 'foo' to p and sets its value to 'bar'
 		#    p.delete(:foo)                   #=> 'bar'
 		#    p.foo                            #=> raises ArgumentError
@@ -85,10 +85,10 @@ module EvoSynth
 			@properties.delete(key)
 		end
 
-		# Return a printable version of the profile.
+		# Return a printable version of the configuration.
 
 		def to_s
-			"evolver profile <#{@properties.to_s}>"
+			"evolver configuration <#{@properties.to_s}>"
 		end
 
 		private

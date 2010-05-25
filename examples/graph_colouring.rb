@@ -51,7 +51,7 @@ module Examples
 			exit(0)
 		end
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_GRAPH_COLOUR, 0.01),
 			:parent_selection	=> EvoSynth::Selections::RouletteWheelSelection.new,
 			:recombination		=> EvoSynth::Recombinations::KPointCrossover.new,
@@ -59,7 +59,7 @@ module Examples
 			:evaluator			=> graph_evaluator
 		)
 
-		evolver = EvoSynth::Evolvers::SteadyStateGA.new(profile)
+		evolver = EvoSynth::Evolvers::SteadyStateGA.new(configuration)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
 			"generations"	=> ->{ evolver.generations_computed },
 			"bestfitness"   => ->{ evolver.best_solution.fitness },
@@ -67,6 +67,6 @@ module Examples
 		))
 
 		evolver.run_until { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
-		puts "", profile.population.best
+		puts "", configuration.population.best
 	end
 end

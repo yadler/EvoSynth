@@ -28,14 +28,13 @@ Features:
 			-> output zu exporter umbenennen
 			-> was ist mit diesem consolewriter?!
 
-		=> Profile zu Configuration umbenennen?!
-		=> Evolver sollte Observer vom Profile sein, um auf dessen Änderungen reagieren zu können
+		=> Evolver sollte Observer vom Configuration sein, um auf dessen Änderungen reagieren zu können
 		=> Logger bzw. output module reorganisieren
 
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 
-		=> Ergebnisse sollten Profile speichern, mit dem sie "erzeugt" wurden:
-			-> dafür sollten Profile sinnvoll clonebar sein
+		=> Ergebnisse sollten Configuration speichern, mit dem sie "erzeugt" wurden:
+			-> dafür sollten Configuration sinnvoll clonebar sein
 
 		=> mehrere Testläufe:
 			-> Durchschnittswerte
@@ -57,8 +56,8 @@ Features:
 			   innerhalb einer population
 
 	- Logger und Exporter:
-		=> gnuplot durch eigenes system ersetzen
-			-> bessere optionen, templates
+		=> gnuplot:
+			-> bessere bzw. mehr optionen, templates
 			-> was ist mit errorbars?
 
 		=> HTML exporter
@@ -73,12 +72,12 @@ Features:
 
 	- Verbesserungen:
 		=> mutationen nach dem vorbild von charlie's listen mutationen refaktorisieren?
-		=> DSL für profile und run_until sachen
+		=> DSL für Configuration und run_until sachen
 		=> ist anstatt OrderedRecombination OrderRecombination korrekt?
 		=> child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
 		=> metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
 		=> runnable_evolver sollte überarbeitet werden
-			-> eventuell population oder profile anstatt beste solution yielden
+			-> eventuell population oder Configuration anstatt beste solution yielden
 			-> ziel: mehr flexibilität
 
 	- Species-Konzept sinnvoll? (siehe ECJ)

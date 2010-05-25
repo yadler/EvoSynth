@@ -34,15 +34,15 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 				    :evaluator,
 				    :mutation,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY
 
-				use_profile profile
+				use_configuration configuration
 
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end

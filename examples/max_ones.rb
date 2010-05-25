@@ -45,7 +45,7 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:individual			=> MaxOnes.create_individual,
 			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
 			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
@@ -54,7 +54,7 @@ module Examples
 
 		# ---------------------------- Use simple Hillclimber ---------------------------- #
 
-		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
 			"generations"	=> ->{ evolver.generations_computed },
 			"bestfitness"   => ->{ evolver.best_solution.fitness },
@@ -62,13 +62,13 @@ module Examples
 		))
 
 		puts "\nRunning Hillclimber...\n"
-		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
-		puts "\nIndividual after evolution:  #{profile.individual}"
+		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
+		puts "\nIndividual after evolution:  #{configuration.individual}"
 
 		# --------------------------- Use GA with weak elistism --------------------------- #
 
-		profile.evaluator.reset_counters
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		configuration.evaluator.reset_counters
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 			"generations"		=> ->{ evolver.generations_computed },
@@ -79,7 +79,7 @@ module Examples
 		))
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"
-		result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
+		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

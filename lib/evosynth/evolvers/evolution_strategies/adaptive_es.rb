@@ -45,8 +45,8 @@ module EvoSynth
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 				    :evaluator,
 					:sigma					=> DEFAULT_SIGMA,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
@@ -54,7 +54,7 @@ module EvoSynth
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection		=> DEFAULT_PARENT_SELECTION
 
-				use_profile profile
+				use_configuration configuration
 				@adjustment = DEFAULT_ADJUSTMENT
 				@mutation = DEFAULT_MUTATION
 				@success = 0

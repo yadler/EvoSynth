@@ -64,11 +64,11 @@ module Examples
 			puts
 		end
 
-		def LocalSearch.run_with(profile, individual)
-			puts "--- Local Search with #{profile.acceptance.to_s} ---\n"
+		def LocalSearch.run_with(configuration, individual)
+			puts "--- Local Search with #{configuration.acceptance.to_s} ---\n"
 
-			profile.individual = individual.deep_clone
-			evolver = EvoSynth::Evolvers::LocalSearch.new(profile)
+			configuration.individual = individual.deep_clone
+			evolver = EvoSynth::Evolvers::LocalSearch.new(configuration)
 			LocalSearch.print_acceptance_state(evolver)
 
 			evolver.add_observer(EvoSynth::Output.create_console_logger(500,
@@ -82,28 +82,28 @@ module Examples
 			result = evolver.run_until_generations_reached(GENERATIONS)
 			LocalSearch.print_acceptance_state(evolver)
 
-			puts "\n-> fitness after #{GENERATIONS} generations: #{profile.evaluator.calculate_fitness(result)}\n\n"
+			puts "\n-> fitness after #{GENERATIONS} generations: #{configuration.evaluator.calculate_fitness(result)}\n\n"
 		end
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:evaluator			=> LocalSearchEvaluator.new
 		)
 		individual = LocalSearch.create_individual
 
-		profile.acceptance = EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance.new
-		LocalSearch.run_with(profile, individual)
+		configuration.acceptance = EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance.new
+		LocalSearch.run_with(configuration, individual)
 
-		profile.acceptance = EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance.new(5000.0)
-		LocalSearch.run_with(profile, individual)
+		configuration.acceptance = EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance.new(5000.0)
+		LocalSearch.run_with(configuration, individual)
 
-		profile.acceptance = EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance.new(5000.0)
-		LocalSearch.run_with(profile, individual)
+		configuration.acceptance = EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance.new(5000.0)
+		LocalSearch.run_with(configuration, individual)
 
-		profile.acceptance = EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance.new(2500.0)
-		LocalSearch.run_with(profile, individual)
+		configuration.acceptance = EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance.new(2500.0)
+		LocalSearch.run_with(configuration, individual)
 
-		profile.acceptance = EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)
-		LocalSearch.run_with(profile, individual)
+		configuration.acceptance = EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance.new(5000.0)
+		LocalSearch.run_with(configuration, individual)
 	end
 end

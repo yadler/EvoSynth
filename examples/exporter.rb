@@ -52,7 +52,7 @@ module Examples
 		end
 
 		evaluator = ExporterEvaluator.new
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 #			:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 			:parent_selection	=> EvoSynth::Selections::SelectBest.new,
@@ -61,12 +61,12 @@ module Examples
 			:evaluator			=> evaluator
 		)
 
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_strong_elistism(evolver)
 
 		plot_logger = EvoSynth::Output::Logger.new(5, true,
-			"best fitness"		=> ->{ profile.population.best.fitness },
-			"worst fitness"		=> ->{ profile.population.worst.fitness },
+			"best fitness"		=> ->{ configuration.population.best.fitness },
+			"worst fitness"		=> ->{ configuration.population.worst.fitness },
 			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
 			"mean fitness"		=> ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
 			"median fitness"	=> ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) }
@@ -84,19 +84,19 @@ module Examples
 		puts "\nexport a PNG, Gnuplot script and datafile to #{pngfile}, #{scriptfile} and #{datafile}..."
 
 		gp = EvoSynth::Export::Gnuplot.new(plot_logger, pngfile, scriptfile, datafile)
-#		gp = EvoSynth::Export::GnuplotExporter.new(plot_logger, pngfile)
 		gp.set_title('Rastgrin function with Elistism GA')
 		gp.set_labels("Generationen", "")
-#		gp.plot_column("best fitness", "lines")
-#		gp.plot_column("worst fitness")
 		gp.plot_all_columns("lines")
 		gp.export
 
-		pngfile = BASEPATH + '/evosynth_gnuplot_dsl.png'
+		# OR:
+
+		pngfile = BASEPATH + '/evosynth_gnuplot_block.png'
 		EvoSynth::Export::Gnuplot.plot(plot_logger, pngfile) do |gp|
 			gp.set_title('Rastgrin function with Elistism GA')
 			gp.set_labels("Generationen", "")
-			gp.plot_all_columns("lines")
+			gp.plot_column("best fitness", "lines")
+			gp.plot_column("worst fitness")
 		end
 
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."

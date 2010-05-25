@@ -49,10 +49,10 @@ module Examples
 			individual
 		end
 
-		def EsExample.run(evolver_class, profile, base_population)
-			profile.evaluator.reset_counters
-			profile.population = base_population.deep_clone
-			evolver = evolver_class.new(profile)
+		def EsExample.run(evolver_class, configuration, base_population)
+			configuration.evaluator.reset_counters
+			configuration.population = base_population.deep_clone
+			evolver = evolver_class.new(configuration)
 
 			evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 				"generations"	=> ->{ evolver.generations_computed },
@@ -66,20 +66,20 @@ module Examples
 
 			puts "\nRunning #{evolver}...\n"
 			result = evolver.run_until_generations_reached(GENERATIONS)
-			puts "", profile.evaluator
-			puts "\nfitness = #{profile.evaluator.calculate_fitness(result.best)}"
+			puts "", configuration.evaluator
+			puts "\nfitness = #{configuration.evaluator.calculate_fitness(result.best)}"
 			puts
 		end
 
 		base_population = EvoSynth::Population.new(POPULATION_SIZE) { EsExample.create_individual(DIMENSIONS) }
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:modification_frequency => 10,
 			:evaluator				=> BenchmarkEvaluator.new,
 			:tau					=> 1 / Math.sqrt(DIMENSIONS)
 		)
 
-		EsExample.run(EvoSynth::Evolvers::AdaptiveES, profile, base_population)
-		EsExample.run(EvoSynth::Evolvers::SelfAdaptiveES, profile, base_population)
-		EsExample.run(EvoSynth::Evolvers::DerandomizedES, profile, base_population)
+		EsExample.run(EvoSynth::Evolvers::AdaptiveES, configuration, base_population)
+		EsExample.run(EvoSynth::Evolvers::SelfAdaptiveES, configuration, base_population)
+		EsExample.run(EvoSynth::Evolvers::DerandomizedES, configuration, base_population)
 	end
 end

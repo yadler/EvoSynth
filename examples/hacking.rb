@@ -49,13 +49,13 @@ module Examples
 
 		FLIP_CHAR = lambda { ALPHABET[EvoSynth.rand(ALPHABET.size)] }
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:individual			=> EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { ALPHABET[EvoSynth.rand(ALPHABET.size)] }),
 			:evaluator			=> Hacking::HackingEvaluator.new,
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
 		)
 
-		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
 		evolver.run_until_fitness_reached(0.0)
 		puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
 	end

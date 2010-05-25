@@ -163,7 +163,7 @@ module Examples
 		end
 
 
-		def Ants.evolver_profile(tsp, pheromon)
+		def Ants.evolver_configuration(tsp, pheromon)
 			ant_mutation = Ants::AntMutation.new(tsp, pheromon, 1, 0.2)
 
 			population = EvoSynth::Population.new(10) do
@@ -175,7 +175,7 @@ module Examples
 			combined_mutation.add(EvoSynth::Mutations::InversionMutation.new, 0.25)
 			combined_mutation.add(ant_mutation, 0.75)
 
-			EvoSynth::Profile.new(
+			EvoSynth::Configuration.new(
 				:mutation			=> combined_mutation,
 				:parent_selection	=> EvoSynth::Selections::FitnessProportionalSelection.new,
 				:population			=> population,
@@ -209,18 +209,18 @@ module Examples
 			end
 		end
 
-		# setup the profile, optimal solution and run the evolver:
+		# setup the configuration, optimal solution and run the evolver:
 
-		profile = Ants.evolver_profile(tsp, PHEROMON)
+		configuration = Ants.evolver_configuration(tsp, PHEROMON)
 
 		opt_tour = [1,28,6,12,9,5,26,29,3,2,20,10,4,15,18,17,14,22,11,19,25,7,23,27,8,24,16,13,21].map! { |num| num -= 1 }
 		optimal = EvoSynth::MinimizingIndividual.new(EvoSynth::ArrayGenome.new(opt_tour))
-		profile.evaluator.calculate_and_set_fitness(optimal)
+		configuration.evaluator.calculate_and_set_fitness(optimal)
 		puts "Optimal Individual for this problem: #{optimal}"
 
-		puts "Best Individual before evolution: #{profile.population.best}"
+		puts "Best Individual before evolution: #{configuration.population.best}"
 
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(profile)
+		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"	=> ->{ evolver.generations_computed },

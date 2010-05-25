@@ -96,7 +96,7 @@ module Examples
 		end
 
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:problem_mutation			=> EvoSynth::Mutations::MixingMutation.new,
 			:problem_recombination		=> EvoSynth::Recombinations::OnePointCrossover.new,
@@ -105,7 +105,7 @@ module Examples
 			:evaluator					=> CMBEvaluator.new
 		)
 
-		evolver = EvoSynth::Evolvers::BalancedCoevolutionary.new(profile)
+		evolver = EvoSynth::Evolvers::BalancedCoevolutionary.new(configuration)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations"				=> ->{ evolver.generations_computed },
 			"best solution fitness"		=> ->{ evolver.population.best.fitness },

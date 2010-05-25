@@ -13,11 +13,13 @@
 * refactored logging features
   * added DataFetcher and DataSet classes
 
+* renamed Profile to Configuration
+
 === 0.1.0
 
 - Initial Release -
 
-* classes for individuals, populations, algorithm profiles, genomes
+* classes for individuals, populations, algorithm configurations, genomes
 * support for custom randomizer
 * meta operators: proportional, sequentional and conditional combined operators
 * logging support with exporter to gnuplot, gruff and csv

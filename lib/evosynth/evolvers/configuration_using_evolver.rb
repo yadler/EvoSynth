@@ -25,11 +25,11 @@
 module EvoSynth
 	module Evolvers
 
-		# This module provides the ability to use the Profile class in a evolver.
+		# This module provides the ability to use the Configuration class in a evolver.
 
-		module ProfileUsingEvolver
+		module ConfigurationUsingEvolver
 
-			def init_profile(*properties)
+			def init_configuration(*properties)
 				@properties = properties
 				@properties.each do |property|
 					if property.is_a?(Symbol)
@@ -42,30 +42,30 @@ module EvoSynth
 				end
 			end
 
-			def use_profile(profile)
-				@profile = profile
+			def use_configuration(configuration)
+				@configuration = configuration
 				@properties.each do |property|
 					if property.is_a? Symbol
-							use_property(profile, property)
+							use_property(configuration, property)
 					elsif property.is_a? Hash
-							use_property_hash(profile, property)
+							use_property_hash(configuration, property)
 					end
 				end
 			end
 
 			private
 
-			def use_property(profile, property)
+			def use_property(configuration, property)
 				accessor_symbol = "#{property.id2name}=".to_sym
-				value = profile.send(property.to_sym) rescue value = nil
-				raise "evolver profile is missing '#{property.id2name}' field" if value.nil?
+				value = configuration.send(property.to_sym) rescue value = nil
+				raise "evolver configuration is missing '#{property.id2name}' field" if value.nil?
 				self.send(accessor_symbol, value)
 			end
 
-			def use_property_hash(profile, property_hash)
+			def use_property_hash(configuration, property_hash)
 				property_hash.each_pair do |key, default_value|
 					accessor_symbol = "#{key.id2name}=".to_sym
-					value = profile.send(key.to_sym) rescue value = nil
+					value = configuration.send(key.to_sym) rescue value = nil
 					value = default_value if value.nil?
 					self.send(accessor_symbol, value)
 				end

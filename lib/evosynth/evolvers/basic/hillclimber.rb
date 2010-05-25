@@ -30,9 +30,9 @@ module EvoSynth
 		class Hillclimber
 			include EvoSynth::Evolvers::Evolver
 
-			def initialize(profile)
-				init_profile :individual, :mutation, :evaluator
-				use_profile profile
+			def initialize(configuration)
+				init_configuration :individual, :mutation, :evaluator
+				use_configuration configuration
 
 				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end

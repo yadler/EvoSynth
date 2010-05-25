@@ -27,47 +27,47 @@ require 'shoulda'
 require 'evosynth'
 
 
-class ProfileTest < Test::Unit::TestCase
+class ConfigurationTest < Test::Unit::TestCase
 
 	context "when initialized with a symbol" do
 
 		should "work as expected with simple stuff" do
-			profile = EvoSynth::Profile.new
-			assert_raise(ArgumentError) { (profile.foo) }
-			assert_raise(ArgumentError) { (profile.bar) }
-			profile.foo= "foo"
-			profile.bar= "bar"
-			assert_equal("foo", profile.foo)
-			assert_equal("bar", profile.bar)
+			configuration = EvoSynth::Configuration.new
+			assert_raise(ArgumentError) { (configuration.foo) }
+			assert_raise(ArgumentError) { (configuration.bar) }
+			configuration.foo= "foo"
+			configuration.bar= "bar"
+			assert_equal("foo", configuration.foo)
+			assert_equal("bar", configuration.bar)
 		end
 
 		should "work as expected with more complex stuff" do
-			profile = EvoSynth::Profile.new
-			assert_raise(ArgumentError) { (profile.foo) }
-			assert_raise(ArgumentError) { (profile.bar) }
-			profile.foo= [1,2,3,4,5]
+			configuration = EvoSynth::Configuration.new
+			assert_raise(ArgumentError) { (configuration.foo) }
+			assert_raise(ArgumentError) { (configuration.bar) }
+			configuration.foo= [1,2,3,4,5]
 			struct = Struct.new(:foo,:bar,:baz)
-			profile.bar= struct
-			assert_equal([1,2,3,4,5], profile.foo)
-			assert_equal(struct, profile.bar)
+			configuration.bar= struct
+			assert_equal([1,2,3,4,5], configuration.foo)
+			assert_equal(struct, configuration.bar)
 		end
 
 		should "work with defaults" do
-			profile = EvoSynth::Profile.new(:foo, :bar => "bar", :baz => "baz")
-			assert_nil(profile.foo)
-			assert_equal("bar", profile.bar)
-			assert_equal("baz", profile.baz)
+			configuration = EvoSynth::Configuration.new(:foo, :bar => "bar", :baz => "baz")
+			assert_nil(configuration.foo)
+			assert_equal("bar", configuration.bar)
+			assert_equal("baz", configuration.baz)
 		end
 
 		should "be able to delete keys" do
-			profile = EvoSynth::Profile.new(:foo, :bar => "bar", :baz => "baz")
-			assert_nil(profile.foo)
-			assert_equal("bar", profile.bar)
-			assert_equal("baz", profile.baz)
-			profile.delete(:foo)
-			assert_raise(ArgumentError) { (profile.foo) }
-			profile.delete(:bar)
-			assert_raise(ArgumentError) { (profile.bar) }
+			configuration = EvoSynth::Configuration.new(:foo, :bar => "bar", :baz => "baz")
+			assert_nil(configuration.foo)
+			assert_equal("bar", configuration.bar)
+			assert_equal("baz", configuration.baz)
+			configuration.delete(:foo)
+			assert_raise(ArgumentError) { (configuration.foo) }
+			configuration.delete(:bar)
+			assert_raise(ArgumentError) { (configuration.bar) }
 		end
 
 	end

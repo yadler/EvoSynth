@@ -39,8 +39,8 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 					:problems,
 				    :evaluator,
 					:mutation,
@@ -51,7 +51,7 @@ module EvoSynth
 					:enviromental_selection => DEFAULT_SELECTION,
 					:pairing_runs => DEFAULT_PAIRING_RUNS
 
-				use_profile profile
+				use_configuration configuration
 
 				# intialize fitnesses?! FIXME: find a better way to do this
 				solution = @parent_selection.select(@population, 1).first

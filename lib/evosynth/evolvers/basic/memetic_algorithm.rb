@@ -37,10 +37,10 @@ module EvoSynth
 			DEFAULT_INDIVIDUAL_LEARNING_GOAL = ->(gen, best) { gen >= 10 }
 			DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY = 0.75
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
-			DEFAULT_SUBEVOLVER_CREATOR = ->(profile) { EvoSynth::Evolvers::LocalSearch.new(profile) }
+			DEFAULT_SUBEVOLVER_CREATOR = ->(configuration) { EvoSynth::Evolvers::LocalSearch.new(configuration) }
 
-			def initialize(profile)
-				init_profile :population,
+			def initialize(configuration)
+				init_configuration :population,
 					:evaluator,
 				    :mutation,
 					:recombination						=> DEFAULT_RECOMBINATION,
@@ -52,7 +52,7 @@ module EvoSynth
 					:individual_learning_goal			=> DEFAULT_INDIVIDUAL_LEARNING_GOAL,
 					:individual_learning_probability	=> DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY
 
-				use_profile profile
+				use_configuration configuration
 
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
@@ -93,8 +93,8 @@ module EvoSynth
 
 				child_population.map! do |child|
 					if EvoSynth.rand < @individual_learning_probability
-						@profile.individual = child
-						subevolver = @subevolver_creator.call(@profile)
+						@configuration.individual = child
+						subevolver = @subevolver_creator.call(@configuration)
 						subevolver.run_until &@individual_learning_goal
 					else
 						child

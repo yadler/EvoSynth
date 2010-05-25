@@ -35,8 +35,8 @@ module EvoSynth
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 			DEFAULT_CHILD_FACTOR = 0.5
 
-			def initialize(profile)
-				init_profile :population, 
+			def initialize(configuration)
+				init_configuration :population,
 				    :evaluator,
 				    :mutation,
 				    :parent_selection			=> DEFAULT_SELECTION,
@@ -44,7 +44,7 @@ module EvoSynth
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY,
 					:child_factor				=> DEFAULT_CHILD_FACTOR
 
-				use_profile profile
+				use_configuration configuration
 
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end

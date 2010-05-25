@@ -149,16 +149,16 @@ module Examples
 		problem = Partitionproblem::Testdata.gen_layer_set
 		base_population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:mutation			=> PartitionMutation.new,
 			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
 			:recombination		=> EvoSynth::Recombinations::Identity.new,
 			:evaluator			=> Partitionproblem::PartitionEvaluator.new
 		)
 
-		profile.population = base_population.deep_clone
+		configuration.population = base_population.deep_clone
 		puts "running MemeticAlgorithm with elitism..."
-		evolver = EvoSynth::Evolvers::MemeticAlgorithm.new(profile)
+		evolver = EvoSynth::Evolvers::MemeticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
 			"generations" => ->{ evolver.generations_computed },

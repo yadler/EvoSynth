@@ -92,13 +92,13 @@ module Examples
 		GENOME_SIZE = 16
 		GENERATIONS = 5000
 
-		profile = EvoSynth::Profile.new(
+		configuration = EvoSynth::Configuration.new(
 			:individual			=> EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ),
 			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:evaluator			=> SPkFitnessEvaluator.new(K)
 		)
 
-		evolver = EvoSynth::Evolvers::Hillclimber.new(profile)
+		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
 		puts "Running #{evolver}...\n\n"
 		result = evolver.run_until_generations_reached(GENERATIONS)
 		puts "result: #{result}"

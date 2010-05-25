@@ -19,7 +19,7 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
 
 == Features (for details see docs/FEATURES)
 
-* classes for individuals, populations, algorithm profiles, genomes
+* classes for individuals, populations, algorithm configurations, genomes
 * support for custom randomizer
 * meta operators: proportional, sequentional and conditional combined operators
 * logging support with exporter to gnuplot, gruff and csv

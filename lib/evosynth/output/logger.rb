@@ -29,8 +29,8 @@ module EvoSynth
 		#
 		#	logger = EvoSynth::Output::Logger.new(10, true,
 		#		"gen" => ->{ evolver.generations_computed },
-		#		"best" => ->{ profile.population.best.fitness },
-		#		"worst" => ->{ profile.population.worst.fitness }
+		#		"best" => ->{ configuration.population.best.fitness },
+		#		"worst" => ->{ configuration.population.worst.fitness }
 		#	)
 		#	evolver.add_observer(logger)
 

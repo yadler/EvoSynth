@@ -91,13 +91,13 @@ module Examples
 			end
 		end
 
-		def CCGAExample.create_profile(evaluator)
+		def CCGAExample.create_configuration(evaluator)
 			populations = []
 			DIMENSIONS.times do |dim|
 				populations << EvoSynth::Population.new(POPULATION_SIZE) { CCGAIndividual.new(dim, EvoSynth::ArrayGenome.new(VALUE_BITS) { EvoSynth.rand_bool }) }
 			end
 
-			EvoSynth::Profile.new(
+			EvoSynth::Configuration.new(
 				:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 				:parent_selection			=> EvoSynth::Selections::FitnessProportionalSelection.new,
 				:recombination				=> EvoSynth::Recombinations::KPointCrossover.new(2),
@@ -107,10 +107,10 @@ module Examples
 			)
 		end
 
-		def CCGAExample.run(evolver, profile, evolver_name)
+		def CCGAExample.run(evolver, configuration, evolver_name)
 			evolver.add_observer(EvoSynth::Output.create_console_logger(50,
 				"generations" => ->{ evolver.generations_computed },
-				"evaluations" => ->{ profile.evaluator.called },
+				"evaluations" => ->{ configuration.evaluator.called },
 				"fitness"     => ->{ best_genome = [];
 									 evolver.best_solution.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) };
 									 CCGAExample.fitness_function(best_genome)
@@ -119,8 +119,8 @@ module Examples
 
 			puts "\nRunning #{evolver}..."
 			puts
-			result = evolver.run_until { profile.evaluator.called < MAX_EVALUATIONS }
-			puts "\n#{profile.evaluator}"
+			result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
+			puts "\n#{configuration.evaluator}"
 
 			puts "\n#{evolver_name}: best 'combined' individual:"
 			best = []
@@ -137,14 +137,14 @@ module Examples
 
 		puts "# --- CCGA-1 ----------------------------------------------------------------------------------- #"
 
-		profile = create_profile(CCGABenchmarkEvaluator)
-		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(profile)
-		run(evolver, profile, "CCGA-1")
+		configuration = create_configuration(CCGABenchmarkEvaluator)
+		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(configuration)
+		run(evolver, configuration, "CCGA-1")
 
 		puts "# --- CCGA-2 ----------------------------------------------------------------------------------- #"
 
-		profile = create_profile(CCGA2BenchmarkEvaluator)
-		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(profile)
-		run(evolver, profile, "CCGA-2")
+		configuration = create_configuration(CCGA2BenchmarkEvaluator)
+		evolver = EvoSynth::Evolvers::RoundRobinCoevolutionary.new(configuration)
+		run(evolver, configuration, "CCGA-2")
 	end
 end
