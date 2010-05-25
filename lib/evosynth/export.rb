@@ -22,5 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/output/exporter/gnuplot_exporter'
-require 'evosynth/output/exporter/csv_exporter'
+require 'evosynth/export/gnuplot'
+require 'evosynth/export/csv'

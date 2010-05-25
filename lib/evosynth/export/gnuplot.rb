@@ -23,11 +23,11 @@
 
 
 module EvoSynth
-	module Output
+	module Export
 
 		# exports the contents (data) of a logger to gnuplot
 
-		class GnuplotExporter
+		class Gnuplot
 
 			def initialize(logger, pngfile, scriptfile = nil, datafile = nil)
 				@plot_commands = []
@@ -47,27 +47,35 @@ module EvoSynth
 				end
 			end
 
+			# shortcut, lets you do something like:
+			#
+			#	EvoSynth::Output::GnuplotExporter.plot(plot_logger, pngfile) do |gp|
+			#		gp.set_title('Rastgrin function with Elistism GA')
+			#		gp.set_labels("Generationen", "")
+			#		gp.plot_all_columns("lines")
+			#	end
+
+			def Gnuplot.plot(logger, pngfile, scriptfile = nil, datafile = nil)
+				gp = Gnuplot.new(logger, pngfile, scriptfile, datafile)
+				yield gp
+				gp.export
+			end
+
 			def set_gnuplot_script(gnuplot_script)
 				@gnuplot_script = gnuplot_script
 			end
 
 			def set_title(title)
-				@options << "set title \"#{title}\""
+				add_option("set title \"#{title}\"")
+			end
+
+			def set_labels(xlabel, ylabel)
+				add_option("set xlabel \"#{xlabel}\"")
+				add_option("set ylabel \"#{ylabel}\"")
 			end
 
 			def add_option(option)
 				@options << option
-					#reset
-					#set terminal png
-					#set   autoscale                        # scale axes automatically
-					#unset     log                          # remove any log-scaling
-					#unset     label                        # remove any previous labels
-					##set yrange [0:150]
-					#set xrange [0:1000]
-					#set xtic auto                          # set xtics automatically
-					#set ytic auto                          # set ytics automatically
-					#set xlabel "Generation"
-					#set ylabel "Farben"
 			end
 
 			def plot_column(column_name, style = nil)

@@ -23,11 +23,11 @@
 
 
 module EvoSynth
-	module Output
+	module Export
 
-		class CSVExporter
+		class CSV
 
-			def CSVExporter.export(logger, filename, write_header = false, separator = ',')
+			def CSV.export(logger, filename, write_header = false, separator = ',')
 				# Note: I see no advantage in using the 'csv' library for this
 
 				File.open(filename,  "w+") do |file|

@@ -5,8 +5,10 @@
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
 
-* evosynth now creates data- and scriptfile for gnuplot without a external gem
-  (removed dependency on gnuplot, gruff and rmagick gems)
+* export
+  * evosynth has its own gnuplot class now, no need for a external gem anymore
+    (removed dependency on gnuplot, gruff and rmagick gems)
+  * moved exporter to Export module and directory
 
 * refactored logging features
   * added DataFetcher and DataSet classes
