@@ -75,11 +75,21 @@ module Examples
 		evolver.add_observer(plot_logger)
 #		evaluator.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
-		BASEPATH = File.expand_path(".")
 
-		puts "\nexport a PNG, Gnuplot script and datafile to #{BASEPATH + '/evosynth_export.png'}, #{BASEPATH + '/evosynth_gnuplot.gp'} and #{BASEPATH + '/evosynth_export.dat'}..."
-		EvoSynth::Output::GnuplotExporter.export(plot_logger, BASEPATH + '/evosynth_gnuplot.gp',
-			BASEPATH + '/evosynth_export.dat', BASEPATH + '/evosynth_export.png', "Rastgrin function with Elistism GA")
+		BASEPATH = File.expand_path(".")
+		scriptfile = BASEPATH + '/evosynth_gnuplot.gp'
+		datafile = BASEPATH + '/evosynth_gnuplot.dat'
+		pngfile = BASEPATH + '/evosynth_gnuplot.png'
+
+		puts "\nexport a PNG, Gnuplot script and datafile to #{pngfile}, #{scriptfile} and #{datafile}..."
+
+#		gp = EvoSynth::Output::GnuplotExporter.new(plot_logger, pngfile, scriptfile, datafile)
+		gp = EvoSynth::Output::GnuplotExporter.new(plot_logger, pngfile)
+		gp.set_title('Rastgrin function with Elistism GA')
+#		gp.plot_column("best fitness", "lines")
+#		gp.plot_column("worst fitness")
+		gp.plot_all_columns("lines")
+		gp.export
 
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
 		EvoSynth::Output::CSVExporter.export(plot_logger, BASEPATH + '/evosynth_export.csv', true)
