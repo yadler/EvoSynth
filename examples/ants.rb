@@ -46,7 +46,8 @@ module Examples
 				ants.each do |ant|
 					ant.genome.each_with_index do |node, index|
 						break if (index + 1) >= ant.genome.size
-						columns[node][ant.genome[index + 1]] += 100.0 / ant.fitness
+						col = columns[node]
+						col[ant.genome[index + 1]] += 100.0 / ant.fitness
 					end
 				end
 
@@ -200,7 +201,7 @@ module Examples
 
 		PHEROMON = Ants::Pheromon.new(tsp.size)
 
-		class EvoSynth::Evolvers::GeneticAlgorithm
+		class AntGeneticAlgortihm < EvoSynth::Evolvers::GeneticAlgorithm
 			alias :ant_next_generation :next_generation
 
 			def next_generation
@@ -220,7 +221,7 @@ module Examples
 
 		puts "Best Individual before evolution: #{configuration.population.best}"
 
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
+		evolver = AntGeneticAlgortihm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		logger = EvoSynth::Logger.new(25) do |log|
 			log.add_column("generations",   ->{ evolver.generations_computed })
@@ -230,7 +231,7 @@ module Examples
 		end
 		evolver.add_observer(logger)
 
-		result = evolver.run_until_generations_reached(500)
+		result = evolver.run_until_generations_reached(100)
 		puts evolver
 
 		puts "\nBest Individual after evolution:  #{result.best}"
