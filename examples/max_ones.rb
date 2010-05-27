@@ -45,12 +45,12 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		configuration = EvoSynth::Configuration.new(
-			:individual			=> MaxOnes.create_individual,
-			:population			=> EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual },
-			:evaluator			=> MaxOnes::MaxOnesEvaluator.new,
-			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-		)
+		configuration = EvoSynth::Configuration.new do |conf|
+			conf.individual	= MaxOnes.create_individual
+			conf.population	= EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual }
+			conf.evaluator  = MaxOnes::MaxOnesEvaluator.new
+			conf.mutation   = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		end
 
 		# ---------------------------- Use simple Hillclimber ---------------------------- #
 

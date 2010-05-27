@@ -40,17 +40,20 @@ module EvoSynth
 			attr_accessor :save_data
 			attr_reader :data, :data_fetcher
 
-			def initialize(log_step, save_data, things_to_log = {})
+			def initialize(log_step, save_data = true, things_to_log = {})
 				@log_step = log_step
 				@save_data = save_data
-
 				@data_fetcher = DataFetcher.new
 				@data = DataSet.new
 
-				things_to_log.each_pair do |column_name, column_lambda|
-					@data_fetcher.add_column(column_name, column_lambda)
+				things_to_log.each_pair  { |name, lambda| add_column(name, lambda) }
+
+				yield self if block_given?
+			end
+
+			def add_column(column_name, column_lambda)
+				@data_fetcher.add_column(column_name, column_lambda)
 					@data.column_names << column_name
-				end
 			end
 
 			def clear_data

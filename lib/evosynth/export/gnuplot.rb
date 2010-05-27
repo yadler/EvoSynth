@@ -47,7 +47,7 @@ module EvoSynth
 				end
 			end
 
-			# shortcut, lets you do something like:
+			# shortcut, lets you construct a gnuplot exporter in a scoped block, to do something like:
 			#
 			#	EvoSynth::Output::GnuplotExporter.plot(plot_logger, pngfile) do |gp|
 			#		gp.set_title('Rastgrin function with Elistism GA')

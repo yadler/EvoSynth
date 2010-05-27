@@ -39,6 +39,15 @@ module EvoSynth
 		#        :evaluator       => MaxOnes::MaxOnesEvaluator.new,
 		#        :mutation        => EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		#    )
+		#
+		# or:
+		# 
+		#	configuration = EvoSynth::Configuration.create do |conf|
+		#		conf.individual	= MaxOnes.create_individual
+		#		conf.population	= EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual }
+		#		conf.evaluator  = MaxOnes::MaxOnesEvaluator.new
+		#		conf.mutation   = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		#	end
 
 		def initialize(*properties)
 			@properties = {}
@@ -52,6 +61,8 @@ module EvoSynth
 					raise ArgumentError, "argument type not supported"
 				end
 			end
+
+			yield self if block_given?
 		end
 
 		# Used to dynamically add key/value pairs.

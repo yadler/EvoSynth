@@ -31,6 +31,17 @@ Features:
 		=> Evolver sollte Observer vom Configuration sein, um auf dessen Änderungen reagieren zu können
 		=> Logger bzw. output module reorganisieren
 
+	- Logger und Exporter:
+		=> gnuplot:
+			-> bessere bzw. mehr optionen, templates
+			-> was ist mit errorbars?
+
+		=> HTML exporter
+
+		=> exporter:
+			-> balken für min/max, stddev und fehler
+			-> heatmap und 3d topografie plots
+
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 
 		=> Ergebnisse sollten Configuration speichern, mit dem sie "erzeugt" wurden:
@@ -54,17 +65,6 @@ Features:
 			-> was ist mit schematheorem und co?
 			-> häufigkeiten bestimmter werte an allen positionen eines genomes
 			   innerhalb einer population
-
-	- Logger und Exporter:
-		=> gnuplot:
-			-> bessere bzw. mehr optionen, templates
-			-> was ist mit errorbars?
-
-		=> HTML exporter
-
-		=> exporter:
-			-> balken für min/max, stddev und fehler
-			-> heatmap und 3d topografie plots
 
 ============================== EvoSynth 0.3 ====================================
 

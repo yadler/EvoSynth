@@ -13,7 +13,10 @@
 * refactored logging features
   * added DataFetcher and DataSet classes
 
-* renamed Profile to Configuration
+* various improvements:
+  * renamed Profile to Configuration
+  * Configuration and Logger constructor now yields self, to make scoped block
+    initialisation possible
 
 === 0.1.0
 
