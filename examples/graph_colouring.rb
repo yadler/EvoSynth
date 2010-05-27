@@ -60,11 +60,13 @@ module Examples
 		)
 
 		evolver = EvoSynth::Evolvers::SteadyStateGA.new(configuration)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
-			"generations"	=> ->{ evolver.generations_computed },
-			"bestfitness"   => ->{ evolver.best_solution.fitness },
-			"worstfitness"  => ->{ evolver.worst_solution.fitness }
-		))
+		logger = EvoSynth::Output::Logger.new(500) do |log|
+			log.add_column("generations",   ->{ evolver.generations_computed })
+			log.add_column("best fitness",  ->{ evolver.best_solution.fitness })
+			log.add_column("worst fitness", ->{ evolver.worst_solution.fitness })
+			log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
 
 		evolver.run_until { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
 		puts "", configuration.population.best

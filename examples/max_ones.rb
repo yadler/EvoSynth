@@ -55,11 +55,13 @@ module Examples
 		# ---------------------------- Use simple Hillclimber ---------------------------- #
 
 		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(500,
-			"generations"	=> ->{ evolver.generations_computed },
-			"bestfitness"   => ->{ evolver.best_solution.fitness },
-			"worstfitness"  => ->{ evolver.worst_solution.fitness }
-		))
+		logger = EvoSynth::Output::Logger.new(500) do |log|
+			log.add_column("generations",   ->{ evolver.generations_computed })
+			log.add_column("best fitness",  ->{ evolver.best_solution.fitness })
+			log.add_column("worst fitness", ->{ evolver.worst_solution.fitness })
+			log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
 
 		puts "\nRunning Hillclimber...\n"
 		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
@@ -68,15 +70,18 @@ module Examples
 		# --------------------------- Use GA with weak elistism --------------------------- #
 
 		configuration.evaluator.reset_counters
+
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(50,
-			"generations"		=> ->{ evolver.generations_computed },
-			"bestfitness"		=> ->{ evolver.best_solution.fitness },
-			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) }
-		))
+		logger = EvoSynth::Output::Logger.new(50) do |log|
+			log.add_column("generations",       ->{ evolver.generations_computed })
+			log.add_column("best fitness",      ->{ evolver.best_solution.fitness })
+			log.add_column("worst fitness",     ->{ evolver.worst_solution.fitness })
+			log.add_column("dist. diversity",   ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) })
+			log.add_column("entropy diversity", ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) })
+			log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"
 		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }

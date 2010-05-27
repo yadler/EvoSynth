@@ -222,11 +222,13 @@ module Examples
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
-			"generations"	=> ->{ evolver.generations_computed },
-			"bestfitness"   => ->{ evolver.best_solution.fitness },
-			"worstfitness"  => ->{ evolver.worst_solution.fitness }
-		))
+		logger = EvoSynth::Output::Logger.new(25) do |log|
+			log.add_column("generations",   ->{ evolver.generations_computed })
+			log.add_column("best fitness",  ->{ evolver.best_solution.fitness })
+			log.add_column("worst fitness", ->{ evolver.worst_solution.fitness })
+			log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
 
 		result = evolver.run_until_generations_reached(500)
 		puts evolver

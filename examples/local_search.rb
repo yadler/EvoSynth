@@ -71,13 +71,15 @@ module Examples
 			evolver = EvoSynth::Evolvers::LocalSearch.new(configuration)
 			LocalSearch.print_acceptance_state(evolver)
 
-			evolver.add_observer(EvoSynth::Output.create_console_logger(500,
-				"generations" => ->{ evolver.generations_computed },
-				"fitness"     => ->{ evolver.best_solution.fitness },
-				"temperature" => ->{ evolver.acceptance.temperature },
-				"alpha"       => ->{ evolver.acceptance.alpha },
-				"delta"       => ->{ evolver.acceptance.delta }
-			))
+			logger = EvoSynth::Output::Logger.new(500) do |log|
+				log.add_column("generations",  ->{ evolver.generations_computed })
+				log.add_column("best fitness", ->{ evolver.best_solution.fitness })
+				log.add_column("temperature",  ->{ evolver.acceptance.temperature })
+				log.add_column("alpha",        ->{ evolver.acceptance.alpha })
+				log.add_column("delta",        ->{ evolver.acceptance.delta })
+				log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+			end
+			evolver.add_observer(logger)
 
 			result = evolver.run_until_generations_reached(GENERATIONS)
 			LocalSearch.print_acceptance_state(evolver)

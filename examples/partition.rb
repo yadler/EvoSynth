@@ -160,11 +160,13 @@ module Examples
 		puts "running MemeticAlgorithm with elitism..."
 		evolver = EvoSynth::Evolvers::MemeticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		evolver.add_observer(EvoSynth::Output.create_console_logger(25,
-			"generations" => ->{ evolver.generations_computed },
-			"fitness"     => ->{ evolver.best_solution.fitness },
-			"best"		  => ->{ evolver.best_solution.to_s }
-		))
+		logger = EvoSynth::Output::Logger.new(25) do |log|
+			log.add_column("generations",  ->{ evolver.generations_computed })
+			log.add_column("best fitness", ->{ evolver.best_solution.fitness })
+			log.add_column("best",         ->{ evolver.best_solution.to_s })
+			log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
 
 		evolver.run_until { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
 		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution}"

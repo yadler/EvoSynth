@@ -56,7 +56,7 @@ module Examples
 		)
 
 		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
-		evolver.run_until_fitness_reached(0.0)
+		evolver.run_until { |gen, best| gen > 25000 || best.fitness == 0.0  }
 		puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
 	end
 end
