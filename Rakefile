@@ -37,7 +37,7 @@ package_specification = Gem::Specification.new do |spec|
 	spec.required_ruby_version	= '>= 1.9'
 	spec.platform				= Gem::Platform::RUBY
 	spec.name					= 'evosynth'
-	spec.version				= '0.1.1'
+	spec.version				= '0.2.0'
 
 	spec.rubyforge_project		= 'evosynth'
 	spec.homepage				= 'http://evosynth.rubyforge.org'
