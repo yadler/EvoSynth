@@ -8,15 +8,14 @@
 * export
   * evosynth has its own gnuplot class now, no need for a external gem anymore
     (removed dependency on gnuplot, gruff and rmagick gems)
-  * moved exporter to Export module and directory
+  * moved exporter (console, csv, gnuplot) to Export module and directory
 
-* refactored logging features
-  * added DataFetcher and DataSet classes
-
-* various improvements:
-  * renamed Profile to Configuration
-  * Configuration and Logger constructor now yields self, to make scoped block
-    initialisation possible
+* various changes and improvements:
+  * renamed Profile to Configuration!
+  * Configuration and Logger constructors now yield themself, to make scoped block initialisation possible
+  * refactored logging features: added DataFetcher and DataSet classes
+  * removed unnessesary util function: create_console_logger (not needed anymore)
+  * removed output module, moved logger to core and export to its own module (see above)
 
 === 0.1.0
 

@@ -24,3 +24,4 @@
 
 require 'evosynth/export/gnuplot'
 require 'evosynth/export/csv'
+require 'evosynth/export/console'

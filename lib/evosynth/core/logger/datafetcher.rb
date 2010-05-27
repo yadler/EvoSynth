@@ -22,7 +22,33 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/output/dataset'
-require 'evosynth/output/datafetcher'
-require 'evosynth/output/logger'
-require 'evosynth/output/console_writer'
+module EvoSynth
+	module Logging
+
+		class DataFetcher
+			attr_accessor :show_fetch_errors
+			attr_reader :columns
+
+			def initialize(show_fetch_errors = false)
+				@columns, @data = {}, {}
+				@show_fetch_errors = show_fetch_errors
+			end
+
+			def add_column(name, column_lambda)
+				@columns[name] = column_lambda
+			end
+
+			def fetch_next_row(row_number = 0)
+				row = []
+
+				@columns.each_pair do |column_name, column_lambda|
+					row << column_lambda.call rescue @show_fetch_errors ? row << "Error while fetching '#{column_name}'" : row << nil
+				end
+
+				row
+			end
+
+		end
+
+	end
+end

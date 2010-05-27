@@ -23,21 +23,13 @@ Features:
 		=> Auf Diplomarbeitshintergrund verweisen
 
 	- Refactoring und Verbesserungen:
-		=> output:
-			-> Logger ins core module! (seine toolklassen in EvoSynth::Logger module)
-			-> output zu exporter umbenennen
-			-> was ist mit diesem consolewriter?!
-
 		=> Evolver sollte Observer vom Configuration sein, um auf dessen Änderungen reagieren zu können
-		=> Logger bzw. output module reorganisieren
 
 	- Logger und Exporter:
+		=> HTML exporter
 		=> gnuplot:
 			-> bessere bzw. mehr optionen, templates
 			-> was ist mit errorbars?
-
-		=> HTML exporter
-
 		=> exporter:
 			-> balken für min/max, stddev und fehler
 			-> heatmap und 3d topografie plots

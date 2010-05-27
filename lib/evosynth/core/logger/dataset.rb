@@ -23,51 +23,30 @@
 
 
 module EvoSynth
-	module Output
+	module Logging
 
-		# Customizable logger
-		#
-		#	logger = EvoSynth::Output::Logger.new(10, true,
-		#		"gen" => ->{ evolver.generations_computed },
-		#		"best" => ->{ configuration.population.best.fitness },
-		#		"worst" => ->{ configuration.population.worst.fitness }
-		#	)
-		#	evolver.add_observer(logger)
+		class DataSet
+			attr_accessor :column_names
 
-		class Logger
-			include Observable
-
-			attr_accessor :save_data
-			attr_reader :data, :data_fetcher
-
-			def initialize(log_step, save_data = true, things_to_log = {})
-				@log_step = log_step
-				@save_data = save_data
-				@data_fetcher = DataFetcher.new
-				@data = DataSet.new
-
-				things_to_log.each_pair  { |name, lambda| add_column(name, lambda) }
-
-				yield self if block_given?
+			def initialize(column_names = [])
+				@data = {}
+				@column_names = column_names
 			end
 
-			def add_column(column_name, column_lambda)
-				@data_fetcher.add_column(column_name, column_lambda)
-					@data.column_names << column_name
+			def [](row_number)
+				@data[row_number]
 			end
 
-			def clear_data
-				@data = DataSet.new(@data.column_names)
+			def []=(row_number, row)
+				@data[row_number] = row
 			end
 
-			def update(observable, counter)
-				return unless counter % @log_step == 0
+			def each_row
+				@data.each { |row_num, row| yield row }
+			end
 
-				new_row = @data_fetcher.fetch_next_row(counter)
-				@data[counter] = new_row if @save_data
-
-				changed
-				notify_observers self, counter, new_row
+			def each_row_with_index
+				@data.each { |row_num, row| yield row, row_num }
 			end
 
 		end

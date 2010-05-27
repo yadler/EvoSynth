@@ -54,7 +54,7 @@ module Examples
 			configuration.population = base_population.deep_clone
 			evolver = evolver_class.new(configuration)
 
-			logger = EvoSynth::Output::Logger.new(50) do |log|
+			logger = EvoSynth::Logger.new(50) do |log|
 				log.add_column("generations",   ->{ evolver.generations_computed })
 				log.add_column("best fitness",  ->{ evolver.best_solution.fitness })
 				log.add_column("worst fitness", ->{ evolver.worst_solution.fitness })
@@ -62,7 +62,7 @@ module Examples
 				log.add_column("success",       ->{ evolver.success })
 				log.add_column("s",             ->{ evolver.s.inspect })
 				log.add_column("diversity",     ->{ EvoSynth::EvoBench.diversity_distance_float(evolver.population) })
-				log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+				log.add_observer(EvoSynth::Export::ConsoleWriter.new)
 			end
 			evolver.add_observer(logger)
 

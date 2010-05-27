@@ -56,7 +56,7 @@ module Examples
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 
-		logger = EvoSynth::Output::Logger.new(1, true,
+		logger = EvoSynth::Logger.new(1, true,
 			"generations"		=> ->{ evolver.generations_computed },
 			"bestfitness"		=> ->{ evolver.best_solution.fitness },
 			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
@@ -88,7 +88,7 @@ module Examples
 		configuration.evaluator.reset_counters
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-		logger = EvoSynth::Output::Logger.new(1, true,
+		logger = EvoSynth::Logger.new(1, true,
 			"generations"		=> ->{ evolver.generations_computed },
 			"bestfitness"		=> ->{ evolver.best_solution.fitness },
 			"worstfitness"		=> ->{ evolver.worst_solution.fitness },

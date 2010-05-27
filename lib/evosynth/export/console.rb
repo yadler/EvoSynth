@@ -22,31 +22,21 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
-	module Output
+	module Export
 
-		class DataSet
-			attr_accessor :column_names
+		class ConsoleWriter
 
-			def initialize(column_names = [])
-				@data = {}
-				@column_names = column_names
+			def initialize(step_size = 1)
+				@step_size = step_size
 			end
 
-			def [](row_number)
-				@data[row_number]
-			end
-
-			def []=(row_number, row)
-				@data[row_number] = row
-			end
-
-			def each_row
-				@data.each { |row_num, row| yield row }
-			end
-
-			def each_row_with_index
-				@data.each { |row_num, row| yield row, row_num }
+			def update(logger, counter, line)
+				return unless counter % @step_size == 0
+				puts "#{line.join("\t")}"
 			end
 
 		end

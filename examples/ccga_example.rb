@@ -108,14 +108,14 @@ module Examples
 		end
 
 		def CCGAExample.run(evolver, configuration, evolver_name)
-			logger = EvoSynth::Output::Logger.new(50) do |log|
+			logger = EvoSynth::Logger.new(50) do |log|
 				log.add_column("generations", ->{ evolver.generations_computed })
 				log.add_column("evaluations", ->{ configuration.evaluator.called })
 				log.add_column("fitness",     ->{ best_genome = [];
 									              evolver.best_solution.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) };
 									              CCGAExample.fitness_function(best_genome)
 									            })
-				log.add_observer(EvoSynth::Output::ConsoleWriter.new)
+				log.add_observer(EvoSynth::Export::ConsoleWriter.new)
 			end
 			evolver.add_observer(logger)
 

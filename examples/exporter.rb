@@ -64,13 +64,13 @@ module Examples
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_strong_elistism(evolver)
 
-		plot_logger = EvoSynth::Output::Logger.new(5) do |logger|
+		plot_logger = EvoSynth::Logger.new(5) do |logger|
 			logger.add_column("best fitness",    ->{ configuration.population.best.fitness })
 			logger.add_column("worst fitness",   ->{ configuration.population.worst.fitness })
 			logger.add_column("dist. diversity", ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) })
 			logger.add_column("mean fitness",    ->{ EvoSynth::EvoBench.population_fitness_mean(evolver.population) })
 			logger.add_column("median fitness",  ->{ EvoSynth::EvoBench.population_fitness_median(evolver.population) })
-			logger.add_observer(EvoSynth::Output::ConsoleWriter.new(10))
+			logger.add_observer(EvoSynth::Export::ConsoleWriter.new(10))
 		end
 
 		evolver.add_observer(plot_logger)
