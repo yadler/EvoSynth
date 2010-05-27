@@ -22,9 +22,6 @@ Features:
 		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
 		=> Auf Diplomarbeitshintergrund verweisen
 
-	- Refactoring und Verbesserungen:
-		=> Evolver sollte Observer vom Configuration sein, um auf dessen Änderungen reagieren zu können
-
 	- Logger und Exporter:
 		=> HTML exporter
 		=> gnuplot:
