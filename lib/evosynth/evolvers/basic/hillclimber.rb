@@ -27,13 +27,13 @@ module EvoSynth
 
 		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
-		class Hillclimber
-			include EvoSynth::Evolvers::Evolver
+		class Hillclimber < EvoSynth::Evolvers::Evolver
 
-			def initialize(configuration)
-				init_configuration :individual, :mutation, :evaluator
-				use_configuration configuration
+			def required_configuration?
+				{ :individual => nil, :mutation => nil, :evaluator => nil }
+			end
 
+			def setup
 				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end
 

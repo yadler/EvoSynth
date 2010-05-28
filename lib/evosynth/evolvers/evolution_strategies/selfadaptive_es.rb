@@ -27,24 +27,25 @@ module EvoSynth
 
 		# ES-SELBSTADAPTIV (Weicker Page 135)
 
-		class SelfAdaptiveES
-			include EvoSynth::Evolvers::Evolver
+		class SelfAdaptiveES < EvoSynth::Evolvers::Evolver
 
 			DEFAULT_CHILD_FACTOR = 5
 			DEFAULT_MUTATION = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 
-			def initialize(configuration)
-				init_configuration :population,
-				    :evaluator,
+			def required_configuration?
+				{
+					:population				=> nil,
+				    :evaluator				=> nil,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :mutation				=> DEFAULT_MUTATION,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection		=> DEFAULT_PARENT_SELECTION
+				}
+			end
 
-				use_configuration configuration
-
+			def setup
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 

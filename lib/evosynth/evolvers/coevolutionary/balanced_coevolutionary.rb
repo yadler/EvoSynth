@@ -29,8 +29,7 @@ module EvoSynth
 		#
 		# evolves two populations (problems, solutions / predator, prey) in a balanced manner
 
-		class BalancedCoevolutionary
-			include EvoSynth::Evolvers::Evolver
+		class BalancedCoevolutionary < EvoSynth::Evolvers::Evolver
 
 			attr_reader :solution_success
 
@@ -39,20 +38,22 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def initialize(configuration)
-				init_configuration :population,
-					:problems,
-				    :evaluator,
-					:mutation,
-				    :problem_mutation,
-					:recombination => DEFAULT_RECOMBINATION,
-				    :problem_recombination => DEFAULT_RECOMBINATION,
-					:parent_selection => DEFAULT_SELECTION,
-					:enviromental_selection => DEFAULT_SELECTION,
-					:pairing_runs => DEFAULT_PAIRING_RUNS
+			def required_configuration?
+				{
+					:population				=> nil,
+				    :evaluator				=> nil,
+				    :mutation				=> nil,
+					:problems				=> nil,
+				    :problem_mutation		=> nil,
+					:recombination			=> DEFAULT_RECOMBINATION,
+				    :problem_recombination	=> DEFAULT_RECOMBINATION,
+					:parent_selection		=> DEFAULT_SELECTION,
+					:enviromental_selection	=> DEFAULT_SELECTION,
+					:pairing_runs			=> DEFAULT_PAIRING_RUNS
+				}
+			end
 
-				use_configuration configuration
-
+			def setup
 				# intialize fitnesses?! FIXME: find a better way to do this
 				solution = @parent_selection.select(@population, 1).first
 				@problems.each do |problem|

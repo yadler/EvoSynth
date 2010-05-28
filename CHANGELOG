@@ -12,6 +12,7 @@
 
 * various changes and improvements:
   * renamed Profile to Configuration!
+  * refactoring of evolver - more flexible, now yields itself
   * Configuration and Logger constructors now yield themself, to make scoped block initialisation possible
   * refactored logging features: added DataFetcher and DataSet classes
   * removed unnessesary util function: create_console_logger (not needed anymore)

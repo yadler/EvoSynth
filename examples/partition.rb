@@ -145,21 +145,24 @@ module Examples
 		POPULATION_SIZE = 20
 		GENERATIONS = 500
 		GOAL = 0.0
+		PROBLEM = Partitionproblem::Testdata.gen_layer_set
 
-		problem = Partitionproblem::Testdata.gen_layer_set
-		base_population = EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(problem) }
-
-		configuration = EvoSynth::Configuration.new(
+		subevolver_conf = EvoSynth::Configuration.new(
 			:mutation			=> PartitionMutation.new,
-			:parent_selection	=> EvoSynth::Selections::TournamentSelection.new(3),
-			:recombination		=> EvoSynth::Recombinations::Identity.new,
 			:evaluator			=> Partitionproblem::PartitionEvaluator.new
 		)
 
-		configuration.population = base_population.deep_clone
-		puts "running MemeticAlgorithm with elitism..."
-		evolver = EvoSynth::Evolvers::MemeticAlgorithm.new(configuration)
+		evolver = EvoSynth::Evolvers::MemeticAlgorithm.new do |ma|
+			ma.mutation			= PartitionMutation.new
+			ma.parent_selection	= EvoSynth::Selections::TournamentSelection.new(3)
+			ma.recombination	= EvoSynth::Recombinations::Identity.new
+			ma.evaluator		= Partitionproblem::PartitionEvaluator.new
+			ma.population		= EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(PROBLEM) }
+			ma.subevolver				= EvoSynth::Evolvers::LocalSearch
+			ma.subevolver_configuration = subevolver_conf
+		end
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
+
 		logger = EvoSynth::Logger.new(25) do |log|
 			log.add_column("generations",  ->{ evolver.generations_computed })
 			log.add_column("best fitness", ->{ evolver.best_solution.fitness })
@@ -168,6 +171,7 @@ module Examples
 		end
 		evolver.add_observer(logger)
 
+		puts "running MemeticAlgorithm with elitism..."
 		evolver.run_until { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
 		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution}"
 	end

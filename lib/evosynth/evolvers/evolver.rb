@@ -29,14 +29,50 @@ require 'evosynth/evolvers/configuration_using_evolver'
 module EvoSynth
 	module Evolvers
 
-		# This Module provides some basic functionality for evolvers, its simply a union
+		# This Class provides some basic functionality for evolvers, its simply a union
 		# of RunnableEvolver and ConfigurationUsingEvolver. Every evolver should mix-in this
 		# module of provide similiar functionality to be compatible with the other classes
 		# and modules in EvoSynth.
 
-		module Evolver
+		class Evolver
 			include RunnableEvolver
 			include ConfigurationUsingEvolver
+
+			def initialize(configuration = nil)
+				init_configuration(required_configuration?)
+				use_configuration(configuration) unless configuration.nil?
+				yield self if block_given?
+				check_configuration
+				setup
+			end
+
+			def required_configuration?
+				raise NotImplementedError
+			end
+
+			def setup
+				raise NotImplementedError
+			end
+
+			def next_generation
+				raise NotImplementedError
+			end
+
+			def best_solution
+				raise NotImplementedError
+			end
+
+			def worst_solution
+				raise NotImplementedError
+			end
+
+			def return_result
+				raise NotImplementedError
+			end
+
+			def to_s
+				"evolver"
+			end
 		end
 
 	end

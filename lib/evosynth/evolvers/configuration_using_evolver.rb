@@ -29,45 +29,26 @@ module EvoSynth
 
 		module ConfigurationUsingEvolver
 
-			def init_configuration(*properties)
-				@properties = properties
-				@properties.each do |property|
-					if property.is_a?(Symbol)
-						self.class.send(:attr_accessor, property)
-					elsif property.is_a?(Hash)
-						property.keys.each { |key| self.class.send(:attr_accessor, key) }
-					else
-						raise ArgumentError, "argument type not supported"
-					end
+			def init_configuration(property_hash)
+				raise ArgumentError, "argument type not supported" unless property_hash.is_a?(Hash)
+				@property_hash = property_hash				
+				@property_hash.each_pair do |key, default_value|
+					self.class.send(:attr_accessor, key)
+					self.send("#{key.id2name}=".to_sym, default_value) unless default_value.nil?
 				end
 			end
 
 			def use_configuration(configuration)
 				@configuration = configuration
-				@properties.each do |property|
-					if property.is_a? Symbol
-							use_property(configuration, property)
-					elsif property.is_a? Hash
-							use_property_hash(configuration, property)
-					end
+				@property_hash.each_pair do |key, default_value|
+					value = configuration.send("#{key.id2name}") rescue nil
+					self.send("#{key.id2name}=".to_sym, value) unless value.nil?
 				end
 			end
 
-			private
-
-			def use_property(configuration, property)
-				accessor_symbol = "#{property.id2name}=".to_sym
-				value = configuration.send(property.to_sym) rescue value = nil
-				raise "evolver configuration is missing '#{property.id2name}' field" if value.nil?
-				self.send(accessor_symbol, value)
-			end
-
-			def use_property_hash(configuration, property_hash)
-				property_hash.each_pair do |key, default_value|
-					accessor_symbol = "#{key.id2name}=".to_sym
-					value = configuration.send(key.to_sym) rescue value = nil
-					value = default_value if value.nil?
-					self.send(accessor_symbol, value)
+			def check_configuration
+				@property_hash.each_key do |key|
+					raise "evolver configuration is missing '#{key.id2name}' field" if self.send(key).nil?
 				end
 			end
 

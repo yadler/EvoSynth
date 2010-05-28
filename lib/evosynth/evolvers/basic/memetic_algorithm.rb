@@ -28,8 +28,7 @@ module EvoSynth
 		# MEMETISCHER-ALGORITHMUS (Weicker Page 165)
 		# see also: http://en.wikipedia.org/wiki/Memetic_algorithm for later improvments
 
-		class MemeticAlgorithm
-			include EvoSynth::Evolvers::Evolver
+		class MemeticAlgorithm < EvoSynth::Evolvers::Evolver
 
 			DEFAULT_CHILD_FACTOR = 0.5
 			DEFAULT_RECOMBINATION_PROBABILITY = 1.0
@@ -37,23 +36,25 @@ module EvoSynth
 			DEFAULT_INDIVIDUAL_LEARNING_GOAL = ->(gen, best) { gen >= 10 }
 			DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY = 0.75
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
-			DEFAULT_SUBEVOLVER_CREATOR = ->(configuration) { EvoSynth::Evolvers::LocalSearch.new(configuration) }
 
-			def initialize(configuration)
-				init_configuration :population,
-					:evaluator,
-				    :mutation,
+			def required_configuration?
+				{
+					:population							=> nil,
+					:evaluator							=> nil,
+				    :mutation							=> nil,
+					:subevolver							=> nil,
+					:subevolver_configuration			=> nil,
 					:recombination						=> DEFAULT_RECOMBINATION,
 					:parent_selection					=> DEFAULT_SELECTION,
 					:enviromental_selection				=> DEFAULT_SELECTION,
 					:child_factor						=> DEFAULT_CHILD_FACTOR,
 					:recombination_probability			=> DEFAULT_RECOMBINATION_PROBABILITY,
-				    :subevolver_creator					=> DEFAULT_SUBEVOLVER_CREATOR,
 					:individual_learning_goal			=> DEFAULT_INDIVIDUAL_LEARNING_GOAL,
 					:individual_learning_probability	=> DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY
+				}
+			end
 
-				use_configuration configuration
-
+			def setup
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
@@ -93,8 +94,8 @@ module EvoSynth
 
 				child_population.map! do |child|
 					if EvoSynth.rand < @individual_learning_probability
-						@configuration.individual = child
-						subevolver = @subevolver_creator.call(@configuration)
+						@subevolver_configuration.clone.individual = child
+						subevolver = @subevolver.new(@subevolver_configuration)
 						subevolver.run_until &@individual_learning_goal
 					else
 						child

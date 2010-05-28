@@ -32,8 +32,7 @@ module EvoSynth
 		# 
 		# TODO: rdoc (mutation and adjustment are fixed!)
 
-		class AdaptiveES
-			include EvoSynth::Evolvers::Evolver
+		class AdaptiveES < EvoSynth::Evolvers::Evolver
 
 			attr_reader :success
 
@@ -45,20 +44,22 @@ module EvoSynth
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
-			def initialize(configuration)
-				init_configuration :population,
-				    :evaluator,
-					:sigma					=> DEFAULT_SIGMA,
+			def required_configuration?
+				{
+					:population				=> nil,
+				    :evaluator				=> nil,
+				    :sigma					=> DEFAULT_SIGMA,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
 				    :parent_selection		=> DEFAULT_PARENT_SELECTION
+				}
+			end
 
-				use_configuration configuration
+			def setup
 				@adjustment = DEFAULT_ADJUSTMENT
 				@mutation = DEFAULT_MUTATION
 				@success = 0
-
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 

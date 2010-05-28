@@ -27,23 +27,24 @@ module EvoSynth
 
 		# STEADY-STATE-GA (Weicker Page 129)
 
-		class SteadyStateGA
-			include EvoSynth::Evolvers::Evolver
+		class SteadyStateGA < EvoSynth::Evolvers::Evolver
 
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def initialize(configuration)
-				init_configuration :population,
-				    :evaluator,
-				    :mutation,
+			def required_configuration?
+				{
+					:population					=> nil,
+				    :evaluator					=> nil,
+				    :mutation					=> nil,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY
+				}
+			end
 
-				use_configuration configuration
-
+			def setup
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 

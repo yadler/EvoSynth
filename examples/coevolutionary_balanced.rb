@@ -60,10 +60,11 @@ module Examples
 			end
 		end
 
-		class EvoSynth::Individual
+		class CoEvoIndividual < EvoSynth::MaximizingIndividual
 			# TODO: put this in a good place :)
 
-			def initialize
+			def initialize(*args)
+				super(*args)
 				@memory = []
 				@memory_size = 1
 			end
@@ -100,8 +101,8 @@ module Examples
 			:mutation					=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN),
 			:problem_mutation			=> EvoSynth::Mutations::MixingMutation.new,
 			:problem_recombination		=> EvoSynth::Recombinations::OnePointCrossover.new,
-			:population					=> EvoSynth::Population.new(SOLUTIONS) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
-			:problems					=> EvoSynth::Population.new(PROBLEMS) { EvoSynth::MaximizingIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
+			:population					=> EvoSynth::Population.new(SOLUTIONS) { CoEvoIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } ) },
+			:problems					=> EvoSynth::Population.new(PROBLEMS) { CoEvoIndividual.new( CMBExample.generate_problem(NUM_PEAKS) ) },
 			:evaluator					=> CMBEvaluator.new
 		)
 

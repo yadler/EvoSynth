@@ -34,16 +34,20 @@ module EvoSynth
 
 		# LOKALE-SUCHE (Weicker Page 155)
 
-		class LocalSearch
-			include EvoSynth::Evolvers::Evolver
+		class LocalSearch < EvoSynth::Evolvers::Evolver
 
 			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
 
-			def initialize(configuration)
-				init_configuration :individual, :mutation, :evaluator, :acceptance => DEFAULT_ACCEPTANCE
+			def required_configuration?
+				{
+					:individual => nil,
+					:mutation   => nil,
+					:evaluator  => nil,
+					:acceptance => DEFAULT_ACCEPTANCE
+				}
+			end
 
-				use_configuration configuration
-
+			def setup
 				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end
 

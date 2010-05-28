@@ -32,8 +32,7 @@ module EvoSynth
 		#
 		# TODO: rdoc
 
-		class DerandomizedES
-			include EvoSynth::Evolvers::Evolver
+		class DerandomizedES < EvoSynth::Evolvers::Evolver
 
 			attr_reader :s
 
@@ -45,16 +44,19 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 
-			def initialize(configuration)
-				init_configuration :population,
-				    :evaluator,
-					:sigma					=> DEFAULT_SIGMA,
+			def required_configuration?
+				{
+					:population				=> nil,
+				    :evaluator				=> nil,
+				    :sigma					=> DEFAULT_SIGMA,
 					:alpha					=> DEFAULT_ALPHA,
 					:tau					=> DEFAULT_TAU,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION
+				}
+			end
 
-				use_configuration configuration
+			def setup
 				@mutation = DEFAULT_MUTATION
 				@recombination = DEFAULT_RECOMBINATION
 

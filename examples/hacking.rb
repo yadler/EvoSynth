@@ -45,17 +45,17 @@ module Examples
 
 				(6030912063.0 - suma).abs
 			end
+
 		end
 
 		FLIP_CHAR = lambda { ALPHABET[EvoSynth.rand(ALPHABET.size)] }
 
-		configuration = EvoSynth::Configuration.new(
-			:individual			=> EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { ALPHABET[EvoSynth.rand(ALPHABET.size)] }),
-			:evaluator			=> Hacking::HackingEvaluator.new,
-			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
-		)
+		evolver = EvoSynth::Evolvers::Hillclimber.new do |hc|
+			hc.evaluator = HackingEvaluator.new
+			hc.individual = EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { ALPHABET[EvoSynth.rand(ALPHABET.size)] })
+			hc.mutation	= EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
+		end
 
-		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
 		evolver.run_until { |gen, best| gen > 25000 || best.fitness == 0.0  }
 		puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
 	end

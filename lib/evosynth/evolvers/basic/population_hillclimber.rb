@@ -27,13 +27,13 @@ module EvoSynth
 
 		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
-		class PopulationHillclimber
-			include EvoSynth::Evolvers::Evolver
+		class PopulationHillclimber < EvoSynth::Evolvers::Evolver
 
-			def initialize(configuration)
-				init_configuration :mutation, :population, :evaluator
-				use_configuration configuration
+			def required_configuration?
+				{ :mutation => nil, :population => nil, :evaluator => nil }
+			end
 
+			def setup
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 

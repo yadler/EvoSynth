@@ -27,8 +27,7 @@ module EvoSynth
 
 		# based on CCGA-1/2 (Mitchell A. Potter and Kenneth A. De Jong)
 
-		class RoundRobinCoevolutionary
-			include EvoSynth::Evolvers::Evolver
+		class RoundRobinCoevolutionary < EvoSynth::Evolvers::Evolver
 
 			attr_reader :subevolvers
 
@@ -36,12 +35,15 @@ module EvoSynth
 			                                                  EvoSynth::Evolvers.add_weak_elistism(evolver);
 			                                                  evolver }
 
-			def initialize(configuration)
-				init_configuration :populations,
-				    :subevolvers_creator => DEFAULT_SUBEVOLVERS_CREATOR
+			def required_configuration?
+				{
+					:populations			=> nil,
+				    :subevolvers_creator	=> DEFAULT_SUBEVOLVERS_CREATOR
+				}
+			end
 
-				use_configuration configuration
-				initialize_sub_evolvers(configuration)
+			def setup
+				initialize_sub_evolvers(@configuration)
 				@next_index = 0
 			end
 
