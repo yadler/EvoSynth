@@ -43,101 +43,66 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
+		def EvoBench.test_run(evolver, &reset_block)
+			logger = EvoSynth::Logger.new(1, true, "best fitness" => ->{ evolver.best_solution.fitness })
+			evolver.add_observer(logger)
 
-		configuration = EvoSynth::Configuration.new(
-			:population			=> EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual },
-			:evaluator			=> EvoBench::Evaluator.new,
-			:mutation			=> EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
-		)
+			# collect data:
+			puts "running #{evolver.to_s}..."
+			datasets = []
+			RUNS.times do |run|
+				print "."
+				yield evolver
+				evolver.run_until_generations_reached(MAX_GENERATIONS)
+				datasets << logger.data
 
-		# --------------------------- Use GA with weak elistism --------------------------- #
+				evolver.evaluator.reset_counters
+				logger.clear_data
+			end
+			puts "\n\n"
 
-		configuration.evaluator.reset_counters
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
-		EvoSynth::Evolvers.add_weak_elistism(evolver)
+			# create data hash:
+			datahash = {}
+			datasets.each do |dataset|
+				dataset.each_row_with_index do |row, index|
+					datahash[index] = [] unless datahash.has_key?(index)
+					datahash[index] << row[0] # best fitness
+				end
+			end
 
-		logger = EvoSynth::Logger.new(1, true,
-			"generations"		=> ->{ evolver.generations_computed },
-			"bestfitness"		=> ->{ evolver.best_solution.fitness },
-			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) }
-		)
-#		logger.add_observer(EvoSynth::Output::ConsoleWriter.new(20))
-		evolver.add_observer(logger)
-
-		seeds = []
-		RUNS.times { |run| seeds << EvoSynth::rand(99999999999) }
-
-		puts "running GA with elitism"
-
-		datasets1 = []
-		RUNS.times do |run|
-			print "."
-			EvoSynth::srand(seeds[run])
-			evolver.population = EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual }
-			evolver.run_until_generations_reached(MAX_GENERATIONS)
-			datasets1 << logger.data
-
-			configuration.evaluator.reset_counters
-			logger.clear_data
+			datahash
 		end
 
-		# --------------------------- Use GA WITHOUT weak elistism --------------------------- #
+		def EvoBench.compare(evolver_one, evolver_two, &reset_block)
+			results_one = EvoBench.test_run(evolver_one, &reset_block)
+			results_two = EvoBench.test_run(evolver_two, &reset_block)
 
-		configuration.evaluator.reset_counters
-		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
+			puts "comparison:\n"
+			results_one.each_pair do |index, row|
+				t_value = EvoSynth::EvoBench.t_test(row, results_two[index])
+				error_prob = EvoSynth::EvoBench.t_probability(t_value, RUNS)
 
-		logger = EvoSynth::Logger.new(1, true,
-			"generations"		=> ->{ evolver.generations_computed },
-			"bestfitness"		=> ->{ evolver.best_solution.fitness },
-			"worstfitness"		=> ->{ evolver.worst_solution.fitness },
-			"dist. diversity"	=> ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) },
-			"entropy diversity" => ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) }
-		)
-#		logger.add_observer(EvoSynth::Output::ConsoleWriter.new(20))
-		evolver.add_observer(logger)
-
-		puts "\nrunning GA without elitism"
-
-		datasets2 = []
-		RUNS.times do |run|
-			print "."
-			EvoSynth::srand(seeds[run])
-			evolver.population = EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual }
-			evolver.run_until_generations_reached(MAX_GENERATIONS)
-			datasets2 << logger.data
-
-			configuration.evaluator.reset_counters
-			logger.clear_data
-		end
-
-		with = {}
-		datasets1.each do |dataset|
-			dataset.each_row_with_index do |row, index|
-				with[index] = [] unless with.has_key?(index)
-				with[index] << row[1]
+				puts "#{index}\tbest (one) = #{EvoSynth::EvoBench.mean(row)}\tbest (two) = #{EvoSynth::EvoBench.mean(results_two[index])}\tt-value=#{t_value}\terror prob.=#{error_prob}"
 			end
 		end
 
-		without = {}
-		datasets2.each do |dataset|
-			dataset.each_row_with_index do |row, index|
-				without[index] = [] unless without.has_key?(index)
-				without[index] << row[1]
-			end
+
+		base_population = EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual }
+
+		configuration = EvoSynth::Configuration.new do |cfg|
+			cfg.population = base_population
+			cfg.evaluator = EvoBench::Evaluator.new
+			cfg.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		end
 
-#		puts with.inspect
-#		puts without.inspect
+		# ------------------------------------------------------------------------------------ #
 
-		puts ""
-		with.each_pair do |index, row|
-			t_value = EvoSynth::EvoBench.t_test(row, without[index])
-			error_prob = EvoSynth::EvoBench.t_probability(t_value, RUNS)
-			error_prob2 = EvoSynth::EvoBench.t_probability2(t_value, RUNS)
+		ga_elistism = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
+		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
+		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-			puts "#{index}\t#{t_value}\t#{error_prob}\t#{error_prob2}"
+		EvoBench.compare(ga_elistism, ga) do |evolver|
+			evolver.population = base_population.deep_clone
 		end
 	end
 end
