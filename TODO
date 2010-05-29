@@ -19,6 +19,7 @@ fehlende oder fehlerhafte Testfälle:
 Features:
 
 	- README:
+		=> features aktualisieren (siehe CHANGELOG)
 		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
 		=> Auf Diplomarbeitshintergrund verweisen
 

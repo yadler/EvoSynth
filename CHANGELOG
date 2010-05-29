@@ -4,6 +4,7 @@
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
+  * Comparator, to compare the performance of two or more Evolvers
 
 * export
   * evosynth has its own gnuplot class now, no need for a external gem anymore

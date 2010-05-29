@@ -43,50 +43,6 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		def EvoBench.test_run(evolver, &reset_block)
-			logger = EvoSynth::Logger.new(1, true, "best fitness" => ->{ evolver.best_solution.fitness })
-			evolver.add_observer(logger)
-
-			# collect data:
-			puts "running #{evolver.to_s}..."
-			datasets = []
-			RUNS.times do |run|
-				print "."
-				yield evolver
-				evolver.run_until_generations_reached(MAX_GENERATIONS)
-				datasets << logger.data
-
-				evolver.evaluator.reset_counters
-				logger.clear_data
-			end
-			puts "\n\n"
-
-			# create data hash:
-			datahash = {}
-			datasets.each do |dataset|
-				dataset.each_row_with_index do |row, index|
-					datahash[index] = [] unless datahash.has_key?(index)
-					datahash[index] << row[0] # best fitness
-				end
-			end
-
-			datahash
-		end
-
-		def EvoBench.compare(evolver_one, evolver_two, &reset_block)
-			results_one = EvoBench.test_run(evolver_one, &reset_block)
-			results_two = EvoBench.test_run(evolver_two, &reset_block)
-
-			puts "comparison:\n"
-			results_one.each_pair do |index, row|
-				t_value = EvoSynth::EvoBench.t_test(row, results_two[index])
-				error_prob = EvoSynth::EvoBench.t_probability(t_value, RUNS)
-
-				puts "#{index}\tbest (one) = #{EvoSynth::EvoBench.mean(row)}\tbest (two) = #{EvoSynth::EvoBench.mean(results_two[index])}\tt-value=#{t_value}\terror prob.=#{error_prob}"
-			end
-		end
-
-
 		base_population = EvoSynth::Population.new(POP_SIZE) { EvoBench.create_individual }
 
 		configuration = EvoSynth::Configuration.new do |cfg|
@@ -101,8 +57,13 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
 		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-		EvoBench.compare(ga_elistism, ga) do |evolver|
-			evolver.population = base_population.deep_clone
-		end
+		comparator = EvoSynth::EvoBench::Comparator.new(RUNS)
+		comparator.set_goal { |gen, best| gen > MAX_GENERATIONS }
+		comparator.reset_evolvers_with() { |evolver| evolver.population = base_population.deep_clone }
+
+		comparator.add_evolver(ga_elistism)
+		comparator.add_evolver(ga)
+		comparator.collect_data!
+		comparator.compare(ga, ga_elistism)
 	end
 end
