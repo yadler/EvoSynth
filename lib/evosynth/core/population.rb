@@ -58,9 +58,6 @@ module EvoSynth
 		# Removes a give individual (first occurence) from the population.
 
 		def remove(individual)
-			# FIXME: this is a rather ugly hack
-			# -> should be replaced with a cool 1.9 function
-
 			found = nil
 			self.each_index do |index|
 				if self[index] == individual
