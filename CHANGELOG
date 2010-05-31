@@ -1,5 +1,7 @@
 === 0.2.0
 
+* added SP_k problem to binary benchmark functions
+
 * added EvoBench module with following benchmarking features:
 
   * diversity calculations (distance, entropy and subsequence)

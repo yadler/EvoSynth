@@ -69,6 +69,24 @@ module EvoSynth
 				1.0 / xs.size * (xs.size - max_hamming_dist)
 			end
 
+			# SP_k problem
+			#
+			# TODO: needs rdoc and testcase
+
+			def BinaryBenchmarkFuntions.sp_k(k, bs)
+				length_of_ones = bs.take_while { |i| i == true }.length
+
+				below_max_k = length_of_ones / k <= (bs.size / (3.0 * k**2)).ceil
+				divisible = length_of_ones % k == 0
+				valid_order = length_of_ones == bs.count(true)
+
+				if valid_order && below_max_k && divisible
+					bs.size * (bs.count(true) + 1)
+				else
+					bs.size - bs.count(true)
+				end
+			end
+
 		end
 	end
 end

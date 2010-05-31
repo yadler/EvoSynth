@@ -25,7 +25,7 @@
 require 'evosynth'
 
 
-# TODO: this could be a benchmark problem
+# TODO: transfer this into separate examples: binary benchmark example, float benchmark example, ...
 
 module Examples
 	module SPk
@@ -38,57 +38,12 @@ module Examples
 			end
 
 			def calculate_fitness(individual)
-				fitness = 0.0
-
-				ones = individual.genome.inject(0) do |ones, gene|
-					ones += gene ? 1 : 0
-				end
-
-				if is_valid(individual.genome)
-					fitness = individual.genome.size * (ones + 1)
-				else
-					fitness = individual.genome.size - ones
-				end
-
-				fitness
-			end
-
-			def is_valid(genome)
-				valid = false
-
-				len_of_ones = calc_length_of_ones(genome)
-				max_k = (genome.size.to_f / (3.0 * @k*@k).to_f).ceil
-				valid = true if !len_of_ones.nil? && len_of_ones / @k <= max_k && len_of_ones % @k == 0
-
-				valid
-			end
-
-			def calc_length_of_ones(genome)
-				count, len_of_ones = 0, 0
-				end_of_ones, end_of_zeros = false, false
-
-				genome.each do |gene|
-					end_of_ones_reached = !gene && !end_of_ones
-					end_of_zeros_reached = gene && end_of_ones && !end_of_zeros
-
-					if end_of_ones_reached
-						len_of_ones = count
-						end_of_ones = true
-					elsif end_of_zeros_reached
-						end_of_zeros = true
-					end
-
-					count += 1
-				end
-
-				len_of_ones = count if !end_of_ones
-				len_of_ones = nil if end_of_zeros
-				len_of_ones
+				EvoSynth::Problems::BinaryBenchmarkFuntions.sp_k(@k, individual.genome)
 			end
 
 		end
  
-		K = 2
+		K = 3
 		GENOME_SIZE = 16
 		GENERATIONS = 5000
 
@@ -98,8 +53,15 @@ module Examples
 			hc.evaluator  = SPkFitnessEvaluator.new(K)
 		end
 
+		logger = EvoSynth::Logger.new(500) do |log|
+			log.add_column("generations",  ->{ evolver.generations_computed })
+			log.add_column("best fitness", ->{ evolver.best_solution.fitness })
+			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
+		end
+		evolver.add_observer(logger)
+
 		puts "Running #{evolver}...\n\n"
 		result = evolver.run_until_generations_reached(GENERATIONS)
-		puts "result: #{result}"
+		puts "\nResult: #{result}"
 	end
 end
