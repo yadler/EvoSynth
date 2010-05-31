@@ -22,21 +22,15 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evolvers/runnable_evolver'
-require 'evosynth/evolvers/configuration_using_evolver'
-
-
 module EvoSynth
 	module Evolvers
 
-		# This Class provides some basic functionality for evolvers, its simply a union
-		# of RunnableEvolver and ConfigurationUsingEvolver. Every evolver should mix-in this
-		# module of provide similiar functionality to be compatible with the other classes
-		# and modules in EvoSynth.
+		# This Class provides some basic functionality for evolvers.
 
 		class Evolver
-			include RunnableEvolver
-			include ConfigurationUsingEvolver
+			include Observable
+
+			attr_reader :generations_computed
 
 			def initialize(configuration = nil)
 				init_configuration(required_configuration?)
@@ -46,12 +40,70 @@ module EvoSynth
 				setup
 			end
 
+			def setup
+				raise NotImplementedError
+			end
+
+			def init_configuration(property_hash)
+				raise ArgumentError, "argument type not supported" unless property_hash.is_a?(Hash)
+				@property_hash = property_hash
+				@property_hash.each_pair do |key, default_value|
+					self.class.send(:attr_accessor, key)
+					self.send("#{key.id2name}=".to_sym, default_value) unless default_value.nil?
+				end
+			end
+
+			def use_configuration(configuration)
+				@configuration = configuration
+				@property_hash.each_pair do |key, default_value|
+					value = configuration.send("#{key.id2name}") rescue nil
+					self.send("#{key.id2name}=".to_sym, value) unless value.nil?
+				end
+			end
+
+			def check_configuration
+				@property_hash.each_key do |key|
+					raise "evolver configuration is missing '#{key.id2name}' field" if self.send(key).nil?
+				end
+			end
+
 			def required_configuration?
 				raise NotImplementedError
 			end
 
-			def setup
-				raise NotImplementedError
+			def run_until(&condition) # :yields: generations computed, best solution
+				@generations_computed = 0
+				changed
+				notify_observers self, @generations_computed
+
+				case condition.arity
+					when 0
+						loop_condition = condition
+					when 1
+						loop_condition = lambda { !yield @generations_computed }
+					when 2
+						loop_condition = lambda { !yield @generations_computed, best_solution }
+				else
+					raise ArgumentError, "please provide a block with the arity of 0, 1 or 2"
+				end
+
+				while loop_condition.call
+					next_generation
+					@generations_computed += 1
+					changed
+					notify_observers self, @generations_computed
+				end
+
+				return_result
+			end
+
+			def run_until_generations_reached(max_generations)
+				run_until { |gen| gen == max_generations }
+			end
+
+			def run_until_fitness_reached(fitness)
+				goal = Goal.new(fitness)
+				run_until { |gen, best| best >= goal }
 			end
 
 			def next_generation
@@ -73,6 +125,21 @@ module EvoSynth
 			def to_s
 				"evolver"
 			end
+
+
+			private
+
+
+			class Goal
+				def initialize(goal)
+					@goal = goal
+				end
+
+				def fitness
+					@goal
+				end
+			end
+
 		end
 
 	end

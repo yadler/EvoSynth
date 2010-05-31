@@ -1,23 +1,35 @@
 === 0.2.0
 
 * added EvoBench module with following benchmarking features:
+
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
   * Comparator, to compare the performance of two or more Evolvers
 
 * export
+
   * evosynth has its own gnuplot class now, no need for a external gem anymore
     (removed dependency on gnuplot, gruff and rmagick gems)
   * moved exporter (console, csv, gnuplot) to Export module and directory
 
 * various changes and improvements:
-  * renamed Profile to Configuration!
-  * refactoring of evolver - more flexible, now yields itself
-  * Configuration and Logger constructors now yield themself, to make scoped block initialisation possible
-  * refactored logging features: added DataFetcher and DataSet classes
-  * removed unnessesary util function: create_console_logger (not needed anymore)
-  * removed output module, moved logger to core and export to its own module (see above)
+
+  * refactoring of profile:
+    - renamed Profile to Configuration
+    - constructor now yield self, to make scoped block initialisation possible
+    - removed unnessesary util function: create_console_logger (not needed anymore)
+
+  * refactoring of evolver:
+    - constructor now yield self, to make scoped block initialisation possible
+    - removed ConfigurationUsingEvolver and RunnableEvolver mixin's and merged code
+      into Evolver
+
+  * refactored logging features:
+    - constructor now yield self, to make scoped block initialisation possible
+    - added DataFetcher and DataSet classes
+    - removed output module
+    - moved logger to core and export to its own module (see above)
 
 === 0.1.0
 
