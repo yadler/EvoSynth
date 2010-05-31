@@ -30,7 +30,7 @@ module EvoSynth
 		class Evolver
 			include Observable
 
-			attr_reader :generations_computed
+			attr_reader :generations_computed, :configuration
 
 			def initialize(configuration = nil)
 				init_configuration(required_configuration?)

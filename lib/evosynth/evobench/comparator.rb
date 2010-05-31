@@ -78,7 +78,7 @@ module EvoSynth
 				@repetitions.times do |run|
 					# reset all relevant objects
 					@reset_block.call evolver
-					logger.clear_data
+					logger.clear_data!
 
 					print "."
 					evolver.run_until { |gen, best| @goal_block.call gen, best }

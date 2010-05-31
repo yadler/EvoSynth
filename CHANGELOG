@@ -32,6 +32,7 @@
     - added DataFetcher and DataSet classes
     - removed output module
     - moved logger to core and export to its own module (see above)
+    - renamed #clear_data to #clear_data!
 
 === 0.1.0
 

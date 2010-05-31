@@ -28,7 +28,7 @@ require 'evosynth/core/logger/datafetcher'
 
 module EvoSynth
 
-	# Customizable logger
+	# customizable (column based) logger
 	#
 	#	logger = EvoSynth::Output::Logger.new(10, true,
 	#		"gen" => ->{ evolver.generations_computed },
@@ -59,7 +59,7 @@ module EvoSynth
 				@data.column_names << column_name
 		end
 
-		def clear_data
+		def clear_data!
 			@data = EvoSynth::Logging::DataSet.new(@data.column_names)
 		end
 
