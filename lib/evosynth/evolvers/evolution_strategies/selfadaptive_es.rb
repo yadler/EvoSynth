@@ -36,8 +36,8 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:population				=> nil,
-				    :evaluator				=> nil,
+					:population				=> REQUIRED_FIELD,
+				    :evaluator				=> REQUIRED_FIELD,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :mutation				=> DEFAULT_MUTATION,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,

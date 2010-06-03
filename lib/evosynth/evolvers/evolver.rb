@@ -25,33 +25,71 @@
 module EvoSynth
 	module Evolvers
 
-		# This Class provides some basic functionality for evolvers.
+		# Base-Class for evolvers. Create a subclass and implement the
+		# missing functionality to create your own Evolver.
 
 		class Evolver
 			include Observable
 
-			attr_reader :generations_computed, :configuration
+			# constant to improve readability
+			REQUIRED_FIELD = nil
 
-			def initialize(configuration = nil)
-				init_configuration(required_configuration?)
+			# returns the number of generations that has been computed by the evolver
+			attr_reader :generations_computed
+
+			# returns the Configuration of the evolver
+			attr_reader :configuration
+
+
+			# Creates a new Evolver using the given Configuration.
+			#
+			# <b>DO NOT OVERWRITE THIS</b>, except you what you do!
+			#
+			# usage:
+			#
+			#    evolver = EvoSynth::Evolvers::Evolver.new(config)
+			#
+			# or:
+			#
+			#	evolver = EvoSynth::Evolver.new do |evolver|
+			#	    evolver.individual = MaxOnes.create_individual
+			#	    evolver.evaluator  = MaxOnes::MaxOnesEvaluator.new
+			#	end
+
+			def initialize(configuration = nil) #:yields: self
+				create_accessors_for_configuration(required_configuration?)
 				use_configuration(configuration) unless configuration.nil?
 				yield self if block_given?
-				check_configuration
+				valid_configuration?
 				setup
 			end
+
+			# Called by constructor. Use this function to initialize your Evolver.
+			# (instead of overwriting the constructor!)
 
 			def setup
 				raise NotImplementedError
 			end
 
-			def init_configuration(property_hash)
+			#	:call-seq:
+			#		create_accessors_for_configuration(configuration_hash)
+			#
+			# initializes the evolver with the needed configuration-fields
+
+			def create_accessors_for_configuration(property_hash)
 				raise ArgumentError, "argument type not supported" unless property_hash.is_a?(Hash)
+
 				@property_hash = property_hash
 				@property_hash.each_pair do |key, default_value|
 					self.class.send(:attr_accessor, key)
 					self.send("#{key.id2name}=".to_sym, default_value) unless default_value.nil?
 				end
 			end
+
+			#	:call-seq:
+			#		use_configuration(Configuration)
+			#
+			# use a given configuration
 
 			def use_configuration(configuration)
 				@configuration = configuration
@@ -61,15 +99,53 @@ module EvoSynth
 				end
 			end
 
-			def check_configuration
+			#	:call-seq:
+			#		valid_configuration? -> True/False
+			#
+			# check if the current evolver configuration is complete and valid
+
+			def valid_configuration?
 				@property_hash.each_key do |key|
 					raise "evolver configuration is missing '#{key.id2name}' field" if self.send(key).nil?
 				end
 			end
 
+			#	:call-seq:
+			#		required_configuration? -> Hash
+			#
+			# overwrite this, it should return a hash containing the required fields.
+			#
+			# key is the accessor-name, value is default or REQUIRED_FIELD (nil)
+			#
+			# example:
+			#
+			# 	def required_configuration?
+			#	{
+			#	    :population                 => REQUIRED_FIELD,
+			#	    :evaluator                  => REQUIRED_FIELD,
+			#	    :mutation                   => REQUIRED_FIELD,
+			#	    :parent_selection           => DEFAULT_SELECTION,
+			#	    :recombination              => DEFAULT_RECOMBINATION,
+			#	    :recombination_probability  => DEFAULT_RECOMBINATION_PROBABILITY,
+			#	    :child_factor               => DEFAULT_CHILD_FACTOR
+			#	}
+			#	end
+			#
+
 			def required_configuration?
 				raise NotImplementedError
 			end
+
+			# this function start the computation of the evolver, the given block is called each generation
+			# to check if the next generation should be computed. possible arities of the block are 0,1 and 2.
+			# returns return_result.
+			#
+			# example:
+			#
+			#	Evolver.run_until { am_i_already_skynet? }                             # "external" stop criteria
+			#	Evolver.run_until { |gen| gen <= 42 }                                  # run 42 generations
+			#	Evolver.run_until { |gen, best| gen <= 42 or best.fitness == 0.0 }     # run 42 generations or stop if a fitness of 0.0 has been reached
+			#
 
 			def run_until(&condition) # :yields: generations computed, best solution
 				@generations_computed = 0
@@ -97,30 +173,44 @@ module EvoSynth
 				return_result
 			end
 
+			# wrapper for run_until { |gen| gen == max_generations}
+
 			def run_until_generations_reached(max_generations)
 				run_until { |gen| gen == max_generations }
 			end
+
+			# wrapper for run_until, constructs a Goal class to use the <=> to compare the fitness values
 
 			def run_until_fitness_reached(fitness)
 				goal = Goal.new(fitness)
 				run_until { |gen, best| best >= goal }
 			end
 
+			# implement this to generate the next generation (individuals, whatever) of your evolver
+
 			def next_generation
 				raise NotImplementedError
 			end
+
+			# this function should return the best solution
 
 			def best_solution
 				raise NotImplementedError
 			end
 
+			# this function should return the worst solution
+
 			def worst_solution
 				raise NotImplementedError
 			end
 
+			# this function should return the "result" of the evolver, it will get called at the end of run_until
+
 			def return_result
 				raise NotImplementedError
 			end
+
+			# returns a human-readable representation of the evolver
 
 			def to_s
 				"evolver"
@@ -129,6 +219,9 @@ module EvoSynth
 
 			private
 
+
+			# simple class to compare a given fitness-goal with a individual using the <=>,
+			# this is done to respect minimizing and maximizin evolvers.
 
 			class Goal
 				def initialize(goal)

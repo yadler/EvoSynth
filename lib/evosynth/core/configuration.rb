@@ -43,13 +43,13 @@ module EvoSynth
 		# or:
 		# 
 		#	configuration = EvoSynth::Configuration.create do |conf|
-		#		conf.individual	= MaxOnes.create_individual
-		#		conf.population	= EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual }
-		#		conf.evaluator  = MaxOnes::MaxOnesEvaluator.new
-		#		conf.mutation   = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		#	    conf.individual = MaxOnes.create_individual
+		#	    conf.population = EvoSynth::Population.new(POP_SIZE) { MaxOnes.create_individual }
+		#	    conf.evaluator  = MaxOnes::MaxOnesEvaluator.new
+		#	    conf.mutation   = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		#	end
 
-		def initialize(*properties)
+		def initialize(*properties) #:yields: self
 			@properties = {}
 
 			properties.each do |property|

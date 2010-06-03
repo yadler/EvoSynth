@@ -30,7 +30,11 @@ module EvoSynth
 		class PopulationHillclimber < EvoSynth::Evolvers::Evolver
 
 			def required_configuration?
-				{ :mutation => nil, :population => nil, :evaluator => nil }
+				{
+					:mutation	=> REQUIRED_FIELD,
+					:population => REQUIRED_FIELD,
+					:evaluator	=> REQUIRED_FIELD
+				}
 			end
 
 			def setup

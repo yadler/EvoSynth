@@ -35,9 +35,9 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:population					=> nil,
-				    :evaluator					=> nil,
-				    :mutation					=> nil,
+					:population					=> REQUIRED_FIELD,
+				    :evaluator					=> REQUIRED_FIELD,
+				    :mutation					=> REQUIRED_FIELD,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY

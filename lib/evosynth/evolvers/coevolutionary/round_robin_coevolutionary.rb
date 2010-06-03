@@ -37,7 +37,7 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:populations			=> nil,
+					:populations			=> REQUIRED_FIELD,
 				    :subevolvers_creator	=> DEFAULT_SUBEVOLVERS_CREATOR
 				}
 			end

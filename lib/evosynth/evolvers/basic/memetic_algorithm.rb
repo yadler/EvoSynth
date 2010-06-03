@@ -39,11 +39,11 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:population							=> nil,
-					:evaluator							=> nil,
-				    :mutation							=> nil,
-					:subevolver							=> nil,
-					:subevolver_configuration			=> nil,
+					:population							=> REQUIRED_FIELD,
+					:evaluator							=> REQUIRED_FIELD,
+				    :mutation							=> REQUIRED_FIELD,
+					:subevolver							=> REQUIRED_FIELD,
+					:subevolver_configuration			=> REQUIRED_FIELD,
 					:recombination						=> DEFAULT_RECOMBINATION,
 					:parent_selection					=> DEFAULT_SELECTION,
 					:enviromental_selection				=> DEFAULT_SELECTION,

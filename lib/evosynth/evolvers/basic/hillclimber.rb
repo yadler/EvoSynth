@@ -30,7 +30,11 @@ module EvoSynth
 		class Hillclimber < EvoSynth::Evolvers::Evolver
 
 			def required_configuration?
-				{ :individual => nil, :mutation => nil, :evaluator => nil }
+				{
+					:individual => REQUIRED_FIELD,
+					:mutation	=> REQUIRED_FIELD,
+					:evaluator	=> REQUIRED_FIELD
+				}
 			end
 
 			def setup

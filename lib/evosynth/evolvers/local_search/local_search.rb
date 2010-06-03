@@ -40,9 +40,9 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:individual => nil,
-					:mutation   => nil,
-					:evaluator  => nil,
+					:individual => REQUIRED_FIELD,
+					:mutation   => REQUIRED_FIELD,
+					:evaluator  => REQUIRED_FIELD,
 					:acceptance => DEFAULT_ACCEPTANCE
 				}
 			end

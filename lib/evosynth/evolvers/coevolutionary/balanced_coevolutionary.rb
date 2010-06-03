@@ -40,11 +40,11 @@ module EvoSynth
 
 			def required_configuration?
 				{
-					:population				=> nil,
-				    :evaluator				=> nil,
-				    :mutation				=> nil,
-					:problems				=> nil,
-				    :problem_mutation		=> nil,
+					:population				=> REQUIRED_FIELD,
+				    :evaluator				=> REQUIRED_FIELD,
+				    :mutation				=> REQUIRED_FIELD,
+					:problems				=> REQUIRED_FIELD,
+				    :problem_mutation		=> REQUIRED_FIELD,
 					:recombination			=> DEFAULT_RECOMBINATION,
 				    :problem_recombination	=> DEFAULT_RECOMBINATION,
 					:parent_selection		=> DEFAULT_SELECTION,
