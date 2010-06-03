@@ -32,7 +32,7 @@ module EvoSynth
 		# 
 		# TODO: rdoc (mutation and adjustment are fixed!)
 
-		class AdaptiveES < EvoSynth::Evolvers::Evolver
+		class AdaptiveES < EvoSynth::Evolver
 
 			attr_reader :success
 

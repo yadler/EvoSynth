@@ -29,7 +29,7 @@ module EvoSynth
 		#
 		# evolves two populations (problems, solutions / predator, prey) in a balanced manner
 
-		class BalancedCoevolutionary < EvoSynth::Evolvers::Evolver
+		class BalancedCoevolutionary < EvoSynth::Evolver
 
 			attr_reader :solution_success
 

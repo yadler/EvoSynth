@@ -22,7 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evolvers/evolver'
 require 'evosynth/evolvers/elitism'
 
 require 'evosynth/evolvers/basic/hillclimber'

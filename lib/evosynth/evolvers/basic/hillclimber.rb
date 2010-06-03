@@ -27,7 +27,7 @@ module EvoSynth
 
 		# BINÄRES-HILLCLIMBING (Weicker Page 49)
 
-		class Hillclimber < EvoSynth::Evolvers::Evolver
+		class Hillclimber < EvoSynth::Evolver
 
 			def required_configuration?
 				{

@@ -34,7 +34,7 @@ module EvoSynth
 
 		# LOKALE-SUCHE (Weicker Page 155)
 
-		class LocalSearch < EvoSynth::Evolvers::Evolver
+		class LocalSearch < EvoSynth::Evolver
 
 			DEFAULT_ACCEPTANCE = HillclimberAcceptance.new
 

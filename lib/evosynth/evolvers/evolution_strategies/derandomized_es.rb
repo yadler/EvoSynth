@@ -32,7 +32,7 @@ module EvoSynth
 		#
 		# TODO: rdoc
 
-		class DerandomizedES < EvoSynth::Evolvers::Evolver
+		class DerandomizedES < EvoSynth::Evolver
 
 			attr_reader :s
 

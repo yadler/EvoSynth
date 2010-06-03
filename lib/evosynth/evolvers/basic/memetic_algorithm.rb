@@ -28,7 +28,7 @@ module EvoSynth
 		# MEMETISCHER-ALGORITHMUS (Weicker Page 165)
 		# see also: http://en.wikipedia.org/wiki/Memetic_algorithm for later improvments
 
-		class MemeticAlgorithm < EvoSynth::Evolvers::Evolver
+		class MemeticAlgorithm < EvoSynth::Evolver
 
 			DEFAULT_CHILD_FACTOR = 0.5
 			DEFAULT_RECOMBINATION_PROBABILITY = 1.0

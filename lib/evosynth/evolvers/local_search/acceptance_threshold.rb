@@ -25,7 +25,7 @@
 module EvoSynth
 	module Evolvers
 
-		class LocalSearch < EvoSynth::Evolvers::Evolver
+		class LocalSearch < EvoSynth::Evolver
 
 			# AKZEPTANZ-TA (Weicker Page 157)
 

@@ -27,7 +27,7 @@ module EvoSynth
 
 		# POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
 
-		class PopulationHillclimber < EvoSynth::Evolvers::Evolver
+		class PopulationHillclimber < EvoSynth::Evolver
 
 			def required_configuration?
 				{

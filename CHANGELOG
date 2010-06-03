@@ -23,6 +23,7 @@
     - removed unnessesary util function: create_console_logger (not needed anymore)
 
   * refactoring of evolver:
+    - moved Evolver into EvoSynth (core) module
     - constructor now yield self, to make scoped block initialisation possible
     - removed ConfigurationUsingEvolver and RunnableEvolver mixin's and merged code
       into Evolver

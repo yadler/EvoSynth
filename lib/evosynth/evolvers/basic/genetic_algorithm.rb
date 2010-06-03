@@ -27,7 +27,7 @@ module EvoSynth
 
 		# GENETISCHER-ALGORITHMUS (Weicker Page 85)
 
-		class GeneticAlgorithm < EvoSynth::Evolvers::Evolver
+		class GeneticAlgorithm < EvoSynth::Evolver
 
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new

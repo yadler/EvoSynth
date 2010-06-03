@@ -27,7 +27,7 @@ module EvoSynth
 
 		# STEADY-STATE-GA (Weicker Page 129)
 
-		class SteadyStateGA < EvoSynth::Evolvers::Evolver
+		class SteadyStateGA < EvoSynth::Evolver
 
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
