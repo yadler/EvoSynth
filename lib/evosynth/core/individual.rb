@@ -37,6 +37,12 @@ module EvoSynth
 
 		attr_reader :fitness
 
+		# TODO: needs rdoc
+
+		def initialize(genome = nil)
+			@genome = genome
+		end
+
 		# Sets the fitness value of this individual, also sets genome.changed to true.
 
 		def fitness=(value)

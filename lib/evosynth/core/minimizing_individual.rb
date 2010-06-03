@@ -39,8 +39,7 @@ module EvoSynth
 		#     EvoSynth::MinimizingIndividual.new( EvoSynth::ArrayGenome.new(10) { EvoSynth.rand_bool } )
 
 		def initialize(genome = nil)
-			super()
-			@genome = genome
+			super(genome)
 			@fitness = Float::MAX
 		end
 
