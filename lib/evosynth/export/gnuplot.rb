@@ -80,6 +80,7 @@ module EvoSynth
 
 			def plot_column(column_name, style = nil)
 				column_index = @logger.data.column_names.index(column_name)
+				raise "column '#{column_name}' not present in logger.data" if column_index.nil?
 
 				command = "using 1:#{column_index + 2} title \"#{column_name}\""
 				command += " with #{style}" unless style.nil?

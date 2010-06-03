@@ -29,7 +29,8 @@
     - constructor now yield self, to make scoped block initialisation possible
     - removed ConfigurationUsingEvolver and RunnableEvolver mixin's and merged code
       into Evolver
-    - added a couple of functions, which need to be implemented by concrete evolvers
+    - added a couple of methods, which need to be implemented by concrete evolvers
+    - renamed a lot of methods
 
   * refactored logging features:
     - constructor now yield self, to make scoped block initialisation possible

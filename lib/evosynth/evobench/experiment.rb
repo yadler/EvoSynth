@@ -22,12 +22,36 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evobench/statistics_math'
-require 'evosynth/evobench/t-test'
-require 'evosynth/evobench/diversity_distance'
-require 'evosynth/evobench/diversity_entropy'
-require 'evosynth/evobench/diversity_subseq'
+module EvoSynth
+	module EvoBench
 
-require 'evosynth/evobench/test_run'
-require 'evosynth/evobench/comparator'
-require 'evosynth/evobench/experiment'
+		# TODO: versuchspläne und so
+
+		class Experiment
+
+			def initialize(configuration)
+				@configuration = configuration
+				@to_test = {}
+				yield self
+			end
+
+			def try(field, operator)
+				if @to_test.has_key?(field)
+					@to_test[field] << operator
+				else
+					@to_test[field] = [operator]
+				end
+			end
+
+			def start!
+
+			end
+
+			def to_s
+				@to_test.to_s
+			end
+
+		end
+
+	end
+end

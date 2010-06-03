@@ -31,6 +31,8 @@ module EvoSynth
 				@results = {}
 				@evolvers = []
 				@repetitions = repetitions
+
+				yield self if block_given?
 			end
 
 			def set_goal(&goal_block)
@@ -46,12 +48,14 @@ module EvoSynth
 			end
 
 			def collect_data!
+				valid_comparator?
 				@evolvers.each do |evolver|
 					@results[evolver] = run_evolver(evolver)
 				end
 			end
 
 			def compare(evolver_one, evolver_two)
+				raise "run collect_data! first" if @results[evolver_one].nil? or @results[evolver_two].nil?
 				puts "comparison:\n"
 				@results[evolver_one].each_pair do |index, results_one|
 					results_two = @results[evolver_two][index]
@@ -66,13 +70,16 @@ module EvoSynth
 			private
 
 
+			def valid_comparator?
+				raise ArgumentError("please set goal block") if @goal_block.nil?
+				raise ArgumentError("please set reset block") if @reset_block.nil?
+			end
+
 			# TODO: add some sort of progress counter here
 			def run_evolver(evolver)
 				collected_data = {}
 
-				logger = EvoSynth::Logger.new(1) do |log|
-					log.add_column("best fitness", ->{ evolver.best_solution?.fitness })
-				end
+				logger = EvoSynth::Logger.create(1, false, :best_fitness)
 				evolver.add_observer(logger)
 
 				@repetitions.times do |run|

@@ -63,7 +63,13 @@ module Examples
 
 		comparator.add_evolver(ga_elistism)
 		comparator.add_evolver(ga)
-		comparator.collect_data!
-		comparator.compare(ga, ga_elistism)
+#		comparator.collect_data!
+#		comparator.compare(ga, ga_elistism)
+
+		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
+			ex.try(:mutation, "foo")
+			ex.try(:mutation, "abr")
+		end
+		puts experiment
 	end
 end
