@@ -32,7 +32,8 @@ module EvoSynth
 	# FIXME: implment in C for better performance - right now its pretty useless
 	# TODO: complete documentation
 
-	class BinaryGenome < Array
+	class BinaryGenome
+		include EvoSynth::Genome
 
 		# Creates a BinaryGenome with a given initial (Integer) value. Default constructs a new
 		# BinaryGenome with the initial value of 0.
@@ -40,18 +41,6 @@ module EvoSynth
 		def initialize(intial_value = 0)
 			@data = intial_value
 			@changed = true
-		end
-
-		# Set the changed flag (boolean) of the genome
-
-		def changed=(value)
-			@changed = value
-		end
-
-		# True if the genome has changed, false otherwise. Has to be set to false manually.
-
-		def changed?
-			@changed
 		end
 
 		# Returns a clone of this genome

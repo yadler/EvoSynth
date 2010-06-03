@@ -22,15 +22,24 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/core/randomizer'
-require 'evosynth/core/genome'
-require 'evosynth/core/binary_genome'
-require 'evosynth/core/array_genome'
-require 'evosynth/core/individual'
-require 'evosynth/core/minimizing_individual'
-require 'evosynth/core/maximizing_individual'
-require 'evosynth/core/evaluator'
-require 'evosynth/core/population'
-require 'evosynth/core/configuration'
-require 'evosynth/core/logger'
-require 'evosynth/core/evolver'
+module EvoSynth
+
+	# TODO: complete documentation
+
+	module Genome
+
+		# Set the changed flag (boolean) of the genome
+
+		def changed=(value)
+			@changed = value
+		end
+
+		# True if the genome has changed, false otherwise. Has to be set to false manually.
+
+		def changed?
+			@changed
+		end
+
+	end
+
+end

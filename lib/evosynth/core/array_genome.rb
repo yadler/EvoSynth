@@ -32,24 +32,7 @@ module EvoSynth
 	# TODO: complete documentation
 
 	class ArrayGenome < Array
-
-		# Set the changed flag (boolean) of the genome
-
-		def changed=(value)
-			@changed = value
-		end
-
-		# True if the genome has changed, false otherwise. Has to be set to false manually.
-
-		def changed?
-			@changed
-		end
-
-		# Return a printable version of this genome.
-
-		def to_s
-			self * ", "
-		end
+		include EvoSynth::Genome
 
 		# Returns a clone of this genome
 
@@ -57,6 +40,12 @@ module EvoSynth
 			my_clone = super
 			my_clone.changed = false
 			my_clone
+		end
+
+		# Return a printable version of this genome.
+
+		def to_s
+			self * ", "
 		end
 
 		# see http://ruby-doc.org/doxygen/1.8.4/group__ruby__ary.html#ga9

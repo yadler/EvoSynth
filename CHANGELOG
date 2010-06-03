@@ -17,6 +17,8 @@
 
 * various changes and improvements:
 
+  * added genome mixin, ArrayGenome and BinaryGenome include it
+
   * refactoring of profile:
     - renamed Profile to Configuration
     - constructor now yield self, to make scoped block initialisation possible
