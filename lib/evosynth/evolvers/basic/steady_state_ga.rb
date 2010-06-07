@@ -33,18 +33,18 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::OnePointCrossover.new
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:population					=> REQUIRED_FIELD,
-				    :evaluator					=> REQUIRED_FIELD,
-				    :mutation					=> REQUIRED_FIELD,
+					:population					=> REQUIRED_PARAMETER,
+				    :evaluator					=> REQUIRED_PARAMETER,
+				    :mutation					=> REQUIRED_PARAMETER,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY
 				}
 			end
 
-			def setup
+			def setup!
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
@@ -52,19 +52,19 @@ module EvoSynth
 				"steady-state genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				parents = @parent_selection.select(@population, 2)
 
 				if EvoSynth.rand < @recombination_probability

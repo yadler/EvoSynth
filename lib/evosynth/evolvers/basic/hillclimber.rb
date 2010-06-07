@@ -29,15 +29,15 @@ module EvoSynth
 
 		class Hillclimber < EvoSynth::Evolver
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:individual => REQUIRED_FIELD,
-					:mutation	=> REQUIRED_FIELD,
-					:evaluator	=> REQUIRED_FIELD
+					:individual => REQUIRED_PARAMETER,
+					:mutation	=> REQUIRED_PARAMETER,
+					:evaluator	=> REQUIRED_PARAMETER
 				}
 			end
 
-			def setup
+			def setup!
 				@evaluator.calculate_and_set_initial_fitness(@individual)
 			end
 
@@ -45,19 +45,19 @@ module EvoSynth
 				"hillclimber <mutation: #{@mutation}, individual: #{@individual}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@individual
 			end
 
-			def worst_solution
+			def worst_solution?
 				@individual
 			end
 
-			def return_result
+			def result?
 				@individual
 			end
 
-			def next_generation
+			def next_generation!
 				child = @mutation.mutate(@individual)
 				@evaluator.calculate_and_set_fitness(child)
 				@individual = child if child > @individual

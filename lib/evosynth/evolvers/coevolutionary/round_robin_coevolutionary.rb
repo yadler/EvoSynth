@@ -35,14 +35,14 @@ module EvoSynth
 			                                                  EvoSynth::Evolvers.add_weak_elistism(evolver);
 			                                                  evolver }
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:populations			=> REQUIRED_FIELD,
+					:populations			=> REQUIRED_PARAMETER,
 				    :subevolvers_creator	=> DEFAULT_SUBEVOLVERS_CREATOR
 				}
 			end
 
-			def setup
+			def setup!
 				initialize_sub_evolvers(@configuration)
 				@next_index = 0
 			end
@@ -51,24 +51,24 @@ module EvoSynth
 				"cooperative coevolutionary algorithm"
 			end
 
-			def best_solution
+			def best_solution?
 				best = []
 				@populations.each { |pop| best << pop.best }
 				best
 			end
 
-			def worst_solution
+			def worst_solution?
 				worst = []
 				@populations.each { |pop| worst << pop.worst }
 				worst
 			end
 
-			def return_result
+			def result?
 				@populations
 			end
 
-			def next_generation
-				@subevolvers[@next_index].next_generation
+			def next_generation!
+				@subevolvers[@next_index].next_generation!
 				@next_index = (@next_index + 1) % @populations.size
 			end
 

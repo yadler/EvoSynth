@@ -72,8 +72,8 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
 		logger = EvoSynth::Logger.new(25) do |log|
 			log.add_column("generations",      ->{ evolver.generations_computed })
-			log.add_column("best fitness",     ->{ evolver.best_solution.fitness })
-			log.add_column("worst fitness",    ->{ evolver.worst_solution.fitness })
+			log.add_column("best fitness",     ->{ evolver.best_solution?.fitness })
+			log.add_column("worst fitness",    ->{ evolver.worst_solution?.fitness })
 			log.add_column("subseq diversity", ->{ EvoSynth::EvoBench.diversity_subseq(evolver.population) })
 			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
 		end

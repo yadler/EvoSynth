@@ -44,10 +44,10 @@ module EvoSynth
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 			DEFAULT_ADJUSTMENT = EvoSynth::Adjustments::AdaptiveAdjustment.new
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:population				=> REQUIRED_FIELD,
-				    :evaluator				=> REQUIRED_FIELD,
+					:population				=> REQUIRED_PARAMETER,
+				    :evaluator				=> REQUIRED_PARAMETER,
 				    :sigma					=> DEFAULT_SIGMA,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :modification_frequency => DEFAULT_MODIFICATION_FREQUENCY,
@@ -56,7 +56,7 @@ module EvoSynth
 				}
 			end
 
-			def setup
+			def setup!
 				@adjustment = DEFAULT_ADJUSTMENT
 				@mutation = DEFAULT_MUTATION
 				@success = 0
@@ -67,19 +67,19 @@ module EvoSynth
 				"adaptive ES <sigma: #{@sigma}, success: #{@success}, mutation: #{@mutation}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				child_population = EvoSynth::Population.new
 
 				(@child_factor * @population.size).times do

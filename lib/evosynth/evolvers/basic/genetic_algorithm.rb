@@ -34,11 +34,11 @@ module EvoSynth
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 			DEFAULT_CHILD_FACTOR = 0.5
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:population					=> REQUIRED_FIELD,
-				    :evaluator					=> REQUIRED_FIELD,
-				    :mutation					=> REQUIRED_FIELD,
+					:population					=> REQUIRED_PARAMETER,
+				    :evaluator					=> REQUIRED_PARAMETER,
+				    :mutation					=> REQUIRED_PARAMETER,
 				    :parent_selection			=> DEFAULT_SELECTION,
 				    :recombination				=> DEFAULT_RECOMBINATION,
 				    :recombination_probability	=> DEFAULT_RECOMBINATION_PROBABILITY,
@@ -46,7 +46,7 @@ module EvoSynth
 				}
 			end
 
-			def setup
+			def setup!
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
@@ -54,19 +54,19 @@ module EvoSynth
 				"basic genetic algoritm <mutation: #{@mutation}, parent selection: #{@parent_selection}, recombination: #{@recombination}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				selected_pop = @parent_selection.select(@population, @population.size * @child_factor)
 				@population.clear
 

@@ -165,14 +165,14 @@ module Examples
 
 		logger = EvoSynth::Logger.new(25) do |log|
 			log.add_column("generations",  ->{ evolver.generations_computed })
-			log.add_column("best fitness", ->{ evolver.best_solution.fitness })
-			log.add_column("best",         ->{ evolver.best_solution.to_s })
+			log.add_column("best fitness", ->{ evolver.best_solution?.fitness })
+			log.add_column("best",         ->{ evolver.best_solution?.to_s })
 			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
 		end
 		evolver.add_observer(logger)
 
 		puts "running MemeticAlgorithm with elitism..."
 		evolver.run_until { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
-		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution}"
+		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution?}"
 	end
 end

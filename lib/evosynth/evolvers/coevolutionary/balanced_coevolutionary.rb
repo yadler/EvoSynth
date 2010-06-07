@@ -38,13 +38,13 @@ module EvoSynth
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
 			DEFAULT_RECOMBINATION_PROBABILITY = 0.75
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:population				=> REQUIRED_FIELD,
-				    :evaluator				=> REQUIRED_FIELD,
-				    :mutation				=> REQUIRED_FIELD,
-					:problems				=> REQUIRED_FIELD,
-				    :problem_mutation		=> REQUIRED_FIELD,
+					:population				=> REQUIRED_PARAMETER,
+				    :evaluator				=> REQUIRED_PARAMETER,
+				    :mutation				=> REQUIRED_PARAMETER,
+					:problems				=> REQUIRED_PARAMETER,
+				    :problem_mutation		=> REQUIRED_PARAMETER,
 					:recombination			=> DEFAULT_RECOMBINATION,
 				    :problem_recombination	=> DEFAULT_RECOMBINATION,
 					:parent_selection		=> DEFAULT_SELECTION,
@@ -53,7 +53,7 @@ module EvoSynth
 				}
 			end
 
-			def setup
+			def setup!
 				# intialize fitnesses?! FIXME: find a better way to do this
 				solution = @parent_selection.select(@population, 1).first
 				@problems.each do |problem|
@@ -70,19 +70,19 @@ module EvoSynth
 				"C-M-B coevolutionary algorithm <mutation: #{@mutation}, recombination: #{@recombination}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				problem_wins, solution_wins = 0, 0
 
 				@pairing_runs.times do

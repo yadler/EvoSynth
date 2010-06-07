@@ -31,7 +31,7 @@ module EvoSynth
 		include Observable
 
 		# constant to improve readability
-		REQUIRED_FIELD = nil
+		REQUIRED_PARAMETER = nil
 
 		# returns the number of generations that has been computed by the evolver
 		attr_reader :generations_computed
@@ -56,30 +56,30 @@ module EvoSynth
 		#	end
 
 		def initialize(configuration = nil) #:yields: self
-			create_accessors_for_configuration(required_configuration?)
+			create_accessors_for_parameters(required_parameters?)
 			use_configuration(configuration) unless configuration.nil?
 			yield self if block_given?
 			valid_configuration?
-			setup
+			setup!
 		end
 
 		# Called by constructor. Use this function to initialize your Evolver.
 		# (instead of overwriting the constructor!)
 
-		def setup
+		def setup!
 			raise NotImplementedError
 		end
 
 		#	:call-seq:
 		#		create_accessors_for_configuration(configuration_hash)
 		#
-		# initializes the evolver with the needed configuration-fields
+		# initializes the evolver with the needed configuration parameters
 
-		def create_accessors_for_configuration(property_hash)
-			raise ArgumentError, "argument type not supported" unless property_hash.is_a?(Hash)
+		def create_accessors_for_parameters(parameters)
+			raise ArgumentError, "argument type not supported" unless parameters.is_a?(Hash)
 
-			@property_hash = property_hash
-			@property_hash.each_pair do |key, default_value|
+			@parameters = parameters
+			@parameters.each_pair do |key, default_value|
 				self.class.send(:attr_accessor, key)
 				self.send("#{key.id2name}=".to_sym, default_value) unless default_value.nil?
 			end
@@ -92,7 +92,7 @@ module EvoSynth
 
 		def use_configuration(configuration)
 			@configuration = configuration
-			@property_hash.each_pair do |key, default_value|
+			@parameters.each_pair do |key, default_value|
 				value = configuration.send("#{key.id2name}") rescue nil
 				self.send("#{key.id2name}=".to_sym, value) unless value.nil?
 			end
@@ -104,25 +104,25 @@ module EvoSynth
 		# check if the current evolver configuration is complete and valid
 
 		def valid_configuration?
-			@property_hash.each_key do |key|
-				raise "evolver configuration is missing '#{key.id2name}' field" if self.send(key).nil?
+			@parameters.each_key do |key|
+				raise "evolver configuration is missing '#{key.id2name}' parameter" if self.send(key).nil?
 			end
 		end
 
 		#	:call-seq:
-		#		required_configuration? -> Hash
+		#		required_parameters? -> Hash
 		#
-		# overwrite this, it should return a hash containing the required fields.
+		# overwrite this, it should return a hash containing the required parameters.
 		#
-		# key is the accessor-name, value is default or REQUIRED_FIELD (nil)
+		# key is the accessor-name, value is default or REQUIRED_PARAMETER (nil)
 		#
 		# example:
 		#
-		# 	def required_configuration?
+		# 	def required_parameters?
 		#	{
-		#	    :population                 => REQUIRED_FIELD,
-		#	    :evaluator                  => REQUIRED_FIELD,
-		#	    :mutation                   => REQUIRED_FIELD,
+		#	    :population                 => REQUIRED_PARAMETER,
+		#	    :evaluator                  => REQUIRED_PARAMETER,
+		#	    :mutation                   => REQUIRED_PARAMETER,
 		#	    :parent_selection           => DEFAULT_SELECTION,
 		#	    :recombination              => DEFAULT_RECOMBINATION,
 		#	    :recombination_probability  => DEFAULT_RECOMBINATION_PROBABILITY,
@@ -131,13 +131,13 @@ module EvoSynth
 		#	end
 		#
 
-		def required_configuration?
+		def required_parameters?
 			raise NotImplementedError
 		end
 
 		# this function start the computation of the evolver, the given block is called each generation
 		# to check if the next generation should be computed. possible arities of the block are 0,1 and 2.
-		# returns return_result.
+		# returns result?.
 		#
 		# example:
 		#
@@ -157,19 +157,19 @@ module EvoSynth
 				when 1
 					loop_condition = lambda { !yield @generations_computed }
 				when 2
-					loop_condition = lambda { !yield @generations_computed, best_solution }
+					loop_condition = lambda { !yield @generations_computed, best_solution? }
 			else
 				raise ArgumentError, "please provide a block with the arity of 0, 1 or 2"
 			end
 
 			while loop_condition.call
-				next_generation
+				next_generation!
 				@generations_computed += 1
 				changed
 				notify_observers self, @generations_computed
 			end
 
-			return_result
+			result?
 		end
 
 		# wrapper for run_until { |gen| gen == max_generations}
@@ -187,25 +187,25 @@ module EvoSynth
 
 		# implement this to generate the next generation (individuals, whatever) of your evolver
 
-		def next_generation
+		def next_generation!
 			raise NotImplementedError
 		end
 
 		# this function should return the best solution
 
-		def best_solution
+		def best_solution?
 			raise NotImplementedError
 		end
 
 		# this function should return the worst solution
 
-		def worst_solution
+		def worst_solution?
 			raise NotImplementedError
 		end
 
 		# this function should return the "result" of the evolver, it will get called at the end of run_until
 
-		def return_result
+		def result?
 			raise NotImplementedError
 		end
 

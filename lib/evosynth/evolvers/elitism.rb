@@ -36,13 +36,13 @@ module EvoSynth
 			evolver.population rescue raise "Evolver not supported!"
 
 			evolver.instance_eval(%q{
-				alias :original_next_generation :next_generation
+				alias :original_next_generation! :next_generation!
 				alias :original_to_s :to_s
 
-				def next_generation
+				def next_generation!
 					best_individual = population.best
 
-					original_next_generation
+					original_next_generation!
 
 					if population.best < best_individual
 						population.remove(population.worst)
@@ -67,13 +67,13 @@ module EvoSynth
 
 			if (n == 1)
 				evolver.instance_eval("
-					alias :original_next_generation :next_generation
+					alias :original_next_generation! :next_generation!
 					alias :original_to_s :to_s
 
-					def next_generation
+					def next_generation!
 						best = population.best
 
-						original_next_generation
+						original_next_generation!
 
 						population.remove(population.worst)
 						population.add(best)
@@ -85,13 +85,13 @@ module EvoSynth
 				")
 			else
 				evolver.instance_eval("
-					alias :original_next_generation :next_generation
+					alias :original_next_generation! :next_generation!
 					alias :original_to_s :to_s
 
-					def next_generation
+					def next_generation!
 						best = population.best(#{n})
 
-						original_next_generation
+						original_next_generation!
 
 						worst = population.worst(#{n})
 						worst.each { |individual| population.remove(individual) }

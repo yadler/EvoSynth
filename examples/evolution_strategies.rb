@@ -56,8 +56,8 @@ module Examples
 
 			logger = EvoSynth::Logger.new(50) do |log|
 				log.add_column("generations",   ->{ evolver.generations_computed })
-				log.add_column("best fitness",  ->{ evolver.best_solution.fitness })
-				log.add_column("worst fitness", ->{ evolver.worst_solution.fitness })
+				log.add_column("best fitness",  ->{ evolver.best_solution?.fitness })
+				log.add_column("worst fitness", ->{ evolver.worst_solution?.fitness })
 				log.add_column("sigma",         ->{ evolver.sigma })
 				log.add_column("success",       ->{ evolver.success })
 				log.add_column("s",             ->{ evolver.s.inspect })

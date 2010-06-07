@@ -29,15 +29,15 @@ module EvoSynth
 
 		class PopulationHillclimber < EvoSynth::Evolver
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:mutation	=> REQUIRED_FIELD,
-					:population => REQUIRED_FIELD,
-					:evaluator	=> REQUIRED_FIELD
+					:mutation	=> REQUIRED_PARAMETER,
+					:population => REQUIRED_PARAMETER,
+					:evaluator	=> REQUIRED_PARAMETER
 				}
 			end
 
-			def setup
+			def setup!
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
@@ -45,19 +45,19 @@ module EvoSynth
 				"population based hillclimber <mutation: #{@mutation}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				@population.map! { |individual| mutate(individual) }
 			end
 

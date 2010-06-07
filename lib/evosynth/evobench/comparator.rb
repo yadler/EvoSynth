@@ -71,7 +71,7 @@ module EvoSynth
 				collected_data = {}
 
 				logger = EvoSynth::Logger.new(1) do |log|
-					log.add_column("best fitness", ->{ evolver.best_solution.fitness })
+					log.add_column("best fitness", ->{ evolver.best_solution?.fitness })
 				end
 				evolver.add_observer(logger)
 

@@ -55,7 +55,7 @@ module Examples
 
 		logger = EvoSynth::Logger.new(500) do |log|
 			log.add_column("generations",  ->{ evolver.generations_computed })
-			log.add_column("best fitness", ->{ evolver.best_solution.fitness })
+			log.add_column("best fitness", ->{ evolver.best_solution?.fitness })
 			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
 		end
 		evolver.add_observer(logger)

@@ -34,10 +34,10 @@ module EvoSynth
 			DEFAULT_PARENT_SELECTION = EvoSynth::Selections::RandomSelection.new
 			DEFAULT_ENV_SELECTION = EvoSynth::Selections::SelectBest.new
 
-			def required_configuration?
+			def required_parameters?
 				{
-					:population				=> REQUIRED_FIELD,
-				    :evaluator				=> REQUIRED_FIELD,
+					:population				=> REQUIRED_PARAMETER,
+				    :evaluator				=> REQUIRED_PARAMETER,
 				    :child_factor			=> DEFAULT_CHILD_FACTOR,
 				    :mutation				=> DEFAULT_MUTATION,
 				    :enviromental_selection => DEFAULT_ENV_SELECTION,
@@ -45,7 +45,7 @@ module EvoSynth
 				}
 			end
 
-			def setup
+			def setup!
 				@population.each { |individual| @evaluator.calculate_and_set_initial_fitness(individual) }
 			end
 
@@ -53,19 +53,19 @@ module EvoSynth
 				"selfadaptive ES <mutation: #{@mutation}, parent selection: #{@parent_selection}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}>"
 			end
 
-			def best_solution
+			def best_solution?
 				@population.best
 			end
 
-			def worst_solution
+			def worst_solution?
 				@population.worst
 			end
 
-			def return_result
+			def result?
 				@population
 			end
 
-			def next_generation
+			def next_generation!
 				child_population = EvoSynth::Population.new
 
 				(@child_factor * @population.size).times do
