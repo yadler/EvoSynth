@@ -22,6 +22,9 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
 
 	# Base-Class for evolvers. Create a subclass and implement the
