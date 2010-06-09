@@ -38,11 +38,19 @@ module EvoSynth
 				@columns[name] = column_lambda
 			end
 
-			def fetch_next_row(row_number = 0)
+			def fetch_next_row(observable)
 				row = []
 
 				@columns.each_pair do |column_name, column_lambda|
-					row << column_lambda.call rescue @show_fetch_errors ? row << "Error while fetching '#{column_name}'" : row << nil
+					begin
+						row << column_lambda.call(observable)
+					rescue
+						if @show_fetch_errors
+							row << "Error while fetching '#{column_name}'"
+						else
+							row << nil
+						end
+					end
 				end
 
 				row

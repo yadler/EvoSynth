@@ -40,6 +40,23 @@ module EvoSynth
 	class Logger
 		include Observable
 
+		DEFAULT_COLUMNS = {
+			:gen						=> ->(evolver) { evolver.generations_computed },
+			:best_to_s					=> ->(evolver) { evolver.best_solution?.to_s },
+			:worst_to_s					=> ->(evolver) { evolver.worst_solution?.to_s },
+
+			:best_fitness				=> ->(evolver) { evolver.best_solution?.fitness },
+			:worst_fitness				=> ->(evolver) { evolver.worst_solution?.fitness },
+			
+			:pop_mean_fitness			=> ->(evolver) { EvoSynth::EvoBench.population_fitness_mean(evolver.population) },
+			:pop_median_fitness			=> ->(evolver) { EvoSynth::EvoBench.population_fitness_median(evolver.population) },
+			
+			:pop_diversity_subseq		=> ->(evolver) { EvoSynth::EvoBench.diversity_subseq(evolver.population) },
+			:pop_diversity_entropy		=> ->(evolver) { EvoSynth::EvoBench.diversity_entropy(evolver.population) },
+			:pop_diversity_dist_float	=> ->(evolver) { EvoSynth::EvoBench.diversity_distance_float(evolver.population) },
+			:pop_diversity_dist_hamming	=> ->(evolver) { EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) }
+		}
+
 		attr_accessor :save_data
 		attr_reader :data, :data_fetcher
 
@@ -66,13 +83,40 @@ module EvoSynth
 		def update(observable, counter)
 			return unless counter % @log_step == 0
 
-			new_row = @data_fetcher.fetch_next_row(counter)
+			new_row = @data_fetcher.fetch_next_row(observable)
 			@data[counter] = new_row if @save_data
 
 			changed
 			notify_observers self, counter, new_row
 		end
 
+		# little logger factory
+		#
+		# WARNING: defaults will only work in combination with a evolver, not with a evaluator!
+		# 
+		# examples:
+		# 
+		# EvoSynth::Logger.create(25, false, :gen,:best_fitness, :worst_fitness, :pop_diversity_subseq)
+		# 
+		# logger = EvoSynth::Logger.create(50, true, :gen, :best_fitness, :worst_fitness) do |log|
+		#    log.add_column("sigma",    ->(evolver) { evolver.sigma })
+		#    log.add_column("success",  ->(evolver) { evolver.success })
+		#    log.add_column("s",        ->(evolver) { evolver.s.inspect })
+		# end
+		#
+
+		def Logger.create(step, console_output, *columns)
+			logger = EvoSynth::Logger.new(step)
+			logger.add_observer(EvoSynth::Export::ConsoleWriter.new) if console_output
+
+			columns.each do |col|
+				raise "unknown column name '#{col}'" unless DEFAULT_COLUMNS.has_key?(col)
+				logger.add_column(col, DEFAULT_COLUMNS[col])
+			end
+
+			yield logger if block_given?
+			logger
+		end
 	end
 
 end

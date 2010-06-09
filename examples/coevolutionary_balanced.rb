@@ -107,12 +107,8 @@ module Examples
 		)
 
 		evolver = EvoSynth::Evolvers::BalancedCoevolutionary.new(configuration)
-		logger = EvoSynth::Logger.new(25) do |log|
-			log.add_column("generations",      ->{ evolver.generations_computed })
-			log.add_column("best fitness",     ->{ evolver.best_solution?.fitness })
-			log.add_column("worst fitness",    ->{ evolver.worst_solution?.fitness })
-			log.add_column("solution_success", ->{ evolver.solution_success })
-			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
+		logger = EvoSynth::Logger.create(25, true, :gen, :best_fitness, :worst_fitness) do |log|
+			log.add_column("solution_success", ->(evolver) { evolver.solution_success })
 		end
 		evolver.add_observer(logger)
 		evolver.run_until_generations_reached(MAX_GENERATIONS)

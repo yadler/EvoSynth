@@ -70,13 +70,7 @@ module Examples
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		logger = EvoSynth::Logger.new(25) do |log|
-			log.add_column("generations",      ->{ evolver.generations_computed })
-			log.add_column("best fitness",     ->{ evolver.best_solution?.fitness })
-			log.add_column("worst fitness",    ->{ evolver.worst_solution?.fitness })
-			log.add_column("subseq diversity", ->{ EvoSynth::EvoBench.diversity_subseq(evolver.population) })
-			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
-		end
+		logger = EvoSynth::Logger.create(25, true, :gen,:best_fitness, :worst_fitness, :pop_diversity_subseq)
 		evolver.add_observer(logger)
 
 		puts "\nRunning #{evolver}...\n"

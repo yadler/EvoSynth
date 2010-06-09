@@ -51,14 +51,8 @@ module Examples
 			hc.individual = EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 			hc.mutation	  = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 			hc.evaluator  = SPkFitnessEvaluator.new(K)
+			hc.add_observer(EvoSynth::Logger.create(500, true, :gen, :best_fitness, :worst_fitness))
 		end
-
-		logger = EvoSynth::Logger.new(500) do |log|
-			log.add_column("generations",  ->{ evolver.generations_computed })
-			log.add_column("best fitness", ->{ evolver.best_solution?.fitness })
-			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
-		end
-		evolver.add_observer(logger)
 
 		puts "Running #{evolver}...\n\n"
 		result = evolver.run_until_generations_reached(GENERATIONS)

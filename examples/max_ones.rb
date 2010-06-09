@@ -55,12 +55,7 @@ module Examples
 		# ---------------------------- Use simple Hillclimber ---------------------------- #
 
 		evolver = EvoSynth::Evolvers::Hillclimber.new(configuration)
-		logger = EvoSynth::Logger.new(500) do |log|
-			log.add_column("generations",   ->{ evolver.generations_computed })
-			log.add_column("best fitness",  ->{ evolver.best_solution?.fitness })
-			log.add_column("worst fitness", ->{ evolver.worst_solution?.fitness })
-			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
-		end
+		logger = EvoSynth::Logger.create(500, true, :gen, :best_fitness, :worst_fitness)
 		evolver.add_observer(logger)
 
 		puts "\nRunning Hillclimber...\n"
@@ -73,14 +68,7 @@ module Examples
 
 		evolver = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		logger = EvoSynth::Logger.new(50) do |log|
-			log.add_column("generations",       ->{ evolver.generations_computed })
-			log.add_column("best fitness",      ->{ evolver.best_solution?.fitness })
-			log.add_column("worst fitness",     ->{ evolver.worst_solution?.fitness })
-			log.add_column("dist. diversity",   ->{ EvoSynth::EvoBench.diversity_distance_hamming(evolver.population) })
-			log.add_column("entropy diversity", ->{ EvoSynth::EvoBench.diversity_entropy(evolver.population) })
-			log.add_observer(EvoSynth::Export::ConsoleWriter.new)
-		end
+		logger = EvoSynth::Logger.create(50, true, :gen, :best_fitness, :worst_fitness, :pop_diversity_dist_hamming, :pop_diversity_entropy)
 		evolver.add_observer(logger)
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"
