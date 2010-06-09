@@ -29,6 +29,10 @@ module EvoSynth
 
 	class Configuration
 
+		# TODO: rdoc or remove!
+
+		attr_accessor :properties
+
 		# Creates a new Configuration using a given hash of symbols and values.
 		# 
 		# usage:
@@ -100,6 +104,15 @@ module EvoSynth
 
 		def to_s
 			"evolver configuration <#{@properties.to_s}>"
+		end
+
+		# TODO: rdoc
+		# TODO: is this possible without accessor?!
+
+		def clone
+			my_clone = super
+			my_clone.properties = @properties.clone
+			my_clone
 		end
 
 		private
