@@ -22,13 +22,52 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evobench/statistics_math'
-require 'evosynth/evobench/t-test'
-require 'evosynth/evobench/diversity_distance'
-require 'evosynth/evobench/diversity_entropy'
-require 'evosynth/evobench/diversity_subseq'
+module EvoSynth
+	module EvoBench
 
-require 'evosynth/evobench/test_run'
-require 'evosynth/evobench/full_factorial_plan'
-require 'evosynth/evobench/comparator'
-require 'evosynth/evobench/experiment'
+		class FullFactorialPlan
+
+			def create_runs(experiment)
+				puts "creating experiment..."
+				runs = []
+
+				combinations = parameter_combinations(experiment.parameters)
+
+				experiment.evolvers.each do |evolver|
+					combinations.each do |combination|
+						combi_conf = experiment.configuration.clone
+						combination.each { |param| combi_conf.send("#{param[0]}=", param[1]) }
+						runs << EvoSynth::EvoBench::TestRun.new(evolver, combi_conf)
+					end
+				end
+
+				runs
+			end
+
+			def parameter_combinations(parameters)
+				combinations = []
+
+				parameters.keys.each do |parameter_type|				
+					if combinations.empty?
+						parameters[parameter_type].each { |param| combinations << [[parameter_type, param]] }
+					else
+						new_combs = []
+						combinations.each do |combination|
+							parameters[parameter_type].each do |param|
+								new_combs << combination + [[parameter_type, param]]
+							end
+						end
+
+						combinations = new_combs
+					end
+				end
+
+				combinations
+			end
+
+
+			
+		end
+
+	end
+end

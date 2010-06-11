@@ -66,6 +66,7 @@ module EvoSynth
 		def initialize(log_step, save_data = true, things_to_log = {})
 			@log_step = log_step
 			@save_data = save_data
+
 			@data_fetcher = EvoSynth::Logging::DataFetcher.new
 			@data = EvoSynth::Logging::DataSet.new
 
@@ -76,7 +77,7 @@ module EvoSynth
 
 		def add_column(column_name, column_lambda)
 			@data_fetcher.add_column(column_name, column_lambda)
-				@data.column_names << column_name
+			@data.column_names << column_name
 		end
 
 		def clear_data!

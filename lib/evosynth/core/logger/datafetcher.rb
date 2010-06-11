@@ -30,7 +30,7 @@ module EvoSynth
 			attr_reader :columns
 
 			def initialize(show_fetch_errors = false)
-				@columns, @data = {}, {}
+				@columns = {}
 				@show_fetch_errors = show_fetch_errors
 			end
 

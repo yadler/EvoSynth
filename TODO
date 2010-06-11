@@ -45,12 +45,10 @@ Features:
 		=> versuchsreihen mit:
 			-> verschiedene "Benchmarkfunktionen", also verschiedene Fitnessfunktionen
 			   für alle zu testenden Operatoren
-			-> array von mutationen, selektionen, rekombination, evolvern, ...
 			-> verschiedene randomgeneratoren testen
 			-> range mit schrittweite für parameter (Integer und Float)
-			-> array mit werten für alles andere?
 
-		=> Versuchspläne
+		=> Versuchspläne (sind zumindest angefangen)
 
 		=> (Populations) Statistiken?!
 			-> was ist mit schematheorem und co?

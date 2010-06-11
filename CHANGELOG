@@ -7,7 +7,11 @@
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
+
   * Comparator, to compare the performance of two or more Evolvers
+  * TestRun: runs a evolver with a given configuration (n times) and collects the produced data
+  * Experiment class: run a experiment with a experimental plan and compare different parameters
+  * FullFactorialPlan : full factorial experimental plan
 
 * export
 

@@ -25,11 +25,25 @@
 module EvoSynth
 	module EvoBench
 
-		class Experiment
-			attr_reader :evolvers, :parameters, :configuration
+		# versuchsreihen mit:
+		#
+		#-> verschiedene "Benchmarkfunktionen", also verschiedene Fitnessfunktionen
+		#   für alle zu testenden Operatoren
+		#-> array von mutationen, selektionen, rekombination, evolvern, ...
+		#-> verschiedene randomgeneratoren testen
+		#-> range mit schrittweite für parameter (Integer und Float)
+		#-> array mit werten für alles andere?
 
-			def initialize(configuration)
+		# TODO: arrays und ranges für parameter!
+
+		class Experiment
+			DEFAULT_EXPERIMENTAL_PLAN = EvoSynth::EvoBench::FullFactorialPlan.new
+
+			attr_reader :evolvers, :parameters, :configuration, :experimental_plan
+
+			def initialize(configuration, experimental_plan = DEFAULT_EXPERIMENTAL_PLAN)
 				@configuration = configuration
+				@experimental_plan = experimental_plan
 				@evolvers = []
 				@parameters = {}
 				yield self
@@ -39,7 +53,7 @@ module EvoSynth
 				@goal_block = goal_block
 			end
 
-			def reset_evolver_with(&reset_block)
+			def reset_evolvers_with(&reset_block)
 				@reset_block = reset_block
 			end
 
@@ -55,41 +69,21 @@ module EvoSynth
 				end
 			end
 
-			def create_experiment_plan
-				plan = []
-				configurations = []
+			def start!(repetitions = 1)
+				runs = @experimental_plan.create_runs(self)
+				test_counter = 1
+				datasets = []
 
-				@parameters.each_key do |param_type|
-
-					@parameters[param_type].each do |parameter|
-
-
-						@parameters.each_key do |inner_param_type|
-							next if inner_param_type == param_type
-
-							puts @parameters[inner_param_type].zip( [parameter] * @parameters[inner_param_type].size).to_s
-							# TODO: FIXME!!!
-						end
-
-#						puts foo.to_s
-					end
+				runs.each do |test_run|
+					test_run.set_goal &@goal_block
+					test_run.reset_evolvers_with &@reset_block
+					
+					puts "running test #{test_counter} of #{runs.size}..."
+					datasets << test_run.start!(repetitions)
+					test_counter += 1
 				end
-#				puts configurations.to_s
-			end
 
-			def start!
-				experiments = create_experiment_plan
-
-				experiments.each do |configuration|
-					@evolver.reset!(configuration)
-					puts "I would run #{@evolver} with #{configuration}"
-
-#					EvoSynth::EvoBench::TestRun.new(@evolver) do |run|
-#						run.set_goal &@goal_block
-#						run.reset_evolvers_with &@reset_block
-#						run.start!
-#					end
-				end
+				datasets
 			end
 
 			def to_s
