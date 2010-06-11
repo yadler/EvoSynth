@@ -72,22 +72,22 @@ module EvoSynth
 			def start!(repetitions = 1, logger = EvoSynth::EvoBench::TestRun::LOGGER_FITNESS_TIME)
 				runs = @experimental_plan.create_runs(self)
 				test_counter = 1
-				datasets = []
+				results = []
 
 				runs.each do |test_run|
 					test_run.set_goal &@goal_block
 					test_run.reset_evolvers_with &@reset_block
 					
 					puts "running test #{test_counter} of #{runs.size}..."
-					datasets << test_run.start!(repetitions, logger)
+					results << test_run.start!(repetitions, logger)
 					test_counter += 1
 				end
 
-				datasets
+				results
 			end
 
 			def to_s
-				"Experiment <evolver=#{@evolver}, parameters=#{@parameters.to_s}>"
+				"Experiment <evolvers=#{@evolvers.to_s}, parameters=#{@parameters.to_s}>"
 			end
 
 		end

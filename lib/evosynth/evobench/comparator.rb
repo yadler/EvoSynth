@@ -89,14 +89,14 @@ module EvoSynth
 				end
 
 				logger = EvoSynth::Logger.create(1, false, :best_fitness)
-				datasets = test_run.start!(@repetitions, logger)
+				results = test_run.start!(@repetitions, logger)
 				puts "\n"
 
 				collected_data = {}
-				datasets.each do |data|
-					data.each_index do |index|
+				results.each do |result|
+					result.dataset.each_index do |index|
 						collected_data[index] = [] unless collected_data.has_key?(index)
-						collected_data[index] << data[index, :best_fitness]
+						collected_data[index] << result.dataset[index, :best_fitness]
 					end
 				end
 

@@ -57,15 +57,15 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
 		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-#		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
-#			cmp.set_goal { |gen, best| gen > MAX_GENERATIONS }
-#			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-#			cmp.add_evolver(ga_elistism)
-#			cmp.add_evolver(ga)
-#		end
-#
-#		comparator.collect_data!
-#		comparator.compare(ga, ga_elistism)
+		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
+			cmp.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
+			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+			cmp.add_evolver(ga_elistism)
+			cmp.add_evolver(ga)
+		end
+
+		comparator.collect_data!
+		comparator.compare(ga, ga_elistism)
 
 #		logger = EvoSynth::Logger.create(1, false, :best_fitness)
 
@@ -75,15 +75,15 @@ module Examples
 #		end
 #		puts test_run.start!.to_s
 
-		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
-			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
-			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-			
-			ex.try_evolver(ga)
-			ex.try_evolver(ga_elistism)
-			
-			ex.try_parameter(:mutation, EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN))
-			ex.try_parameter(:mutation, EvoSynth::Mutations::OneGeneFlipping.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN))
+#		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
+#			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
+#			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+#
+#			ex.try_evolver(ga)
+#			ex.try_evolver(ga_elistism)
+#
+#			ex.try_parameter(:mutation, EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN))
+#			ex.try_parameter(:mutation, EvoSynth::Mutations::OneGeneFlipping.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN))
 
 #			ex.try_parameter(:recombination, EvoSynth::Recombinations::KPointCrossover.new(2))
 #			ex.try_parameter(:recombination, EvoSynth::Recombinations::Identity.new)
@@ -91,10 +91,9 @@ module Examples
 #			ex.try_parameter(:selection, EvoSynth::Selections::SelectBest.new)
 #			ex.try_parameter(:selection, EvoSynth::Selections::TournamentSelection.new)
 #			ex.try_parameter(:selection, EvoSynth::Selections::RouletteWheelSelection.new)
-		end
-#		puts experiment
-		datasets = experiment.start!
-		puts datasets.to_s
-#		experiment.create_experiment_plan
+#		end
+#
+#		results = experiment.start!
+#		puts results.to_s
 	end
 end

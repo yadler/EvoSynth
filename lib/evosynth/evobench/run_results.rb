@@ -22,14 +22,20 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evobench/statistics_math'
-require 'evosynth/evobench/t-test'
-require 'evosynth/evobench/diversity_distance'
-require 'evosynth/evobench/diversity_entropy'
-require 'evosynth/evobench/diversity_subseq'
+module EvoSynth
+	module EvoBench
 
-require 'evosynth/evobench/run_results'
-require 'evosynth/evobench/test_run'
-require 'evosynth/evobench/full_factorial_plan'
-require 'evosynth/evobench/comparator'
-require 'evosynth/evobench/experiment'
+		class RunResults
+			attr_accessor :dataset, :evolver, :configuration, :elapsed_time
+
+			def initialize(dataset, evolver, configuration)
+				@dataset = dataset
+				@evolver = evolver
+				@configuration = configuration
+				@elapsed_time = 0
+			end
+
+		end
+
+	end
+end

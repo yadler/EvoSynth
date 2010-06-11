@@ -64,7 +64,7 @@ module EvoSynth
 				raise "please set goal block" if @goal_block.nil?
 				raise "please set reset block" if @reset_block.nil?
 
-				data_sets = []
+				results = []
 				@runs_computed = 0
 				@evolver.add_observer(logger)
 
@@ -72,9 +72,13 @@ module EvoSynth
 					# reset all relevant objects
 					@reset_block.call @evolver
 					logger.clear_data!
-					
+
+					start_time = Time.now
 					@evolver.run_until { |evolver| @goal_block.call evolver }
-					data_sets << logger.data
+					
+					result = EvoSynth::EvoBench::RunResults.new(logger.data, @evolver, @configuration)
+					result.elapsed_time = start_time - Time.now
+					results << result
 
 					@runs_computed += 1
 					changed
@@ -82,7 +86,7 @@ module EvoSynth
 				end
 
 				@evolver.delete_observer(logger)
-				data_sets
+				results
 			end
 
 		end
