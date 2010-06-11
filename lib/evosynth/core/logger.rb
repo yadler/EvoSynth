@@ -44,6 +44,8 @@ module EvoSynth
 		include Observable
 
 		DEFAULT_COLUMNS = {
+			:time						=> ->(observable) { Time.now },
+			
 			:gen						=> ->(evolver) { evolver.generations_computed },
 			:best_to_s					=> ->(evolver) { evolver.best_solution?.to_s },
 			:worst_to_s					=> ->(evolver) { evolver.worst_solution?.to_s },

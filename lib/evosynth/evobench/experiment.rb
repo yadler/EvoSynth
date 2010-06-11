@@ -69,7 +69,7 @@ module EvoSynth
 				end
 			end
 
-			def start!(repetitions = 1)
+			def start!(repetitions = 1, logger = EvoSynth::EvoBench::TestRun::LOGGER_FITNESS_TIME)
 				runs = @experimental_plan.create_runs(self)
 				test_counter = 1
 				datasets = []
@@ -79,7 +79,7 @@ module EvoSynth
 					test_run.reset_evolvers_with &@reset_block
 					
 					puts "running test #{test_counter} of #{runs.size}..."
-					datasets << test_run.start!(repetitions)
+					datasets << test_run.start!(repetitions, logger)
 					test_counter += 1
 				end
 

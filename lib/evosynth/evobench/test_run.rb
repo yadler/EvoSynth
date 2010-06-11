@@ -34,7 +34,7 @@ module EvoSynth
 			attr_reader :runs_computed
 
 			DEFAULT_LOGGER = EvoSynth::Logger.create(1, false, :best_fitness)
-
+			LOGGER_FITNESS_TIME = EvoSynth::Logger.create(1, false, :time, :best_fitness)
 
 			# Initialize a Test-Run for the given evolver. Optional: use the given Configuration.
 
