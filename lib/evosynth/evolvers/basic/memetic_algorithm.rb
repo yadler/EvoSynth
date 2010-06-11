@@ -33,7 +33,7 @@ module EvoSynth
 			DEFAULT_CHILD_FACTOR = 0.5
 			DEFAULT_RECOMBINATION_PROBABILITY = 1.0
 			DEFAULT_RECOMBINATION = EvoSynth::Recombinations::KPointCrossover.new(2)
-			DEFAULT_INDIVIDUAL_LEARNING_GOAL = ->(gen, best) { gen >= 10 }
+			DEFAULT_INDIVIDUAL_LEARNING_GOAL = ->(evolver) { evolver.generations_computed >= 10 }
 			DEFAULT_INDIVIDUAL_LEARNING_PROBABILITY = 0.75
 			DEFAULT_SELECTION = EvoSynth::Selections::FitnessProportionalSelection.new
 
@@ -94,8 +94,9 @@ module EvoSynth
 
 				child_population.map! do |child|
 					if EvoSynth.rand < @individual_learning_probability
-						@subevolver_configuration.clone.individual = child
-						subevolver = @subevolver.new(@subevolver_configuration)
+						sub_conf = @subevolver_configuration.clone
+						sub_conf.individual = child
+						subevolver = @subevolver.new(sub_conf)
 						subevolver.run_while &@individual_learning_goal
 					else
 						child

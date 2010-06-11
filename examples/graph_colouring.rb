@@ -63,7 +63,7 @@ module Examples
 		logger = EvoSynth::Logger.create(100, true, :gen, :best_fitness, :worst_fitness)
 		evolver.add_observer(logger)
 
-		evolver.run_while { |gen, best| best.fitness <= GOAL || gen > GENERATIONS }
+		evolver.run_while { |evolver| evolver.best_solution?.fitness > GOAL && evolver.generations_computed < GENERATIONS }
 		puts "", configuration.population.best
 	end
 end

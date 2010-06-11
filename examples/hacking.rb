@@ -56,7 +56,8 @@ module Examples
 			hc.mutation	= EvoSynth::Mutations::BinaryMutation.new(FLIP_CHAR)
 		end
 
-		evolver.run_while { |gen, best| gen > 25000 || best.fitness == 0.0  }
+		evolver.run_while { |evolver| evolver.generations_computed < 25000 && evolver.individual.fitness > 0.0 }
 		puts "found passwort ('#{evolver.individual.genome.join("")}') after #{evolver.generations_computed} generations..."
+
 	end
 end

@@ -59,6 +59,9 @@ module EvoSynth
 		#	end
 
 		def initialize(configuration = nil) #:yields: self
+			@generations_computed = 0
+			@configuration = nil
+
 			create_accessors_for_parameters(required_parameters?)
 			set_default_values!
 			use_configuration(configuration) unless configuration.nil?
@@ -158,27 +161,18 @@ module EvoSynth
 		# example:
 		#
 		#	Evolver.run_while { am_i_skynet? }                                     # "external" stop criteria
-		#	Evolver.run_while { |gen| gen <= 42 }                                  # run 42 generations
-		#	Evolver.run_while { |gen, best| gen <= 42 or best.fitness == 0.0 }     # run 42 generations or stop if a fitness of 0.0 has been reached
+		#	Evolver.run_while { |evolver| evovler.generations_computed <= 42 }     # run 42 generations
+		#	
+		#	# run 42 generations or stop if a fitness of 0.0 has been reached:
+		#	Evolver.run_while { |evovler| evovler.generations_computed <= 42 and evovler.best_solution?.fitness > 0.0 }
 		#
 
-		def run_while(&condition) # :yields: generations computed, best solution
+		def run_while(&condition) # :yields: evolver
 			@generations_computed = 0
 			changed
 			notify_observers self, @generations_computed
 
-			case condition.arity
-				when 0
-					loop_condition = condition
-				when 1
-					loop_condition = lambda { !yield @generations_computed }
-				when 2
-					loop_condition = lambda { !yield @generations_computed, best_solution? }
-			else
-				raise ArgumentError, "please provide a block with the arity of 0, 1 or 2"
-			end
-
-			while loop_condition.call
+			while yield self
 				next_generation!
 				@generations_computed += 1
 				changed
@@ -188,17 +182,23 @@ module EvoSynth
 			result?
 		end
 
+		# be compatible to EvoSynth 0.1
+
+		def run_until(&condition) # :yields: evolver
+			run_while { |evolver| !yield evolver}
+		end
+
 		# wrapper for run_while { |gen| gen == max_generations}
 
 		def run_until_generations_reached(max_generations)
-			run_while { |gen| gen == max_generations }
+			run_while { |evolver| evolver.generations_computed == max_generations }
 		end
 
 		# wrapper for run_while, constructs a Goal class to use the <=> to compare the fitness values
 
 		def run_until_fitness_reached(fitness)
 			goal = Goal.new(fitness)
-			run_while { |gen, best| best >= goal }
+			run_while { |evolver| evolver.best_solution? >= goal }
 		end
 
 		# implement this to generate the next generation (individuals, whatever) of your evolver

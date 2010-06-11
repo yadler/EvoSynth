@@ -73,7 +73,7 @@ module EvoSynth
 					@reset_block.call @evolver
 					logger.clear_data!
 					
-					@evolver.run_while { |gen, best| @goal_block.call gen, best }
+					@evolver.run_while { |evolver| @goal_block.call evolver }
 					data_sets << logger.data
 
 					@runs_computed += 1
