@@ -35,7 +35,6 @@ Features:
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 
 		=> Ergebnisse sollten Configuration speichern, mit dem sie "erzeugt" wurden:
-			-> dafür sollten Configuration sinnvoll clonebar sein
 
 		=> mehrere Testläufe:
 			-> Durchschnittswerte
@@ -51,7 +50,9 @@ Features:
 			-> range mit schrittweite für parameter (Integer und Float)
 			-> array mit werten für alles andere?
 
-		=> Versuchspläne und Statistiken?!
+		=> Versuchspläne
+
+		=> (Populations) Statistiken?!
 			-> was ist mit schematheorem und co?
 			-> häufigkeiten bestimmter werte an allen positionen eines genomes
 			   innerhalb einer population
