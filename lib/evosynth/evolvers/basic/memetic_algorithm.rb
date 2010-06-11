@@ -96,7 +96,7 @@ module EvoSynth
 					if EvoSynth.rand < @individual_learning_probability
 						@subevolver_configuration.clone.individual = child
 						subevolver = @subevolver.new(@subevolver_configuration)
-						subevolver.run_until &@individual_learning_goal
+						subevolver.run_while &@individual_learning_goal
 					else
 						child
 					end

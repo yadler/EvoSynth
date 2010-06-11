@@ -59,7 +59,7 @@ module Examples
 		evolver.add_observer(logger)
 
 		puts "\nRunning Hillclimber...\n"
-		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
+		result = evolver.run_while { configuration.evaluator.called < MAX_EVALUATIONS }
 		puts "\nIndividual after evolution:  #{configuration.individual}"
 
 		# --------------------------- Use GA with weak elistism --------------------------- #
@@ -72,7 +72,7 @@ module Examples
 		evolver.add_observer(logger)
 
 		puts "\nRunning Genetic Algorithm with elitism...\n"
-		result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
+		result = evolver.run_while { configuration.evaluator.called < MAX_EVALUATIONS }
 		puts "\nBest Individual after evolution:  #{result.best}"
 	end
 end

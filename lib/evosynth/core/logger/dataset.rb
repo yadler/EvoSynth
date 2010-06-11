@@ -33,12 +33,22 @@ module EvoSynth
 				@column_names = column_names
 			end
 
-			def [](row_number)
-				@data[row_number]
+			def [](row_number, column_name = nil)
+				if column_name.nil?
+					@data[row_number]
+				else
+					col_index = @column_names.index(column_name)
+					raise "unknown column '#{column_name}'" if col_index.nil?
+					@data[row_number][col_index]
+				end
 			end
 
 			def []=(row_number, row)
 				@data[row_number] = row
+			end
+
+			def each_index
+				@data.keys.each { |row_num| yield row_num }
 			end
 
 			def each_row

@@ -120,7 +120,7 @@ module Examples
 
 			puts "\nRunning #{evolver}..."
 			puts
-			result = evolver.run_until { configuration.evaluator.called < MAX_EVALUATIONS }
+			result = evolver.run_while { configuration.evaluator.called < MAX_EVALUATIONS }
 			puts "\n#{configuration.evaluator}"
 
 			puts "\n#{evolver_name}: best 'combined' individual:"

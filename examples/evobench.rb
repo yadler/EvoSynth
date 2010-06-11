@@ -57,28 +57,36 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
 		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
-			cmp.set_goal { |gen, best| gen > MAX_GENERATIONS }
-			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-			cmp.add_evolver(ga_elistism)
-			cmp.add_evolver(ga)
-		end
-
-		comparator.collect_data!
-		comparator.compare(ga, ga_elistism)
-
-		logger = EvoSynth::Logger.create(1, false, :best_fitness)
-
-		test_run = EvoSynth::EvoBench::TestRun.new(ga_elistism) do |run|
-			run.set_goal { |gen, best| gen > MAX_GENERATIONS }
-			run.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-		end
-		puts test_run.start(logger).to_s
-
-#		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
-#			ex.try(:mutation, "foo")
-#			ex.try(:mutation, "abr")
+#		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
+#			cmp.set_goal { |gen, best| gen > MAX_GENERATIONS }
+#			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+#			cmp.add_evolver(ga_elistism)
+#			cmp.add_evolver(ga)
 #		end
+#
+#		comparator.collect_data!
+#		comparator.compare(ga, ga_elistism)
+
+#		logger = EvoSynth::Logger.create(1, false, :best_fitness)
+
+#		test_run = EvoSynth::EvoBench::TestRun.new(ga_elistism) do |run|
+#			run.set_goal { |gen, best| gen > MAX_GENERATIONS }
+#			run.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+#		end
+#		puts test_run.start!.to_s
+
+		experiment = EvoSynth::EvoBench::Experiment.new(ga_elistism, configuration) do |ex|
+			ex.try(:mutation, "m1")
+			ex.try(:mutation, "m2")
+			ex.try(:mutation, "m3")
+			ex.try(:recombination, "r1")
+			ex.try(:recombination, "r2")
+			ex.try(:recombination, "r3")
+			ex.try(:selection, "s1")
+			ex.try(:selection, "s2")
+		end
 #		puts experiment
+#		experiment.start!
+		experiment.create_experiment_plan
 	end
 end

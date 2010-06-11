@@ -166,7 +166,7 @@ module Examples
 		evolver.add_observer(logger)
 
 		puts "running MemeticAlgorithm with elitism..."
-		evolver.run_until { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
+		evolver.run_while { |gen, best| best.fitness <= GOAL || gen >= GENERATIONS }
 		puts "\nResult after #{evolver.generations_computed} generations: #{evolver.best_solution?}"
 	end
 end

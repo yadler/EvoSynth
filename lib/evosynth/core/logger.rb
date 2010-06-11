@@ -22,6 +22,9 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 require 'evosynth/core/logger/dataset'
 require 'evosynth/core/logger/datafetcher'
 

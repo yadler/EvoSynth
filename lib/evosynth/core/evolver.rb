@@ -60,8 +60,18 @@ module EvoSynth
 
 		def initialize(configuration = nil) #:yields: self
 			create_accessors_for_parameters(required_parameters?)
+			set_default_values!
 			use_configuration(configuration) unless configuration.nil?
 			yield self if block_given?
+			valid_configuration?
+			setup!
+		end
+
+		# TODO: rdoc
+
+		def reset!(configuration = nil)
+			set_default_values!
+			use_configuration(configuration.nil? ? @configuration : configuration)
 			valid_configuration?
 			setup!
 		end
@@ -82,19 +92,22 @@ module EvoSynth
 			raise ArgumentError, "argument type not supported" unless parameters.is_a?(Hash)
 
 			@parameters = parameters
-			@parameters.each_pair do |key, default_value|
-				self.class.send(:attr_accessor, key)
-				self.send("#{key.id2name}=".to_sym, default_value) unless default_value.nil?
-			end
+			@parameters.each_key { |key| self.class.send(:attr_accessor, key) }
+		end
+
+		# TODO: rdoc
+
+		def set_default_values!
+			@parameters.each_pair { |key, default| self.send("#{key.id2name}=".to_sym, default) unless default.nil? }
 		end
 
 		#	:call-seq:
 		#		use_configuration(Configuration)
 		#
-		# use a given configuration
+		# use a given configuration (deep clones the given configuration!!)
 
 		def use_configuration(configuration)
-			@configuration = configuration
+			@configuration = configuration.clone
 			@parameters.each_pair do |key, default_value|
 				value = configuration.send("#{key.id2name}") rescue nil
 				self.send("#{key.id2name}=".to_sym, value) unless value.nil?
@@ -144,12 +157,12 @@ module EvoSynth
 		#
 		# example:
 		#
-		#	Evolver.run_until { am_i_already_skynet? }                             # "external" stop criteria
-		#	Evolver.run_until { |gen| gen <= 42 }                                  # run 42 generations
-		#	Evolver.run_until { |gen, best| gen <= 42 or best.fitness == 0.0 }     # run 42 generations or stop if a fitness of 0.0 has been reached
+		#	Evolver.run_while { am_i_skynet? }                                     # "external" stop criteria
+		#	Evolver.run_while { |gen| gen <= 42 }                                  # run 42 generations
+		#	Evolver.run_while { |gen, best| gen <= 42 or best.fitness == 0.0 }     # run 42 generations or stop if a fitness of 0.0 has been reached
 		#
 
-		def run_until(&condition) # :yields: generations computed, best solution
+		def run_while(&condition) # :yields: generations computed, best solution
 			@generations_computed = 0
 			changed
 			notify_observers self, @generations_computed
@@ -175,17 +188,17 @@ module EvoSynth
 			result?
 		end
 
-		# wrapper for run_until { |gen| gen == max_generations}
+		# wrapper for run_while { |gen| gen == max_generations}
 
 		def run_until_generations_reached(max_generations)
-			run_until { |gen| gen == max_generations }
+			run_while { |gen| gen == max_generations }
 		end
 
-		# wrapper for run_until, constructs a Goal class to use the <=> to compare the fitness values
+		# wrapper for run_while, constructs a Goal class to use the <=> to compare the fitness values
 
 		def run_until_fitness_reached(fitness)
 			goal = Goal.new(fitness)
-			run_until { |gen, best| best >= goal }
+			run_while { |gen, best| best >= goal }
 		end
 
 		# implement this to generate the next generation (individuals, whatever) of your evolver
@@ -206,7 +219,7 @@ module EvoSynth
 			raise NotImplementedError
 		end
 
-		# this function should return the "result" of the evolver, it will get called at the end of run_until
+		# this function should return the "result" of the evolver, it will get called at the end of run_while
 
 		def result?
 			raise NotImplementedError
