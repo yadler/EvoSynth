@@ -75,15 +75,17 @@ module Examples
 #		end
 #		puts test_run.start!.to_s
 
-		experiment = EvoSynth::EvoBench::Experiment.new(ga_elistism, configuration) do |ex|
-			ex.try(:mutation, "m1")
-			ex.try(:mutation, "m2")
-			ex.try(:mutation, "m3")
-			ex.try(:recombination, "r1")
-			ex.try(:recombination, "r2")
-			ex.try(:recombination, "r3")
-			ex.try(:selection, "s1")
-			ex.try(:selection, "s2")
+		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
+			ex.try_evolver(ga)
+			ex.try_evolver(ga_elistism)
+			ex.try_parameter(:mutation, "m1")
+			ex.try_parameter(:mutation, "m2")
+			ex.try_parameter(:mutation, "m3")
+			ex.try_parameter(:recombination, "r1")
+			ex.try_parameter(:recombination, "r2")
+			ex.try_parameter(:recombination, "r3")
+			ex.try_parameter(:selection, "s1")
+			ex.try_parameter(:selection, "s2")
 		end
 #		puts experiment
 #		experiment.start!

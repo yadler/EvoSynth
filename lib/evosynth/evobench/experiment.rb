@@ -25,30 +25,75 @@
 module EvoSynth
 	module EvoBench
 
-		# TODO: versuchspläne und so
-
 		class Experiment
+			attr_reader :evolvers, :parameters, :configuration
 
 			def initialize(configuration)
 				@configuration = configuration
-				@to_test = {}
+				@evolvers = []
+				@parameters = {}
 				yield self
 			end
 
-			def try(field, operator)
-				if @to_test.has_key?(field)
-					@to_test[field] << operator
+			def set_goal(&goal_block)
+				@goal_block = goal_block
+			end
+
+			def reset_evolver_with(&reset_block)
+				@reset_block = reset_block
+			end
+
+			def try_evolver(evolver)
+				@evolvers << evolver
+			end
+
+			def try_parameter(parameter, value)
+				if @parameters.has_key?(parameter)
+					@parameters[parameter] << value
 				else
-					@to_test[field] = [operator]
+					@parameters[parameter] = [value]
 				end
 			end
 
-			def start!
+			def create_experiment_plan
+				plan = []
+				configurations = []
 
+				@parameters.each_key do |param_type|
+
+					@parameters[param_type].each do |parameter|
+
+
+						@parameters.each_key do |inner_param_type|
+							next if inner_param_type == param_type
+
+							puts @parameters[inner_param_type].zip( [parameter] * @parameters[inner_param_type].size).to_s
+							# TODO: FIXME!!!
+						end
+
+#						puts foo.to_s
+					end
+				end
+#				puts configurations.to_s
+			end
+
+			def start!
+				experiments = create_experiment_plan
+
+				experiments.each do |configuration|
+					@evolver.reset!(configuration)
+					puts "I would run #{@evolver} with #{configuration}"
+
+#					EvoSynth::EvoBench::TestRun.new(@evolver) do |run|
+#						run.set_goal &@goal_block
+#						run.reset_evolvers_with &@reset_block
+#						run.start!
+#					end
+				end
 			end
 
 			def to_s
-				@to_test.to_s
+				"Experiment <evolver=#{@evolver}, parameters=#{@parameters.to_s}>"
 			end
 
 		end

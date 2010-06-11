@@ -22,12 +22,19 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
 	module EvoBench
 
 		class TestRun
+			include Observable
 
 			attr_reader :runs_computed
+
+			DEFAULT_LOGGER = EvoSynth::Logger.create(1, false, :best_fitness)
+
 
 			# Initialize a Test-Run for the given evolver. Optional: use the given Configuration.
 
@@ -53,7 +60,7 @@ module EvoSynth
 				@reset_block = reset_block
 			end
 
-			def start(logger, repetitions = 1)
+			def start!(repetitions = 1, logger = DEFAULT_LOGGER)
 				raise "please set goal block" if @goal_block.nil?
 				raise "please set reset block" if @reset_block.nil?
 
@@ -66,10 +73,12 @@ module EvoSynth
 					@reset_block.call @evolver
 					logger.clear_data!
 					
-					@evolver.run_until { |gen, best| @goal_block.call gen, best }
+					@evolver.run_while { |gen, best| @goal_block.call gen, best }
 					data_sets << logger.data
 
 					@runs_computed += 1
+					changed
+					notify_observers self, @runs_computed
 				end
 
 				@evolver.delete_observer(logger)

@@ -25,6 +25,10 @@
 module EvoSynth
 	module EvoBench
 
+		# TODO: remove me!
+		#
+		# This class is strange - should be replaced by test_run, experiment und a nice analysis tool!
+
 		class Comparator
 
 			def initialize(repetitions = 1)
@@ -48,7 +52,9 @@ module EvoSynth
 			end
 
 			def collect_data!
-				valid_comparator?
+				raise ArgumentError("please set goal block") if @goal_block.nil?
+				raise ArgumentError("please set reset block") if @reset_block.nil?
+
 				@evolvers.each do |evolver|
 					@results[evolver] = run_evolver(evolver)
 				end
@@ -66,38 +72,34 @@ module EvoSynth
 				end
 			end
 
+			def update(test_run, repetitions_computed)
+				print "#{repetitions_computed}..."
+			end
+
 
 			private
 
 
-			def valid_comparator?
-				raise ArgumentError("please set goal block") if @goal_block.nil?
-				raise ArgumentError("please set reset block") if @reset_block.nil?
-			end
-
-			# TODO: add some sort of progress counter here
 			def run_evolver(evolver)
-				collected_data = {}
+
+				test_run = EvoSynth::EvoBench::TestRun.new(evolver) do |run|
+					run.set_goal &@goal_block
+					run.reset_evolvers_with &@reset_block
+					run.add_observer(self)
+				end
 
 				logger = EvoSynth::Logger.create(1, false, :best_fitness)
-				evolver.add_observer(logger)
-
-				@repetitions.times do |run|
-					# reset all relevant objects
-					@reset_block.call evolver
-					logger.clear_data!
-
-					print "."
-					evolver.run_until { |gen, best| @goal_block.call gen, best }
-
-					logger.data.each_row_with_index do |row, index|
-						collected_data[index] = [] unless collected_data.has_key?(index)
-						collected_data[index] << row[0] # best fitness
-					end
-				end
+				datasets = test_run.start!(@repetitions, logger)
 				puts "\n"
 
-				evolver.delete_observer(logger)
+				collected_data = {}
+				datasets.each do |data|
+					data.each_index do |index|
+						collected_data[index] = [] unless collected_data.has_key?(index)
+						collected_data[index] << data[index, :best_fitness]
+					end
+				end
+
 				collected_data
 			end
 
