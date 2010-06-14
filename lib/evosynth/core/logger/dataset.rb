@@ -47,6 +47,10 @@ module EvoSynth
 				@data[row_number] = row
 			end
 
+			def has_row?(row_num)
+				@data.has_key?(row_num)
+			end
+
 			def each_index
 				@data.keys.each { |row_num| yield row_num }
 			end
@@ -59,6 +63,20 @@ module EvoSynth
 				@data.each { |row_num, row| yield row, row_num }
 			end
 
+			def DataSet.union(*datasets)
+				union = DateSet.new(datasets[0].column_names)
+
+				datasets.each do |dataset|
+					raise "can't merge these DataSets (different columns!)" if union.column_names != dataset.column_names
+
+					dataset.each_row_with_index do |row, index|
+						union[index] = [] unless union.has_row?(index)
+						union[index] << dataset[index]
+					end
+				end
+
+				union
+			end
 		end
 
 	end
