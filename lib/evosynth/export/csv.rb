@@ -27,18 +27,18 @@ module EvoSynth
 
 		class CSV
 
-			def CSV.export(logger, filename, write_header = false, separator = ',')
+			def CSV.export(dataset, filename, write_header = false, separator = ',')
 				# Note: I see no advantage in using the 'csv' library for this
 
 				File.open(filename,  "w+") do |file|
 					if write_header
 						file.write("counter")
-						file.write(separator) unless logger.data.column_names.nil?
-						file.write(logger.data.column_names.join(separator))
+						file.write(separator) unless dataset.column_names.nil?
+						file.write(dataset.column_names.join(separator))
 						file.write("\n")
 					end
 
-					logger.data.each_row_with_index do |row, row_number|
+					dataset.each_row_with_index do |row, row_number|
 						file.write(row_number)
 						file.write(separator) unless row.nil?
 						file.write(row.join(separator))

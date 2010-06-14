@@ -75,7 +75,7 @@ module Examples
 
 		puts "\nexport a PNG, Gnuplot script and datafile to #{pngfile}, #{scriptfile} and #{datafile}..."
 
-		gp = EvoSynth::Export::Gnuplot.new(plot_logger, pngfile, scriptfile, datafile)
+		gp = EvoSynth::Export::Gnuplot.new(plot_logger.data, pngfile, scriptfile, datafile)
 		gp.set_title('Rastgrin function with Elistism GA')
 		gp.set_labels("Generationen", "")
 		gp.plot_all_columns("lines")
@@ -84,7 +84,7 @@ module Examples
 		# OR:
 
 		pngfile = BASEPATH + '/evosynth_gnuplot_block.png'
-		EvoSynth::Export::Gnuplot.plot(plot_logger, pngfile) do |gp|
+		EvoSynth::Export::Gnuplot.plot(plot_logger.data, pngfile) do |gp|
 			gp.set_title('Rastgrin function with Elistism GA')
 			gp.set_labels("Generationen", "")
 			gp.plot_column(:best_fitness, "lines")
@@ -92,6 +92,6 @@ module Examples
 		end
 
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
-		EvoSynth::Export::CSV.export(plot_logger, BASEPATH + '/evosynth_export.csv', true)
+		EvoSynth::Export::CSV.export(plot_logger.data, BASEPATH + '/evosynth_export.csv', true)
 	end
 end

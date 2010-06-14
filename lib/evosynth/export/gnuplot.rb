@@ -25,13 +25,13 @@
 module EvoSynth
 	module Export
 
-		# exports the contents (data) of a logger to gnuplot
+		# exports the contents (data) of a DataSet to gnuplot
 
 		class Gnuplot
 
-			def initialize(logger, pngfile, scriptfile = nil, datafile = nil)
+			def initialize(dataset, pngfile, scriptfile = nil, datafile = nil)
 				@plot_commands = []
-				@logger = logger
+				@dataset = dataset
 				@options = ["set terminal png", "set output '#{pngfile}'"]
 
 				if scriptfile.nil?
@@ -49,14 +49,14 @@ module EvoSynth
 
 			# shortcut, lets you construct a gnuplot exporter in a scoped block, to do something like:
 			#
-			#	EvoSynth::Output::GnuplotExporter.plot(plot_logger, pngfile) do |gp|
+			#	EvoSynth::Output::GnuplotExporter.plot(dataset, pngfile) do |gp|
 			#		gp.set_title('Rastgrin function with Elistism GA')
 			#		gp.set_labels("Generationen", "")
 			#		gp.plot_all_columns("lines")
 			#	end
 
-			def Gnuplot.plot(logger, pngfile, scriptfile = nil, datafile = nil)
-				gp = Gnuplot.new(logger, pngfile, scriptfile, datafile)
+			def Gnuplot.plot(dataset, pngfile, scriptfile = nil, datafile = nil)
+				gp = Gnuplot.new(dataset, pngfile, scriptfile, datafile)
 				yield gp
 				gp.export
 			end
@@ -79,8 +79,8 @@ module EvoSynth
 			end
 
 			def plot_column(column_name, style = nil)
-				column_index = @logger.data.column_names.index(column_name)
-				raise "column '#{column_name}' not present in logger.data" if column_index.nil?
+				column_index = @dataset.column_names.index(column_name)
+				raise "column '#{column_name}' not present in DataSet" if column_index.nil?
 
 				command = "using 1:#{column_index + 2} title \"#{column_name}\""
 				command += " with #{style}" unless style.nil?
@@ -89,7 +89,7 @@ module EvoSynth
 			end
 
 			def plot_all_columns(style = nil)
-				@logger.data.column_names.each { |column| plot_column(column, style) }
+				@dataset.column_names.each { |column| plot_column(column, style) }
 			end
 
 			def export
@@ -105,9 +105,9 @@ module EvoSynth
 			def write_datafile
 				File.open(@datafile,  "w+") do |file|
 					file.write("# counter")
-					@logger.data.column_names.each { |column| file.write("\t#{column}") }
+					@dataset.column_names.each { |column| file.write("\t#{column}") }
 
-					@logger.data.each_row_with_index do |row, row_number|
+					@dataset.each_row_with_index do |row, row_number|
 						file.write("\n#{row_number}")
 						row.each { |column| file.write("\t#{column}")}
 					end

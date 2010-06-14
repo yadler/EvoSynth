@@ -191,7 +191,7 @@ module EvoSynth
 		# wrapper for run_while { |gen| gen == max_generations}
 
 		def run_until_generations_reached(max_generations)
-			run_while { |evolver| evolver.generations_computed == max_generations }
+			run_until { |evolver| evolver.generations_computed == max_generations }
 		end
 
 		# wrapper for run_while, constructs a Goal class to use the <=> to compare the fitness values
