@@ -31,6 +31,7 @@ module EvoSynth
 		class TestRun
 			include Observable
 
+			attr_accessor :repetitions, :logger
 			attr_reader :runs_computed
 
 			DEFAULT_LOGGER = EvoSynth::Logger.create(1, false, :best_fitness)
@@ -41,6 +42,8 @@ module EvoSynth
 			def initialize(evolver, configuration = nil)
 				@evolver = evolver
 				@runs_computed = 0
+				@repetitions = 1
+				@logger = DEFAULT_LOGGER
 				@goal_block = nil
 				@reset_block = nil
 
@@ -60,23 +63,23 @@ module EvoSynth
 				@reset_block = reset_block
 			end
 
-			def start!(repetitions = 1, logger = DEFAULT_LOGGER)
+			def start!
 				raise "please set goal block" if @goal_block.nil?
 				raise "please set reset block" if @reset_block.nil?
 
 				results = []
 				@runs_computed = 0
-				@evolver.add_observer(logger)
+				@evolver.add_observer(@logger)
 
-				repetitions.times do |run|
+				@repetitions.times do |run|
 					# reset all relevant objects
 					@reset_block.call @evolver
-					logger.clear_data!
+					@logger.clear_data!
 
 					start_time = Time.now
 					@evolver.run_until { |evolver| @goal_block.call evolver }
 					
-					result = EvoSynth::EvoBench::RunResults.new(logger.data, @evolver, @configuration)
+					result = EvoSynth::EvoBench::RunResults.new(@logger.data, @evolver, @configuration)
 					result.elapsed_time = start_time - Time.now
 					results << result
 
@@ -85,7 +88,7 @@ module EvoSynth
 					notify_observers self, @runs_computed
 				end
 
-				@evolver.delete_observer(logger)
+				@evolver.delete_observer(@logger)
 				results
 			end
 

@@ -22,6 +22,9 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'observer'
+
+
 module EvoSynth
 	module EvoBench
 
@@ -37,13 +40,18 @@ module EvoSynth
 		# TODO: arrays und ranges für parameter!
 
 		class Experiment
+			include Observable
+			
 			DEFAULT_EXPERIMENTAL_PLAN = EvoSynth::EvoBench::FullFactorialPlan.new
 
+			attr_accessor :repetitions, :logger
 			attr_reader :evolvers, :parameters, :configuration, :experimental_plan
 
 			def initialize(configuration, experimental_plan = DEFAULT_EXPERIMENTAL_PLAN)
 				@configuration = configuration
 				@experimental_plan = experimental_plan
+				@logger = EvoSynth::EvoBench::TestRun::LOGGER_FITNESS_TIME
+				@repetitions = 1
 				@evolvers = []
 				@parameters = {}
 				yield self
@@ -69,18 +77,25 @@ module EvoSynth
 				end
 			end
 
-			def start!(repetitions = 1, logger = EvoSynth::EvoBench::TestRun::LOGGER_FITNESS_TIME)
+			def start!
+				raise "please set goal block" if @goal_block.nil?
+				raise "please set reset block" if @reset_block.nil?
+
 				runs = @experimental_plan.create_runs(self)
-				test_counter = 1
+				test_runs_computed = 1
 				results = []
 
 				runs.each do |test_run|
 					test_run.set_goal &@goal_block
 					test_run.reset_evolvers_with &@reset_block
+					test_run.repetitions = @repetitions
+					test_run.logger = @logger
 					
-					puts "running test #{test_counter} of #{runs.size}..."
-					results << test_run.start!(repetitions, logger)
-					test_counter += 1
+					results << test_run.start!
+				
+					changed
+					notify_observers self, test_runs_computed, runs.size
+					test_runs_computed += 1
 				end
 
 				results

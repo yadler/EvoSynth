@@ -82,14 +82,14 @@ module EvoSynth
 
 			def run_evolver(evolver)
 
-				test_run = EvoSynth::EvoBench::TestRun.new(evolver) do |run|
+				results = EvoSynth::EvoBench::TestRun.new(evolver) do |run|
 					run.set_goal &@goal_block
 					run.reset_evolvers_with &@reset_block
+					run.repetitions = @repetitions
+					run.logger = EvoSynth::Logger.create(1, false, :best_fitness)
 					run.add_observer(self)
-				end
-
-				logger = EvoSynth::Logger.create(1, false, :best_fitness)
-				results = test_run.start!(@repetitions, logger)
+				end.start!
+				
 				puts "\n"
 
 				collected_data = {}
