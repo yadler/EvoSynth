@@ -64,14 +64,18 @@ module EvoSynth
 			end
 
 			def DataSet.union(*datasets)
-				union = DateSet.new(datasets[0].column_names)
+				union = DataSet.new(datasets[0].column_names)
 
 				datasets.each do |dataset|
 					raise "can't merge these DataSets (different columns!)" if union.column_names != dataset.column_names
 
 					dataset.each_row_with_index do |row, index|
 						union[index] = [] unless union.has_row?(index)
-						union[index] << dataset[index]
+
+						dataset[index].each_with_index do |data, col_index|
+							union[index][col_index] = [] if union[index][col_index].nil?
+							union[index][col_index] << data
+						end
 					end
 				end
 

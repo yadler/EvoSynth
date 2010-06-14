@@ -57,14 +57,17 @@ module EvoSynth
 
 				@evolvers.each do |evolver|
 					@results[evolver] = run_evolver(evolver)
+					puts "\n"
 				end
 			end
 
 			def compare(evolver_one, evolver_two)
 				raise "run collect_data! first" if @results[evolver_one].nil? or @results[evolver_two].nil?
-				puts "comparison:\n"
-				@results[evolver_one].each_pair do |index, results_one|
-					results_two = @results[evolver_two][index]
+				puts "\ncomparison:\n"
+				
+				@results[evolver_one].dataset.each_index do |index|
+					results_one = @results[evolver_one].dataset[index, :best_fitness]
+					results_two = @results[evolver_two].dataset[index, :best_fitness]
 					t_value = EvoSynth::EvoBench.t_test(results_one, results_two)
 					error_prob = EvoSynth::EvoBench.t_probability(t_value, @repetitions)
 
@@ -81,7 +84,6 @@ module EvoSynth
 
 
 			def run_evolver(evolver)
-
 				results = EvoSynth::EvoBench::TestRun.new(evolver) do |run|
 					run.set_goal &@goal_block
 					run.reset_evolvers_with &@reset_block
@@ -89,18 +91,8 @@ module EvoSynth
 					run.logger = EvoSynth::Logger.create(1, false, :best_fitness)
 					run.add_observer(self)
 				end.start!
-				
-				puts "\n"
 
-				collected_data = {}
-				results.each do |result|
-					result.dataset.each_index do |index|
-						collected_data[index] = [] unless collected_data.has_key?(index)
-						collected_data[index] << result.dataset[index, :best_fitness]
-					end
-				end
-
-				collected_data
+				EvoSynth::EvoBench::RunResults.union(*results)
 			end
 
 		end

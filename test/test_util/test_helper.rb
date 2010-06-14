@@ -126,3 +126,10 @@ class TestArrayGenomeIndividual < EvoSynth::MinimizingIndividual
 	end
 
 end
+
+
+class TestEvaluator < EvoSynth::Evaluator
+	def calculate_fitness(individual)
+		0.0
+	end
+end

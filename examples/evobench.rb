@@ -63,27 +63,27 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
 		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-#		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
-#			cmp.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
-#			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-#			cmp.add_evolver(ga_elistism)
-#			cmp.add_evolver(ga)
-#		end
-#
-#		comparator.collect_data!
-#		comparator.compare(ga, ga_elistism)
-
-		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
-			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
-			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-			ex.repetitions = 10
-
-			ex.try_evolver(ga)
-			ex.try_evolver(ga_elistism)
-
-			ex.add_observer(Examples::EvoBench::ProgressOutput.new)
+		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
+			cmp.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
+			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+			cmp.add_evolver(ga_elistism)
+			cmp.add_evolver(ga)
 		end
-		experiment.start!
+
+		comparator.collect_data!
+		comparator.compare(ga, ga_elistism)
+
+#		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
+#			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
+#			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+#			ex.repetitions = 10
+#
+#			ex.try_evolver(ga)
+#			ex.try_evolver(ga_elistism)
+#
+#			ex.add_observer(Examples::EvoBench::ProgressOutput.new)
+#		end
+#		experiment.start!
 
 #		logger = EvoSynth::Logger.create(1, false, :best_fitness)
 

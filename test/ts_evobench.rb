@@ -22,37 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-module EvoSynth
-	module EvoBench
-
-		class RunResults
-			attr_accessor :dataset, :evolver, :configuration, :elapsed_time
-
-			def initialize(dataset, evolver, configuration)
-				@dataset = dataset
-				@evolver = evolver
-				@configuration = configuration
-				@elapsed_time = 0
-			end
-
-			def RunResults.union(*results)
-				datasets = []
-				elapsed_time_sum = 0.0
-
-				results.each do |result|
-					raise "can't merge these RunResults (different configuration!)" if result.configuration != results[0].configuration
-					raise "can't merge these RunResults (different evolver!)" if result.evolver != results[0].evolver
-					datasets << result.dataset
-					elapsed_time_sum += result.elapsed_time
-				end
-
-				union_ds = EvoSynth::Logging::DataSet.union(*datasets)
-				union = RunResults.new(union_ds, results[0].evolver, results[0].configuration)
-				union.elapsed_time = elapsed_time_sum / results.size
-
-				union
-			end
-		end
-
-	end
-end
+require 'test/evobench/tc_run_results'
