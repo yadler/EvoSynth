@@ -22,26 +22,57 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
+require 'set'
+
+
 module EvoSynth
 	module Export
 
 		class CSV
+			attr_accessor :filename, :write_header, :separator
 
-			def CSV.export(dataset, filename, write_header = false, separator = ',')
-				# Note: I see no advantage in using the 'csv' library for this
+			def initialize(dataset, filename, write_header = false, separator = ',')
+				@dataset = dataset
+				@columns = Set.new
+				@filename = filename
+				@write_header = write_header
+				@separator = separator
+				
+				yield self if block_given?
+				export_all_columns if @columns.empty?
+				
+				export
+			end
 
-				File.open(filename,  "w+") do |file|
-					if write_header
+			def export_column(name)
+				raise "column '#{name}' not in dataset" if @dataset.column_names.index(name).nil?
+				@columns << name
+			end
+
+			def export_all_columns
+				@dataset.column_names.each { |name| export_column(name) }
+			end
+
+			private
+
+			def export
+				File.open(@filename,  "w+") do |file|
+					if @write_header
 						file.write("counter")
-						file.write(separator) unless dataset.column_names.nil?
-						file.write(dataset.column_names.join(separator))
+						file.write(@separator) unless @columns.nil? or @columns.empty?
+						file.write(@columns.to_a.join(@separator))
 						file.write("\n")
 					end
 
-					dataset.each_row_with_index do |row, row_number|
+					col_indexes = @columns.map { |col|  @dataset.column_names.index(col) }
+
+					@dataset.each_row_with_index do |row, row_number|
 						file.write(row_number)
-						file.write(separator) unless row.nil?
-						file.write(row.join(separator))
+						file.write(@separator) unless row.nil?
+
+						row_to_write = col_indexes.map { |index|  row[index] }
+						file.write(row_to_write.join(@separator))
+
 						file.write("\n")
 					end
 				end

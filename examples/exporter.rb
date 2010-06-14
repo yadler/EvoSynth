@@ -92,6 +92,9 @@ module Examples
 		end
 
 		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
-		EvoSynth::Export::CSV.export(plot_logger.data, BASEPATH + '/evosynth_export.csv', true)
+		EvoSynth::Export::CSV.new(plot_logger.data, BASEPATH + '/evosynth_export.csv', true) do |csv|
+			csv.export_column(:best_fitness)
+			csv.export_all_columns
+		end
 	end
 end

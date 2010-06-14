@@ -28,6 +28,7 @@ module EvoSynth
 		# exports the contents (data) of a DataSet to gnuplot
 
 		class Gnuplot
+			attr_accessor :pngfile, :scriptfile, :datafile
 
 			def initialize(dataset, pngfile, scriptfile = nil, datafile = nil)
 				@plot_commands = []
@@ -62,7 +63,7 @@ module EvoSynth
 			end
 
 			def set_gnuplot_script(gnuplot_script)
-				@gnuplot_script = gnuplot_script
+				@scriptfile = gnuplot_script
 			end
 
 			def set_title(title)
