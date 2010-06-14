@@ -22,8 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'evosynth/evobench/statistics_math'
-require 'evosynth/evobench/t-test'
+require 'evosynth/evobench/math'
 require 'evosynth/evobench/diversity_distance'
 require 'evosynth/evobench/diversity_entropy'
 require 'evosynth/evobench/diversity_subseq'
