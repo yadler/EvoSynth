@@ -4,40 +4,31 @@ Features:
 
 	- README:
 		=> features aktualisieren (siehe CHANGELOG)
+		=> CHANGELOG, README, TODO aufräumen, schick machen und mit commits vergleichen
 		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
-		=> Auf Diplomarbeitshintergrund verweisen
+		=> Auf Diplomarbeitshintergrund verweisen?
 
 	- Logger und Exporter:
 		=> HTML exporter
 		=> gnuplot:
 			-> bessere bzw. mehr optionen, templates
 			-> was ist mit errorbars?
-		=> exporter:
 			-> balken für min/max, stddev und fehler
 			-> heatmap und 3d topografie plots
 
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 
-		=> Ergebnisse sollten Configuration speichern, mit dem sie "erzeugt" wurden:
-
 		=> mehrere Testläufe:
 			-> Durchschnittswerte
-			-> laufzeit messung der einzelnen Varianten (güte pro minute?)
-			-> ergebnisse sollten ein serialisierbares objekt sein
-			-> populationsstatistiken (verteilung von genen im genom)
+			-> ergebnisse sollten ein serialisierbares objekt sein - TESTEN!
 
 		=> versuchsreihen mit:
-			-> verschiedene "Benchmarkfunktionen", also verschiedene Fitnessfunktionen
-			   für alle zu testenden Operatoren
+			-> verschiedene "Benchmarkfunktionen", also verschiedene Fitnessfunktionen für alle zu testenden Operatoren
 			-> verschiedene randomgeneratoren testen
 			-> range mit schrittweite für parameter (Integer und Float)
 
 		=> Versuchspläne (sind zumindest angefangen)
 
-		=> (Populations) Statistiken?!
-			-> was ist mit schematheorem und co?
-			-> häufigkeiten bestimmter werte an allen positionen eines genomes
-			   innerhalb einer population
 
 ============================== EvoSynth 0.3 ====================================
 
@@ -49,9 +40,13 @@ Features:
 		=> ist anstatt OrderedRecombination OrderRecombination korrekt?
 		=> child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
 		=> metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
-		=> runnable_evolver sollte überarbeitet werden
-			-> eventuell population oder Configuration anstatt beste solution yielden
-			-> ziel: mehr flexibilität
+		=> Abbruchbedingungen für evolver: keine fitnessänderung in x generationen
+
+	- EvoBench:
+		=> (Populations) Statistiken?!
+			-> was ist mit schematheorem und co?
+			-> häufigkeiten bestimmter werte an allen positionen eines genomes
+			   innerhalb einer population (verteilung von genen im genom)
 
 	- Species-Konzept sinnvoll? (siehe ECJ)
 
@@ -71,8 +66,6 @@ Features:
 		   Anfoderung umschreiben!
 		=> CMBCoevolutionary braucht ein Refactoring
 		=> die koevolutionären könnten sich etwas von ECJ (CompetitiveEvaluator) abgucken
-
-	- Abbruchbedingungen für evolver: keine fitnessänderung in x generationen
 
 	- Checkpointing für Evolver:
 		=> Save, Stop, Restart, Continue

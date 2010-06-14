@@ -167,7 +167,7 @@ module EvoSynth
 		#	Evolver.run_while { |evovler| evovler.generations_computed <= 42 and evovler.best_solution?.fitness > 0.0 }
 		#
 
-		def run_while(&condition) # :yields: evolver
+		def run_while(&condition) # :yields: evolver, generations_computed
 			@generations_computed = 0
 			changed
 			notify_observers self, @generations_computed

@@ -2,7 +2,7 @@
 
 * added SP_k problem to binary benchmark functions
 
-* added EvoBench module with following benchmarking features:
+* added EvoBench (benchmarking for evolutionary algorithms) module:
 
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
