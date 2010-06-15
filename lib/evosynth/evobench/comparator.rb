@@ -92,7 +92,7 @@ module EvoSynth
 					run.add_observer(self)
 				end.start!
 
-				EvoSynth::EvoBench::RunResults.union(*results)
+				EvoSynth::EvoBench::RunResult.union(*results)
 			end
 
 		end

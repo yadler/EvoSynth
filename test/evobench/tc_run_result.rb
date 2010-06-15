@@ -60,16 +60,16 @@ class RunResultsTest < Test::Unit::TestCase
 			@ds3[6] = [33, 33]
 			@ds3[7] = [33, 33]
 
-			@rs1 = EvoSynth::EvoBench::RunResults.new(@ds1, @evolver, @conf)
+			@rs1 = EvoSynth::EvoBench::RunResult.new(@ds1, @evolver, @conf)
 			@rs1.elapsed_time = 10
-			@rs2 = EvoSynth::EvoBench::RunResults.new(@ds2, @evolver, @conf)
+			@rs2 = EvoSynth::EvoBench::RunResult.new(@ds2, @evolver, @conf)
 			@rs2.elapsed_time = 5
-			@rs3 = EvoSynth::EvoBench::RunResults.new(@ds3, @evolver, @conf)
+			@rs3 = EvoSynth::EvoBench::RunResult.new(@ds3, @evolver, @conf)
 			@rs3.elapsed_time = 15
 		end
 
 		should "have a working union implementation for 2 RunResults" do
-			union = EvoSynth::EvoBench::RunResults.union(@rs1, @rs2)
+			union = EvoSynth::EvoBench::RunResult.union(@rs1, @rs2)
 
 			assert_equal(7.5, union.elapsed_time)
 			assert_equal([[1,10],[2,20]], union.dataset[0])
@@ -79,7 +79,7 @@ class RunResultsTest < Test::Unit::TestCase
 		end
 
 		should "have a working union implementation for 3 datasets" do
-			union = EvoSynth::EvoBench::RunResults.union(@rs1, @rs2, @rs3)
+			union = EvoSynth::EvoBench::RunResult.union(@rs1, @rs2, @rs3)
 
 			assert_equal(10.0, union.elapsed_time)
 			assert_equal([[1,10],[2,20]], union.dataset[0])

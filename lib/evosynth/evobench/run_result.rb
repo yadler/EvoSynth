@@ -25,7 +25,7 @@
 module EvoSynth
 	module EvoBench
 
-		class RunResults
+		class RunResult
 			attr_accessor :dataset, :evolver, :configuration, :elapsed_time
 
 			def initialize(dataset, evolver, configuration)
@@ -35,7 +35,7 @@ module EvoSynth
 				@elapsed_time = 0
 			end
 
-			def RunResults.union(*results)
+			def RunResult.union(*results)
 				datasets = []
 				elapsed_time_sum = 0.0
 
@@ -47,7 +47,7 @@ module EvoSynth
 				end
 
 				union_ds = EvoSynth::Logging::DataSet.union(*datasets)
-				union = RunResults.new(union_ds, results[0].evolver, results[0].configuration)
+				union = RunResult.new(union_ds, results[0].evolver, results[0].configuration)
 				union.elapsed_time = elapsed_time_sum / results.size
 
 				union

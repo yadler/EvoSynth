@@ -27,7 +27,7 @@ require 'evosynth/evobench/diversity_distance'
 require 'evosynth/evobench/diversity_entropy'
 require 'evosynth/evobench/diversity_subseq'
 
-require 'evosynth/evobench/run_results'
+require 'evosynth/evobench/run_result'
 require 'evosynth/evobench/test_run'
 require 'evosynth/evobench/full_factorial_plan'
 require 'evosynth/evobench/comparator'
