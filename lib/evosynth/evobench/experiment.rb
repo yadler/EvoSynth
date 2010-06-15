@@ -98,7 +98,7 @@ module EvoSynth
 					test_runs_computed += 1
 				end
 
-				results
+				results.flatten
 			end
 
 			def to_s
