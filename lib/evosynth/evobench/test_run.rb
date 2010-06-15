@@ -80,7 +80,7 @@ module EvoSynth
 					@evolver.run_until { |evolver| @goal_block.call evolver }
 					
 					result = EvoSynth::EvoBench::RunResults.new(@logger.data, @evolver, @configuration)
-					result.elapsed_time = start_time - Time.now
+					result.elapsed_time = Time.now - start_time
 					results << result
 
 					@runs_computed += 1
