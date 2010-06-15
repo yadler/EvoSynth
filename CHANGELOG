@@ -18,6 +18,7 @@
   * evosynth has its own gnuplot class now, no need for a external gem anymore
     (removed dependency on gnuplot, gruff and rmagick gems)
   * moved exporter (console, csv, gnuplot) to Export module and directory
+  * added simple HTML exporter: call it csv-2-html if you want ;-)
 
 * various changes and improvements:
 

@@ -24,4 +24,5 @@
 
 require 'evosynth/export/gnuplot'
 require 'evosynth/export/csv'
+require 'evosynth/export/html'
 require 'evosynth/export/console'

@@ -9,7 +9,6 @@ Features:
 		=> Auf Diplomarbeitshintergrund verweisen?
 
 	- Logger und Exporter:
-		=> HTML exporter
 		=> gnuplot:
 			-> bessere bzw. mehr optionen, templates
 			-> was ist mit errorbars?

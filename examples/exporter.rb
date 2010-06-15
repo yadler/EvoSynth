@@ -96,5 +96,11 @@ module Examples
 			csv.export_column(:best_fitness)
 			csv.export_all_columns
 		end
+
+		puts "export a HTML-File to #{BASEPATH + '/evosynth_export.html'}..."
+		EvoSynth::Export::HTML.new(plot_logger.data, BASEPATH + '/evosynth_export.html', 'HTML example export') do |html|
+			html.export_column(:best_fitness)
+			html.export_all_columns
+		end
 	end
 end
