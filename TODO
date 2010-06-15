@@ -8,12 +8,11 @@ Features:
 		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
 		=> Auf Diplomarbeitshintergrund verweisen?
 
-	- Logger und Exporter:
-		=> gnuplot:
-			-> bessere bzw. mehr optionen, templates
-			-> was ist mit errorbars?
-			-> balken für min/max, stddev und fehler
-			-> heatmap und 3d topografie plots
+	- gnuplot export:
+		=> bessere bzw. mehr optionen, templates
+		=> was ist mit errorbars?
+		=> balken für min/max, stddev und fehler
+		=> heatmap und 3d topografie plots
 
 	- EvoBench: Benchmark für Evolutionäre Algorithmen
 
@@ -35,7 +34,7 @@ Features:
 
 	- Verbesserungen:
 		=> mutationen nach dem vorbild von charlie's listen mutationen refaktorisieren?
-		=> DSL für Configuration und run_until sachen
+		=> DSL für Configuration, gnuplot, experiment und run_until sachen
 		=> ist anstatt OrderedRecombination OrderRecombination korrekt?
 		=> child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
 		=> metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen

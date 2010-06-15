@@ -68,39 +68,16 @@ module Examples
 #		evaluator.add_observer(plot_logger)
 		evolver.run_until_generations_reached(GENERATIONS)
 
-		BASEPATH = File.expand_path(".")
-		scriptfile = BASEPATH + '/evosynth_gnuplot.gp'
-		datafile = BASEPATH + '/evosynth_gnuplot.dat'
-		pngfile = BASEPATH + '/evosynth_gnuplot.png'
-
-		puts "\nexport a PNG, Gnuplot script and datafile to #{pngfile}, #{scriptfile} and #{datafile}..."
-
-		gp = EvoSynth::Export::Gnuplot.new(plot_logger.data, pngfile, scriptfile, datafile)
-		gp.set_title('Rastgrin function with Elistism GA')
-		gp.set_labels("Generationen", "")
-		gp.plot_all_columns("lines")
-		gp.export
-
-		# OR:
-
-		pngfile = BASEPATH + '/evosynth_gnuplot_block.png'
-		EvoSynth::Export::Gnuplot.plot(plot_logger.data, pngfile) do |gp|
-			gp.set_title('Rastgrin function with Elistism GA')
-			gp.set_labels("Generationen", "")
-			gp.plot_column(:best_fitness, "lines")
-			gp.plot_column(:worst_fitness)
-		end
-
-		puts "export a CSV-File to #{BASEPATH + '/evosynth_export.csv'}..."
-		EvoSynth::Export::CSV.new(plot_logger.data, BASEPATH + '/evosynth_export.csv', true) do |csv|
-			csv.export_column(:best_fitness)
-			csv.export_all_columns
-		end
+		BASEPATH = File.expand_path(".") + "/examples/export"
 
 		puts "export a HTML-File to #{BASEPATH + '/evosynth_export.html'}..."
 		EvoSynth::Export::HTML.new(plot_logger.data, BASEPATH + '/evosynth_export.html', 'HTML example export') do |html|
 			html.export_column(:best_fitness)
 			html.export_all_columns
 		end
+
+		# OR
+		#
+		# EvoSynth::Export::HTML.new(plot_logger.data, BASEPATH + '/evosynth_export.html', 'HTML example export')
 	end
 end

@@ -118,7 +118,7 @@ end
 
 desc "Run all examples"
 task :run_examples do
-	example_files = FileList["examples/*.rb"]
+	example_files = FileList["examples/**/*.rb"]
 	$:.unshift File.expand_path("../lib", __FILE__)
 	example_files.each do |example_file|
 		puts "\nRunning example : #{example_file}\n\n"
