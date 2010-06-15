@@ -63,14 +63,22 @@ module Examples
 		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
 		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
 
-		comparator = EvoSynth::EvoBench::Comparator.new(RUNS) do |cmp|
-			cmp.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
-			cmp.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
-			cmp.add_evolver(ga_elistism)
-			cmp.add_evolver(ga)
+		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
+			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
+			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+			ex.repetitions = 3
+
+			ex.try_evolver(ga)
+			ex.try_evolver(ga_elistism)
 		end
 
-		comparator.collect_data!
-		comparator.compare(ga, ga_elistism)
+		results = experiment.start!
+
+		ga_results = results.select { |res| res.evolver == ga }
+		ga_results = EvoSynth::EvoBench::RunResult.union(*ga_results)
+		ga_elistism_results = results.select { |res| res.evolver == ga_elistism }
+		ga_elistism_results = EvoSynth::EvoBench::RunResult.union(*ga_elistism_results)
+
+		EvoSynth::EvoBench::Comparator.compare_with_error_probability(ga_results, ga_elistism_results, :best_fitness)
 	end
 end

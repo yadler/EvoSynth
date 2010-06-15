@@ -26,24 +26,27 @@ module EvoSynth
 	module EvoBench
 
 		class RunResult
-			attr_accessor :dataset, :evolver, :configuration, :elapsed_time
+			attr_accessor :dataset, :evolver, :configuration, :elapsed_time, :repetitions
 
 			def initialize(dataset, evolver, configuration)
 				@dataset = dataset
 				@evolver = evolver
 				@configuration = configuration
 				@elapsed_time = 0
+				@repetitions = 1
 			end
 
 			def RunResult.union(*results)
 				datasets = []
 				elapsed_time_sum = 0.0
+				repetitions_sum = 0.0
 
 				results.each do |result|
 					raise "can't merge these RunResults (different configuration!)" if result.configuration != results[0].configuration
 					raise "can't merge these RunResults (different evolver!)" if result.evolver != results[0].evolver
 					datasets << result.dataset
 					elapsed_time_sum += result.elapsed_time
+					repetitions_sum += result.repetitions
 				end
 
 				union_ds = EvoSynth::Logging::DataSet.union(*datasets)
@@ -52,6 +55,7 @@ module EvoSynth
 
 				union
 			end
+
 		end
 
 	end

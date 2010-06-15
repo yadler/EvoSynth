@@ -25,74 +25,23 @@
 module EvoSynth
 	module EvoBench
 
-		# TODO: remove me!
-		#
-		# This class is strange - should be replaced by test_run, experiment und a nice analysis tool!
+		# TODO: rdoc
 
 		class Comparator
 
-			def initialize(repetitions = 1)
-				@results = {}
-				@evolvers = []
-				@repetitions = repetitions
+			def Comparator.compare_with_error_probability(results_one, results_two, column)
+				puts "comparison (column = '#{column}'):\n\n"
 
-				yield self if block_given?
-			end
+				raise "repetitions are not equal!" if results_one.repetitions != results_two.repetitions
 
-			def set_goal(&goal_block)
-				@goal_block = goal_block
-			end
+				results_one.dataset.each_index do |index|
+					column_one = results_one.dataset[index, column]
+					column_two = results_two.dataset[index, column]
+					t_value = EvoSynth::EvoBench.t_test(column_one, column_two)
+					error_prob = EvoSynth::EvoBench.t_probability(t_value, results_one.repetitions)
 
-			def reset_evolvers_with(&reset_block)
-				@reset_block = reset_block
-			end
-
-			def add_evolver(evolver)
-				@evolvers << evolver
-			end
-
-			def collect_data!
-				raise ArgumentError("please set goal block") if @goal_block.nil?
-				raise ArgumentError("please set reset block") if @reset_block.nil?
-
-				@evolvers.each do |evolver|
-					@results[evolver] = run_evolver(evolver)
-					puts "\n"
+					puts "#{index}\tbest (one) = #{EvoSynth::EvoBench.mean(column_one)}\tbest (two) = #{EvoSynth::EvoBench.mean(column_two)}\tt-value=#{t_value}\terror prob.=#{error_prob}"
 				end
-			end
-
-			def compare(evolver_one, evolver_two)
-				raise "run collect_data! first" if @results[evolver_one].nil? or @results[evolver_two].nil?
-				puts "\ncomparison:\n"
-				
-				@results[evolver_one].dataset.each_index do |index|
-					results_one = @results[evolver_one].dataset[index, :best_fitness]
-					results_two = @results[evolver_two].dataset[index, :best_fitness]
-					t_value = EvoSynth::EvoBench.t_test(results_one, results_two)
-					error_prob = EvoSynth::EvoBench.t_probability(t_value, @repetitions)
-
-					puts "#{index}\tbest (one) = #{EvoSynth::EvoBench.mean(results_one)}\tbest (two) = #{EvoSynth::EvoBench.mean(results_two)}\tt-value=#{t_value}\terror prob.=#{error_prob}"
-				end
-			end
-
-			def update(test_run, repetitions_computed)
-				print "#{repetitions_computed}..."
-			end
-
-
-			private
-
-
-			def run_evolver(evolver)
-				results = EvoSynth::EvoBench::TestRun.new(evolver) do |run|
-					run.set_goal &@goal_block
-					run.reset_evolvers_with &@reset_block
-					run.repetitions = @repetitions
-					run.logger = EvoSynth::Logger.create(1, false, :best_fitness)
-					run.add_observer(self)
-				end.start!
-
-				EvoSynth::EvoBench::RunResult.union(*results)
 			end
 
 		end
