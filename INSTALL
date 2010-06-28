@@ -6,7 +6,7 @@
 - <i>optional:</i> <b>Gnuplot</b> (for Gnuplot-exporter) from http://www.gnuplot.info/
 - <i>optional:</i> <b>git</b> from http://git-scm.com (to build latest version from git repository)
 
-- <i>optional:</i> gems for development (install with "gem install <gem-name>" (as root)):
+- <i>optional:</i> gems (libraries) for development (install with "gem install <gem-name>" (as root)):
   - shoulda and rake (Rakefile, Testsuite)
   - flake, flog, roodi and rcov (code quality tools)
 
