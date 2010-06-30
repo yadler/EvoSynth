@@ -107,14 +107,12 @@ module EvoSynth
 		#	:call-seq:
 		#		use_configuration(Configuration)
 		#
-		# use a given configuration (deep clones the given configuration!!)
+		# use a given configuration (deep clones the given configuration!!) and check if it is valid
 
-		def use_configuration(configuration)
-			@configuration = configuration.clone
-			@parameters.each_pair do |key, default_value|
-				value = configuration.send("#{key.id2name}") rescue nil
-				self.send("#{key.id2name}=".to_sym, value) unless value.nil?
-			end
+		def use_configuration(configuration) #:yields: self
+			set_configuration(configuration)
+			yield self if block_given?
+			valid_configuration?
 		end
 
 		#	:call-seq:
@@ -234,6 +232,18 @@ module EvoSynth
 
 		private
 
+		#	:call-seq:
+		#		set_configuration(Configuration)
+		#
+		# set a given configuration (deep clones the given configuration!!)
+
+		def set_configuration(configuration)
+			@configuration = configuration.clone
+			@parameters.each_pair do |key, default_value|
+				value = configuration.send("#{key.id2name}") rescue nil
+				self.send("#{key.id2name}=".to_sym, value) unless value.nil?
+			end
+		end
 
 		# simple class to compare a given fitness-goal with a individual using the <=>,
 		# this is done to respect minimizing and maximizin evolvers.
