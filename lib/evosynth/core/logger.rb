@@ -86,14 +86,14 @@ module EvoSynth
 			@data = EvoSynth::Logging::DataSet.new(@data.column_names)
 		end
 
-		def update(observable, counter)
-			return unless counter % @log_step == 0
+		def update(observable, key)
+			return unless key % @log_step == 0
 
 			new_row = @data_fetcher.fetch_next_row(observable)
-			@data[counter] = new_row if @save_data
+			@data[key] = new_row if @save_data
 
 			changed
-			notify_observers self, counter, new_row
+			notify_observers self, key, new_row
 		end
 
 		# little logger factory
