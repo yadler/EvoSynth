@@ -25,8 +25,6 @@ Features:
 			-> verschiedene randomgeneratoren testen
 			-> range mit schrittweite für parameter (Integer und Float)
 
-		=> Versuchspläne (sind zumindest angefangen)
-
 
 ============================== EvoSynth 0.3 ====================================
 
@@ -39,12 +37,14 @@ Features:
 		=> child_factor durch mü und lambda ersetzen und als feste zahl anstatt faktor
 		=> metaprogramming sachen durch "dynamisch geerbte" mixins ersetzen
 		=> Abbruchbedingungen für evolver: keine fitnessänderung in x generationen
+		=> ConsoleWriter sollte konfigurierbare Spaltendingens bekommen, wie CSV und HTML
 
 	- EvoBench:
 		=> (Populations) Statistiken?!
 			-> was ist mit schematheorem und co?
 			-> häufigkeiten bestimmter werte an allen positionen eines genomes
 			   innerhalb einer population (verteilung von genen im genom)
+		=> mehr Versuchspläne
 
 	- Species-Konzept sinnvoll? (siehe ECJ)
 

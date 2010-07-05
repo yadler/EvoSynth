@@ -27,26 +27,34 @@ module EvoSynth
 
 		class FullFactorialPlan
 
-			def create_test_runs(experiment)
-				test_runs = []
+			def initialize
+				@test_runs = []
+			end
 
+			def test_runs # :yields: TestRun's
+				@test_runs.each { |run| yield run }
+			end
+
+			def number_of_test_runs
+				@test_runs.size
+			end
+
+			def create_plan(experiment)
 				combinations = parameter_combinations(experiment.parameters)
 
 				experiment.evolvers.each do |evolver|
 
 					if combinations.empty?
-						test_runs << EvoSynth::EvoBench::TestRun.new(evolver, experiment.configuration)
+						@test_runs << EvoSynth::EvoBench::TestRun.new(evolver, experiment.configuration)
 					else
 						combinations.each do |combination|
 							combi_conf = experiment.configuration.clone
 							combination.each { |param| combi_conf.send("#{param[0]}=", param[1]) }
-							test_runs << EvoSynth::EvoBench::TestRun.new(evolver, combi_conf)
+							@test_runs << EvoSynth::EvoBench::TestRun.new(evolver, combi_conf)
 						end
 					end
 
 				end
-
-				test_runs
 			end
 
 
@@ -75,7 +83,6 @@ module EvoSynth
 			end
 
 
-			
 		end
 
 	end

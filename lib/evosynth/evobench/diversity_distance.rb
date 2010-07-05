@@ -55,7 +55,7 @@ module EvoSynth
 			end
 		end
 
-		# calculates the "hamming distance" (does a bit more) of two given individuals
+		# calculates the "hamming distance" (does a bit more) of two given genomes
 
 		def EvoBench.hamming_distance(genome_one, genome_two)
 			distance = 0
@@ -67,7 +67,7 @@ module EvoSynth
 			distance
 		end
 
-		# calculates the distance of two given "float individuals"
+		# calculates the distance of two given "float genomes"
 
 		def EvoBench.float_distance(genome_one, genome_two)
 			distance = 0.0

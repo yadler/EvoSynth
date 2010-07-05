@@ -38,6 +38,7 @@ module EvoSynth
 		#-> array mit werten für alles andere?
 
 		# TODO: arrays und ranges für parameter!
+		# TODO: rdoc
 
 		class Experiment
 			include Observable
@@ -81,11 +82,11 @@ module EvoSynth
 				raise "please set goal block" if @goal_block.nil?
 				raise "please set reset block" if @reset_block.nil?
 
-				test_runs = @experimental_plan.create_test_runs(self)
+				@experimental_plan.create_plan(self)
 				test_runs_computed = 1
 				results = []
 
-				test_runs.each do |test_run|
+				@experimental_plan.test_runs do |test_run|
 					test_run.set_goal &@goal_block
 					test_run.reset_evolvers_with &@reset_block
 					test_run.repetitions = @repetitions
@@ -94,7 +95,7 @@ module EvoSynth
 					results << test_run.start!
 				
 					changed
-					notify_observers self, test_runs_computed, test_runs.size
+					notify_observers self, test_runs_computed, @experimental_plan.number_of_test_runs
 					test_runs_computed += 1
 				end
 

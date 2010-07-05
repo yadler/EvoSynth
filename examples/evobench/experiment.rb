@@ -80,5 +80,6 @@ module Examples
 			ex.add_observer(Examples::EvoBench::ProgressOutput.new)
 		end
 		experiment.start!
+		puts "- done -"
 	end
 end
