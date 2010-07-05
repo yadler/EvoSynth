@@ -67,7 +67,7 @@ module EvoSynth
 			end
 
 			def next_generation!
-				selected_pop = @parent_selection.select(@population, @population.size * @child_factor)
+				selected_pop = @parent_selection.select(@population, (@population.size * @child_factor).to_i)
 				@population.clear
 
 				selected_pop.each_index do |index_one|
