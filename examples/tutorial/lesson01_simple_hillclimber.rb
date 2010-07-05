@@ -61,6 +61,6 @@ evolver.add_observer(logger)
 # 
 # The hillclimber will stop, when the fitness function got called 5000 times.
 
-puts "\nRunning Hillclimber...\n"
+puts "\nRunning hillclimber...\n"
 result = evolver.run_while { |hc| hc.evaluator.called < 5001 }
 puts "\nIndividual after evolution:  #{result}"
