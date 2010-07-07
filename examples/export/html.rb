@@ -71,7 +71,8 @@ module Examples
 		BASEPATH = File.expand_path(".") + "/examples/export"
 
 		puts "export a HTML-File to #{BASEPATH + '/evosynth_export.html'}..."
-		EvoSynth::Export::HTML.new(plot_logger.data, BASEPATH + '/evosynth_export.html', 'HTML example export') do |html|
+		EvoSynth::Export::HTML.new(plot_logger.data, BASEPATH + '/evosynth_export.html') do |html|
+			html.set_title('HTML example export')
 			html.export_column(:best_fitness)
 			html.export_all_columns
 		end

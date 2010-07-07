@@ -43,6 +43,12 @@ module EvoSynth
 				export
 			end
 
+			# to "feel" like gnuplot ;-)
+			
+			def set_title(title)
+				@title = title
+			end
+
 			def export_column(name)
 				raise "column '#{name}' not in dataset" if @dataset.column_names.index(name).nil?
 				@columns << name
