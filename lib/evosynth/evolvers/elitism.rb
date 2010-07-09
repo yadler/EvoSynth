@@ -56,7 +56,7 @@ module EvoSynth
 			})
 		end
 
-		# this function adds weak elistism to a evolver using instance_eval
+		# this function adds strong elistism to a evolver using instance_eval
 		#
 		# strong elitism: copy best n parents into offspring population (replace worst n childrens)
 		# 
