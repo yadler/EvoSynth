@@ -160,10 +160,10 @@ module Examples
 			ma.population		= EvoSynth::Population.new(POPULATION_SIZE) { Partitionproblem.get_new_individual_from(PROBLEM) }
 			ma.subevolver				= EvoSynth::Evolvers::LocalSearch
 			ma.subevolver_configuration = subevolver_conf
+
+			EvoSynth::Evolvers.add_weak_elistism(ma)
+			ma.add_observer(EvoSynth::Logger.create(5, true, :gen, :best_fitness, :best_to_s))
 		end
-		EvoSynth::Evolvers.add_weak_elistism(evolver)
-		logger = EvoSynth::Logger.create(5, true, :gen, :best_fitness, :best_to_s)
-		evolver.add_observer(logger)
 
 		puts "running MemeticAlgorithm with elitism..."
 		evolver.run_while { |evolver| evolver.best_solution?.fitness > GOAL && evolver.generations_computed <= GENERATIONS }

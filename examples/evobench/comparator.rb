@@ -66,6 +66,7 @@ module Examples
 		experiment = EvoSynth::EvoBench::Experiment.new(configuration) do |ex|
 			ex.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
 			ex.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
+			ex.add_observer(Examples::EvoBench::ProgressOutput.new)
 			ex.repetitions = 3
 
 			ex.try_evolver(ga)
