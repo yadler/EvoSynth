@@ -92,9 +92,11 @@ module Examples
 		end
 
 		def CCGAExample.create_configuration(evaluator)
-			populations = []
-			DIMENSIONS.times do |dim|
-				populations << EvoSynth::Population.new(POPULATION_SIZE) { CCGAIndividual.new(dim, EvoSynth::ArrayGenome.new(VALUE_BITS) { EvoSynth.rand_bool }) }
+			populations = (0 .. DIMENSIONS - 1).to_a
+			populations.map! do |dim|
+				EvoSynth::Population.new(POPULATION_SIZE) do
+					CCGAIndividual.new(dim, EvoSynth::ArrayGenome.new(VALUE_BITS) { EvoSynth.rand_bool })
+				end
 			end
 
 			EvoSynth::Configuration.new(
@@ -111,8 +113,7 @@ module Examples
 			logger = EvoSynth::Logger.create(50, true, :gen) do |log|
 				log.add_column("generations", ->{ evolver.generations_computed })
 				log.add_column("evaluations", ->(evolver) { configuration.evaluator.called })
-				log.add_column("fitness",     ->(evolver) { best_genome = [];
-															evolver.best_solution?.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) };
+				log.add_column("fitness",     ->(evolver) { best_genome = evolver.best_solution?.map { |individual| EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
 															CCGAExample.fitness_function(best_genome)
 														})
 			end
@@ -124,11 +125,8 @@ module Examples
 			puts "\n#{configuration.evaluator}"
 
 			puts "\n#{evolver_name}: best 'combined' individual:"
-			best = []
-			result.each { |pop| best << pop.best; puts "\t#{pop.best}" }
-
-			best_genome = []
-			best.each { |individual| best_genome <<  EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
+			best = result.map { |pop| puts "\t#{pop.best}"; pop.best }
+			best_genome = best.map { |individual| EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
 
 			puts "\n#{evolver_name}: best 'combined' genome:"
 			puts "\t#{best_genome.inspect}"
