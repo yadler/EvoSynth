@@ -31,6 +31,10 @@ Features:
 Features:
 
 	- Verbesserungen:
+		=> Evolver, Evaluator in ein Module transformieren:
+			-> statt Konstruktor #included verwenden!
+			-> oder würde das das yield dingens vom konstruktor verfriemeln?
+
 		=> mutationen nach dem vorbild von charlie's listen mutationen refaktorisieren?
 		=> DSL für Configuration, gnuplot, experiment und run_until sachen
 		=> ist anstatt OrderedRecombination OrderRecombination korrekt?
