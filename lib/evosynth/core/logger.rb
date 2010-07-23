@@ -49,6 +49,9 @@ module EvoSynth
 			:eval_called				=> ->(evaluator) { evaluator.called },
 			:eval_calculated			=> ->(evaluator) { evaluator.calculated },
 
+			:evolver_eval_called		=> ->(evolver) { evolver.evaluator.called },
+			:evolver_eval_calculated	=> ->(evolver) { evolver.evaluator.calculated },
+
 			:gen						=> ->(evolver) { evolver.generations_computed },
 			:best_to_s					=> ->(evolver) { evolver.best_solution?.to_s },
 			:worst_to_s					=> ->(evolver) { evolver.worst_solution?.to_s },
