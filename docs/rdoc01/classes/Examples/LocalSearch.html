@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Examples::LocalSearch [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Examples::LocalSearch</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/examples/local_search_rb.html">
+
+                examples/local_search.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000271">create_individual</a>&nbsp;&nbsp;
+
+        <a href="#M000272">print_acceptance_state</a>&nbsp;&nbsp;
+
+        <a href="#M000273">run_with</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="LocalSearch/LocalSearchEvaluator.html" class="link">Examples::LocalSearch::LocalSearchEvaluator</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALUE_BITS</td>
+          <td>=</td>
+          <td class="context-item-value">16</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DIMENSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">5</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GENERATIONS</td>
+          <td>=</td>
+          <td class="context-item-value">5000</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GENOME_SIZE</td>
+          <td>=</td>
+          <td class="context-item-value">VALUE_BITS * DIMENSIONS</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">UPPER_LIMIT</td>
+          <td>=</td>
+          <td class="context-item-value">5.12</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">LOWER_LIMIT</td>
+          <td>=</td>
+          <td class="context-item-value">-5.12</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000271" class="method-detail">
+        <a name="M000271"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000271" class="method-signature">
+
+          <span class="method-name">create_individual</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000271-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000271-source">
+<pre>
+    <span class="ruby-comment cmt"># File examples/local_search.rb, line 54</span>
+54:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">create_individual</span>
+55:                         <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">MinimizingIndividual</span>.<span class="ruby-identifier">new</span>( <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">ArrayGenome</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">GENOME_SIZE</span>) { <span class="ruby-constant">EvoSynth</span>.<span class="ruby-identifier">rand_bool</span> } )
+56:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000272" class="method-detail">
+        <a name="M000272"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000272" class="method-signature">
+
+          <span class="method-name">print_acceptance_state</span><span class="method-args">(evolver)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000272-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000272-source">
+<pre>
+    <span class="ruby-comment cmt"># File examples/local_search.rb, line 58</span>
+58:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">print_acceptance_state</span>(<span class="ruby-identifier">evolver</span>)
+59:                         <span class="ruby-identifier">puts</span> <span class="ruby-value str">&quot;\nAcceptance:&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">empty?</span>
+60:                         <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">instance_variables</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">var</span><span class="ruby-operator">|</span>
+61:                                 <span class="ruby-identifier">is_accessor</span> = (<span class="ruby-identifier">var</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">&quot;@&quot;</span>, <span class="ruby-value str">&quot;&quot;</span>) <span class="ruby-operator">+</span> <span class="ruby-value str">&quot;=&quot;</span>).<span class="ruby-identifier">to_sym</span>
+62:                                 <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\t#{var} = #{evolver.acceptance.instance_variable_get(var)}&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">is_accessor</span>)
+63:                         <span class="ruby-keyword kw">end</span>
+64:                         <span class="ruby-identifier">puts</span>
+65:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000273" class="method-detail">
+        <a name="M000273"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000273" class="method-signature">
+
+          <span class="method-name">run_with</span><span class="method-args">(profile, individual)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000273-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000273-source">
+<pre>
+    <span class="ruby-comment cmt"># File examples/local_search.rb, line 67</span>
+67:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">run_with</span>(<span class="ruby-identifier">profile</span>, <span class="ruby-identifier">individual</span>)
+68:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;--- Local Search with #{profile.acceptance.to_s} ---\n&quot;</span>
+69: 
+70:                         <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">individual</span> = <span class="ruby-identifier">individual</span>.<span class="ruby-identifier">deep_clone</span>
+71:                         <span class="ruby-identifier">evolver</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Evolvers</span><span class="ruby-operator">::</span><span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">profile</span>)
+72:                         <span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">print_acceptance_state</span>(<span class="ruby-identifier">evolver</span>)
+73: 
+74:                         <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">add_observer</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Output</span>.<span class="ruby-identifier">create_console_logger</span>(<span class="ruby-value">500</span>,
+75:                                 <span class="ruby-value str">&quot;generations&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">generations_computed</span> },
+76:                                 <span class="ruby-value str">&quot;fitness&quot;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">best_solution</span>.<span class="ruby-identifier">fitness</span> },
+77:                                 <span class="ruby-value str">&quot;temperature&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">temperature</span> },
+78:                                 <span class="ruby-value str">&quot;alpha&quot;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">alpha</span> },
+79:                                 <span class="ruby-value str">&quot;delta&quot;</span>       =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">acceptance</span>.<span class="ruby-identifier">delta</span> }
+80:                         ))
+81: 
+82:                         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">run_until_generations_reached</span>(<span class="ruby-constant">GENERATIONS</span>)
+83:                         <span class="ruby-constant">LocalSearch</span>.<span class="ruby-identifier">print_acceptance_state</span>(<span class="ruby-identifier">evolver</span>)
+84: 
+85:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n-&gt; fitness after #{GENERATIONS} generations: #{profile.evaluator.calculate_fitness(result)}\n\n&quot;</span>
+86:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

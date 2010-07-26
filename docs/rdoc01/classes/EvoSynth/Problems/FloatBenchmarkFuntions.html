@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: EvoSynth::Problems::FloatBenchmarkFuntions [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">EvoSynth::Problems::FloatBenchmarkFuntions</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/problems/float_benchmark_functions_rb.html">
+
+                lib/evosynth/problems/float_benchmark_functions.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This module contains some multi-dimensional Benchmarkfunctions. You simply
+set the number of dimensions by the length of the given (Float) array.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000010">ackley</a>&nbsp;&nbsp;
+
+        <a href="#M000006">double_sum</a>&nbsp;&nbsp;
+
+        <a href="#M000011">griewank</a>&nbsp;&nbsp;
+
+        <a href="#M000008">rastgrin</a>&nbsp;&nbsp;
+
+        <a href="#M000009">rosenbrock</a>&nbsp;&nbsp;
+
+        <a href="#M000005">sinus_sum</a>&nbsp;&nbsp;
+
+        <a href="#M000007">sphere</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000010" class="method-detail">
+        <a name="M000010"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000010" class="method-signature">
+
+          <span class="method-name">ackley</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Ackley (Ackley 1987)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000010-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000010-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 81</span>
+81:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">ackley</span>(<span class="ruby-identifier">xs</span>)
+82:                                 <span class="ruby-identifier">quad_sum</span> = <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">x</span><span class="ruby-operator">**</span><span class="ruby-value">2</span> }
+83:                                 <span class="ruby-identifier">cos_sum</span> = <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">cos</span>(<span class="ruby-value">2</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span><span class="ruby-operator">::</span><span class="ruby-constant">PI</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">x</span>) }
+84:                                 <span class="ruby-value">20</span> <span class="ruby-operator">+</span> <span class="ruby-constant">Math</span><span class="ruby-operator">::</span><span class="ruby-constant">E</span> <span class="ruby-operator">-</span> <span class="ruby-value">20</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">exp</span>(<span class="ruby-value">-0</span><span class="ruby-value">.2</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>( (<span class="ruby-value">1.0</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">quad_sum</span> )) <span class="ruby-operator">-</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">exp</span>( (<span class="ruby-value">1.0</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span>) <span class="ruby-operator">*</span> <span class="ruby-identifier">cos_sum</span> )
+85:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000006" class="method-detail">
+        <a name="M000006"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000006" class="method-signature">
+
+          <span class="method-name">double_sum</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Double Sum function (Schwefel 1977)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000006-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 45</span>
+45:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">double_sum</span>(<span class="ruby-identifier">xs</span>)
+46:                                 <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+47:                                         <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">xs</span>[<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">i</span>].<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">x</span> }
+48:                                 <span class="ruby-keyword kw">end</span>
+49:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000011" class="method-signature">
+
+          <span class="method-name">griewank</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Griewank (Törn &amp; Zilinskas 1989)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 91</span>
+91:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">griewank</span>(<span class="ruby-identifier">xs</span>)
+92:                                 <span class="ruby-identifier">product</span> = <span class="ruby-value">1.0</span>
+93:                                 <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">each_with_index</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">x</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span> <span class="ruby-identifier">product</span> <span class="ruby-operator">*=</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">cos</span> <span class="ruby-identifier">x</span> <span class="ruby-operator">/</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>) }
+94:                                 <span class="ruby-value">1</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">x</span><span class="ruby-operator">**</span><span class="ruby-value">2</span> <span class="ruby-operator">/</span> (<span class="ruby-value">400</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span>) } <span class="ruby-operator">-</span> <span class="ruby-identifier">product</span>
+95:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000008" class="method-detail">
+        <a name="M000008"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000008" class="method-signature">
+
+          <span class="method-name">rastgrin</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Rastgrin (Törn &amp; Zilinskas 1989)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000008-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000008-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 63</span>
+63:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">rastgrin</span>(<span class="ruby-identifier">xs</span>)
+64:                                 <span class="ruby-value">10</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">x</span><span class="ruby-operator">**</span><span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-value">10</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">cos</span>(<span class="ruby-value">2</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span><span class="ruby-operator">::</span><span class="ruby-constant">PI</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">x</span>) }
+65:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000009" class="method-detail">
+        <a name="M000009"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000009" class="method-signature">
+
+          <span class="method-name">rosenbrock</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Rosenbrock (De Jong 1975)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 1, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000009-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000009-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 71</span>
+71:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">rosenbrock</span>(<span class="ruby-identifier">xs</span>)
+72:                                 (<span class="ruby-value">0</span><span class="ruby-operator">..</span><span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">2</span>).<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+73:                                         <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-value">100</span> <span class="ruby-operator">*</span> (<span class="ruby-identifier">xs</span>[<span class="ruby-identifier">i</span>]<span class="ruby-operator">**</span><span class="ruby-value">2</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">xs</span>[<span class="ruby-identifier">i</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>])<span class="ruby-operator">**</span><span class="ruby-value">2</span> <span class="ruby-operator">+</span> (<span class="ruby-value">1</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">xs</span>[<span class="ruby-identifier">i</span>])<span class="ruby-operator">**</span><span class="ruby-value">2</span>
+74:                                 <span class="ruby-keyword kw">end</span>
+75:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000005" class="method-detail">
+        <a name="M000005"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000005" class="method-signature">
+
+          <span class="method-name">sinus_sum</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sinus Sum function (Schwefel 1995)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 420.9687, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000005-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 37</span>
+37:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">sinus_sum</span>(<span class="ruby-identifier">xs</span>)
+38:                                 <span class="ruby-value">418.98289</span> <span class="ruby-operator">*</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-operator">-</span><span class="ruby-identifier">x</span> <span class="ruby-operator">*</span> <span class="ruby-constant">Math</span>.<span class="ruby-identifier">sin</span>(<span class="ruby-constant">Math</span>.<span class="ruby-identifier">sqrt</span>(<span class="ruby-identifier">x</span>.<span class="ruby-identifier">abs</span>)) }
+39:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000007" class="method-detail">
+        <a name="M000007"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000007" class="method-signature">
+
+          <span class="method-name">sphere</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Sphere function (Rechenberg 1973 and De Jong 1975)
+</p>
+<p>
+global minimum: f(x) = 0 at x(i) = 0, i = 1..n
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000007-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/problems/float_benchmark_functions.rb, line 55</span>
+55:                         <span class="ruby-keyword kw">def</span> <span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">sphere</span>(<span class="ruby-identifier">xs</span>)
+56:                                 <span class="ruby-identifier">xs</span>.<span class="ruby-identifier">inject</span>(<span class="ruby-value">0</span><span class="ruby-value">.0</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">sum</span>, <span class="ruby-identifier">x</span><span class="ruby-operator">|</span> <span class="ruby-identifier">sum</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">x</span><span class="ruby-operator">**</span><span class="ruby-value">2</span> }
+57:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: README [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+  <div id="fileHeader">
+    <h1>README</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>README
+
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>2010-03-12 15:02:43 +0100</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2><a href="../classes/EvoSynth.html">EvoSynth</a> 0.1</h2>
+<table>
+<tr><td valign="top">Website:</td><td><a href="http://evosynth.rubyforge.org/">evosynth.rubyforge.org/</a>
+
+</td></tr>
+<tr><td valign="top">Project:</td><td><a
+href="http://rubyforge.org/projects/evosynth/">rubyforge.org/projects/evosynth/</a>
+
+</td></tr>
+<tr><td valign="top">Sourcecode:</td><td><a href="http://gitorious.org/evosynth">gitorious.org/evosynth</a> and <a
+href="http://github.com/yadler/EvoSynth">github.com/yadler/EvoSynth</a>
+
+</td></tr>
+<tr><td valign="top">Author:</td><td>Yves Adler (<a
+href="http://yadler.wordpress.com/">yadler.wordpress.com/</a>, <a
+href="mailto:yves.adler@googlemail.com">yves.adler@googlemail.com</a>)
+
+</td></tr>
+<tr><td valign="top">Copyright:</td><td>Copyright &#169; 2009, 2010 Yves Adler <yves.adler@googlemail.com>
+
+</td></tr>
+<tr><td valign="top">License:</td><td>MIT (see <a href="LICENSE.html">LICENSE</a>)
+
+</td></tr>
+</table>
+<h2>Description</h2>
+<p>
+<a href="../classes/EvoSynth.html">EvoSynth</a> (Evolutionary Computation
+Synthesizer) is a framework for rapid development and prototyping of
+evolutionary algorithms.
+</p>
+<h2>Features (for details see <a href="docs/FEATURES.html">docs/FEATURES</a>)</h2>
+<ul>
+<li>classes for individuals, populations, algorithm profiles, genomes
+
+</li>
+<li>support for custom randomizer
+
+</li>
+<li>meta operators: proportional, sequentional and conditional combined
+operators
+
+</li>
+<li>logging support with exporter to gnuplot, gruff and csv
+
+</li>
+<li>many predefined fitness functions
+
+</li>
+<li>most common evolutionary algorithms:
+
+<ul>
+<li>hillclimber (single individual and population based)
+
+</li>
+<li>standard genetic algorithm, steady state GA
+
+</li>
+<li>memetic algorithm
+
+</li>
+<li>evolution strategies (adaptive, selfadaptive and derandomized)
+
+</li>
+<li>local search (hillclimber, threshold acceptance, simulated annealing, great
+deluge, record-to-record travel)
+
+</li>
+<li>coevolutionary algorithms (round robin and balanced)
+
+</li>
+</ul>
+</li>
+<li>selection strategies:
+
+<ul>
+<li>identity
+
+</li>
+<li>random selection
+
+</li>
+<li>best selection
+
+</li>
+<li>n-stage tournament selection
+
+</li>
+<li>tournament selection
+
+</li>
+<li>fitness proportional selection
+
+</li>
+<li>roulette wheel selection
+
+</li>
+</ul>
+</li>
+<li>mutations:
+
+<ul>
+<li>identity
+
+</li>
+<li>one gene flipping, binary mutation, efficient binary mutation
+
+</li>
+<li>exchange mutation, inversion mutation, mixing mutation, shifting mutation
+
+</li>
+<li>uniform real mutation, gauss mutation, self-adaptive gaus mutation
+
+</li>
+</ul>
+</li>
+<li>recombinations:
+
+<ul>
+<li>identity
+
+</li>
+<li>one-point-crossover, k-point-crossover, uniform crossover
+
+</li>
+<li>arithmetic crossover
+
+</li>
+<li>ordered recombination, partially mapped crossover, edge recombination
+
+</li>
+<li>global uniform crossover, global arithmetic crossover
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Installation</h2>
+<ul>
+<li>gem install evosynth (as root)
+
+</li>
+<li>for detailed instructions (build from source, etc.) see <a
+href="INSTALL.html">INSTALL</a>
+
+</li>
+</ul>
+
+    </div>
+
+   </div>
+
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

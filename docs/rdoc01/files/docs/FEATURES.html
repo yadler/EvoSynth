@@ -1,0 +1,428 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: FEATURES [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+  <div id="fileHeader">
+    <h1>FEATURES</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>docs/FEATURES
+
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>2010-03-12 14:45:42 +0100</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Core features</h2>
+<ul>
+<li><a href="../../classes/EvoSynth/Evaluator.html">EvoSynth::Evaluator</a>
+
+</li>
+<li><a href="../../classes/EvoSynth/Profile.html">EvoSynth::Profile</a>
+
+</li>
+<li><a href="../../classes/EvoSynth/Population.html">EvoSynth::Population</a>
+
+</li>
+<li><a href="../../classes/EvoSynth/Individual.html">EvoSynth::Individual</a>
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/MaximizingIndividual.html">EvoSynth::MaximizingIndividual</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/MinimizingIndividual.html">EvoSynth::MinimizingIndividual</a>
+
+</li>
+</ul>
+</li>
+<li>EvoSynth::Randomizer
+
+<ul>
+<li><a href="../../classes/EvoSynth.html#M000001">EvoSynth.rand</a> / <a
+href="../../classes/EvoSynth.html#M000004">EvoSynth.srand</a>
+
+</li>
+<li><a href="../../classes/EvoSynth.html#M000003">EvoSynth.nrand</a>
+
+</li>
+<li><a href="../../classes/EvoSynth.html#M000002">EvoSynth.rand_bool</a>
+
+</li>
+</ul>
+</li>
+<li>Include &#8220;Genotypes&#8221;:
+
+<ul>
+<li><a href="../../classes/EvoSynth/ArrayGenome.html">EvoSynth::ArrayGenome</a>
+(can contain any datatype as items)
+
+</li>
+<li><a
+href="../../classes/EvoSynth/BinaryGenome.html">EvoSynth::BinaryGenome</a>
+(not optimized yet)
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Evolution algorithms</h2>
+<ul>
+<li>meta features:
+
+<ul>
+<li>EvoSynth::Evolvers.add_weak_elitism
+
+</li>
+<li>EvoSynth::Evolvers.add_strong_elitism
+
+</li>
+</ul>
+</li>
+<li>basic evolvers:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Evolvers/Hillclimber.html">EvoSynth::Evolvers::Hillclimber</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/PopulationHillclimber.html">EvoSynth::Evolvers::PopulationHillclimber</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/GeneticAlgorithm.html">EvoSynth::Evolvers::GeneticAlgorithm</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/SteadyStateGA.html">EvoSynth::Evolvers::SteadyStateGA</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/MemeticAlgorithm.html">EvoSynth::Evolvers::MemeticAlgorithm</a>
+
+</li>
+</ul>
+</li>
+<li>evolution strategies:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Evolvers/AdaptiveES.html">EvoSynth::Evolvers::AdaptiveES</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/SelfAdaptiveES.html">EvoSynth::Evolvers::SelfAdaptiveES</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/DerandomizedES.html">EvoSynth::Evolvers::DerandomizedES</a>
+
+</li>
+</ul>
+</li>
+<li>local search:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch.html">EvoSynth::Evolvers::LocalSearch</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch/HillclimberAcceptance.html">EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch/SimulatedAnnealingAcceptance.html">EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch/ThresholdAcceptance.html">EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch/GreatDelugeAcceptance.html">EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/LocalSearch/RecordToRecordTravelAcceptance.html">EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance</a>
+
+</li>
+</ul>
+</li>
+<li>coevolutionary algorithms:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html">EvoSynth::Evolvers::RoundRobinCoevolutionary</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Evolvers/BalancedCoevolutionary.html">EvoSynth::Evolvers::BalancedCoevolutionary</a>
+(unfinished)
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Selections</h2>
+<ul>
+<li><a
+href="../../classes/EvoSynth/Selections/Identity.html">EvoSynth::Selections::Identity</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/SelectBest.html">EvoSynth::Selections::SelectBest</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/NStageTournamentSelection.html">EvoSynth::Selections::NStageTournamentSelection</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/TournamentSelection.html">EvoSynth::Selections::TournamentSelection</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/FitnessProportionalSelection.html">EvoSynth::Selections::FitnessProportionalSelection</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/RouletteWheelSelection.html">EvoSynth::Selections::RouletteWheelSelection</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Selections/RandomSelection.html">EvoSynth::Selections::RandomSelection</a>
+
+</li>
+</ul>
+<h2>Meta operators</h2>
+<ul>
+<li><a
+href="../../classes/EvoSynth/MetaOperators/ProportionalCombinedOperator.html">EvoSynth::MetaOperators::ProportionalCombinedOperator</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/MetaOperators/SequentialCombinedOperator.html">EvoSynth::MetaOperators::SequentialCombinedOperator</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/MetaOperators/ConditionalCombinedOperator.html">EvoSynth::MetaOperators::ConditionalCombinedOperator</a>
+
+</li>
+</ul>
+<h2>Mutations</h2>
+<ul>
+<li>work on every genome:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Mutations/Identity.html">EvoSynth::Mutations::Identity</a>
+
+</li>
+</ul>
+</li>
+<li>work on arrays (need flip function):
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Mutations/BinaryMutation.html">EvoSynth::Mutations::BinaryMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/EfficientBinaryMutation.html">EvoSynth::Mutations::EfficientBinaryMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/OneGeneFlipping.html">EvoSynth::Mutations::OneGeneFlipping</a>
+
+</li>
+</ul>
+</li>
+<li>work on permutations:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Mutations/ExchangeMutation.html">EvoSynth::Mutations::ExchangeMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/InversionMutation.html">EvoSynth::Mutations::InversionMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/MixingMutation.html">EvoSynth::Mutations::MixingMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/ShiftingMutation.html">EvoSynth::Mutations::ShiftingMutation</a>
+
+</li>
+</ul>
+</li>
+<li>work on (arrays of) floats:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Mutations/GaussMutation.html">EvoSynth::Mutations::GaussMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/UniformRealMutation.html">EvoSynth::Mutations::UniformRealMutation</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Mutations/SelfAdaptiveGaussMutation.html">EvoSynth::Mutations::SelfAdaptiveGaussMutation</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Recombinations</h2>
+<ul>
+<li>work on every genome:
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Recombinations/Identity.html">EvoSynth::Recombinations::Identity</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/OnePointCrossover.html">EvoSynth::Recombinations::OnePointCrossover</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/KPointCrossover.html">EvoSynth::Recombinations::KPointCrossover</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/UniformCrossover.html">EvoSynth::Recombinations::UniformCrossover</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/ArithmeticCrossover.html">EvoSynth::Recombinations::ArithmeticCrossover</a>
+(needs interpolation functions)
+
+</li>
+</ul>
+</li>
+<li>work on permutations (no duplicates):
+
+<ul>
+<li><a
+href="../../classes/EvoSynth/Recombinations/PartiallyMappedCrossover.html">EvoSynth::Recombinations::PartiallyMappedCrossover</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/OrderedRecombination.html">EvoSynth::Recombinations::OrderedRecombination</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Recombinations/EdgeRecombination.html">EvoSynth::Recombinations::EdgeRecombination</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h2>Global recombinations</h2>
+<ul>
+<li><a
+href="../../classes/EvoSynth/GlobalRecombinations/GlobalUniformCrossover.html">EvoSynth::GlobalRecombinations::GlobalUniformCrossover</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/GlobalRecombinations/GlobalArithmeticCrossover.html">EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover</a>
+
+</li>
+</ul>
+<h2>Adjustment strategies</h2>
+<ul>
+<li><a
+href="../../classes/EvoSynth/Adjustments/PredifinedAdjustment.html">EvoSynth::Adjustments::PredifinedAdjustment</a>
+
+</li>
+<li><a
+href="../../classes/EvoSynth/Adjustments/AdaptiveAdjustment.html">EvoSynth::Adjustments::AdaptiveAdjustment</a>
+
+</li>
+</ul>
+
+    </div>
+
+   </div>
+
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

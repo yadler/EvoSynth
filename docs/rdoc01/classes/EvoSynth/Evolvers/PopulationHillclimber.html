@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Evolvers::PopulationHillclimber [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Evolvers::PopulationHillclimber</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/evolvers/basic/population_hillclimber_rb.html">
+
+                lib/evosynth/evolvers/basic/population_hillclimber.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+POPULATIONSBASIERTES-BINÄRES-HILLCLIMBING (Weicker Page 65)
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000197">best_solution</a>&nbsp;&nbsp;
+
+        <a href="#M000201">mutate</a>&nbsp;&nbsp;
+
+        <a href="#M000195">new</a>&nbsp;&nbsp;
+
+        <a href="#M000200">next_generation</a>&nbsp;&nbsp;
+
+        <a href="#M000199">return_result</a>&nbsp;&nbsp;
+
+        <a href="#M000196">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000198">worst_solution</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Evolver.html">EvoSynth::Evolvers::Evolver</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000195" class="method-detail">
+        <a name="M000195"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000195" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(profile)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000195-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000195-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 33</span>
+33:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">profile</span>)
+34:                                 <span class="ruby-identifier">init_profile</span> <span class="ruby-identifier">:mutation</span>, <span class="ruby-identifier">:population</span>, <span class="ruby-identifier">:evaluator</span>
+35:                                 <span class="ruby-identifier">use_profile</span> <span class="ruby-identifier">profile</span>
+36: 
+37:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_initial_fitness</span>(<span class="ruby-identifier">individual</span>) }
+38:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000197" class="method-detail">
+        <a name="M000197"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000197" class="method-signature">
+
+          <span class="method-name">best_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000197-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000197-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 44</span>
+44:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">best_solution</span>
+45:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">best</span>
+46:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000201" class="method-detail">
+        <a name="M000201"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000201" class="method-signature">
+
+          <span class="method-name">mutate</span><span class="method-args">(individual)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000201-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000201-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 60</span>
+60:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">individual</span>)
+61:                                 <span class="ruby-identifier">child</span> = <span class="ruby-ivar">@mutation</span>.<span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">individual</span>)
+62:                                 <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_fitness</span>(<span class="ruby-identifier">child</span>)
+63:                                 <span class="ruby-identifier">child</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">individual</span> <span class="ruby-value">? </span><span class="ruby-identifier">child</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">individual</span>
+64:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000200" class="method-detail">
+        <a name="M000200"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000200" class="method-signature">
+
+          <span class="method-name">next_generation</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000200-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000200-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 56</span>
+56:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_generation</span>
+57:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">map!</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">individual</span>) }
+58:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000199" class="method-detail">
+        <a name="M000199"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000199" class="method-signature">
+
+          <span class="method-name">return_result</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000199-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000199-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 52</span>
+52:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">return_result</span>
+53:                                 <span class="ruby-ivar">@population</span>
+54:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000196" class="method-detail">
+        <a name="M000196"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000196" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000196-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000196-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 40</span>
+40:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+41:                                 <span class="ruby-node">&quot;population based hillclimber &lt;mutation: #{@mutation}&gt;&quot;</span>
+42:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000198" class="method-detail">
+        <a name="M000198"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000198" class="method-signature">
+
+          <span class="method-name">worst_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000198-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000198-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/basic/population_hillclimber.rb, line 48</span>
+48:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">worst_solution</span>
+49:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">worst</span>
+50:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

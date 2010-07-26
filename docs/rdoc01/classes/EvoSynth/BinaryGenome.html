@@ -1,0 +1,518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::BinaryGenome [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::BinaryGenome</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/evosynth/core/binary_genome_rb.html">
+
+                lib/evosynth/core/binary_genome.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Array
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Binary genome which keeps track of changes (changed attribute) to reduce
+the need to recalculate the fitness function (see <a
+href="Evaluator.html">Evaluator</a>)
+</p>
+<p>
+This genome is a simple bitstring and each gene is a boolean.
+</p>
+<p>
+FIXME: implment in C for better performance - right now its pretty useless
+TODO: complete documentation
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000248">[]</a>&nbsp;&nbsp;
+
+        <a href="#M000249">[]=</a>&nbsp;&nbsp;
+
+        <a href="#M000245">changed=</a>&nbsp;&nbsp;
+
+        <a href="#M000246">changed?</a>&nbsp;&nbsp;
+
+        <a href="#M000247">clone</a>&nbsp;&nbsp;
+
+        <a href="#M000250">flip!</a>&nbsp;&nbsp;
+
+        <a href="#M000244">new</a>&nbsp;&nbsp;
+
+        <a href="#M000251">size</a>&nbsp;&nbsp;
+
+        <a href="#M000252">to_s</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000244" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(intial_value = 0)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Creates a <a href="BinaryGenome.html">BinaryGenome</a> with a given initial
+(Integer) value. Default constructs a new <a
+href="BinaryGenome.html">BinaryGenome</a> with the initial value of 0.
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000244-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000244-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 40</span>
+40:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">intial_value</span> = <span class="ruby-value">0</span>)
+41:                         <span class="ruby-ivar">@data</span> = <span class="ruby-identifier">intial_value</span>
+42:                         <span class="ruby-ivar">@changed</span> = <span class="ruby-keyword kw">true</span>
+43:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000248" class="method-detail">
+        <a name="M000248"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000248" class="method-signature">
+
+          <span class="method-name">[]</span><span class="method-args">(*args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Array like index accessor
+</p>
+<p>
+[index] [index, length] [range]
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000248-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000248-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 71</span>
+71:                 <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+72:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+73: 
+74:                                 <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
+75:                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+76:                                                 <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]]
+77:                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Range</span>
+78:                                                 <span class="ruby-identifier">get_sub_range</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
+79:                                         <span class="ruby-keyword kw">else</span>
+80:                                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;argument should be either index or range&quot;</span>
+81:                                         <span class="ruby-keyword kw">end</span>
+82: 
+83:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+84:                                 <span class="ruby-identifier">get_sub_range</span> <span class="ruby-constant">Range</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)
+85:                         <span class="ruby-keyword kw">else</span>
+86:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;wrong number of arguments&quot;</span>
+87:                         <span class="ruby-keyword kw">end</span>
+88:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000249" class="method-detail">
+        <a name="M000249"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000249" class="method-signature">
+
+          <span class="method-name">[]=</span><span class="method-args">(*args)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Array like index accessor
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000249-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000249-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 92</span>
+ 92:                 <span class="ruby-keyword kw">def</span> <span class="ruby-operator">[]=</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+ 93:                         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">2</span>
+ 94: 
+ 95:                                 <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>]
+ 96:                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+ 97:                                                 <span class="ruby-identifier">set_gene</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>])
+ 98:                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Range</span>
+ 99:                                                 <span class="ruby-keyword kw">case</span> <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>]
+100:                                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Numeric</span>
+101:                                                                 <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_gene</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>]) }
+102:                                                         <span class="ruby-keyword kw">when</span> <span class="ruby-constant">Array</span>
+103:                                                                 <span class="ruby-identifier">offset</span> = <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">begin</span>
+104:                                                                 <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>].<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_gene</span>(<span class="ruby-identifier">index</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>][<span class="ruby-identifier">index</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">offset</span>]) }
+105:                                                         <span class="ruby-keyword kw">else</span>
+106:                                                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;argument (1) should be either index or range&quot;</span>
+107:                                                 <span class="ruby-keyword kw">end</span>
+108: 
+109:                                         <span class="ruby-keyword kw">else</span>
+110:                                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;argument (0) should be either index or range&quot;</span>
+111:                                         <span class="ruby-keyword kw">end</span>
+112: 
+113:                         <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">==</span> <span class="ruby-value">3</span>
+114:                                 <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">times</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">offset</span><span class="ruby-operator">|</span> <span class="ruby-identifier">set_gene</span>(<span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>] <span class="ruby-operator">+</span> <span class="ruby-identifier">offset</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">2</span>]) }
+115:                         <span class="ruby-keyword kw">else</span>
+116:                                 <span class="ruby-identifier">raise</span> <span class="ruby-constant">ArgumentError</span>, <span class="ruby-value str">&quot;wrong number of arguments&quot;</span>
+117:                         <span class="ruby-keyword kw">end</span>
+118:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000245" class="method-signature">
+
+          <span class="method-name">changed=</span><span class="method-args">(value)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Set the changed flag (boolean) of the genome
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000245-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000245-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 47</span>
+47:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">changed=</span>(<span class="ruby-identifier">value</span>)
+48:                         <span class="ruby-ivar">@changed</span> = <span class="ruby-identifier">value</span>
+49:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000246" class="method-signature">
+
+          <span class="method-name">changed?</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+True if the genome has changed, false otherwise. Has to be set to false
+manually.
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000246-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000246-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 53</span>
+53:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">changed?</span>
+54:                         <span class="ruby-ivar">@changed</span>
+55:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000247" class="method-detail">
+        <a name="M000247"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000247" class="method-signature">
+
+          <span class="method-name">clone</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a clone of this genome
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000247-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000247-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 59</span>
+59:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clone</span>
+60:                         <span class="ruby-identifier">my_clone</span> = <span class="ruby-constant">BinaryGenome</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@data</span>)
+61:                         <span class="ruby-identifier">my_clone</span>.<span class="ruby-identifier">changed</span> = <span class="ruby-keyword kw">false</span>
+62:                         <span class="ruby-identifier">my_clone</span>
+63:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000250" class="method-detail">
+        <a name="M000250"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000250" class="method-signature">
+
+          <span class="method-name">flip!</span><span class="method-args">(index)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Flips (inverts) the gene at the given index
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000250-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000250-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 122</span>
+122:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flip!</span>(<span class="ruby-identifier">index</span>)
+123:                         <span class="ruby-ivar">@data</span> = <span class="ruby-ivar">@data</span> <span class="ruby-operator">^</span> (<span class="ruby-value">1</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">index</span>)
+124:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000251" class="method-detail">
+        <a name="M000251"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000251" class="method-signature">
+
+          <span class="method-name">size</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the size (in bits) of this genome.
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000251-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000251-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 128</span>
+128:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">size</span>
+129:                         <span class="ruby-ivar">@size</span> = <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">2</span>).<span class="ruby-identifier">size</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">defined?</span> <span class="ruby-ivar">@size</span>
+130:                         <span class="ruby-ivar">@size</span>
+131:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000252" class="method-detail">
+        <a name="M000252"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000252" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Return a printable version of the genome
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000252-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000252-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/core/binary_genome.rb, line 135</span>
+135:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+136:                         <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">to_s</span>(<span class="ruby-value">2</span>)
+137:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

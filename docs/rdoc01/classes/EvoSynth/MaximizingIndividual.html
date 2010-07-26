@@ -1,0 +1,266 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::MaximizingIndividual [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::MaximizingIndividual</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/lib/evosynth/core/maximizing_individual_rb.html">
+
+                lib/evosynth/core/maximizing_individual.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                <a href="Individual.html">
+
+                EvoSynth::Individual
+
+               </a>
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Basic individual for maximizing problems
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000242">compare_fitness_values</a>&nbsp;&nbsp;
+
+        <a href="#M000241">new</a>&nbsp;&nbsp;
+
+        <a href="#M000243">to_s</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000241" class="method-signature">
+
+          <span class="method-name">MaximizingIndividual.new &rarr; MaximizingIndividual<br />
+MaximizingIndividual.new(genome) &rarr; MaximizingIndividual (with given genome)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new <a href="MaximizingIndividual.html">MaximizingIndividual</a>.
+In the first form, the genome is nil. In the second it creates a <a
+href="MaximizingIndividual.html">MaximizingIndividual</a> with the given
+genome.
+</p>
+<pre>
+    EvoSynth::MaximizingIndividual.new
+    EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(10) { EvoSynth.rand_bool } )
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/maximizing_individual.rb, line 41</span>
+41:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">genome</span> = <span class="ruby-keyword kw">nil</span>)
+42:                         <span class="ruby-keyword kw">super</span>()
+43:                         <span class="ruby-ivar">@genome</span> = <span class="ruby-identifier">genome</span>
+44:                         <span class="ruby-ivar">@fitness</span> = <span class="ruby-constant">Float</span><span class="ruby-operator">::</span><span class="ruby-constant">MIN</span>
+45:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000242" class="method-signature">
+
+          <span class="method-name">compare_fitness_values(one, two) &rarr; Number<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Compares two fitness values for maximizing problems. It uses the <=> of the
+given fitness values.
+</p>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000242-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/maximizing_individual.rb, line 53</span>
+53:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">compare_fitness_values</span>(<span class="ruby-identifier">one</span>, <span class="ruby-identifier">two</span>)
+54:                         <span class="ruby-identifier">one</span> <span class="ruby-operator">&lt;=&gt;</span> <span class="ruby-identifier">two</span>
+55:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000243" class="method-signature">
+
+          <span class="method-name">to_s &rarr; string<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns description of this individual
+</p>
+<pre>
+    i = EvoSynth::MaximizingIndividual.new
+    i.to_s                                     #=&gt; &quot;maximizing individual &lt;fitness = 2.2250738585072e-308, genome = [nil]&gt;&quot;
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000243-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/core/maximizing_individual.rb, line 65</span>
+65:                 <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+66:                         <span class="ruby-node">&quot;maximizing individual &lt;fitness = #{fitness}, genome = [#{genome}]&gt;&quot;</span>
+67:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

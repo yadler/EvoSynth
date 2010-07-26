@@ -1,0 +1,422 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Evolvers::LocalSearch [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Evolvers::LocalSearch</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/local_search_rb.html">
+
+                lib/evosynth/evolvers/local_search/local_search.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/acceptance_record_to_record_rb.html">
+
+                lib/evosynth/evolvers/local_search/acceptance_record_to_record.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/acceptance_threshold_rb.html">
+
+                lib/evosynth/evolvers/local_search/acceptance_threshold.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/acceptance_hillclimber_rb.html">
+
+                lib/evosynth/evolvers/local_search/acceptance_hillclimber.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/acceptance_great_deluge_rb.html">
+
+                lib/evosynth/evolvers/local_search/acceptance_great_deluge.rb
+
+                </a>
+
+
+        <br />
+
+
+                <a href="../../../files/lib/evosynth/evolvers/local_search/acceptance_simulated_annealing_rb.html">
+
+                lib/evosynth/evolvers/local_search/acceptance_simulated_annealing.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+LOKALE-SUCHE (Weicker Page 155)
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000147">best_solution</a>&nbsp;&nbsp;
+
+        <a href="#M000145">new</a>&nbsp;&nbsp;
+
+        <a href="#M000150">next_generation</a>&nbsp;&nbsp;
+
+        <a href="#M000149">return_result</a>&nbsp;&nbsp;
+
+        <a href="#M000146">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000148">worst_solution</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Evolver.html">EvoSynth::Evolvers::Evolver</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="LocalSearch/GreatDelugeAcceptance.html" class="link">EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance</a><br />
+Class <a href="LocalSearch/HillclimberAcceptance.html" class="link">EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance</a><br />
+Class <a href="LocalSearch/RecordToRecordTravelAcceptance.html" class="link">EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance</a><br />
+Class <a href="LocalSearch/SimulatedAnnealingAcceptance.html" class="link">EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance</a><br />
+Class <a href="LocalSearch/ThresholdAcceptance.html" class="link">EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_ACCEPTANCE</td>
+          <td>=</td>
+          <td class="context-item-value">HillclimberAcceptance.new</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000145" class="method-detail">
+        <a name="M000145"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000145" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(profile)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000145-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 42</span>
+42:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">profile</span>)
+43:                                 <span class="ruby-identifier">init_profile</span> <span class="ruby-identifier">:individual</span>, <span class="ruby-identifier">:mutation</span>, <span class="ruby-identifier">:evaluator</span>, <span class="ruby-identifier">:acceptance</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_ACCEPTANCE</span>
+44: 
+45:                                 <span class="ruby-identifier">use_profile</span> <span class="ruby-identifier">profile</span>
+46: 
+47:                                 <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_initial_fitness</span>(<span class="ruby-ivar">@individual</span>)
+48:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000147" class="method-detail">
+        <a name="M000147"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000147" class="method-signature">
+
+          <span class="method-name">best_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000147-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 54</span>
+54:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">best_solution</span>
+55:                                 <span class="ruby-ivar">@individual</span>
+56:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000150" class="method-detail">
+        <a name="M000150"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000150" class="method-signature">
+
+          <span class="method-name">next_generation</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000150-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 66</span>
+66:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_generation</span>
+67:                                 <span class="ruby-identifier">child</span> = <span class="ruby-ivar">@mutation</span>.<span class="ruby-identifier">mutate</span>(<span class="ruby-ivar">@individual</span>)
+68:                                 <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">calculate_and_set_fitness</span>(<span class="ruby-identifier">child</span>)
+69:                                 <span class="ruby-ivar">@individual</span> = <span class="ruby-identifier">child</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@acceptance</span>.<span class="ruby-identifier">accepts</span>(<span class="ruby-ivar">@individual</span>, <span class="ruby-identifier">child</span>, <span class="ruby-ivar">@generations_computed</span>)
+70:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000149" class="method-detail">
+        <a name="M000149"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000149" class="method-signature">
+
+          <span class="method-name">return_result</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000149-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 62</span>
+62:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">return_result</span>
+63:                                 <span class="ruby-ivar">@individual</span>
+64:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000146" class="method-detail">
+        <a name="M000146"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000146" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000146-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 50</span>
+50:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+51:                                 <span class="ruby-node">&quot;local search &lt;mutation: #{@mutation}, individual: #{@individual}&gt;&quot;</span>
+52:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000148" class="method-detail">
+        <a name="M000148"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000148" class="method-signature">
+
+          <span class="method-name">worst_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000148-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/local_search/local_search.rb, line 58</span>
+58:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">worst_solution</span>
+59:                                 <span class="ruby-ivar">@individual</span>
+60:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

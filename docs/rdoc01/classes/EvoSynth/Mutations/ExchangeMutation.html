@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Mutations::ExchangeMutation [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Mutations::ExchangeMutation</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/operators/mutations/exchange_mutation_rb.html">
+
+                lib/evosynth/operators/mutations/exchange_mutation.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This mutations exchanges two genes in the genome of a given individual and
+returns a mutated individual. It is based on VERTAUSCHENDE-MUTATION
+(Weicker 2007, page 27) and DREIERTAUSCH-MUTATION (Weicker 2007, page 107)
+</p>
+<p>
+This mutations does not destroy permutations.
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000062">mutate</a>&nbsp;&nbsp;
+
+        <a href="#M000061">new</a>&nbsp;&nbsp;
+
+        <a href="#M000063">to_s</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_SWAP_COUNT</td>
+          <td>=</td>
+          <td class="context-item-value">2</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">swap_count</td>
+
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+
+          <td class="context-item-desc">
+The number of genes that will be swapped during this mutation (default is
+2).
+
+</td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000061" class="method-signature">
+
+          <span class="method-name">ExchangeMutation.new<br />
+ExchangeMutation(Fixnum) &rarr; ExchangeMutation (overrides default swap count)<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns a new <a href="ExchangeMutation.html">ExchangeMutation</a>. In the
+first form, the default swap count is used. In the second it creates a <a
+href="ExchangeMutation.html">ExchangeMutation</a> with the given swap
+count.
+</p>
+<pre>
+    ExchangeMutation.new
+    ExchangeMutation.new(3)
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/operators/mutations/exchange_mutation.rb, line 52</span>
+52:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">swap_count</span> = <span class="ruby-constant">DEFAULT_SWAP_COUNT</span>)
+53:                                 <span class="ruby-ivar">@swap_count</span> = <span class="ruby-identifier">swap_count</span>
+54:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000062" class="method-signature">
+
+          <span class="method-name">mutate(Individual) &rarr; Individual<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns the mutation of a given individual.
+</p>
+<pre>
+    m = ExchangeMutation.new
+    m.mutate(a_individual)   #=&gt; a_new_individual
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/operators/mutations/exchange_mutation.rb, line 64</span>
+64:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">individual</span>)
+65:                                 <span class="ruby-identifier">mutated</span> = <span class="ruby-identifier">individual</span>.<span class="ruby-identifier">deep_clone</span>
+66:                                 <span class="ruby-identifier">genome</span> = <span class="ruby-identifier">mutated</span>.<span class="ruby-identifier">genome</span>
+67: 
+68:                                 <span class="ruby-identifier">indexes</span> = <span class="ruby-identifier">rand_indexes</span>(<span class="ruby-identifier">genome</span>.<span class="ruby-identifier">size</span>)
+69: 
+70:                                 (<span class="ruby-identifier">indexes</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>).<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">index</span><span class="ruby-operator">|</span>
+71:                                         <span class="ruby-identifier">index_one</span> = <span class="ruby-identifier">indexes</span>[<span class="ruby-identifier">index</span>]
+72:                                         <span class="ruby-identifier">index_two</span> = <span class="ruby-identifier">indexes</span>[<span class="ruby-identifier">index</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>]
+73:                                         <span class="ruby-identifier">index_two</span> = <span class="ruby-identifier">indexes</span>[<span class="ruby-value">0</span>] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">index_two</span>.<span class="ruby-identifier">nil?</span>
+74: 
+75:                                         <span class="ruby-identifier">genome</span>[<span class="ruby-identifier">index_one</span>], <span class="ruby-identifier">genome</span>[<span class="ruby-identifier">index_two</span>] = <span class="ruby-identifier">genome</span>[<span class="ruby-identifier">index_two</span>], <span class="ruby-identifier">genome</span>[<span class="ruby-identifier">index_one</span>]
+76:                                 <span class="ruby-keyword kw">end</span>
+77: 
+78:                                 <span class="ruby-identifier">mutated</span>
+79:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000063" class="method-signature">
+
+          <span class="method-name">to_s &rarr; string<br />
+</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p>
+Returns description of this mutation
+</p>
+<pre>
+    m = ExchangeMutation.new
+    m.to_s                   #=&gt; &quot;exchange mutation&quot;
+</pre>
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/operators/mutations/exchange_mutation.rb, line 89</span>
+89:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+90:                                 <span class="ruby-node">&quot;exchange mutation &lt;swap count: #{@swap_count}&gt;&quot;</span>
+91:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

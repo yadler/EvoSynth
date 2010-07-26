@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Examples::CCGAExample [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Examples::CCGAExample</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/examples/ccga_example_rb.html">
+
+                examples/ccga_example.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+This example is EvoSynth&#8217;s interpretation of DeJong and
+Potter&#8217;s CCGA presented in &#8220;A Cooperative Coevolutionary
+Approach to Function Optimization&#8221; (1994)
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000264">create_profile</a>&nbsp;&nbsp;
+
+        <a href="#M000263">fitness_function</a>&nbsp;&nbsp;
+
+        <a href="#M000265">run</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="CCGAExample/CCGA2BenchmarkEvaluator.html" class="link">Examples::CCGAExample::CCGA2BenchmarkEvaluator</a><br />
+Class <a href="CCGAExample/CCGABenchmarkEvaluator.html" class="link">Examples::CCGAExample::CCGABenchmarkEvaluator</a><br />
+Class <a href="CCGAExample/CCGAIndividual.html" class="link">Examples::CCGAExample::CCGAIndividual</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">VALUE_BITS</td>
+          <td>=</td>
+          <td class="context-item-value">16</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DIMENSIONS</td>
+          <td>=</td>
+          <td class="context-item-value">5</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">MAX_EVALUATIONS</td>
+          <td>=</td>
+          <td class="context-item-value">25000</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">POPULATION_SIZE</td>
+          <td>=</td>
+          <td class="context-item-value">25</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000264" class="method-detail">
+        <a name="M000264"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000264" class="method-signature">
+
+          <span class="method-name">create_profile</span><span class="method-args">(evaluator)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000264-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000264-source">
+<pre>
+     <span class="ruby-comment cmt"># File examples/ccga_example.rb, line 94</span>
+ 94:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">CCGAExample</span>.<span class="ruby-identifier">create_profile</span>(<span class="ruby-identifier">evaluator</span>)
+ 95:                         <span class="ruby-identifier">populations</span> = []
+ 96:                         <span class="ruby-constant">DIMENSIONS</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">dim</span><span class="ruby-operator">|</span>
+ 97:                                 <span class="ruby-identifier">populations</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Population</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">POPULATION_SIZE</span>) { <span class="ruby-constant">CCGAIndividual</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">dim</span>, <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">ArrayGenome</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">VALUE_BITS</span>) { <span class="ruby-constant">EvoSynth</span>.<span class="ruby-identifier">rand_bool</span> }) }
+ 98:                         <span class="ruby-keyword kw">end</span>
+ 99: 
+100:                         <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Profile</span>.<span class="ruby-identifier">new</span>(
+101:                                 <span class="ruby-identifier">:mutation</span>                                   =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Mutations</span><span class="ruby-operator">::</span><span class="ruby-constant">BinaryMutation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Mutations</span><span class="ruby-operator">::</span><span class="ruby-constant">Functions</span><span class="ruby-operator">::</span><span class="ruby-constant">FLIP_BOOLEAN</span>),
+102:                                 <span class="ruby-identifier">:parent_selection</span>                   =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Selections</span><span class="ruby-operator">::</span><span class="ruby-constant">FitnessProportionalSelection</span>.<span class="ruby-identifier">new</span>,
+103:                                 <span class="ruby-identifier">:recombination</span>                              =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Recombinations</span><span class="ruby-operator">::</span><span class="ruby-constant">KPointCrossover</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">2</span>),
+104:                                 <span class="ruby-identifier">:recombination_probability</span>  =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span><span class="ruby-value">.6</span>,
+105:                                 <span class="ruby-identifier">:populations</span>                                =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">populations</span>,
+106:                                 <span class="ruby-identifier">:evaluator</span>                                  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">evaluator</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">populations</span>)
+107:                         )
+108:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000263" class="method-detail">
+        <a name="M000263"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000263" class="method-signature">
+
+          <span class="method-name">fitness_function</span><span class="method-args">(xs)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000263-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000263-source">
+<pre>
+    <span class="ruby-comment cmt"># File examples/ccga_example.rb, line 41</span>
+41:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">CCGAExample</span>.<span class="ruby-identifier">fitness_function</span>(<span class="ruby-identifier">xs</span>)
+42:                         <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Problems</span><span class="ruby-operator">::</span><span class="ruby-constant">FloatBenchmarkFuntions</span>.<span class="ruby-identifier">rosenbrock</span>(<span class="ruby-identifier">xs</span>)
+43:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000265" class="method-detail">
+        <a name="M000265"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000265" class="method-signature">
+
+          <span class="method-name">run</span><span class="method-args">(evolver, profile, evolver_name)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000265-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000265-source">
+<pre>
+     <span class="ruby-comment cmt"># File examples/ccga_example.rb, line 110</span>
+110:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">CCGAExample</span>.<span class="ruby-identifier">run</span>(<span class="ruby-identifier">evolver</span>, <span class="ruby-identifier">profile</span>, <span class="ruby-identifier">evolver_name</span>)
+111:                         <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">add_observer</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Output</span>.<span class="ruby-identifier">create_console_logger</span>(<span class="ruby-value">50</span>,
+112:                                 <span class="ruby-value str">&quot;generations&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">generations_computed</span> },
+113:                                 <span class="ruby-value str">&quot;evaluations&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">evaluator</span>.<span class="ruby-identifier">called</span> },
+114:                                 <span class="ruby-value str">&quot;fitness&quot;</span>     =<span class="ruby-operator">&gt;</span> <span class="ruby-operator">-</span><span class="ruby-operator">&gt;</span>{ <span class="ruby-identifier">best_genome</span> = [];
+115:                                                                          <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">best_solution</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-identifier">best_genome</span> <span class="ruby-operator">&lt;&lt;</span>  <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Decoder</span>.<span class="ruby-identifier">binary_to_real</span>(<span class="ruby-identifier">individual</span>.<span class="ruby-identifier">genome</span>, <span class="ruby-value">-5.12</span>, <span class="ruby-value">5.12</span>) };
+116:                                                                          <span class="ruby-constant">CCGAExample</span>.<span class="ruby-identifier">fitness_function</span>(<span class="ruby-identifier">best_genome</span>)
+117:                                                                         }
+118:                         ))
+119: 
+120:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\nRunning #{evolver}...&quot;</span>
+121:                         <span class="ruby-identifier">puts</span>
+122:                         <span class="ruby-identifier">result</span> = <span class="ruby-identifier">evolver</span>.<span class="ruby-identifier">run_until</span> { <span class="ruby-identifier">profile</span>.<span class="ruby-identifier">evaluator</span>.<span class="ruby-identifier">called</span> <span class="ruby-operator">&lt;</span> <span class="ruby-constant">MAX_EVALUATIONS</span> }
+123:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n#{profile.evaluator}&quot;</span>
+124: 
+125:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n#{evolver_name}: best 'combined' individual:&quot;</span>
+126:                         <span class="ruby-identifier">best</span> = []
+127:                         <span class="ruby-identifier">result</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">pop</span><span class="ruby-operator">|</span> <span class="ruby-identifier">best</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">pop</span>.<span class="ruby-identifier">best</span>; <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\t#{pop.best}&quot;</span> }
+128: 
+129:                         <span class="ruby-identifier">best_genome</span> = []
+130:                         <span class="ruby-identifier">best</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">individual</span><span class="ruby-operator">|</span> <span class="ruby-identifier">best_genome</span> <span class="ruby-operator">&lt;&lt;</span>  <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Decoder</span>.<span class="ruby-identifier">binary_to_real</span>(<span class="ruby-identifier">individual</span>.<span class="ruby-identifier">genome</span>, <span class="ruby-value">-5.12</span>, <span class="ruby-value">5.12</span>) }
+131: 
+132:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n#{evolver_name}: best 'combined' genome:&quot;</span>
+133:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\t#{best_genome.inspect}&quot;</span>
+134:                         <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;\n\tfitness = #{CCGAExample.fitness_function(best_genome)}&quot;</span>
+135:                         <span class="ruby-identifier">puts</span>
+136:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

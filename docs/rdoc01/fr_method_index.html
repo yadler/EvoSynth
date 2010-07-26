@@ -1,0 +1,661 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!--
+
+    Methods [EvoSynth Documentation]
+
+  -->
+<head>
+  <title>Methods [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div class="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+
+    <a href="classes/EvoSynth/Individual.html#M000256"><=> (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000248">[] (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000249">[]= (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/HillclimberAcceptance.html#M000157">accepts (EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/ThresholdAcceptance.html#M000155">accepts (EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/SimulatedAnnealingAcceptance.html#M000163">accepts (EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/GreatDelugeAcceptance.html#M000160">accepts (EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/RecordToRecordTravelAcceptance.html#M000152">accepts (EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000010">ackley (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/SequentialCombinedOperator.html#M000036">add (EvoSynth::MetaOperators::SequentialCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ProportionalCombinedOperator.html#M000032">add (EvoSynth::MetaOperators::ProportionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000236">add (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ConditionalCombinedOperator.html#M000028">add (EvoSynth::MetaOperators::ConditionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/SelfAdaptiveGaussMutation.html#M000075">add_sigma (EvoSynth::Mutations::SelfAdaptiveGaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers.html#M000125">add_strong_elistism (EvoSynth::Evolvers)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers.html#M000124">add_weak_elistism (EvoSynth::Evolvers)</a><br />
+
+    <a href="classes/EvoSynth/Adjustments/AdaptiveAdjustment.html#M000026">adjust (EvoSynth::Adjustments::AdaptiveAdjustment)</a><br />
+
+    <a href="classes/EvoSynth/Adjustments/PredifinedAdjustment.html#M000024">adjust (EvoSynth::Adjustments::PredifinedAdjustment)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000208">ant_next_generation (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000238">best (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000197">best_solution (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000141">best_solution (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000147">best_solution (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000212">best_solution (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000167">best_solution (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000173">best_solution (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000179">best_solution (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000204">best_solution (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000185">best_solution (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000135">best_solution (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000191">best_solution (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Decoder.html#M000123">binary_to_gray (EvoSynth::Decoder)</a><br />
+
+    <a href="classes/EvoSynth/Decoder.html#M000121">binary_to_real (EvoSynth::Decoder)</a><br />
+
+    <a href="classes/Examples/SPk/SPkFitnessEvaluator.html#M000284">calc_length_of_ones (Examples::SPk::SPkFitnessEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000224">calculate_and_set_fitness (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000225">calculate_and_set_initial_fitness (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/Examples/CCGAExample/CCGABenchmarkEvaluator.html#M000268">calculate_fitness (Examples::CCGAExample::CCGABenchmarkEvaluator)</a><br />
+
+    <a href="classes/Examples/Exporter/ExporterEvaluator.html#M000305">calculate_fitness (Examples::Exporter::ExporterEvaluator)</a><br />
+
+    <a href="classes/Examples/SPk/SPkFitnessEvaluator.html#M000282">calculate_fitness (Examples::SPk::SPkFitnessEvaluator)</a><br />
+
+    <a href="classes/Examples/CCGAExample/CCGA2BenchmarkEvaluator.html#M000269">calculate_fitness (Examples::CCGAExample::CCGA2BenchmarkEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000226">calculate_fitness (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/Problems/GraphColouring.html#M000017">calculate_fitness (EvoSynth::Problems::GraphColouring)</a><br />
+
+    <a href="classes/Examples/Hacking/HackingEvaluator.html#M000280">calculate_fitness (Examples::Hacking::HackingEvaluator)</a><br />
+
+    <a href="classes/Examples/EsExample/BenchmarkEvaluator.html#M000292">calculate_fitness (Examples::EsExample::BenchmarkEvaluator)</a><br />
+
+    <a href="classes/Examples/MaxOnes/MaxOnesEvaluator.html#M000286">calculate_fitness (Examples::MaxOnes::MaxOnesEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Problems/TSP.html#M000019">calculate_fitness (EvoSynth::Problems::TSP)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionEvaluator.html#M000312">calculate_fitness (Examples::Partitionproblem::PartitionEvaluator)</a><br />
+
+    <a href="classes/Examples/LocalSearch/LocalSearchEvaluator.html#M000275">calculate_fitness (Examples::LocalSearch::LocalSearchEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000227">calculate_initial_fitness (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000245">changed= (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/ArrayGenome.html#M000230">changed= (EvoSynth::ArrayGenome)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionIndividual.html#M000316">changed? (Examples::Partitionproblem::PartitionIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000254">changed? (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/ArrayGenome.html#M000231">changed? (EvoSynth::ArrayGenome)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000246">changed? (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/Output/Logger.html#M000110">clear_data (EvoSynth::Output::Logger)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000247">clone (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/ArrayGenome.html#M000233">clone (EvoSynth::ArrayGenome)</a><br />
+
+    <a href="classes/EvoSynth/Output/Logger.html#M000111">column_names (EvoSynth::Output::Logger)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000257">compare_fitness_values (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/MinimizingIndividual.html#M000217">compare_fitness_values (EvoSynth::MinimizingIndividual)</a><br />
+
+    <a href="classes/EvoSynth/MaximizingIndividual.html#M000242">compare_fitness_values (EvoSynth::MaximizingIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Problems/BinaryBenchmarkFuntions.html#M000012">count_ones (EvoSynth::Problems::BinaryBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/Output.html#M000108">create_console_logger (EvoSynth::Output)</a><br />
+
+    <a href="classes/Examples/LocalSearch.html#M000271">create_individual (Examples::LocalSearch)</a><br />
+
+    <a href="classes/Examples/EsExample.html#M000290">create_individual (Examples::EsExample)</a><br />
+
+    <a href="classes/Examples/MaxOnes.html#M000285">create_individual (Examples::MaxOnes)</a><br />
+
+    <a href="classes/Examples/Exporter.html#M000303">create_individual (Examples::Exporter)</a><br />
+
+    <a href="classes/Examples/TSP.html#M000287">create_individual (Examples::TSP)</a><br />
+
+    <a href="classes/Examples/CCGAExample.html#M000264">create_profile (Examples::CCGAExample)</a><br />
+
+    <a href="classes/Examples/GraphColouring.html#M000276">create_random_individual (Examples::GraphColouring)</a><br />
+
+    <a href="classes/Examples/Exporter/ExporterEvaluator.html#M000304">decode (Examples::Exporter::ExporterEvaluator)</a><br />
+
+    <a href="classes/Examples/LocalSearch/LocalSearchEvaluator.html#M000274">decode (Examples::LocalSearch::LocalSearchEvaluator)</a><br />
+
+    <a href="classes/Examples/CCGAExample/CCGABenchmarkEvaluator.html#M000267">decode (Examples::CCGAExample::CCGABenchmarkEvaluator)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionIndividual.html#M000315">deep_clone (Examples::Partitionproblem::PartitionIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000255">deep_clone (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000235">deep_clone (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Profile.html#M000221">delete (EvoSynth::Profile)</a><br />
+
+    <a href="classes/EvoSynth/Problems/TSP.html#M000020">distance (EvoSynth::Problems::TSP)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000006">double_sum (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/Examples/CMBExample/CMBEvaluator.html#M000279">encounter (Examples::CMBExample::CMBEvaluator)</a><br />
+
+    <a href="classes/Examples/Ants.html#M000293">evolver_profile (Examples::Ants)</a><br />
+
+    <a href="classes/EvoSynth/Output/CSVExporter.html#M000120">export (EvoSynth::Output::CSVExporter)</a><br />
+
+    <a href="classes/EvoSynth/Output/GnuPlotExporter.html#M000116">export (EvoSynth::Output::GnuPlotExporter)</a><br />
+
+    <a href="classes/EvoSynth/Output/GruffExporter.html#M000118">export (EvoSynth::Output::GruffExporter)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RunnableEvolver/Goal.html#M000130">fitness (EvoSynth::Evolvers::RunnableEvolver::Goal)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000262">fitness (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000253">fitness= (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000261">fitness= (EvoSynth::Individual)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionIndividual.html#M000314">fitness= (Examples::Partitionproblem::PartitionIndividual)</a><br />
+
+    <a href="classes/Examples/EsExample.html#M000289">fitness_function (Examples::EsExample)</a><br />
+
+    <a href="classes/Examples/CCGAExample.html#M000263">fitness_function (Examples::CCGAExample)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000250">flip! (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/Testdata.html#M000311">gen_big_set (Examples::Partitionproblem::Testdata)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/Testdata.html#M000308">gen_layer_set (Examples::Partitionproblem::Testdata)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/Testdata.html#M000310">gen_random_set (Examples::Partitionproblem::Testdata)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/Testdata.html#M000309">gen_standard_set (Examples::Partitionproblem::Testdata)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/Testdata.html#M000307">gen_tiny_set (Examples::Partitionproblem::Testdata)</a><br />
+
+    <a href="classes/Examples/CMBExample.html#M000277">generate_problem (Examples::CMBExample)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000302">get_nearest_node (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/Examples/Partitionproblem.html#M000306">get_new_individual_from (Examples::Partitionproblem)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000300">get_next_node (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000301">get_sum (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/EvoSynth/Decoder.html#M000122">gray_to_binary (EvoSynth::Decoder)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000011">griewank (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations.html#M000089">individual_with_shorter_genome (EvoSynth::Recombinations)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/ProfileUsingEvolver.html#M000131">init_profile (EvoSynth::Evolvers::ProfileUsingEvolver)</a><br />
+
+    <a href="classes/Examples/SPk/SPkFitnessEvaluator.html#M000283">is_valid (Examples::SPk::SPkFitnessEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000259">maximizes? (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ProportionalCombinedOperator.html#M000033">method_missing (EvoSynth::MetaOperators::ProportionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ConditionalCombinedOperator.html#M000029">method_missing (EvoSynth::MetaOperators::ConditionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Profile.html#M000220">method_missing (EvoSynth::Profile)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/SequentialCombinedOperator.html#M000037">method_missing (EvoSynth::MetaOperators::SequentialCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000258">minimizes? (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/ShiftingMutation.html#M000070">mutate (EvoSynth::Mutations::ShiftingMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/OneGeneFlipping.html#M000079">mutate (EvoSynth::Mutations::OneGeneFlipping)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000201">mutate (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionMutation.html#M000318">mutate (Examples::Partitionproblem::PartitionMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/ExchangeMutation.html#M000062">mutate (EvoSynth::Mutations::ExchangeMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/MixingMutation.html#M000076">mutate (EvoSynth::Mutations::MixingMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/SelfAdaptiveGaussMutation.html#M000073">mutate (EvoSynth::Mutations::SelfAdaptiveGaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/InversionMutation.html#M000059">mutate (EvoSynth::Mutations::InversionMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/Identity.html#M000084">mutate (EvoSynth::Mutations::Identity)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000298">mutate (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/UniformRealMutation.html#M000068">mutate (EvoSynth::Mutations::UniformRealMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/GaussMutation.html#M000082">mutate (EvoSynth::Mutations::GaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/BinaryMutation.html#M000065">mutate (EvoSynth::Mutations::BinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/EfficientBinaryMutation.html#M000087">mutate (EvoSynth::Mutations::EfficientBinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/Problems/BinaryBenchmarkFuntions.html#M000014">n_peaks (EvoSynth::Problems::BinaryBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/ExchangeMutation.html#M000061">new (EvoSynth::Mutations::ExchangeMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/GaussMutation.html#M000081">new (EvoSynth::Mutations::GaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000244">new (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000133">new (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RunnableEvolver/Goal.html#M000129">new (EvoSynth::Evolvers::RunnableEvolver::Goal)</a><br />
+
+    <a href="classes/Examples/SPk/SPkFitnessEvaluator.html#M000281">new (Examples::SPk::SPkFitnessEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/MaximizingIndividual.html#M000241">new (EvoSynth::MaximizingIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/BinaryMutation.html#M000064">new (EvoSynth::Mutations::BinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/Output/GnuPlotExporter.html#M000115">new (EvoSynth::Output::GnuPlotExporter)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000139">new (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/UniformRealMutation.html#M000067">new (EvoSynth::Mutations::UniformRealMutation)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000195">new (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Selections/NStageTournamentSelection.html#M000050">new (EvoSynth::Selections::NStageTournamentSelection)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000234">new (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Output/GruffExporter.html#M000117">new (EvoSynth::Output::GruffExporter)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000145">new (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/Examples/Ants/Pheromon.html#M000294">new (Examples::Ants::Pheromon)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000297">new (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/EvoSynth/Output/ConsoleWriter.html#M000113">new (EvoSynth::Output::ConsoleWriter)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/SelfAdaptiveGaussMutation.html#M000072">new (EvoSynth::Mutations::SelfAdaptiveGaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/OneGeneFlipping.html#M000078">new (EvoSynth::Mutations::OneGeneFlipping)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/RecordToRecordTravelAcceptance.html#M000151">new (EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Selections/TournamentSelection.html#M000043">new (EvoSynth::Selections::TournamentSelection)</a><br />
+
+    <a href="classes/EvoSynth/Output/Logger.html#M000109">new (EvoSynth::Output::Logger)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/ThresholdAcceptance.html#M000154">new (EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance)</a><br />
+
+    <a href="classes/Examples/CCGAExample/CCGAIndividual.html#M000270">new (Examples::CCGAExample::CCGAIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/EfficientBinaryMutation.html#M000086">new (EvoSynth::Mutations::EfficientBinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/SequentialCombinedOperator.html#M000035">new (EvoSynth::MetaOperators::SequentialCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000202">new (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/GreatDelugeAcceptance.html#M000159">new (EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/KPointCrossover.html#M000105">new (EvoSynth::Recombinations::KPointCrossover)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ProportionalCombinedOperator.html#M000031">new (EvoSynth::MetaOperators::ProportionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/SimulatedAnnealingAcceptance.html#M000162">new (EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance)</a><br />
+
+    <a href="classes/Examples/CCGAExample/CCGABenchmarkEvaluator.html#M000266">new (Examples::CCGAExample::CCGABenchmarkEvaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000223">new (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000165">new (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ConditionalCombinedOperator.html#M000027">new (EvoSynth::MetaOperators::ConditionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Adjustments/AdaptiveAdjustment.html#M000025">new (EvoSynth::Adjustments::AdaptiveAdjustment)</a><br />
+
+    <a href="classes/EvoSynth/Individual.html#M000260">new (EvoSynth::Individual)</a><br />
+
+    <a href="classes/EvoSynth/Profile.html#M000219">new (EvoSynth::Profile)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000189">new (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000171">new (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Adjustments/PredifinedAdjustment.html#M000023">new (EvoSynth::Adjustments::PredifinedAdjustment)</a><br />
+
+    <a href="classes/EvoSynth/Problems/TSP.html#M000018">new (EvoSynth::Problems::TSP)</a><br />
+
+    <a href="classes/EvoSynth/MinimizingIndividual.html#M000216">new (EvoSynth::MinimizingIndividual)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionIndividual.html#M000313">new (Examples::Partitionproblem::PartitionIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/ArithmeticCrossover.html#M000098">new (EvoSynth::Recombinations::ArithmeticCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000177">new (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Problems/GraphColouring.html#M000015">new (EvoSynth::Problems::GraphColouring)</a><br />
+
+    <a href="classes/EvoSynth/Output/CSVExporter.html#M000119">new (EvoSynth::Output::CSVExporter)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000183">new (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000210">new (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000182">next_generation (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000209">next_generation (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000176">next_generation (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000215">next_generation (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000207">next_generation (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000138">next_generation (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000188">next_generation (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000200">next_generation (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000194">next_generation (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000150">next_generation (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000144">next_generation (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000170">next_generation (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth.html#M000003">nrand (EvoSynth)</a><br />
+
+    <a href="classes/Examples/TSP.html#M000288">optimal_tour (Examples::TSP)</a><br />
+
+    <a href="classes/Examples/LocalSearch.html#M000272">print_acceptance_state (Examples::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth.html#M000001">rand (EvoSynth)</a><br />
+
+    <a href="classes/EvoSynth.html#M000002">rand_bool (EvoSynth)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000008">rastgrin (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/GlobalRecombinations/GlobalUniformCrossover.html#M000041">recombine (EvoSynth::GlobalRecombinations::GlobalUniformCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/OnePointCrossover.html#M000092">recombine (EvoSynth::Recombinations::OnePointCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/EdgeRecombination.html#M000094">recombine (EvoSynth::Recombinations::EdgeRecombination)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/PartiallyMappedCrossover.html#M000090">recombine (EvoSynth::Recombinations::PartiallyMappedCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/OrderedRecombination.html#M000096">recombine (EvoSynth::Recombinations::OrderedRecombination)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/ArithmeticCrossover.html#M000099">recombine (EvoSynth::Recombinations::ArithmeticCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/UniformCrossover.html#M000101">recombine (EvoSynth::Recombinations::UniformCrossover)</a><br />
+
+    <a href="classes/EvoSynth/GlobalRecombinations/GlobalArithmeticCrossover.html#M000039">recombine (EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/KPointCrossover.html#M000106">recombine (EvoSynth::Recombinations::KPointCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/Identity.html#M000103">recombine (EvoSynth::Recombinations::Identity)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000237">remove (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000228">reset_counters (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000187">return_result (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000206">return_result (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000214">return_result (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000175">return_result (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000149">return_result (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000143">return_result (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000193">return_result (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000169">return_result (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000199">return_result (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000181">return_result (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000137">return_result (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000009">rosenbrock (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/Problems/BinaryBenchmarkFuntions.html#M000013">royal_road (EvoSynth::Problems::BinaryBenchmarkFuntions)</a><br />
+
+    <a href="classes/Examples/CCGAExample.html#M000265">run (Examples::CCGAExample)</a><br />
+
+    <a href="classes/Examples/EsExample.html#M000291">run (Examples::EsExample)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RunnableEvolver.html#M000126">run_until (EvoSynth::Evolvers::RunnableEvolver)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RunnableEvolver.html#M000128">run_until_fitness_reached (EvoSynth::Evolvers::RunnableEvolver)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RunnableEvolver.html#M000127">run_until_generations_reached (EvoSynth::Evolvers::RunnableEvolver)</a><br />
+
+    <a href="classes/Examples/LocalSearch.html#M000273">run_with (Examples::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/Selections/NStageTournamentSelection.html#M000051">select (EvoSynth::Selections::NStageTournamentSelection)</a><br />
+
+    <a href="classes/EvoSynth/Selections/Identity.html#M000053">select (EvoSynth::Selections::Identity)</a><br />
+
+    <a href="classes/EvoSynth/Selections/FitnessProportionalSelection.html#M000055">select (EvoSynth::Selections::FitnessProportionalSelection)</a><br />
+
+    <a href="classes/EvoSynth/Selections/SelectBest.html#M000046">select (EvoSynth::Selections::SelectBest)</a><br />
+
+    <a href="classes/EvoSynth/Selections/RandomSelection.html#M000057">select (EvoSynth::Selections::RandomSelection)</a><br />
+
+    <a href="classes/EvoSynth/Selections/RouletteWheelSelection.html#M000048">select (EvoSynth::Selections::RouletteWheelSelection)</a><br />
+
+    <a href="classes/EvoSynth/Selections/TournamentSelection.html#M000044">select (EvoSynth::Selections::TournamentSelection)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000005">sinus_sum (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth/Problems/TSP.html#M000021">size (EvoSynth::Problems::TSP)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000251">size (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/Problems/FloatBenchmarkFuntions.html#M000007">sphere (EvoSynth::Problems::FloatBenchmarkFuntions)</a><br />
+
+    <a href="classes/EvoSynth.html#M000004">srand (EvoSynth)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000178">to_s (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ProportionalCombinedOperator.html#M000034">to_s (EvoSynth::MetaOperators::ProportionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000140">to_s (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000146">to_s (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/ArrayGenome.html#M000232">to_s (EvoSynth::ArrayGenome)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/SequentialCombinedOperator.html#M000038">to_s (EvoSynth::MetaOperators::SequentialCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Evaluator.html#M000229">to_s (EvoSynth::Evaluator)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/KPointCrossover.html#M000107">to_s (EvoSynth::Recombinations::KPointCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000134">to_s (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/BinaryGenome.html#M000252">to_s (EvoSynth::BinaryGenome)</a><br />
+
+    <a href="classes/EvoSynth/GlobalRecombinations/GlobalUniformCrossover.html#M000042">to_s (EvoSynth::GlobalRecombinations::GlobalUniformCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/Identity.html#M000104">to_s (EvoSynth::Recombinations::Identity)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/RecordToRecordTravelAcceptance.html#M000153">to_s (EvoSynth::Evolvers::LocalSearch::RecordToRecordTravelAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/UniformCrossover.html#M000102">to_s (EvoSynth::Recombinations::UniformCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/ThresholdAcceptance.html#M000156">to_s (EvoSynth::Evolvers::LocalSearch::ThresholdAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/ArithmeticCrossover.html#M000100">to_s (EvoSynth::Recombinations::ArithmeticCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/HillclimberAcceptance.html#M000158">to_s (EvoSynth::Evolvers::LocalSearch::HillclimberAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/OrderedRecombination.html#M000097">to_s (EvoSynth::Recombinations::OrderedRecombination)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/GreatDelugeAcceptance.html#M000161">to_s (EvoSynth::Evolvers::LocalSearch::GreatDelugeAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/EdgeRecombination.html#M000095">to_s (EvoSynth::Recombinations::EdgeRecombination)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch/SimulatedAnnealingAcceptance.html#M000164">to_s (EvoSynth::Evolvers::LocalSearch::SimulatedAnnealingAcceptance)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/OnePointCrossover.html#M000093">to_s (EvoSynth::Recombinations::OnePointCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Profile.html#M000222">to_s (EvoSynth::Profile)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000166">to_s (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth/Recombinations/PartiallyMappedCrossover.html#M000091">to_s (EvoSynth::Recombinations::PartiallyMappedCrossover)</a><br />
+
+    <a href="classes/EvoSynth/MinimizingIndividual.html#M000218">to_s (EvoSynth::MinimizingIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/EfficientBinaryMutation.html#M000088">to_s (EvoSynth::Mutations::EfficientBinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/Identity.html#M000085">to_s (EvoSynth::Mutations::Identity)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/GaussMutation.html#M000083">to_s (EvoSynth::Mutations::GaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/OneGeneFlipping.html#M000080">to_s (EvoSynth::Mutations::OneGeneFlipping)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000172">to_s (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/MetaOperators/ConditionalCombinedOperator.html#M000030">to_s (EvoSynth::MetaOperators::ConditionalCombinedOperator)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/SelfAdaptiveGaussMutation.html#M000074">to_s (EvoSynth::Mutations::SelfAdaptiveGaussMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/ShiftingMutation.html#M000071">to_s (EvoSynth::Mutations::ShiftingMutation)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000196">to_s (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+    <a href="classes/EvoSynth/GlobalRecombinations/GlobalArithmeticCrossover.html#M000040">to_s (EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/UniformRealMutation.html#M000069">to_s (EvoSynth::Mutations::UniformRealMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/BinaryMutation.html#M000066">to_s (EvoSynth::Mutations::BinaryMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/ExchangeMutation.html#M000063">to_s (EvoSynth::Mutations::ExchangeMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/InversionMutation.html#M000060">to_s (EvoSynth::Mutations::InversionMutation)</a><br />
+
+    <a href="classes/EvoSynth/Selections/RandomSelection.html#M000058">to_s (EvoSynth::Selections::RandomSelection)</a><br />
+
+    <a href="classes/EvoSynth/MaximizingIndividual.html#M000243">to_s (EvoSynth::MaximizingIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Selections/FitnessProportionalSelection.html#M000056">to_s (EvoSynth::Selections::FitnessProportionalSelection)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000211">to_s (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Selections/Identity.html#M000054">to_s (EvoSynth::Selections::Identity)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000240">to_s (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Selections/NStageTournamentSelection.html#M000052">to_s (EvoSynth::Selections::NStageTournamentSelection)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000184">to_s (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Problems/TSP.html#M000022">to_s (EvoSynth::Problems::TSP)</a><br />
+
+    <a href="classes/EvoSynth/Selections/RouletteWheelSelection.html#M000049">to_s (EvoSynth::Selections::RouletteWheelSelection)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionIndividual.html#M000317">to_s (Examples::Partitionproblem::PartitionIndividual)</a><br />
+
+    <a href="classes/EvoSynth/Selections/SelectBest.html#M000047">to_s (EvoSynth::Selections::SelectBest)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000203">to_s (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/Examples/Ants/Pheromon.html#M000296">to_s (Examples::Ants::Pheromon)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000190">to_s (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Selections/TournamentSelection.html#M000045">to_s (EvoSynth::Selections::TournamentSelection)</a><br />
+
+    <a href="classes/Examples/Ants/AntMutation.html#M000299">to_s (Examples::Ants::AntMutation)</a><br />
+
+    <a href="classes/EvoSynth/Mutations/MixingMutation.html#M000077">to_s (EvoSynth::Mutations::MixingMutation)</a><br />
+
+    <a href="classes/Examples/Partitionproblem/PartitionMutation.html#M000319">to_s (Examples::Partitionproblem::PartitionMutation)</a><br />
+
+    <a href="classes/Examples/CMBExample/CMBEvaluator.html#M000278">toggle (Examples::CMBExample::CMBEvaluator)</a><br />
+
+    <a href="classes/Examples/Ants/Pheromon.html#M000295">update (Examples::Ants::Pheromon)</a><br />
+
+    <a href="classes/EvoSynth/Output/Logger.html#M000112">update (EvoSynth::Output::Logger)</a><br />
+
+    <a href="classes/EvoSynth/Output/ConsoleWriter.html#M000114">update (EvoSynth::Output::ConsoleWriter)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/ProfileUsingEvolver.html#M000132">use_profile (EvoSynth::Evolvers::ProfileUsingEvolver)</a><br />
+
+    <a href="classes/EvoSynth/Problems/GraphColouring.html#M000016">verletzungen (EvoSynth::Problems::GraphColouring)</a><br />
+
+    <a href="classes/EvoSynth/Population.html#M000239">worst (EvoSynth::Population)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/LocalSearch.html#M000148">worst_solution (EvoSynth::Evolvers::LocalSearch)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/RoundRobinCoevolutionary.html#M000136">worst_solution (EvoSynth::Evolvers::RoundRobinCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/BalancedCoevolutionary.html#M000142">worst_solution (EvoSynth::Evolvers::BalancedCoevolutionary)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/DerandomizedES.html#M000168">worst_solution (EvoSynth::Evolvers::DerandomizedES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/AdaptiveES.html#M000174">worst_solution (EvoSynth::Evolvers::AdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/Hillclimber.html#M000213">worst_solution (EvoSynth::Evolvers::Hillclimber)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SelfAdaptiveES.html#M000180">worst_solution (EvoSynth::Evolvers::SelfAdaptiveES)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/SteadyStateGA.html#M000186">worst_solution (EvoSynth::Evolvers::SteadyStateGA)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/GeneticAlgorithm.html#M000205">worst_solution (EvoSynth::Evolvers::GeneticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/MemeticAlgorithm.html#M000192">worst_solution (EvoSynth::Evolvers::MemeticAlgorithm)</a><br />
+
+    <a href="classes/EvoSynth/Evolvers/PopulationHillclimber.html#M000198">worst_solution (EvoSynth::Evolvers::PopulationHillclimber)</a><br />
+
+  </div>
+</div>
+</body>
+</html>

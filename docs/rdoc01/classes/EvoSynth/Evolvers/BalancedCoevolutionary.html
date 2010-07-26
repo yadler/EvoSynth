@@ -1,0 +1,439 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Class: EvoSynth::Evolvers::BalancedCoevolutionary [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Class</strong></td>
+          <td class="class-name-in-header">EvoSynth::Evolvers::BalancedCoevolutionary</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../../files/lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary_rb.html">
+
+                lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        <tr class="top-aligned-row">
+            <td><strong>Parent:</strong></td>
+            <td>
+
+                Object
+
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+based on &#8220;Coevolution, Memory and Balance&#8221; from Paredis, 1999
+</p>
+<p>
+evolves two populations (problems, solutions / predator, prey) in a
+balanced manner
+</p>
+
+    </div>
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000141">best_solution</a>&nbsp;&nbsp;
+
+        <a href="#M000139">new</a>&nbsp;&nbsp;
+
+        <a href="#M000144">next_generation</a>&nbsp;&nbsp;
+
+        <a href="#M000143">return_result</a>&nbsp;&nbsp;
+
+        <a href="#M000140">to_s</a>&nbsp;&nbsp;
+
+        <a href="#M000142">worst_solution</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+
+        <span class="include-name"><a href="Evolver.html">EvoSynth::Evolvers::Evolver</a></span>
+
+      </div>
+    </div>
+
+    <div id="section">
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_PAIRING_RUNS</td>
+          <td>=</td>
+          <td class="context-item-value">20</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_SELECTION</td>
+          <td>=</td>
+          <td class="context-item-value">EvoSynth::Selections::FitnessProportionalSelection.new</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_RECOMBINATION</td>
+          <td>=</td>
+          <td class="context-item-value">EvoSynth::Recombinations::KPointCrossover.new(2)</td>
+
+        </tr>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">DEFAULT_RECOMBINATION_PROBABILITY</td>
+          <td>=</td>
+          <td class="context-item-value">0.75</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">solution_success</td>
+
+          <td class="context-item-value">&nbsp;[R]&nbsp;</td>
+
+          <td class="context-item-desc"></td>
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000139" class="method-detail">
+        <a name="M000139"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000139" class="method-signature">
+
+          <span class="method-name">new</span><span class="method-args">(profile)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000139-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 42</span>
+42:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">profile</span>)
+43:                                 <span class="ruby-identifier">init_profile</span> <span class="ruby-identifier">:population</span>,
+44:                                         <span class="ruby-identifier">:problems</span>,
+45:                                     <span class="ruby-identifier">:evaluator</span>,
+46:                                         <span class="ruby-identifier">:mutation</span>,
+47:                                     <span class="ruby-identifier">:problem_mutation</span>,
+48:                                         <span class="ruby-identifier">:recombination</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_RECOMBINATION</span>,
+49:                                     <span class="ruby-identifier">:problem_recombination</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_RECOMBINATION</span>,
+50:                                         <span class="ruby-identifier">:parent_selection</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_SELECTION</span>,
+51:                                         <span class="ruby-identifier">:enviromental_selection</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_SELECTION</span>,
+52:                                         <span class="ruby-identifier">:pairing_runs</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">DEFAULT_PAIRING_RUNS</span>
+53: 
+54:                                 <span class="ruby-identifier">use_profile</span> <span class="ruby-identifier">profile</span>
+55: 
+56:                                 <span class="ruby-comment cmt"># intialize fitnesses?! FIXME: find a better way to do this</span>
+57:                                 <span class="ruby-identifier">solution</span> = <span class="ruby-ivar">@parent_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-ivar">@population</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">first</span>
+58:                                 <span class="ruby-ivar">@problems</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">problem</span><span class="ruby-operator">|</span>
+59:                                         <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">encounter</span>(<span class="ruby-identifier">problem</span>, <span class="ruby-identifier">solution</span>)
+60:                                 <span class="ruby-keyword kw">end</span>
+61: 
+62:                                 <span class="ruby-identifier">problem</span> = <span class="ruby-ivar">@parent_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-ivar">@problems</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">first</span>
+63:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">solution</span><span class="ruby-operator">|</span>
+64:                                         <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">encounter</span>(<span class="ruby-identifier">problem</span>, <span class="ruby-identifier">solution</span>)
+65:                                 <span class="ruby-keyword kw">end</span>
+66:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+
+      <div id="method-M000141" class="method-detail">
+        <a name="M000141"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000141" class="method-signature">
+
+          <span class="method-name">best_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000141-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 72</span>
+72:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">best_solution</span>
+73:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">best</span>
+74:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000144" class="method-detail">
+        <a name="M000144"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000144" class="method-signature">
+
+          <span class="method-name">next_generation</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000144-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 84</span>
+ 84:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_generation</span>
+ 85:                                 <span class="ruby-identifier">problem_wins</span>, <span class="ruby-identifier">solution_wins</span> = <span class="ruby-value">0</span>, <span class="ruby-value">0</span>
+ 86: 
+ 87:                                 <span class="ruby-ivar">@pairing_runs</span>.<span class="ruby-identifier">times</span> <span class="ruby-keyword kw">do</span>
+ 88:                                         <span class="ruby-identifier">problem</span> = <span class="ruby-ivar">@parent_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-ivar">@problems</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">first</span>
+ 89:                                         <span class="ruby-identifier">solution</span> = <span class="ruby-ivar">@parent_selection</span>.<span class="ruby-identifier">select</span>(<span class="ruby-ivar">@population</span>, <span class="ruby-value">1</span>).<span class="ruby-identifier">first</span>
+ 90:                                         <span class="ruby-identifier">winner</span> = <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">encounter</span>(<span class="ruby-identifier">problem</span>, <span class="ruby-identifier">solution</span>)
+ 91:                                         <span class="ruby-identifier">winner</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">problem</span> <span class="ruby-value">? </span><span class="ruby-identifier">problem_wins</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">solution_wins</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+ 92:                                 <span class="ruby-keyword kw">end</span>
+ 93: 
+ 94:                                 <span class="ruby-ivar">@solution_success</span> = <span class="ruby-identifier">solution_wins</span> <span class="ruby-operator">/</span> <span class="ruby-ivar">@pairing_runs</span>.<span class="ruby-identifier">to_f</span>
+ 95: 
+ 96:                                 <span class="ruby-keyword kw">if</span> <span class="ruby-constant">EvoSynth</span>.<span class="ruby-identifier">rand</span> <span class="ruby-operator">&lt;</span> <span class="ruby-ivar">@solution_success</span>
+ 97:                                         <span class="ruby-comment cmt"># select, recombine and mutate solution child</span>
+ 98:                                         <span class="ruby-identifier">evolve_offspring</span>(<span class="ruby-ivar">@population</span>, <span class="ruby-ivar">@problems</span>, <span class="ruby-ivar">@recombination</span>,
+ 99:                                                 <span class="ruby-ivar">@mutation</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span>, <span class="ruby-identifier">enemy</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">encounter</span>(<span class="ruby-identifier">enemy</span>, <span class="ruby-identifier">child</span>, <span class="ruby-keyword kw">false</span>, <span class="ruby-keyword kw">true</span>) }
+100:                                 <span class="ruby-keyword kw">else</span>
+101:                                         <span class="ruby-comment cmt"># select, recombine and mutate problem child</span>
+102:                                         <span class="ruby-identifier">evolve_offspring</span>(<span class="ruby-ivar">@problems</span>, <span class="ruby-ivar">@population</span>, <span class="ruby-ivar">@problem_recombination</span>,
+103:                                                 <span class="ruby-ivar">@problem_mutation</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">child</span>, <span class="ruby-identifier">enemy</span><span class="ruby-operator">|</span> <span class="ruby-ivar">@evaluator</span>.<span class="ruby-identifier">encounter</span>(<span class="ruby-identifier">child</span>, <span class="ruby-identifier">enemy</span>, <span class="ruby-keyword kw">true</span>, <span class="ruby-keyword kw">false</span>) }
+104:                                 <span class="ruby-keyword kw">end</span>                         
+105:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000143" class="method-detail">
+        <a name="M000143"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000143" class="method-signature">
+
+          <span class="method-name">return_result</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000143-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 80</span>
+80:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">return_result</span>
+81:                                 <span class="ruby-ivar">@population</span>
+82:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000140" class="method-detail">
+        <a name="M000140"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000140" class="method-signature">
+
+          <span class="method-name">to_s</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000140-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 68</span>
+68:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_s</span>
+69:                                 <span class="ruby-node">&quot;C-M-B coevolutionary algorithm &lt;mutation: #{@mutation}, recombination: #{@recombination}, parent selection: #{@parent_selection}, enviromental selection: #{@enviromental_selection}&gt;&quot;</span>
+70:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+      <div id="method-M000142" class="method-detail">
+        <a name="M000142"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000142" class="method-signature">
+
+          <span class="method-name">worst_solution</span><span class="method-args">()</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000142-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/evosynth/evolvers/coevolutionary/balanced_coevolutionary.rb, line 76</span>
+76:                         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">worst_solution</span>
+77:                                 <span class="ruby-ivar">@population</span>.<span class="ruby-identifier">worst</span>
+78:                         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

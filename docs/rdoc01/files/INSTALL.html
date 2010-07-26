@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>File: INSTALL [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+  <div id="fileHeader">
+    <h1>INSTALL</h1>
+    <table class="header-table">
+    <tr class="top-aligned-row">
+      <td><strong>Path:</strong></td>
+      <td>INSTALL
+
+      </td>
+    </tr>
+    <tr class="top-aligned-row">
+      <td><strong>Last Update:</strong></td>
+      <td>2010-03-12 14:25:36 +0100</td>
+    </tr>
+    </table>
+  </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+    <div id="description">
+      <h2>Installation HOWTO</h2>
+<h3>Prerequisites:</h3>
+<ul>
+<li><b>Ruby 1.9.x</b> from <a
+href="http://www.ruby-lang.org">www.ruby-lang.org</a> or <a
+href="http://rubyforge.org/frs/?group_id=167">rubyforge.org/frs/?group_id=167</a>
+
+</li>
+<li><em>(optional)</em> <b>git</b> from <a
+href="http://git-scm.com">git-scm.com</a> (to build latest version from git
+repository)
+
+</li>
+<li>optional gems (install with &#8220;gem install <gem-name>&#8221; (as
+root)):
+
+<ul>
+<li>shoulda and rake (Rakefile, Testsuite)
+
+</li>
+<li>gruff, gnuplot and rmagick (graphs)
+
+</li>
+<li>flake, flog, roodi and rcov (code quality tools)
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>Download EvoSynth:</h3>
+<ul>
+<li>download source package from <a
+href="http://github.com/yadler/EvoSynth/archives/master">github.com/yadler/EvoSynth/archives/master</a>
+
+</li>
+<li>or checkout with:
+
+<pre>
+      git clone git://github.com/yadler/EvoSynth.git
+</pre>
+</li>
+</ul>
+<h3>Run Testcases</h3>
+<p>
+To make sure everything is running, run the following command inside the
+evosynth directory:
+</p>
+<pre>
+        rake test
+</pre>
+<h3>Get the required testdata to run the examples (copy into the &#8220;testdata&#8221; directory):</h3>
+<ul>
+<li><a
+href="http://mat.gsia.cmu.edu/COLOR/instances/myciel4.col">mat.gsia.cmu.edu/COLOR/instances/myciel4.col</a>
+(graph colouring)
+
+</li>
+<li><a
+href="http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/bays29.tsp">elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/bays29.tsp</a>
+(TSP)
+
+</li>
+<li>more testdata:
+
+<ul>
+<li><a
+href="http://mat.gsia.cmu.edu/COLOR/instances.html">mat.gsia.cmu.edu/COLOR/instances.html</a>
+
+</li>
+<li><a
+href="http://elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html">elib.zib.de/pub/mp-testdata/tsp/tsplib/tsp/index.html</a>
+
+</li>
+</ul>
+</li>
+</ul>
+<h3>Run examples and benchmarks</h3>
+<ul>
+<li>run all examples with
+
+<pre>
+      rake run_examples
+</pre>
+<p>
+or run single examples with:
+</p>
+<pre>
+      ruby -Ilib examples/max_ones.rb
+      ruby -Ilib examples/partition.rb
+      ...
+</pre>
+</li>
+<li><b>Attention:</b> the exporter.rb example will only work if you&#8217;ve
+installed the gruff, gnuplot and rmagick gems!
+
+</li>
+<li>if you are interessted in the performance of the individual components of
+<a href="../classes/EvoSynth.html">EvoSynth</a>, run the benchmark task:
+
+<pre>
+      rake run_benchmarks
+</pre>
+<p>
+or run individual benchmarks with:
+</p>
+<pre>
+      ruby -Ilib test/benchmark/decoder_benchmark.rb
+      ruby -Ilib test/benchmark/mutation_benchmark.rb
+      ...
+</pre>
+</li>
+</ul>
+<h3>Setup Netbeans as IDE (<a href="http://netbeans.org">netbeans.org</a>)</h3>
+<ul>
+<li>download and install netbeans
+
+</li>
+<li>install Ruby plugin (Tools -> Plugins -> Available Plugins &#8230;)
+
+</li>
+<li>create new project:
+
+<ol>
+<li>File -> New Project -> Ruby -> &#8220;Ruby Application with Existing
+Sources&#8220;
+
+</li>
+<li>choose a name (for example &#8220;nb_evosynth&#8220;)
+
+</li>
+<li>choose a directory, this should be outside of the evosynth directory to
+keep the git repository clean
+
+</li>
+<li>choose Ruby platform: Ruby 1.9.x
+
+</li>
+<li>set source folder with &#8220;Source Folders -> Add folder&#8221; -> choose
+evosynth directory
+
+</li>
+</ol>
+</li>
+<li>right click on new created project &#8220;Properties -> Run&#8221; -> add
+&#8220;-Ilib&#8221; to Ruby options
+
+</li>
+<li>test if everything is working:
+
+<ol>
+<li>open a example (examples folder in &#8220;Source Files&#8221;)
+
+</li>
+<li>run it with Shift + F6 (you might have to confirm a dialog)
+
+</li>
+</ol>
+</li>
+</ul>
+
+    </div>
+
+   </div>
+
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+    <!-- if method_list -->
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

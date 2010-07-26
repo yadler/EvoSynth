@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Examples::Ants [EvoSynth Documentation]</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }<\/style>" )
+
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Examples::Ants</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+
+
+                <a href="../../files/examples/ants_rb.html">
+
+                examples/ants.rb
+
+                </a>
+
+
+        <br />
+
+            </td>
+        </tr>
+
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+  <div id="contextContent">
+
+   </div>
+
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+
+        <a href="#M000293">evolver_profile</a>&nbsp;&nbsp;
+
+      </div>
+    </div>
+
+  </div>
+
+    <!-- if includes -->
+
+    <div id="section">
+
+    <div id="class-list">
+      <h3 class="section-bar">Classes and Modules</h3>
+
+      Class <a href="Ants/AntMutation.html" class="link">Examples::Ants::AntMutation</a><br />
+Class <a href="Ants/Pheromon.html" class="link">Examples::Ants::Pheromon</a><br />
+
+    </div>
+
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">PHEROMON</td>
+          <td>=</td>
+          <td class="context-item-value">Ants::Pheromon.new(tsp.size)</td>
+
+          <td>&nbsp;</td>
+          <td class="context-item-desc">
+we need to &#8220;get into&#8221; the used evolver to update the pheromon
+each iteration of the
+
+</td>
+
+        </tr>
+
+        </table>
+      </div>
+    </div>
+
+
+
+
+    <!-- if method_list -->
+
+    <div id="methods">
+
+      <h3 class="section-bar">Public Class methods</h3>
+
+
+      <div id="method-M000293" class="method-detail">
+        <a name="M000293"></a>
+
+        <div class="method-heading">
+
+          <a href="#M000293" class="method-signature">
+
+          <span class="method-name">evolver_profile</span><span class="method-args">(tsp, pheromon)</span>
+
+          </a>
+
+        </div>
+
+        <div class="method-description">
+
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000293-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000293-source">
+<pre>
+     <span class="ruby-comment cmt"># File examples/ants.rb, line 166</span>
+166:                 <span class="ruby-keyword kw">def</span> <span class="ruby-constant">Ants</span>.<span class="ruby-identifier">evolver_profile</span>(<span class="ruby-identifier">tsp</span>, <span class="ruby-identifier">pheromon</span>)
+167:                         <span class="ruby-identifier">ant_mutation</span> = <span class="ruby-constant">Ants</span><span class="ruby-operator">::</span><span class="ruby-constant">AntMutation</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">tsp</span>, <span class="ruby-identifier">pheromon</span>, <span class="ruby-value">1</span>, <span class="ruby-value">0</span><span class="ruby-value">.2</span>)
+168: 
+169:                         <span class="ruby-identifier">population</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Population</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value">10</span>) <span class="ruby-keyword kw">do</span>
+170:                                 <span class="ruby-identifier">ant</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">MinimizingIndividual</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">ArrayGenome</span>.<span class="ruby-identifier">new</span>)
+171:                                 <span class="ruby-identifier">ant_mutation</span>.<span class="ruby-identifier">mutate</span>(<span class="ruby-identifier">ant</span>)
+172:                         <span class="ruby-keyword kw">end</span>
+173: 
+174:                         <span class="ruby-identifier">combined_mutation</span> = <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">MetaOperators</span><span class="ruby-operator">::</span><span class="ruby-constant">ProportionalCombinedOperator</span>.<span class="ruby-identifier">new</span>
+175:                         <span class="ruby-identifier">combined_mutation</span>.<span class="ruby-identifier">add</span>(<span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Mutations</span><span class="ruby-operator">::</span><span class="ruby-constant">InversionMutation</span>.<span class="ruby-identifier">new</span>, <span class="ruby-value">0</span><span class="ruby-value">.25</span>)
+176:                         <span class="ruby-identifier">combined_mutation</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">ant_mutation</span>, <span class="ruby-value">0</span><span class="ruby-value">.75</span>)
+177: 
+178:                         <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Profile</span>.<span class="ruby-identifier">new</span>(
+179:                                 <span class="ruby-identifier">:mutation</span>                   =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">combined_mutation</span>,
+180:                                 <span class="ruby-identifier">:parent_selection</span>   =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Selections</span><span class="ruby-operator">::</span><span class="ruby-constant">FitnessProportionalSelection</span>.<span class="ruby-identifier">new</span>,
+181:                                 <span class="ruby-identifier">:population</span>                 =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">population</span>,
+182:                                 <span class="ruby-identifier">:recombination</span>              =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">EvoSynth</span><span class="ruby-operator">::</span><span class="ruby-constant">Recombinations</span><span class="ruby-operator">::</span><span class="ruby-constant">PartiallyMappedCrossover</span>.<span class="ruby-identifier">new</span>,
+183:                                 <span class="ruby-identifier">:evaluator</span>                  =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">tsp</span>
+184:                         )
+185:                 <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
+
+
+
+  </div>
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>
