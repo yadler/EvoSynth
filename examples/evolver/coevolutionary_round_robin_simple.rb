@@ -96,8 +96,8 @@ module Examples
 
 		logger = EvoSynth::Logger.create(50, true, :gen) do |log|
 			log.add_column("fitness", Proc.new { |evolver|
-				best_genome = evolver.best_solution?.map { |individual| EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
-				CCGAExample.fitness_function(best_genome)
+				best_phenotype = evolver.best_solution?.map { |individual| EvoSynth::Decoder.binary_to_real(individual.genome, -5.12, 5.12) }
+				CCGAExample.fitness_function(best_phenotype)
 			})
 		end
 
