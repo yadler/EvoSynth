@@ -36,6 +36,18 @@ module EvoSynth
 				@repetitions = 1
 			end
 
+			def marshal_dump
+				[ @dataset, @elapsed_time, @repetitions ] #, @configuration, @evolver]
+			end
+
+			def marshal_load(variables)
+				@dataset = variables[0]
+				@elapsed_time = variables[1]
+				@repetitions = variables[2]
+				# @configuration = variables[3]
+				# @evolver = variables[4]
+			end
+
 			def RunResult.union(*results)
 				datasets = []
 				elapsed_time_sum = 0.0

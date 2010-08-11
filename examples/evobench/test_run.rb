@@ -49,22 +49,25 @@ module Examples
 			EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(GENOME_SIZE) { EvoSynth.rand_bool } )
 		end
 
-		configuration = EvoSynth::Configuration.new do |cfg|
-			cfg.population = base_population
-			cfg.evaluator = EvoBench::Evaluator.new
-			cfg.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
+		ga = EvoSynth::Evolvers::GeneticAlgorithm.new do |evolver|
+			evolver.population = base_population
+			evolver.evaluator = EvoBench::Evaluator.new
+			evolver.mutation = EvoSynth::Mutations::BinaryMutation.new(EvoSynth::Mutations::Functions::FLIP_BOOLEAN)
 		end
 
-		ga_elistism = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
-		EvoSynth::Evolvers.add_weak_elistism(ga_elistism)
-		ga = EvoSynth::Evolvers::GeneticAlgorithm.new(configuration)
-
-		test_run = EvoSynth::EvoBench::TestRun.new(ga_elistism) do |run|
+		test_run = EvoSynth::EvoBench::TestRun.new(ga) do |run|
 			run.set_goal { |evolver| evolver.generations_computed == MAX_GENERATIONS }
 			run.reset_evolvers_with { |evolver| evolver.population = base_population.deep_clone }
 			run.repetitions = 3
 		end
 		results = test_run.start!
 		results.each { |result| puts result.elapsed_time }
+
+		puts "\nserialization/deserialization...\n"
+		File.open("run_results", "w+") { |file| Marshal.dump(results, file) }
+		loaded_results = Marshal.load(File.open("run_results"))
+		File.delete("run_results")
+
+		loaded_results.each { |result| puts result.elapsed_time }
 	end
 end
