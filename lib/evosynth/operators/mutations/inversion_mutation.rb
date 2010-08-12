@@ -64,7 +64,7 @@ module EvoSynth
 			#     m.to_s                   #=> "exchange mutation"
 
 			def to_s
-				"exchange mutation"
+				"inversion mutation"
 			end
 
 		end
