@@ -22,5 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/decoder/tc_gray'
-require 'test/decoder/tc_binary_to_real'
+require './test/decoder/tc_gray'
+require './test/decoder/tc_binary_to_real'

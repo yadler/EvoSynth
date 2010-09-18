@@ -22,11 +22,11 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/recombinations/tc_one_point_crossover'
-require 'test/operators/recombinations/tc_k_point_crossover'
-require 'test/operators/recombinations/tc_partially_mapped_crossover'
-require 'test/operators/recombinations/tc_uniform_crossover'
-require 'test/operators/recombinations/tc_identity_recombination'
-require 'test/operators/recombinations/tc_ordered_recombination'
-require 'test/operators/recombinations/tc_edge_recombination'
-require 'test/operators/recombinations/tc_arithmetic_crossover'
+require './test/operators/recombinations/tc_one_point_crossover'
+require './test/operators/recombinations/tc_k_point_crossover'
+require './test/operators/recombinations/tc_partially_mapped_crossover'
+require './test/operators/recombinations/tc_uniform_crossover'
+require './test/operators/recombinations/tc_identity_recombination'
+require './test/operators/recombinations/tc_ordered_recombination'
+require './test/operators/recombinations/tc_edge_recombination'
+require './test/operators/recombinations/tc_arithmetic_crossover'

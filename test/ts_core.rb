@@ -22,8 +22,8 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/core/tc_array_genome'
-require 'test/core/tc_binary_genome'
-require 'test/core/tc_population'
-require 'test/core/tc_configuration'
-require 'test/core/tc_randomizer'
+require './test/core/tc_array_genome'
+require './test/core/tc_binary_genome'
+require './test/core/tc_population'
+require './test/core/tc_configuration'
+require './test/core/tc_randomizer'

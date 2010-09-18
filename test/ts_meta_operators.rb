@@ -22,6 +22,6 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/meta_operators/tc_proportional_combined_operator'
-require 'test/operators/meta_operators/tc_sequential_combined_operator'
-require 'test/operators/meta_operators/tc_conditional_combined_operator'
+require './test/operators/meta_operators/tc_proportional_combined_operator'
+require './test/operators/meta_operators/tc_sequential_combined_operator'
+require './test/operators/meta_operators/tc_conditional_combined_operator'

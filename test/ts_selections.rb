@@ -22,10 +22,10 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/selections/tc_best_selection'
-require 'test/operators/selections/tc_fitness_proportional_selection'
-require 'test/operators/selections/tc_roulette_wheel_selection'
-require 'test/operators/selections/tc_tournament_selection'
-require 'test/operators/selections/tc_random_selection'
-require 'test/operators/selections/tc_n_stage_tournament'
-require 'test/operators/selections/tc_identity'
+require './test/operators/selections/tc_best_selection'
+require './test/operators/selections/tc_fitness_proportional_selection'
+require './test/operators/selections/tc_roulette_wheel_selection'
+require './test/operators/selections/tc_tournament_selection'
+require './test/operators/selections/tc_random_selection'
+require './test/operators/selections/tc_n_stage_tournament'
+require './test/operators/selections/tc_identity'

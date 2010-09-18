@@ -24,7 +24,7 @@
 
 require 'shoulda'
 #require 'gnuplot'
-require 'test/test_util/test_helper'
+require './test/test_util/test_helper'
 
 require 'evosynth'
 

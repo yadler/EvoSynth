@@ -22,4 +22,4 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/evobench/tc_run_result'
+require './test/evobench/tc_run_result'

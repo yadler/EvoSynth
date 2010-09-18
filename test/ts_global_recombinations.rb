@@ -22,5 +22,5 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/operators/global_recombinations/tc_global_uniform_crossover'
-require 'test/operators/global_recombinations/tc_global_arithmetic_crossover'
+require './test/operators/global_recombinations/tc_global_uniform_crossover'
+require './test/operators/global_recombinations/tc_global_arithmetic_crossover'

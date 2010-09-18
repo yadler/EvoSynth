@@ -22,7 +22,7 @@
 #	OTHER DEALINGS IN THE SOFTWARE.
 
 
-require 'test/benchmark/tc_t-test'
-require 'test/benchmark/tc_diversity_distance'
-require 'test/benchmark/tc_diversity_entropy'
-require 'test/benchmark/tc_diversity_subseq'
+require './test/benchmark/tc_t-test'
+require './test/benchmark/tc_diversity_distance'
+require './test/benchmark/tc_diversity_entropy'
+require './test/benchmark/tc_diversity_subseq'

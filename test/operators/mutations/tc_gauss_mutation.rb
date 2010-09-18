@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require 'test/test_util/test_helper'
+require './test/test_util/test_helper'
 
 
 class GaussMutationTest < Test::Unit::TestCase
