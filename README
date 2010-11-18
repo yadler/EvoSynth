@@ -4,7 +4,7 @@ Website:: http://evosynth.rubyforge.org/
 Project:: http://rubyforge.org/projects/evosynth/
 Gem:: http://rubygems.org/gems/evosynth
 Sourcecode:: http://gitorious.org/evosynth and http://github.com/yadler/EvoSynth
-Author::    Yves Adler (http://yadler.wordpress.com/, mailto:yves.adler@googlemail.com)
+Author::    Yves Adler (http://confusedbits.net/, mailto:yves.adler@googlemail.com)
 Copyright:: Copyright (c) 2009, 2010 Yves Adler <yves.adler@googlemail.com>
 License::   MIT (see LICENSE)
 
@@ -22,13 +22,17 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
 * classes for individuals, populations, algorithm configurations, genomes
 * support for custom randomizer
 * meta operators: proportional, sequentional and conditional combined operators
-* logging support with exporter to gnuplot, gruff and csv
+* logging support with exporter to gnuplot, html and csv
 * many predefined fitness functions
 
-* benchmarking features:
+* benchmarking features (evobench module):
   * diversity calculations (distance, entropy and subsequence)
   * mean, median, variance calculations for array/population
   * t-test to determine statistical significance
+  * Comparator, to compare the performance of two or more Evolvers
+  * TestRun: runs a evolver with a given configuration (n times) and collects the produced data
+  * Experiment class: run a experiment with a experimental plan and compare different parameters
+  * FullFactorialPlan : full factorial experimental plan
 
 * most common evolutionary algorithms:
   * hillclimber (single individual and population based)
@@ -59,4 +63,3 @@ EvoSynth (Evolutionary Computation Synthesizer) is a framework for rapid develop
   * arithmetic crossover
   * ordered recombination, partially mapped crossover, edge recombination
   * global uniform crossover, global arithmetic crossover
-

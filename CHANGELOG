@@ -1,5 +1,7 @@
 === 0.2.0
 
+* various bugfixes ;-)
+
 * added SP_k problem to binary benchmark functions
 
 * added EvoBench (benchmarking for evolutionary algorithms) module:

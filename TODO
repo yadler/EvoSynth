@@ -1,12 +1,9 @@
 ============================== EvoSynth 0.2 ====================================
 
-Features:
-
 	- README:
-		=> features aktualisieren (siehe CHANGELOG)
-		=> CHANGELOG, README, TODO aufräumen, schick machen und mit commits vergleichen
 		=> Quellen irgendwo in der Readme oder in eigener Datei erwähnen (für Algorithmen)
-		=> Auf Diplomarbeitshintergrund verweisen?
+
+Features:
 
 	- gnuplot export:
 		=> bessere bzw. mehr optionen, templates
@@ -29,6 +26,9 @@ Features:
 ============================== EvoSynth 0.3 ====================================
 
 Features:
+
+	- Ruby 1.9.2:
+		=> Randomizer krempel checken - da gibts Neuerungen in Ruby!
 
 	- Verbesserungen:
 		=> Evolver, Evaluator in ein Module transformieren:

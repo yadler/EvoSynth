@@ -3,6 +3,7 @@
 * EvoSynth::Evaluator
 * EvoSynth::Configuration
 * EvoSynth::Population
+* EvoSynth::Logger
 
 * EvoSynth::Individual
   * EvoSynth::MaximizingIndividual
@@ -13,10 +14,11 @@
   * EvoSynth.nrand
   * EvoSynth.rand_bool
 
-* Include "Genotypes":
+* Genotypes:
   * EvoSynth::ArrayGenome (can contain any datatype as items)
   * EvoSynth::BinaryGenome (not optimized yet)
 
+* EvoSynth::Decoder
 
 == Evolution algorithms
 
@@ -57,7 +59,6 @@
 * EvoSynth::Selections::FitnessProportionalSelection
 * EvoSynth::Selections::RouletteWheelSelection
 * EvoSynth::Selections::RandomSelection
-
 
 == Meta operators
 
@@ -109,3 +110,25 @@
 
 * EvoSynth::Adjustments::PredifinedAdjustment
 * EvoSynth::Adjustments::AdaptiveAdjustment
+
+== EvoBench: benchmarking of evolutionary algorithms
+
+* EvoSynth::EvoBench::Experiment
+* EvoSynth::EvoBench::RunResult
+* EvoSynth::EvoBench::FullFactorialPlan
+* EvoSynth::EvoBench::Comparator
+* EvoSynth::EvoBench also includes a couple of util functions (t-test, diversity, ...)
+
+== Export
+
+* EvoSynth::Export::ConsoleWriter
+* EvoSynth::Export::GnuPlot
+* EvoSynth::Export::CSV
+* EvoSynth::Export::HTML
+
+== Predefined benchmak (fitness-) functions
+
+* EvoSynth::Problems::BinaryBenchmarkFuntions
+* EvoSynth::Problems::FloatBenchmarkFuntions
+* EvoSynth::Problems::GraphColouring
+* EvoSynth::Problems::TSP

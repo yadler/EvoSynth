@@ -42,7 +42,7 @@ class MyMutation
 	end
 end
 
-# Next we create a stupid recombination. This time we've to overwrite the recombine methdo,
+# Next we create a stupid recombination. This time we've to overwrite the recombine method,
 # which takes two individuals as arguments and returns a array of two individuals.
 
 class MyRecombination
