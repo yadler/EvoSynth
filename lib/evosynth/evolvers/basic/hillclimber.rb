@@ -60,7 +60,7 @@ module EvoSynth
 			def next_generation!
 				child = @mutation.mutate(@individual)
 				@evaluator.calculate_and_set_fitness(child)
-				@individual = child if child > @individual
+				@individual = child unless child < @individual
 			end
 		end
 
