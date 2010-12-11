@@ -1,6 +1,8 @@
 === 0.2.0
 
-* various bugfixes ;-)
+* Fixes:
+  * various bugfixes
+  * fixed hillclimber acceptance [Florian Pilz]
 
 * added SP_k problem to binary benchmark functions
 
