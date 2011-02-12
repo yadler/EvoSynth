@@ -95,9 +95,9 @@ module EvoSynth
 				genome.each { |gene| adj_mat[gene] = Set.new }
 
 				genome.each_with_index do |gene, index|
-					right_neightbor = genome[(index + 1) % genome.size]
-					adj_mat[gene] << right_neightbor
-					adj_mat[right_neightbor] << gene
+					right_neighbor = genome[(index + 1) % genome.size]
+					adj_mat[gene] << right_neighbor
+					adj_mat[right_neighbor] << gene
 				end
 
 				adj_mat
