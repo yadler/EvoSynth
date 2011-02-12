@@ -50,7 +50,7 @@ module EvoSynth
 			def recombine_to_one(parent_one, parent_two)
 				child = parent_one.deep_clone
 				child_genome = child.genome
-				adj_matrix = generate_adj_matrix(parent_one.genome)
+				adj_matrix = generate_adj_matrix(parent_one.genome, parent_two.genome)
 
 				start = EvoSynth.rand_bool ? parent_one.genome[0] : parent_two.genome[0]
 				child_genome[0] = start
@@ -72,7 +72,7 @@ module EvoSynth
 					next unless adj_matrix.has_key?(gene)
 
 					neighbors = adj_matrix[gene]
-					adj_size = 1 if neighbors.include?(gene) ? neighbors.size - 1 : neighbors.size
+					adj_size = neighbors.size
 
 					if min.nil?
 						min = adj_size
@@ -85,19 +85,21 @@ module EvoSynth
 					end
 				end
 
-				next_gene = EvoSynth.rand(adj_matrix.keys) if next_gene.nil?
+				next_gene = adj_matrix.keys.sample if next_gene.nil?
 
 				next_gene
 			end
 
-			def generate_adj_matrix(genome)
+			def generate_adj_matrix(genome_one, genome_two)
 				adj_mat = {}
-				genome.each { |gene| adj_mat[gene] = Set.new }
+				genome_one.each { |gene| adj_mat[gene] = Set.new }
 
-				genome.each_with_index do |gene, index|
-					right_neighbor = genome[(index + 1) % genome.size]
-					adj_mat[gene] << right_neighbor
-					adj_mat[right_neighbor] << gene
+				[genome_one, genome_two].each do |genome|
+					genome.each_with_index do |gene, index|
+						right_neighbor = genome[(index + 1) % genome.size]
+						adj_mat[gene] << right_neighbor
+						adj_mat[right_neighbor] << gene
+					end
 				end
 
 				adj_mat
