@@ -40,11 +40,11 @@ class EdgeRecombinationTest < Test::Unit::TestCase
 
 		context "before the edge recombination is executed" do
 
-			should "individual one should contain all numbers from 1 to 7" do
+			should "individual one should contain all numbers from 1 to 8" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @individual_one.genome.include?(item) }
 			end
 
-			should "individual two should contain all numbers from 1 to 7" do
+			should "individual two should contain all numbers from 1 to 8" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @individual_two.genome.include?(item) }
 			end
 
@@ -56,15 +56,15 @@ class EdgeRecombinationTest < Test::Unit::TestCase
 				@child_one, @child_two = @recombination.recombine(@individual_one, @individual_two)
 			end
 
-			should "parent one should (still) contain all numbers from 1 to 7" do
+			should "parent one should (still) contain all numbers from 1 to 8" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @individual_one.genome.include?(item) }
 			end
 
-			should "parent two should (still) contain all numbers from 1 to 7" do
+			should "parent two should (still) contain all numbers from 1 to 8" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @individual_two.genome.include?(item) }
 			end
 
-			should "both children should (still) contain all numbers from 1 to 7" do
+			should "both children should (still) contain all numbers from 1 to 8" do
 				[1,2,3,4,5,6,7,8].each { |item| assert @child_one.genome.include?(item) }
 				[1,2,3,4,5,6,7,8].each { |item| assert @child_two.genome.include?(item) }
 			end
