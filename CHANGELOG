@@ -3,8 +3,11 @@
 * Fixes:
   * various bugfixes
   * fixed hillclimber acceptance [Florian Pilz]
+  * fixed Edge Recombination [Florian Pilz]
 
 * added SP_k problem to binary benchmark functions
+
+* added EvoSynth.rand_element to retrieve a random element from a array
 
 * added EvoBench (benchmarking for evolutionary algorithms) module:
 

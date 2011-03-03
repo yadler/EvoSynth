@@ -85,7 +85,7 @@ module EvoSynth
 					end
 				end
 
-				next_gene = adj_matrix.keys.sample if next_gene.nil?
+				next_gene = EvoSynth.rand_element(adj_matrix.keys) if next_gene.nil?
 
 				next_gene
 			end

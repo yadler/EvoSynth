@@ -70,4 +70,11 @@ module EvoSynth
 		Kernel.srand(*args)
 	end
 
+
+	# Returns a random element of the given array
+
+	def EvoSynth.rand_element(array)
+		array.sample
+	end
+
 end
