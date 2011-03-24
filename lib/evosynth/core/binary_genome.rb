@@ -43,11 +43,19 @@ module EvoSynth
 			@changed = true
 		end
 
-		# Returns a clone of this genome
+		# Returns a shallow copy of this genome
 
 		def clone
+			my_clone = self.clone
+			my_clone.changed = false unless self.changed? == true
+			my_clone
+		end
+
+		#Returns a deep copy of this genome
+
+		def deep_clone
 			my_clone = BinaryGenome.new(@data)
-			my_clone.changed = false
+			my_clone.changed = false unless self.changed? == true
 			my_clone
 		end
 

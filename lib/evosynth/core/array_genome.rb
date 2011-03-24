@@ -34,12 +34,18 @@ module EvoSynth
 	class ArrayGenome < Array
 		include EvoSynth::Genome
 
-		# Returns a clone of this genome
+		# Returns a shallow copy of this genome
 
 		def clone
 			my_clone = super
-			my_clone.changed = false
+			my_clone.changed = false unless self.changed? == true
 			my_clone
+		end
+
+		#Returns a deep copy of this genome
+
+		def deep_clone
+			self.clone
 		end
 
 		# Return a printable version of this genome.
