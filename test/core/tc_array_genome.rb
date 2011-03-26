@@ -40,6 +40,45 @@ class ArrayGenomeTest < Test::Unit::TestCase
 			assert @genome.changed?
 		end
 
+		should "clone returns a new object" do
+			assert_not_equal @genome.clone.object_id, @genome.object_id
+		end
+
+		should "deep_clone returns a new object" do
+			assert_not_equal @genome.deep_clone.object_id, @genome.object_id
+		end
+	end
+
+	context "after initialized with random values" do
+		setup do
+			@genome = EvoSynth::ArrayGenome.new(GENOME_SIZE) {EvoSynth.rand_bool}
+		end
+
+		should "clone returns a copy" do
+			assert_equal @genome.clone, @genome
+		end
+
+		should "deep_clone returns a copy" do
+			assert_equal @genome.deep_clone, @genome
+		end
+	end
+	
+	context "after #changed is set to true" do
+		setup do
+			@genome = EvoSynth::ArrayGenome.new(GENOME_SIZE)
+			@genome.map! { 1 }
+			@genome.changed = true
+		end
+
+		should "clone do nothing to changed" do
+			clonedgenome = @genome.clone
+			assert clonedgenome.changed?
+		end
+
+		should "deep_clone do nothing to changed" do
+			clonedgenome = @genome.deep_clone
+			assert clonedgenome.changed?
+		end
 	end
 
 	context "after #changed is set to false" do
@@ -149,6 +188,15 @@ class ArrayGenomeTest < Test::Unit::TestCase
 			@genome.changed = false
 		end
 
+		should "clone do nothing to changed" do
+			clonedgenome = @genome.clone
+			assert !clonedgenome.changed?	
+		end
+
+		should "deep_clone do nothing to changed" do
+			clonedgenome = @genome.deep_clone
+			assert !clonedgenome.changed?
+		end
 	end
 
 end
