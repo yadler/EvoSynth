@@ -43,20 +43,10 @@ module EvoSynth
 			@changed = true
 		end
 
-		# Returns a shallow copy of this genome
-
-		def clone
-			my_clone = self.clone
-			my_clone.changed = false unless self.changed? == true
-			my_clone
-		end
-
 		#Returns a deep copy of this genome
 
 		def deep_clone
-			my_clone = BinaryGenome.new(@data)
-			my_clone.changed = false unless self.changed? == true
-			my_clone
+			self.clone
 		end
 
 		# Array like index accessor
@@ -118,6 +108,7 @@ module EvoSynth
 
 		def flip!(index)
 			@data = @data ^ (1 << index)
+			@changed = true
 		end
 
 		# Returns the size (in bits) of this genome.
@@ -147,6 +138,7 @@ module EvoSynth
 			else
 				@data = @data | (1 << index)
 			end
+			@changed = true
 		end
 	end
 

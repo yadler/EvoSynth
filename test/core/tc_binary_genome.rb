@@ -52,14 +52,31 @@ class BinaryGenomeTest < Test::Unit::TestCase
 		end
 
 		should "clone work as expected" do
+			@genome.changed = false
 			foo = @genome.clone
+			assert_equal foo.changed?, @genome.changed?
 			@genome.flip!(0)
-			assert_equal 1, @genome[0]
-			assert_equal 0, foo[0]
+			assert_not_equal foo[0], @genome[0]
+			assert_not_equal foo.changed?, @genome.changed?
+			foo = @genome.clone
+			assert_equal foo.changed?, @genome.changed?
+			assert_not_equal foo.object_id, @genome.object_id
+		end
+
+		should "deep_clone work as expected" do
+			@genome.changed = false
+			foo = @genome.clone
+			assert_equal foo.changed?, @genome.changed?
+			@genome.flip!(0)
+			assert_not_equal foo[0], @genome[0]
+			assert_not_equal foo.changed?, @genome.changed?
+			foo = @genome.clone
+			assert_equal foo.changed?, @genome.changed?
+			assert_not_equal foo.object_id, @genome.object_id
 		end
 	end
 
-	context "when created with 85" do
+	context "when created with 87" do
 		setup do
 			@genome = EvoSynth::BinaryGenome.new(87)
 		end
