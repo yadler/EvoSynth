@@ -32,7 +32,7 @@ module EvoSynth
 	#
 	# For simple problems you just need to overwrite calculate_fitness(individual)
 	#
-	# Obervers get notified each time calculate_and_set_fitness(individual) gets called, not on actual calculations
+	# Observers get notified each time calculate_and_set_fitness(individual) gets called, not on actual calculations
 
 	class Evaluator
 		include Observable
@@ -49,6 +49,12 @@ module EvoSynth
 
 		def initialize
 			reset_counters
+		end
+
+		#Returns a deep copy of this genome
+
+		def deep_clone
+			Marshal::load(Marshal.dump(self))
 		end
 
 		# Calculates and sets the fitness of the given individual if the individual has changed,
@@ -86,7 +92,7 @@ module EvoSynth
 			raise NotImplementedError, "please implement calculate_fitness!"
 		end
 
-		# This function is used to calculate an intitial fitness value for a individual. Calls calculate_fitness by default.
+		# This function is used to calculate an initial fitness value for a individual. Calls calculate_fitness by default.
 
 		def calculate_initial_fitness(individual)
 			calculate_fitness(individual)
@@ -99,7 +105,7 @@ module EvoSynth
 			@calculated = 0
 		end
 
-		# Returns a human readable reprasentation of the Evaluator
+		# Returns a human readable representation of the Evaluator
 
 		def to_s
 			"Evaluator <called: #{@called}, calculated: #{@calculated}>"

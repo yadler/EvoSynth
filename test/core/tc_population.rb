@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../test_util/test_helper'
 
 
 class PopulationTest < Test::Unit::TestCase
@@ -73,6 +73,14 @@ class PopulationTest < Test::Unit::TestCase
 		should "#worst return minimum in population" do
 			assert_equal @min, @population.worst
 		end
+
+		should "deep_clone return a deep copy" do
+			my_clone = @population.deep_clone
+			assert_not_equal my_clone.object_id, @population.object_id
+			@population.each_index do |index|
+				assert_not_equal my_clone[index].object_id, @population[index].object_id
+			end
+		end
 	end
 
 	context "when it contains minizingIndividuals" do
@@ -103,6 +111,14 @@ class PopulationTest < Test::Unit::TestCase
 
 		should "#worst returns maximum in population" do
 			assert_equal @max, @population.worst
+		end
+
+		should "deep_clone return a deep copy" do
+			my_clone = @population.deep_clone
+			assert_not_equal my_clone.object_id, @population.object_id
+			@population.each_index do |index|
+				assert_not_equal my_clone[index].object_id, @population[index].object_id
+			end
 		end
 	end
 

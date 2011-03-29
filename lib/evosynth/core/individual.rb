@@ -43,7 +43,7 @@ module EvoSynth
 			@genome = genome
 		end
 
-		# Sets the fitness value of this individual, also sets genome.changed to true.
+		# Sets the fitness value of this individual, also sets genome.changed to false.
 
 		def fitness=(value)
 			@fitness = value
@@ -60,9 +60,7 @@ module EvoSynth
 		# Clones and returns a individual and its genome (deep copy).
 
 		def deep_clone
-			my_clone = self.clone
-			my_clone.genome = Marshal.load( Marshal.dump( self.genome ) )
-			my_clone
+			Marshal::load(Marshal.dump(self))
 		end
 
 		# If you compare individuals the semantic of "<=>" is the following:

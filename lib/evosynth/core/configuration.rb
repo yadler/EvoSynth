@@ -106,12 +106,12 @@ module EvoSynth
 			"evolver configuration <#{@properties.to_s}>"
 		end
 
-		# TODO: rdoc
-		# TODO: is this possible without accessor?!
+		#Return a deep copy of the configuration
 
-		def clone
-			my_clone = super
+		def deep_clone
+			my_clone = self.clone
 			my_clone.properties = @properties.clone
+			my_clone.properties.each_key { |key| my_clone.properties[key] = my_clone.properties[key].deep_clone}
 			my_clone
 		end
 

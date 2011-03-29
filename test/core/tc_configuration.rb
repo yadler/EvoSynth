@@ -72,4 +72,27 @@ class ConfigurationTest < Test::Unit::TestCase
 
 	end
 
+	context "when initialized with objects which implements deep_clone" do
+		setup do
+			@configuration = EvoSynth::Configuration.new do |conf|
+				conf.individual	= EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } )
+				conf.population	= EvoSynth::Population.new(20) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } ) }
+			end
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @configuration.deep_clone
+			assert_not_equal my_clone.object_id, @configuration.object_id
+			assert_not_equal my_clone.properties.object_id, @configuration.properties.object_id
+			my_clone.properties.each_key do |key|
+				assert_not_equal my_clone.properties[key].object_id, @configuration.properties[key].object_id
+			end
+			assert my_clone.properties[:individual].kind_of?(EvoSynth::MaximizingIndividual)
+			assert my_clone.properties[:population].kind_of?(EvoSynth::Population)
+			assert_equal my_clone.properties[:individual].fitness, @configuration.properties[:individual].fitness
+		end
+
+	end
+
 end
+
