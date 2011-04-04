@@ -87,12 +87,11 @@ class ConfigurationTest < Test::Unit::TestCase
 			my_clone.properties.each_key do |key|
 				assert_not_equal my_clone.properties[key].object_id, @configuration.properties[key].object_id
 			end
-			assert my_clone.properties[:individual].kind_of?(EvoSynth::MaximizingIndividual)
-			assert my_clone.properties[:population].kind_of?(EvoSynth::Population)
+			assert_kind_of EvoSynth::Configuration, my_clone
+			assert_kind_of EvoSynth::MaximizingIndividual, my_clone.properties[:individual]
+			assert_kind_of EvoSynth::Population, my_clone.properties[:population]
 			assert_equal my_clone.properties[:individual].fitness, @configuration.properties[:individual].fitness
 		end
-
 	end
-
 end
 

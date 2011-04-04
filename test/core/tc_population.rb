@@ -79,7 +79,7 @@ class PopulationTest < Test::Unit::TestCase
 			assert_not_equal my_clone.object_id, @population.object_id
 			@population.each_index do |index|
 				assert_not_equal my_clone[index].object_id, @population[index].object_id
-				assert my_clone[index].kind_of?(TestMaximizingIndividual)
+				assert_kind_of TestMaximizingIndividual, my_clone[index]
 			end
 		end
 	end
@@ -119,7 +119,7 @@ class PopulationTest < Test::Unit::TestCase
 			assert_not_equal my_clone.object_id, @population.object_id
 			@population.each_index do |index|
 				assert_not_equal my_clone[index].object_id, @population[index].object_id
-				assert my_clone[index].kind_of?(TestMinimizingIndividual)
+				assert_kind_of TestMinimizingIndividual, my_clone[index]
 			end
 		end
 	end
@@ -168,5 +168,4 @@ class PopulationTest < Test::Unit::TestCase
 		population = EvoSynth::Population.new(1)
 		assert_nil population[0]
 	end
-
 end
