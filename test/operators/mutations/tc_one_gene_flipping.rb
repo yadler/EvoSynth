@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class OneGeneFlippingTest < Test::Unit::TestCase
@@ -104,6 +104,18 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 			should "the mutated gene should be true" do
 				assert @mutated.genome[0]
 			end
+		end
+	end
+
+	context "after mutation is instantiated" do
+		setup do
+			@mutation = EvoSynth::Mutations::OneGeneFlipping.new(FLIP_FUNCTION)
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @mutation.deep_clone
+			assert_not_equal my_clone.object_id, @mutation.object_id
+			assert_not_equal my_clone.flip_function.object_id, @mutation.flip_function.object_id
 		end
 	end
 end
