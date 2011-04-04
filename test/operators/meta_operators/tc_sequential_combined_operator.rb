@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class SequentialCombinedOperatorTest < Test::Unit::TestCase
@@ -75,6 +75,22 @@ class SequentialCombinedOperatorTest < Test::Unit::TestCase
 
 			assert_equal ITERATIONS, @mutation_a.called
 			assert_equal ITERATIONS, @mutation_b.called
+		end
+
+		should "deep_clone returns a new deep copy" do
+			my_clone = @combinded_operator.deep_clone
+			assert_not_equal my_clone.object_id, @combinded_operator.object_id
+			assert_not_equal my_clone.instance_variable_get(:@operators).object_id,
+											@combinded_operator.instance_variable_get(:@operators).object_id
+
+			my_clone.instance_variable_get(:@operators).each_index do |index|
+				assert_not_equal my_clone.instance_variable_get(:@operators)[index][0].object_id,
+											@combinded_operator.instance_variable_get(:@operators)[index][0].object_id
+				assert_equal my_clone.instance_variable_get(:@operators)[index][1],
+											@combinded_operator.instance_variable_get(:@operators)[index][1]
+			end
+			assert my_clone.instance_variable_get(:@operators)[0][0].kind_of?(TestMutationA)
+			assert my_clone.instance_variable_get(:@operators)[1][0].kind_of?(TestMutationB)
 		end
 	end
 

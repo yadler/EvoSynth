@@ -38,7 +38,17 @@ module EvoSynth
 				@operators = []
 				ops.each { |operator| add(operator) }
 			end
+			
+			#Return a deep copy of this operator
 
+			def deep_clone
+				my_clone = self.clone
+				my_clone.instance_variable_set(:@operators, [])
+				@operators.each do |operators|
+					my_clone.add( operators[0].deep_clone, operators[1])
+				end
+				my_clone
+			end
 
 			# default probability is 1.0
 
