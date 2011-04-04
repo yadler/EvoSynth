@@ -36,6 +36,12 @@ module EvoSynth
 				@alpha = alpha
 			end
 
+			#Return a deep copy of the configuration
+
+			def deep_clone
+				self.clone
+			end
+
 			def adjust(sigma)
 				sigma * @alpha
 			end
