@@ -38,6 +38,12 @@ module EvoSynth
 				@step_size = step_size
 			end
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def mutate(individual)
 				mutated = individual.deep_clone
 				genome = mutated.genome

@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class UniformRealMutationTest < Test::Unit::TestCase
@@ -58,8 +58,19 @@ class UniformRealMutationTest < Test::Unit::TestCase
 			should "all genes of the child be in the around +/- #{DELTA} of #{VALUE}" do
 				@mutated.genome.each { |gene| assert_in_delta VALUE, gene, DELTA }
 			end
+		end
+	end
 
+	context "after mutation is instantiated with probabiliy=#{PROBABILITY} and step_size=#{DELTA}" do
+		setup do
+			@mutation = EvoSynth::Mutations::UniformRealMutation.new(PROBABILITY, DELTA)
 		end
 
+		should "deep_clone returns a deep copy" do
+			my_clone = @mutation.deep_clone
+			assert_not_equal my_clone.object_id, @mutation.object_id
+			assert_equal my_clone.instance_variable_get(:@probability), PROBABILITY
+			assert_equal my_clone.instance_variable_get(:@step_size), DELTA
+		end
 	end
 end
