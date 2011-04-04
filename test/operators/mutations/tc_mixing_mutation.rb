@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class MixingMutationTest < Test::Unit::TestCase
@@ -67,7 +67,16 @@ class MixingMutationTest < Test::Unit::TestCase
 			end
 
 		end
-
 	end
 
+	context "after mutation is instantiated" do
+		setup do
+			@mutation = EvoSynth::Mutations::MixingMutation.new
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @mutation.deep_clone
+			assert_not_equal my_clone.object_id, @mutation.object_id
+		end
+	end
 end
