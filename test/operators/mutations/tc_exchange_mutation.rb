@@ -25,12 +25,13 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class ExchangeMutationTest < Test::Unit::TestCase
 
 	MAX_NUM = 20
+	SWAP_COUNT = 4
 
 	context "when run on a permutation genome (size=#{MAX_NUM})" do
 		setup do
@@ -77,7 +78,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 
 		context "after exchange mutation is executed" do
 			setup do
-				mutation = EvoSynth::Mutations::ExchangeMutation.new(3)
+				mutation = EvoSynth::Mutations::ExchangeMutation.new(SWAP_COUNT)
 				@mutated = mutation.mutate(@individual)
 			end
 
@@ -89,7 +90,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 			should "three genes should not be in order" do
 				failed = 0
 				@mutated.genome.each_with_index { |gene, index| failed += 1 if gene != @individual.genome[index] }
-				assert_equal 3, failed
+				assert_equal SWAP_COUNT, failed
 			end
 		end
 	end
@@ -108,7 +109,7 @@ class ExchangeMutationTest < Test::Unit::TestCase
 
 		context "after exchange mutation is executed" do
 			setup do
-				mutation = EvoSynth::Mutations::ExchangeMutation.new(4)
+				mutation = EvoSynth::Mutations::ExchangeMutation.new(SWAP_COUNT)
 				@mutated = mutation.mutate(@individual)
 			end
 
@@ -120,7 +121,19 @@ class ExchangeMutationTest < Test::Unit::TestCase
 			should "three genes should not be in order" do
 				failed = 0
 				@mutated.genome.each_with_index { |gene, index| failed += 1 if gene != @individual.genome[index] }
-				assert_equal 4, failed
+				assert_equal SWAP_COUNT, failed
+			end
+		end
+
+		context "after mutation is instantiated with swap_count =#{SWAP_COUNT})" do
+			setup do
+				@mutation = EvoSynth::Mutations::ExchangeMutation.new(SWAP_COUNT)
+			end
+
+			should "deep_clone returns a deep copy" do
+				my_clone = @mutation.deep_clone
+				assert_not_equal my_clone.object_id, @mutation.object_id
+				assert_equal my_clone.instance_variable_get(:@swap_count), SWAP_COUNT
 			end
 		end
 	end
