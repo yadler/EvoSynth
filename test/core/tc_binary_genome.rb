@@ -61,7 +61,7 @@ class BinaryGenomeTest < Test::Unit::TestCase
 			my_clone = @genome.clone
 			assert_equal my_clone.changed?, @genome.changed?
 			assert_not_equal my_clone.object_id, @genome.object_id
-			assert my_clone.kind_of?(EvoSynth::BinaryGenome)
+			assert_kind_of EvoSynth::BinaryGenome, my_clone
 		end
 	end
 

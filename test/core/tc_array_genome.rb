@@ -43,13 +43,13 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		should "clone returns a new object" do
 			my_clone = @genome.clone
 			assert_not_equal my_clone.object_id, @genome.object_id
-			assert my_clone.kind_of?(EvoSynth::ArrayGenome)
+			assert_kind_of EvoSynth::ArrayGenome, my_clone
 		end
 
 		should "deep_clone returns a new object" do
 			my_clone = @genome.deep_clone
 			assert_not_equal my_clone.object_id, @genome.object_id
-			assert my_clone.kind_of?(EvoSynth::ArrayGenome)
+			assert_kind_of EvoSynth::ArrayGenome, my_clone
 		end
 	end
 
@@ -79,13 +79,13 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		end
 
 		should "clone do nothing to changed" do
-			clonedgenome = @genome.clone
-			assert clonedgenome.changed?
+			my_clone = @genome.clone
+			assert my_clone.changed?
 		end
 
 		should "deep_clone do nothing to changed" do
-			clonedgenome = @genome.deep_clone
-			assert clonedgenome.changed?
+			my_clone = @genome.deep_clone
+			assert my_clone.changed?
 		end
 	end
 
@@ -197,13 +197,13 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		end
 
 		should "clone do nothing to changed" do
-			clonedgenome = @genome.clone
-			assert !clonedgenome.changed?	
+			my_clone = @genome.clone
+			assert !my_clone.changed?
 		end
 
 		should "deep_clone do nothing to changed" do
-			clonedgenome = @genome.deep_clone
-			assert !clonedgenome.changed?
+			my_clone = @genome.deep_clone
+			assert !my_clone.changed?
 		end
 	end
 
