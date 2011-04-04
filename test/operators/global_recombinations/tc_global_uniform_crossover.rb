@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class GlobalUniformCrossoverTest < Test::Unit::TestCase
@@ -57,10 +57,10 @@ class GlobalUniformCrossoverTest < Test::Unit::TestCase
 
 		context "after recombination is executed #{TIMES} times" do
 			setup do
-				recombination = EvoSynth::GlobalRecombinations::GlobalUniformCrossover.new
+				@recombination = EvoSynth::GlobalRecombinations::GlobalUniformCrossover.new
 				@count_false, @count_true = 0, 0
 				TIMES.times do
-					child = recombination.recombine(@population)
+					child = @recombination.recombine(@population)
 					child.genome.each do |gene|
 						if gene == true
 							@count_true += 1
@@ -82,6 +82,12 @@ class GlobalUniformCrossoverTest < Test::Unit::TestCase
 			should "around 50% of the genes should have mutated to false" do
 				assert_in_delta((GENOME_SIZE/2)*TIMES, @count_true, DELTA * (GENOME_SIZE/2) * TIMES)
 				assert_in_delta((GENOME_SIZE/2)*TIMES, @count_false, DELTA * (GENOME_SIZE/2) * TIMES)
+			end
+
+			should "deep_clone returns a new deep copy" do
+				my_clone = @recombination.deep_clone
+				assert_not_equal my_clone.object_id, @recombination.object_id
+				assert my_clone.kind_of?(EvoSynth::GlobalRecombinations::GlobalUniformCrossover)
 			end
 		end
 

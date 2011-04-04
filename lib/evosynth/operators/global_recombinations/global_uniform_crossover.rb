@@ -28,6 +28,11 @@ module EvoSynth
 		#	GLOBALER-UNIFORMER-CROSSOVER (Weicker Page 137)
 
 		class GlobalUniformCrossover
+			#Return a deep copy of the configuration
+
+			def deep_clone
+				self.clone
+			end
 
 			def recombine(population)
 				child = population[EvoSynth.rand(population.size)].deep_clone
