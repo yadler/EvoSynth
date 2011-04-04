@@ -33,7 +33,7 @@ module EvoSynth
 				@operators = []
 			end
 
-			#Return a deep copy of the configuration
+			#Return a deep copy of this operator
 
 			def deep_clone
 				my_clone = self.clone
