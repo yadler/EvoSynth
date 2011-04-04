@@ -74,6 +74,7 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 				assert_equal my_clone.probability, PROBABILITY
 				assert_equal my_clone.instance_variable_get(:@next_index),
 										 @binary_mutation.instance_variable_get(:@next_index)
+				assert_kind_of EvoSynth::Mutations::EfficientBinaryMutation, my_clone
 			end
 		end
 	end

@@ -71,6 +71,7 @@ class UniformRealMutationTest < Test::Unit::TestCase
 			assert_not_equal my_clone.object_id, @mutation.object_id
 			assert_equal my_clone.instance_variable_get(:@probability), PROBABILITY
 			assert_equal my_clone.instance_variable_get(:@step_size), DELTA
+			assert_kind_of EvoSynth::Mutations::UniformRealMutation, my_clone
 		end
 	end
 end

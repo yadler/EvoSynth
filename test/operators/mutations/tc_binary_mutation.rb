@@ -78,6 +78,7 @@ class BinaryMutationTest < Test::Unit::TestCase
 				assert_not_equal my_clone.flip_function.object_id, @binary_mutation.flip_function.object_id
 				assert_equal my_clone.flip_function, FLIP_FUNCTION
 				assert_equal my_clone.probability, PROBABILITY
+				assert_kind_of EvoSynth::Mutations::BinaryMutation, my_clone
 			end
 		end
 	end

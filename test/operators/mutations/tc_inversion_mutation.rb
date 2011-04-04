@@ -75,6 +75,7 @@ class InversionMutationTest < Test::Unit::TestCase
 		should "deep_clone returns a deep copy" do
 			my_clone = @mutation.deep_clone
 			assert_not_equal my_clone.object_id, @mutation.object_id
+			assert_kind_of EvoSynth::Mutations::InversionMutation, my_clone
 		end
 	end
 end

@@ -116,6 +116,7 @@ class OneGeneFlippingTest < Test::Unit::TestCase
 			my_clone = @mutation.deep_clone
 			assert_not_equal my_clone.object_id, @mutation.object_id
 			assert_not_equal my_clone.flip_function.object_id, @mutation.flip_function.object_id
+			assert_kind_of EvoSynth::Mutations::OneGeneFlipping, my_clone
 		end
 	end
 end

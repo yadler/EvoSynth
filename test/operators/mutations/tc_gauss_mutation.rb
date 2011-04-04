@@ -46,6 +46,7 @@ class GaussMutationTest < Test::Unit::TestCase
 			assert_equal my_clone.sigma, @mutation.sigma
 			assert_equal my_clone.lower_bound, @mutation.lower_bound
 			assert_equal my_clone.upper_bound, @mutation.upper_bound
+			assert_kind_of EvoSynth::Mutations::GaussMutation, my_clone
 		end
 	end
 
