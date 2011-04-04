@@ -39,6 +39,12 @@ module EvoSynth
 				@theta = theta
 			end
 
+			#Return a deep copy of the configuration
+			
+			def deep_clone
+				self.clone
+			end
+
 			def adjust(sigma, success_rate = DEFAULT_SUCCESS_RATE)
 				if success_rate > @theta
 					sigma * @alpha

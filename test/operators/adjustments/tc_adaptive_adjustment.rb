@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class AdaptiveAjustmentTest < Test::Unit::TestCase
@@ -57,6 +57,15 @@ class AdaptiveAjustmentTest < Test::Unit::TestCase
 			assert_equal sigma,  @adjustment.adjust(sigma, THETA)
 			sigma = 3
 			assert_equal sigma,  @adjustment.adjust(sigma, THETA)
+		end
+
+		should "deep_clone returns a new deep copy" do
+			my_clone = @adjustment.deep_clone
+			assert_not_equal my_clone.object_id, @adjustment.object_id
+			assert my_clone.kind_of? (EvoSynth::Adjustments::AdaptiveAdjustment)
+			my_clone.alpha, my_clone.theta = 0.8, 0.3
+			assert_not_equal my_clone.alpha, @adjustment.alpha
+			assert_not_equal my_clone.theta, @adjustment.theta
 		end
 	end
 
