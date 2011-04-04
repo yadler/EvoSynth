@@ -41,11 +41,15 @@ class ArrayGenomeTest < Test::Unit::TestCase
 		end
 
 		should "clone returns a new object" do
-			assert_not_equal @genome.clone.object_id, @genome.object_id
+			my_clone = @genome.clone
+			assert_not_equal my_clone.object_id, @genome.object_id
+			assert my_clone.kind_of?(EvoSynth::ArrayGenome)
 		end
 
 		should "deep_clone returns a new object" do
-			assert_not_equal @genome.deep_clone.object_id, @genome.object_id
+			my_clone = @genome.deep_clone
+			assert_not_equal my_clone.object_id, @genome.object_id
+			assert my_clone.kind_of?(EvoSynth::ArrayGenome)
 		end
 	end
 
@@ -54,12 +58,16 @@ class ArrayGenomeTest < Test::Unit::TestCase
 			@genome = EvoSynth::ArrayGenome.new(GENOME_SIZE) {EvoSynth.rand_bool}
 		end
 
-		should "clone returns a copy" do
-			assert_equal @genome.clone, @genome
+		should "clone returns a shallow copy" do
+			my_clone = @genome.clone
+			assert_equal my_clone, @genome
+			assert_not_equal  my_clone.object_id, @genome.object_id
 		end
 
-		should "deep_clone returns a copy" do
-			assert_equal @genome.deep_clone, @genome
+		should "deep_clone returns a deep copy" do
+			my_clone = @genome.deep_clone
+			assert_equal my_clone, @genome
+			assert_not_equal  my_clone.object_id, @genome.object_id
 		end
 	end
 	

@@ -51,28 +51,17 @@ class BinaryGenomeTest < Test::Unit::TestCase
 			assert_equal 1, @genome[0]
 		end
 
-		should "clone work as expected" do
-			@genome.changed = false
-			foo = @genome.clone
-			assert_equal foo.changed?, @genome.changed?
-			@genome.flip!(0)
-			assert_not_equal foo[0], @genome[0]
-			assert_not_equal foo.changed?, @genome.changed?
-			foo = @genome.clone
-			assert_equal foo.changed?, @genome.changed?
-			assert_not_equal foo.object_id, @genome.object_id
-		end
-
 		should "deep_clone work as expected" do
 			@genome.changed = false
-			foo = @genome.clone
-			assert_equal foo.changed?, @genome.changed?
+			my_clone = @genome.clone
+			assert_equal my_clone.changed?, @genome.changed?
 			@genome.flip!(0)
-			assert_not_equal foo[0], @genome[0]
-			assert_not_equal foo.changed?, @genome.changed?
-			foo = @genome.clone
-			assert_equal foo.changed?, @genome.changed?
-			assert_not_equal foo.object_id, @genome.object_id
+			assert_not_equal my_clone[0], @genome[0]
+			assert_not_equal my_clone.changed?, @genome.changed?
+			my_clone = @genome.clone
+			assert_equal my_clone.changed?, @genome.changed?
+			assert_not_equal my_clone.object_id, @genome.object_id
+			assert my_clone.kind_of?(EvoSynth::BinaryGenome)
 		end
 	end
 
