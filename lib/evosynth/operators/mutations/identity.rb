@@ -31,6 +31,13 @@ module EvoSynth
 
 		class Identity
 
+
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
 			#
