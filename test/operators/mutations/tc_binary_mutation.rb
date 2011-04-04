@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class BinaryMutationTest < Test::Unit::TestCase
@@ -67,7 +67,18 @@ class BinaryMutationTest < Test::Unit::TestCase
 				assert_in_delta EXPECTED, @count, EXPECTED * DELTA
 			end
 		end
+		
+		context "after mutation is instantiated with probability=#{PROBABILITY})" do
+			setup do
+				@binary_mutation = EvoSynth::Mutations::BinaryMutation.new(FLIP_FUNCTION, PROBABILITY)
+			end
 
+			should "deep_clone returns a deep copy" do
+				my_clone = @binary_mutation.deep_clone
+				assert_not_equal my_clone.flip_function.object_id, @binary_mutation.flip_function.object_id
+				assert_equal my_clone.flip_function, FLIP_FUNCTION
+				assert_equal my_clone.probability, PROBABILITY
+			end
+		end
 	end
-
 end
