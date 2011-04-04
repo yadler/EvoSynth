@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class GaussMutationTest < Test::Unit::TestCase
@@ -34,6 +34,20 @@ class GaussMutationTest < Test::Unit::TestCase
 	DELTA = 0.2 # TODO: try to lower it to 0.08 => why the heck is 1.0 and -1.0 not as correct as the other values? test with delta == 0.05!
 	VALUE = 8.0
 	MAX_DELTA = 3.5
+
+	context "after mutation is instantiated" do
+		setup do
+			@mutation = EvoSynth::Mutations::GaussMutation.new
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @mutation.deep_clone
+			assert_not_equal my_clone.object_id, @mutation.object_id
+			assert_equal my_clone.sigma, @mutation.sigma
+			assert_equal my_clone.lower_bound, @mutation.lower_bound
+			assert_equal my_clone.upper_bound, @mutation.upper_bound
+		end
+	end
 
 	context "when run on a float genome = #{VALUE}" do
 		setup do

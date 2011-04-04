@@ -42,6 +42,12 @@ module EvoSynth
 				@upper_bound = upper_bound
 			end
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def mutate(individual)
 				mutated = individual.deep_clone
 
