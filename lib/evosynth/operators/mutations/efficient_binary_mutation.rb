@@ -61,6 +61,14 @@ module EvoSynth
 				@probability = probability
 			end
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				my_clone = self.clone
+				my_clone.flip_function = @flip_function.clone
+				my_clone
+			end
+
 			#	:call-seq:
 			#		mutate(Individual) -> Individual
 			#

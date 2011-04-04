@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class EfficientBinaryMutationTest < Test::Unit::TestCase
@@ -51,10 +51,10 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 
 		context "after mutation is executed #{TIMES} times (with probability=#{PROBABILITY})" do
 			setup do
-				binary_mutation = EvoSynth::Mutations::EfficientBinaryMutation.new(FLIP_FUNCTION, PROBABILITY)
+				@binary_mutation = EvoSynth::Mutations::EfficientBinaryMutation.new(FLIP_FUNCTION, PROBABILITY)
 				@count = 0.0
 				TIMES.times do
-					mutated = binary_mutation.mutate(@individual)
+					mutated = @binary_mutation.mutate(@individual)
 					mutated.genome.each { |gene| @count += 1 if !gene }
 				end
 			end
@@ -66,8 +66,15 @@ class EfficientBinaryMutationTest < Test::Unit::TestCase
 			should "around #{EXPECTED} (+/- #{EXPECTED * DELTA}) genes should have mutated to false" do
 				assert_in_delta EXPECTED, @count, EXPECTED * DELTA
 			end
+			
+			should "deep_clone returns a deep copy" do
+				my_clone = @binary_mutation.deep_clone
+				assert_not_equal my_clone.flip_function.object_id, @binary_mutation.flip_function.object_id
+				assert_equal my_clone.flip_function, FLIP_FUNCTION
+				assert_equal my_clone.probability, PROBABILITY
+				assert_equal my_clone.instance_variable_get(:@next_index),
+										 @binary_mutation.instance_variable_get(:@next_index)
+			end
 		end
-
 	end
-
 end
