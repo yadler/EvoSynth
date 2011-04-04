@@ -111,7 +111,9 @@ module EvoSynth
 		def deep_clone
 			my_clone = self.clone
 			my_clone.properties = @properties.clone
-			my_clone.properties.each_key { |key| my_clone.properties[key] = my_clone.properties[key].deep_clone}
+			my_clone.properties.each_key do |key|
+				my_clone.properties[key] = my_clone.properties[key].deep_clone
+			end
 			my_clone
 		end
 
