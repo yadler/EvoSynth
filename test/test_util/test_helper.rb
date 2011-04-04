@@ -33,6 +33,9 @@ class TestMutationA
 		@called += 1
 		"A"
 	end
+	def deep_clone
+		self.clone
+	end
 end
 
 
@@ -45,6 +48,9 @@ class TestMutationB
 		@called += 1
 		"B"
 	end
+	def deep_clone
+		self.clone
+	end
 end
 
 class TestMutationC
@@ -55,6 +61,9 @@ class TestMutationC
 	def mutate(individual)
 		@called += 1
 		"C"
+	end
+	def deep_clone
+		self.clone
 	end
 end
 
@@ -67,6 +76,9 @@ class TestRecombinationA
 		@called += 1
 		["RecA", "RecA"]
 	end
+	def deep_clone
+		self.clone
+	end
 end
 
 class TestRecombinationB
@@ -77,6 +89,9 @@ class TestRecombinationB
 	def recombine(parent_one, parent_two)
 		@called += 1
 		["RecB", "RecB"]
+	end
+	def deep_clone
+		self.clone
 	end
 end
 
