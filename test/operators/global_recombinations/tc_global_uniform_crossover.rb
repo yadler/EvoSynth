@@ -87,10 +87,8 @@ class GlobalUniformCrossoverTest < Test::Unit::TestCase
 			should "deep_clone returns a new deep copy" do
 				my_clone = @recombination.deep_clone
 				assert_not_equal my_clone.object_id, @recombination.object_id
-				assert my_clone.kind_of?(EvoSynth::GlobalRecombinations::GlobalUniformCrossover)
+				assert_kind_of EvoSynth::GlobalRecombinations::GlobalUniformCrossover, my_clone
 			end
 		end
-
 	end
-
 end
