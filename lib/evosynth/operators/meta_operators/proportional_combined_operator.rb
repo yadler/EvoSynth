@@ -36,6 +36,16 @@ module EvoSynth
 				ops.each { |operator| add(operator) }
 			end
 
+			#Return a deep copy of the configuration
+
+			def deep_clone
+				my_clone = self.clone
+				my_clone.instance_variable_set(:@operators, [])
+				@operators.each do |operators|
+					my_clone.add( operators[0].deep_clone, operators[1])
+				end
+				my_clone
+			end
 
 			def add(operator, probability = 1.0 / (@operators.size > 0 ? @operators.size : 1.0))
 				@operators << [operator, probability]
