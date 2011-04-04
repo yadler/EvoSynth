@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 # FIXME: add some meaningful test here
 
@@ -67,6 +67,19 @@ class SelfadaptiveGaussMutationTest < Test::Unit::TestCase
 				assert_in_delta 1.0, @mutated.sigma, 2.5
 			end
 		end
+	end
 
+	context "after mutation is instantiated" do
+		setup do
+			@mutation =  EvoSynth::Mutations::SelfAdaptiveGaussMutation.new
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @mutation.deep_clone
+			assert_not_equal my_clone.object_id, @mutation.object_id
+			assert_equal my_clone.initial_sigma, @mutation.initial_sigma
+			assert_equal my_clone.lower_bound, @mutation.lower_bound
+			assert_equal my_clone.upper_bound, @mutation.upper_bound
+		end
 	end
 end
