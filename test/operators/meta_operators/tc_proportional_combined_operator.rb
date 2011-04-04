@@ -176,9 +176,9 @@ class ProportionalCombinedOperatorTest < Test::Unit::TestCase
 				assert_equal my_clone.instance_variable_get(:@operators)[index][1],
 											@combinded_operator.instance_variable_get(:@operators)[index][1]
 			end
-			assert my_clone.instance_variable_get(:@operators)[0][0].kind_of?(TestMutationA)
-			assert my_clone.instance_variable_get(:@operators)[1][0].kind_of?(TestMutationB)
-			assert my_clone.instance_variable_get(:@operators)[2][0].kind_of?(TestMutationC)
+			assert_kind_of TestMutationA, my_clone.instance_variable_get(:@operators)[0][0]
+			assert_kind_of TestMutationB, my_clone.instance_variable_get(:@operators)[1][0]
+			assert_kind_of TestMutationC, my_clone.instance_variable_get(:@operators)[2][0]
 		end
 	end
 end
