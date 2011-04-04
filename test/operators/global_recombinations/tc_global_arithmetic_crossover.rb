@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class GlobalArithmeticCrossoverTest < Test::Unit::TestCase
@@ -55,8 +55,8 @@ class GlobalArithmeticCrossoverTest < Test::Unit::TestCase
 
 		context "after recombination is executed #{TIMES} times" do
 			setup do
-				recombination = EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover.new
-				@child = recombination.recombine(@population)
+				@recombination = EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover.new
+				@child = @recombination.recombine(@population)
 			end
 
 			should "all genes of the parent one should (still) be 1.0" do
@@ -69,6 +69,12 @@ class GlobalArithmeticCrossoverTest < Test::Unit::TestCase
 
 			should "all genes of the child should equal 0.5" do
 				@child.genome.each { |gene| assert_equal 1.5, gene }
+			end
+
+			should "deep_clone returns a new deep copy" do
+				my_clone = @recombination.deep_clone
+				assert_not_equal my_clone.object_id, @recombination.object_id
+				assert my_clone.kind_of?(EvoSynth::GlobalRecombinations::GlobalArithmeticCrossover)
 			end
 
 		end
