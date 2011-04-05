@@ -30,6 +30,12 @@ module EvoSynth
 
 		class Identity
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Population.new
 				selected_population << population.first(select_count)

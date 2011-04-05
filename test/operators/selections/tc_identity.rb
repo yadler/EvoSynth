@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class IdentityTest < Test::Unit::TestCase
@@ -85,7 +85,17 @@ class IdentityTest < Test::Unit::TestCase
 			result = identity.select(population, 3)
 			assert_equal expected, result
 		end
-
 	end
 
+	context "after selection is instantiated" do
+		setup do
+			@selection = EvoSynth::Selections::Identity.new
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @selection.deep_clone
+			assert_not_equal my_clone.object_id, @selection.object_id
+			assert_kind_of EvoSynth::Selections::Identity, my_clone
+		end
+	end
 end
