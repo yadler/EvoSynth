@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 
@@ -42,6 +42,11 @@ class PartiallyMappedCrossoverTest < Test::Unit::TestCase
 			assert_raise(RuntimeError) { @child_one, @child_two = @recombination.recombine(@individual_one, @individual_two) }
 		end
 
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_kind_of EvoSynth::Recombinations::PartiallyMappedCrossover, my_clone
+		end
 	end
 
 	context "a partially mapped crossover run on example genome (Weicker page 133)" do
