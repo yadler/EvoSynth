@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class KPointCrossoverTest < Test::Unit::TestCase
@@ -42,6 +42,13 @@ class KPointCrossoverTest < Test::Unit::TestCase
 			@individual_one.genome.map! { |gene| true }
 			@individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_two.genome.map! { |gene| false }
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_kind_of EvoSynth::Recombinations::KPointCrossover, my_clone
+			assert_equal my_clone.k, K
 		end
 
 		context "before k-point-crossover is executed" do
