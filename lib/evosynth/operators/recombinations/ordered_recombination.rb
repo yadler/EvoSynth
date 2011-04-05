@@ -35,6 +35,12 @@ module EvoSynth
 
 		class OrderedRecombination
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def recombine(parent_one, parent_two)
 				shorter = EvoSynth::Recombinations.individual_with_shorter_genome(parent_one, parent_two)
 

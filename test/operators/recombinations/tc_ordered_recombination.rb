@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 class OrderedRecombinationTest < Test::Unit::TestCase
 
@@ -36,6 +36,12 @@ class OrderedRecombinationTest < Test::Unit::TestCase
 
 			@individual_one = TestArrayGenomeIndividual.new([1,4,8,6,5,7,2,3])
 			@individual_two = TestArrayGenomeIndividual.new([1,2,3,4,8,5,6,7])
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_kind_of EvoSynth::Recombinations::OrderedRecombination, my_clone
 		end
 
 		context "before the ordered recombination is executed" do
