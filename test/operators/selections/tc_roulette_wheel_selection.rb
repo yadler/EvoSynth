@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class RouletteWheelSelectionTest < Test::Unit::TestCase
@@ -37,7 +37,7 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 	context "when run on a population of minimizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+			roulette_wheel_selection = EvoSynth::Selections::RouletteWheelSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 
@@ -47,7 +47,7 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 			expected.add(TestMinimizingIndividual.new(1))
 
 			SELECT_N_TIMES.times do
-				result = fitness_proportional_selection.select(population, 1)
+				result = roulette_wheel_selection.select(population, 1)
 				assert_equal expected, result
 			end
 		end
@@ -57,7 +57,7 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 	context "when run on a population of maximizing individuals " do
 
 		should "select a super-individual" do
-			fitness_proportional_selection = EvoSynth::Selections::RouletteWheelSelection.new
+			roulette_wheel_selection = EvoSynth::Selections::RouletteWheelSelection.new
 			population = EvoSynth::Population.new
 			expected = EvoSynth::Population.new
 
@@ -67,12 +67,21 @@ class RouletteWheelSelectionTest < Test::Unit::TestCase
 			expected.add(TestMaximizingIndividual.new(MAX_VALUE))
 
 			SELECT_N_TIMES.times do
-				result = fitness_proportional_selection.select(population, 1)
+				result = roulette_wheel_selection.select(population, 1)
 				assert_equal expected, result
 			end
 		end
-
 	end
 
+	context "after selection is instantiated" do
+		setup do
+			@selection = EvoSynth::Selections::RouletteWheelSelection.new
+		end
 
+		should "deep_clone returns a deep copy" do
+			my_clone = @selection.deep_clone
+			assert_not_equal my_clone.object_id, @selection.object_id
+			assert_kind_of EvoSynth::Selections::RouletteWheelSelection, my_clone
+		end
+	end
 end

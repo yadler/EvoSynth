@@ -30,6 +30,12 @@ module EvoSynth
 
 		class RouletteWheelSelection < EvoSynth::Selections::FitnessProportionalSelection
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Population.new
 				fitness_hash = generate_fitness_hash(population)
