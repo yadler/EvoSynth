@@ -29,6 +29,12 @@ module EvoSynth
 
 		class UniformCrossover
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def recombine(individual_one, individual_two)
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone

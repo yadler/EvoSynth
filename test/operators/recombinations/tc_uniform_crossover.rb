@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class UniformCrossoverTest < Test::Unit::TestCase
@@ -38,10 +38,17 @@ class UniformCrossoverTest < Test::Unit::TestCase
 
 	context "when run on binary genome (size=#{GENOME_SIZE})" do
 		setup do
+			@recombination = EvoSynth::Recombinations::UniformCrossover.new
 			@individual_one = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_one.genome.map! { |gene| true }
 			@individual_two = TestArrayBinaryIndividual.new(GENOME_SIZE)
 			@individual_two.genome.map! { |gene| false }
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_kind_of EvoSynth::Recombinations::UniformCrossover, my_clone
 		end
 
 		context "before recombination is executed" do
@@ -56,10 +63,9 @@ class UniformCrossoverTest < Test::Unit::TestCase
 
 		context "after recombination is executed #{TIMES} times" do
 			setup do
-				uniform_crossover = EvoSynth::Recombinations::UniformCrossover.new
 				@count = [0, 0]
 				TIMES.times do
-					child_one, child_two = uniform_crossover.recombine(@individual_one, @individual_two)
+					child_one, child_two = @recombination.recombine(@individual_one, @individual_two)
 					child_one.genome.each { |gene| @count[0] += 1 if !gene }
 					child_two.genome.each { |gene| @count[1] += 1 if !gene }
 				end
@@ -78,7 +84,5 @@ class UniformCrossoverTest < Test::Unit::TestCase
 				assert_in_delta EXPECTED, @count[1], DELTA * EXPECTED
 			end
 		end
-
 	end
-
 end
