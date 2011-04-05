@@ -27,6 +27,12 @@ module EvoSynth
 
 		class RandomSelection
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Population.new
 				select_count.to_i.times { selected_population << population[EvoSynth.rand(population.size)] }
