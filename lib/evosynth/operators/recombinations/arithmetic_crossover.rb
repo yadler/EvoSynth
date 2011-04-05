@@ -42,6 +42,14 @@ module EvoSynth
 				@interpolation_function = interpolation_function
 			end
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				my_clone = self.clone
+				my_clone.instance_variable_set(:@interpolation_function, @interpolation_function.clone)
+				my_clone
+			end
+
 			def recombine(individual_one, individual_two)
 				child_one = individual_one.deep_clone
 				child_two = individual_two.deep_clone

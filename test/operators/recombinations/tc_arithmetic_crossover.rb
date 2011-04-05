@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class ArithmeticCrossoverTest < Test::Unit::TestCase
@@ -43,6 +43,14 @@ class ArithmeticCrossoverTest < Test::Unit::TestCase
 			GENOME_SIZE.times { |i| genome_one << i; genome_two << GENOME_SIZE - i }
 			@individual_one = TestArrayGenomeIndividual.new(genome_one)
 			@individual_two = TestArrayGenomeIndividual.new(genome_two)
+		end
+		
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_not_equal my_clone.instance_variable_get(:@interpolation_function).object_id,
+											 @recombination.instance_variable_get(:@interpolation_function).object_id
+			assert_kind_of EvoSynth::Recombinations::ArithmeticCrossover, my_clone
 		end
 
 		context "before recombination is executed" do
