@@ -28,6 +28,12 @@ module EvoSynth
 
 		class OnePointCrossover
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def recombine(parent_one, parent_two)
 				child_one = parent_one.deep_clone
 				child_two = parent_two.deep_clone

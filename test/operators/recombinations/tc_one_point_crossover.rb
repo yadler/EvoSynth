@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class OnePointCrossoverTest < Test::Unit::TestCase
@@ -43,6 +43,12 @@ class OnePointCrossoverTest < Test::Unit::TestCase
 			@individual_two.genome.map! { |gene| false }
 		end
 
+		should "deep_clone returns a deep copy" do
+			my_clone = @recombination.deep_clone
+			assert_not_equal my_clone.object_id, @recombination.object_id
+			assert_kind_of EvoSynth::Recombinations::OnePointCrossover, my_clone
+		end
+		
 		context "before one-point-crossover is executed" do
 
 			should "all genes of individual one should be true" do
