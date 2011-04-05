@@ -38,6 +38,12 @@ module EvoSynth
 				@enemies = enemies
 			end
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def select(population, select_count = 1)
 				selected_population = EvoSynth::Population.new
 
