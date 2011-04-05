@@ -25,7 +25,7 @@
 require 'shoulda'
 
 require 'evosynth'
-require './test/test_util/test_helper'
+require_relative '../../../test/test_util/test_helper'
 
 
 class SelectBestTest < Test::Unit::TestCase
@@ -79,7 +79,17 @@ class SelectBestTest < Test::Unit::TestCase
 			result = select_best.select(population, 2)
 			assert_equal expected, result
 		end
-
 	end
 
+	context "after selection is instantiated" do
+		setup do
+			@selection = EvoSynth::Selections::SelectBest.new
+		end
+
+		should "deep_clone returns a deep copy" do
+			my_clone = @selection.deep_clone
+			assert_not_equal my_clone.object_id, @selection.object_id
+			assert_kind_of EvoSynth::Selections::SelectBest, my_clone
+		end
+	end
 end
