@@ -34,6 +34,12 @@ module EvoSynth
 
 		class EdgeRecombination
 
+			#Return a deep copy of this operator
+
+			def deep_clone
+				self.clone
+			end
+
 			def recombine(parent_one, parent_two)
 				child_one = recombine_to_one(parent_one, parent_two)
 				child_two = recombine_to_one(parent_two, parent_one)
