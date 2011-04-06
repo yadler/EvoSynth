@@ -112,7 +112,16 @@ module EvoSynth
 			my_clone = self.clone
 			my_clone.properties = @properties.clone
 			my_clone.properties.each_key do |key|
-				my_clone.properties[key] = my_clone.properties[key].deep_clone
+				unless [ true, false, nil ].include?(my_clone.properties[key]) \
+							|| my_clone.properties[key].is_a?(Numeric)
+					if my_clone.properties[key].is_a?(String) \
+					|| my_clone.properties[key].is_a?(Range) \
+					|| my_clone.properties[key].is_a?(Proc)
+						my_clone.properties[key] = my_clone.properties[key].clone
+					else
+						my_clone.properties[key] = my_clone.properties[key].deep_clone
+					end
+				end
 			end
 			my_clone
 		end

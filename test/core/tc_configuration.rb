@@ -72,11 +72,17 @@ class ConfigurationTest < Test::Unit::TestCase
 
 	end
 
-	context "when initialized with objects which implements deep_clone" do
+	context "when initialized with standarttypes or objects which implements deep_clone" do
 		setup do
 			@configuration = EvoSynth::Configuration.new do |conf|
 				conf.individual	= EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } )
 				conf.population	= EvoSynth::Population.new(20) { EvoSynth::MaximizingIndividual.new( EvoSynth::ArrayGenome.new(64) { EvoSynth.rand_bool } ) }
+				conf.floatvalue = 1.2
+				conf.truevalue = true
+				conf.intvalue = 29234
+				conf.stringvalue = "test"
+				conf.rangevalue = (1..10)
+				conf.procvalue = lambda { |param| puts "#{param}" }
 			end
 		end
 
@@ -85,11 +91,22 @@ class ConfigurationTest < Test::Unit::TestCase
 			assert_not_equal my_clone.object_id, @configuration.object_id
 			assert_not_equal my_clone.properties.object_id, @configuration.properties.object_id
 			my_clone.properties.each_key do |key|
-				assert_not_equal my_clone.properties[key].object_id, @configuration.properties[key].object_id
+				cond_one = my_clone.properties[key].object_id <= 4
+				cond_two = my_clone.properties[key].object_id % 2 == 0
+				cond_three = my_clone.properties[key].is_a?(Numeric)
+				unless  (cond_one && cond_two) || cond_three
+						assert_not_equal my_clone.properties[key].object_id, @configuration.properties[key].object_id
+				end
 			end
 			assert_kind_of EvoSynth::Configuration, my_clone
 			assert_kind_of EvoSynth::MaximizingIndividual, my_clone.properties[:individual]
 			assert_kind_of EvoSynth::Population, my_clone.properties[:population]
+			assert_kind_of Numeric, my_clone.properties[:floatvalue]
+			assert_kind_of TrueClass, my_clone.properties[:truevalue]
+			assert_kind_of Numeric, my_clone.properties[:intvalue]
+			assert_kind_of String, my_clone.properties[:stringvalue]
+			assert_kind_of Range, my_clone.properties[:rangevalue]
+			assert_kind_of Proc, my_clone.properties[:procvalue]
 			assert_equal my_clone.properties[:individual].fitness, @configuration.properties[:individual].fitness
 		end
 	end
