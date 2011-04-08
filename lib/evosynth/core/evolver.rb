@@ -57,6 +57,17 @@ module EvoSynth
 		#	    evolver.individual = MaxOnes.create_individual
 		#	    evolver.evaluator  = MaxOnes::MaxOnesEvaluator.new
 		#	end
+		#	
+		# or:required_parameters?
+		#
+		#	evolver = EvoSynth::Evolver.new(config) do |evolver|
+		#	    evolver.individual = MaxOnes.create_individual
+		#	    evolver.evaluator  = MaxOnes::MaxOnesEvaluator.new
+		#	end
+		#
+		# Note:	The block-invocation have a higher priority than initializing
+		#				with config. The last example implies that config will be
+		#				overwritten.
 
 		def initialize(configuration = nil) #:yields: self
 			@generations_computed = 0
@@ -65,9 +76,24 @@ module EvoSynth
 			create_accessors_for_parameters(required_parameters?)
 			set_default_values!
 			use_configuration(configuration) unless configuration.nil?
-			yield self if block_given?
+			if block_given?
+				yield self
+				generate_configuration!
+			end
 			valid_configuration?
 			setup!
+		end
+
+		#Returns a deep copy of this genome
+
+		def deep_clone
+			my_clone = self.clone
+			my_clone.instance_variable_set(:@parameters, @parameters.clone)
+			properties = @parameters.clone
+			properties.each_key { |key| properties[key] = self.send(key) }
+			my_clone.use_configuration(EvoSynth::Configuration.new(properties).deep_clone)
+			my_clone.instance_variable_set(:@configuration, @configuration.deep_clone)
+			my_clone
 		end
 
 		# TODO: rdoc
@@ -238,13 +264,22 @@ module EvoSynth
 		# set a given configuration (deep clones the given configuration!!)
 
 		def set_configuration(configuration)
-			@configuration = configuration.clone
+			@configuration = configuration.deep_clone
 			@parameters.each_pair do |key, default_value|
 				value = configuration.send("#{key.id2name}") rescue nil
 				self.send("#{key.id2name}=".to_sym, value) unless value.nil?
 			end
 		end
 
+		#Generate from required parameters and attributes a configuration
+
+		def generate_configuration!
+			properties = @parameters.clone
+			properties.each_key { |key| properties[key] = self.send(key) }
+			configuration = EvoSynth::Configuration.new(properties)
+			@configuration = configuration.deep_clone
+		end
+		
 		# simple class to compare a given fitness-goal with a individual using the <=>,
 		# this is done to respect minimizing and maximizin evolvers.
 
