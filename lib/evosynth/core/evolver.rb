@@ -84,7 +84,7 @@ module EvoSynth
 			setup!
 		end
 
-		#Returns a deep copy of this genome
+		#Returns a deep copy of this evolver
 
 		def deep_clone
 			my_clone = self.clone
