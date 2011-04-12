@@ -33,6 +33,19 @@ module EvoSynth
 				@column_names = column_names
 			end
 
+			# Returns a deep_copy of this object
+
+			def deep_clone
+				my_clone = self.clone
+				my_clone.column_names = @column_names.clone
+				my_data = my_clone.instance_variable_get(:@data).clone
+				my_data.each_key do |key|
+					my_data[key] = my_data[key].clone
+				end
+				my_clone.instance_variable_set(:@data, my_data)
+				my_clone
+			end
+
 			def [](row_number, column_name = nil)
 				if column_name.nil?
 					@data[row_number]

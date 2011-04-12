@@ -70,7 +70,17 @@ class DataSetTest < Test::Unit::TestCase
 			assert_equal([[33],[33]], union[6])
 			assert_equal([[33],[33]], union[7])
 		end
-
+		
+		should "deep_clone returns a new deep copy" do
+			my_clone = @ds1.deep_clone
+			assert_not_equal(my_clone.object_id, @ds1.object_id)
+			assert_kind_of(EvoSynth::Logging::DataSet, my_clone)
+			my_clone.each_index do |index|
+				assert_not_equal(my_clone[index].object_id, @ds1[index].object_id)
+				assert_kind_of(Array, my_clone[index])
+				my_clone[index].each { |item| assert_kind_of(Fixnum, item) }
+			end
+		end
 	end
 
 end
