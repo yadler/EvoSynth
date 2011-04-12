@@ -83,6 +83,15 @@ module EvoSynth
 			yield self if block_given?
 		end
 
+		# Returns a deep_copy of this object
+
+		def deep_clone
+			my_clone = self.clone
+			my_clone.instance_variable_set(:@data_fetcher, @data_fetcher.deep_clone)
+			my_clone.instance_variable_set(:@data, @data.deep_clone)
+			my_clone
+		end
+
 		def add_column(column_name, column_lambda)
 			@data_fetcher.add_column(column_name, column_lambda)
 			@data.column_names << column_name
