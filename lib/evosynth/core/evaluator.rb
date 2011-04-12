@@ -51,10 +51,10 @@ module EvoSynth
 			reset_counters
 		end
 
-		#Returns a deep copy of this genome
+		#Returns a deep copy of this evaluator
 
 		def deep_clone
-			Marshal::load(Marshal.dump(self))
+			self.clone
 		end
 
 		# Calculates and sets the fitness of the given individual if the individual has changed,
