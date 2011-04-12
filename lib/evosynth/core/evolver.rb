@@ -137,7 +137,10 @@ module EvoSynth
 
 		def use_configuration(configuration) #:yields: self
 			set_configuration(configuration)
-			yield self if block_given?
+			if block_given?
+				yield self
+				generate_configuration!
+			end
 			valid_configuration?
 		end
 
@@ -276,8 +279,7 @@ module EvoSynth
 		def generate_configuration!
 			properties = @parameters.clone
 			properties.each_key { |key| properties[key] = self.send(key) }
-			configuration = EvoSynth::Configuration.new(properties)
-			@configuration = configuration.deep_clone
+			@configuration = EvoSynth::Configuration.new(properties).deep_clone
 		end
 		
 		# simple class to compare a given fitness-goal with a individual using the <=>,
