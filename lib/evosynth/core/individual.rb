@@ -60,7 +60,9 @@ module EvoSynth
 		# Clones and returns a individual and its genome (deep copy).
 
 		def deep_clone
-			Marshal::load(Marshal.dump(self))
+			my_clone = self.clone
+			my_clone.genome = my_clone.genome.deep_clone
+			my_clone
 		end
 
 		# If you compare individuals the semantic of "<=>" is the following:
