@@ -34,6 +34,18 @@ module EvoSynth
 				@show_fetch_errors = show_fetch_errors
 			end
 
+			# Returns a deep_copy of this object
+
+			def deep_clone
+				my_clone = self.clone
+				my_columns = @columns.clone
+				my_columns.each_pair do |column_name, column_lambda|
+					my_columns[column_name] = my_columns[column_name].clone
+				end
+				my_clone.instance_variable_set(:@columns, my_columns)
+				my_clone
+			end
+
 			def add_column(name, column_lambda)
 				@columns[name] = column_lambda
 			end
