@@ -91,7 +91,7 @@ module EvoSynth
 					@next_index += (Math.log(EvoSynth.rand) / Math.log(1 - @probability)).ceil
 				end
 
-				@next_index -= mutated.genome.size
+				@next_index %= mutated.genome.size
 				mutated
 			end
 
