@@ -30,9 +30,12 @@ require 'evosynth/evolvers/basic/genetic_algorithm'
 require 'evosynth/evolvers/basic/steady_state_ga'
 require 'evosynth/evolvers/basic/memetic_algorithm'
 
-require 'evosynth/evolvers/evolution_strategies/adaptive_es'
-require 'evosynth/evolvers/evolution_strategies/selfadaptive_es'
-require 'evosynth/evolvers/evolution_strategies/derandomized_es'
+require 'evosynth/evolvers/evolution_strategies/adaptive_es_comma'
+require 'evosynth/evolvers/evolution_strategies/selfadaptive_es_comma'
+require 'evosynth/evolvers/evolution_strategies/derandomized_es_comma'
+require 'evosynth/evolvers/evolution_strategies/adaptive_es_plus'
+require 'evosynth/evolvers/evolution_strategies/selfadaptive_es_plus'
+require 'evosynth/evolvers/evolution_strategies/derandomized_es_plus'
 
 require 'evosynth/evolvers/local_search/local_search'
 

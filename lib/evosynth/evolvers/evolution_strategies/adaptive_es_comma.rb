@@ -32,7 +32,7 @@ module EvoSynth
 		# 
 		# TODO: rdoc (mutation and adjustment are fixed!)
 
-		class AdaptiveES < EvoSynth::Evolver
+		class AdaptiveESComma < EvoSynth::Evolver
 
 			attr_reader :success
 

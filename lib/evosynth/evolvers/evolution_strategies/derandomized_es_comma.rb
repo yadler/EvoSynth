@@ -32,7 +32,7 @@ module EvoSynth
 		#
 		# TODO: rdoc
 
-		class DerandomizedES < EvoSynth::Evolver
+		class DerandomizedESComma < EvoSynth::Evolver
 
 			attr_reader :s
 

@@ -27,7 +27,7 @@ module EvoSynth
 
 		# ES-SELBSTADAPTIV (Weicker Page 135)
 
-		class SelfAdaptiveES < EvoSynth::Evolver
+		class SelfAdaptiveESComma < EvoSynth::Evolver
 
 			DEFAULT_CHILD_FACTOR = 5
 			DEFAULT_MUTATION = EvoSynth::Mutations::SelfAdaptiveGaussMutation.new

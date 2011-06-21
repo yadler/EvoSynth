@@ -75,8 +75,8 @@ module Examples
 			:tau					=> 1 / Math.sqrt(DIMENSIONS)
 		)
 
-		EsExample.run(EvoSynth::Evolvers::AdaptiveES, configuration, base_population)
-		EsExample.run(EvoSynth::Evolvers::SelfAdaptiveES, configuration, base_population)
-		EsExample.run(EvoSynth::Evolvers::DerandomizedES, configuration, base_population)
+		EsExample.run(EvoSynth::Evolvers::AdaptiveESComma, configuration, base_population)
+		EsExample.run(EvoSynth::Evolvers::SelfAdaptiveESComma, configuration, base_population)
+		EsExample.run(EvoSynth::Evolvers::DerandomizedESComma, configuration, base_population)
 	end
 end
