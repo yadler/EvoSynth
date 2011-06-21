@@ -58,7 +58,11 @@ module EvoSynth
 
 			def initialize(flip_function, probability = DEFAULT_PROBABILITY)
 				@flip_function = flip_function
-				@probability = probability
+				if probability >= 1
+					@probability = 1.0 - Float::MIN
+				else
+					@probability = probability
+				end
 			end
 
 			#Return a deep copy of this operator
@@ -88,7 +92,7 @@ module EvoSynth
 						mutated.genome[@next_index] = @flip_function.call
 					end
 					
-					@next_index += (Math.log(EvoSynth.rand) / Math.log(1 - @probability)).ceil
+					@next_index += (Math.log(EvoSynth.rand + Float::MIN) / Math.log(1 - @probability)).ceil
 				end
 
 				@next_index %= mutated.genome.size
