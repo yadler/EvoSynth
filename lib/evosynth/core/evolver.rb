@@ -228,6 +228,19 @@ module EvoSynth
 			run_while { |evolver| evolver.best_solution? >= goal }
 		end
 
+    #run only for one generation
+
+    def run_next_generation
+      if @generations_computed == 0
+        changed
+        notify_observers self, @generations_computed
+      end
+      next_generation!
+      @generations_computed += 1
+      changed
+      notify_observers self, @generations_computed
+    end
+
 		# implement this to generate the next generation (individuals, whatever) of your evolver
 
 		def next_generation!
